@@ -34,7 +34,6 @@ import {
   getFirstDayOfMonth,
   toDateString,
   cn,
-  shouldShowBranding,
 } from '@/lib/utils';
 import { getEffectiveServicePackages } from '@/constants';
 import styles from './EditorialProfile.module.css';
@@ -991,17 +990,15 @@ export function EditorialProfile({
         )}
 
         {/* ---------------- Platform Branding Footer ---------------- */}
-        {shouldShowBranding(planTier, 'footer') && (
-          <footer className={styles.editorialFooter}>
-            <a href="https://stagehost.in" target="_blank" rel="noopener noreferrer">
-              <Sparkles size={14} color="#d4af37" />
-              <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
-            </a>
-            <div className={styles.editorialFooterNotice}>
-              StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
-            </div>
-          </footer>
-        )}
+        <footer className={styles.editorialFooter}>
+          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+            <Sparkles size={14} color="#d4af37" />
+            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+          </a>
+          <div className={styles.editorialFooterNotice}>
+            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+          </div>
+        </footer>
       </div>
 
       {/* Floating VIP Concierge Dock */}

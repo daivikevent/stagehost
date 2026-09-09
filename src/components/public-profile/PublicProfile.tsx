@@ -1451,17 +1451,15 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
       )}
 
       {/* Branding Footer */}
-      {shouldShowBranding(planTier, 'footer') && (
-        <footer className={styles.brandingFooter}>
-          <a href="https://stagehost.in" target="_blank" rel="noopener noreferrer">
-            <Sparkles size={14} />
-            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
-          </a>
-          <div className={styles.brandingFooterNotice}>
-            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
-          </div>
-        </footer>
-      )}
+      <footer className={styles.brandingFooter}>
+        <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+          <Sparkles size={14} />
+          <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+        </a>
+        <div className={styles.brandingFooterNotice}>
+          StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+        </div>
+      </footer>
         </div>
       )}
 

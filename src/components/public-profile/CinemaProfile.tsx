@@ -803,17 +803,15 @@ export function CinemaProfile({
         </section>
 
         {/* ---------------- Platform Branding Footer ---------------- */}
-        {shouldShowBranding(planTier, 'footer') && (
-          <footer className={styles.cinemaFooter}>
-            <a href="https://stagehost.in" target="_blank" rel="noopener noreferrer">
-              <Sparkles size={14} color="#ff2a4b" />
-              <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
-            </a>
-            <div className={styles.cinemaFooterNotice}>
-              StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
-            </div>
-          </footer>
-        )}
+        <footer className={styles.cinemaFooter}>
+          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+            <Sparkles size={14} color="#f59e0b" />
+            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+          </a>
+          <div className={styles.cinemaFooterNotice}>
+            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+          </div>
+        </footer>
       </div>
 
       {/* ---------------- Floating VIP Premiere Concierge Dock ---------------- */}

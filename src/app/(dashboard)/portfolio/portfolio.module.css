@@ -252,6 +252,11 @@
   box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layoutSectionCollapsed {
+  padding: 14px 22px;
 }
 
 .layoutSection::before {
@@ -266,11 +271,97 @@
 
 .layoutHeader {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: var(--space-5);
   flex-wrap: wrap;
   gap: var(--space-3);
+  user-select: none;
+}
+
+.layoutSectionCollapsed .layoutHeader {
+  margin-bottom: 0;
+}
+
+.layoutHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.activeLayoutBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.layoutsCountTag {
+  font-size: 0.78rem;
+  color: #c4b5fd;
+  font-weight: 600;
+  background: rgba(139, 92, 246, 0.15);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.layoutHeaderPreviewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 5px 11px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.layoutHeaderPreviewBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.layoutToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(124, 58, 237, 0.45));
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  padding: 5px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layoutToggleBtn:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(124, 58, 237, 0.7));
+  border-color: rgba(167, 139, 250, 0.7);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+  transform: translateY(-1px);
 }
 
 .layoutTitleGroup h3 {

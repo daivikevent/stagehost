@@ -792,17 +792,15 @@ export function PalaceProfile({
         </section>
 
         {/* ---------------- Branding Footer ---------------- */}
-        {shouldShowBranding(planTier, 'footer') && (
-          <footer className={styles.palaceFooter}>
-            <a href="https://stagehost.in" target="_blank" rel="noopener noreferrer">
-              <Sparkles size={14} color="#d4af37" />
-              <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
-            </a>
-            <div className={styles.palaceFooterNotice}>
-              StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
-            </div>
-          </footer>
-        )}
+        <footer className={styles.palaceFooter}>
+          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+            <Sparkles size={14} color="#d4af37" />
+            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+          </a>
+          <div className={styles.palaceFooterNotice}>
+            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+          </div>
+        </footer>
       </div>
 
       {/* ---------------- Floating Royal Concierge Dock ---------------- */}

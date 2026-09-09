@@ -30,6 +30,8 @@ import {
   Award,
   Building,
   Upload,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { InstagramIcon as Instagram, YoutubeIcon as Youtube, FacebookIcon as Facebook } from '@/components/ui/SocialIcons';
 import { EVENT_TYPES, LANGUAGES, MAJOR_CITIES, ARTIST_CATEGORIES } from '@/constants';
@@ -54,9 +56,19 @@ interface PortfolioFormProps {
   }) | null;
 }
 
+const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: string; border: string }> = {
+  editorial: { label: 'Editorial Vogue & Billboard', badge: '👑 Vogue Luxury', color: '#f472b6', border: 'rgba(244, 114, 182, 0.4)' },
+  spotlight: { label: 'Neo-Stage Cyber Festival', badge: '⚡ High-Octane', color: '#38bdf8', border: 'rgba(56, 189, 248, 0.4)' },
+  classic: { label: 'Classic Stage Bento', badge: '🎙️ Versatile Bento', color: '#a78bfa', border: 'rgba(167, 139, 250, 0.4)' },
+  vip: { label: 'VIP Sovereign Black Label', badge: '⚜️ Sovereign VIP', color: '#d4af37', border: 'rgba(212, 175, 55, 0.5)' },
+  palace: { label: 'Palace Royale Heritage', badge: '🏰 Royal Heritage', color: '#d4af37', border: 'rgba(212, 175, 55, 0.5)' },
+  cinema: { label: 'CineStar Red Carpet Premiere', badge: '🎬 Red Carpet Premiere', color: '#ff2a4b', border: 'rgba(255, 42, 75, 0.5)' },
+};
+
 export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
   const { success, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
+  const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(true);
 
   const [form, setForm] = useState({
     name: initialProfile?.name || '',
@@ -469,8 +481,20 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
 
       <div className={styles.formGrid}>
         {/* Public Profile Layout Architecture Selector */}
-        <div className={styles.layoutSection}>
-          <div className={styles.layoutHeader}>
+        <div className={`${styles.layoutSection} ${isLayoutCollapsed ? styles.layoutSectionCollapsed : ''}`}>
+          <div
+            className={styles.layoutHeader}
+            onClick={() => setIsLayoutCollapsed(!isLayoutCollapsed)}
+            style={{ cursor: 'pointer' }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setIsLayoutCollapsed(!isLayoutCollapsed);
+              }
+            }}
+          >
             <div className={styles.layoutTitleGroup}>
               <h3>
                 <Sparkles size={20} style={{ color: '#ec4899' }} />
@@ -478,11 +502,62 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
               </h3>
               <p>Choose the visual identity & layout experience your clients see when they visit your public link.</p>
             </div>
-            <span style={{ fontSize: '0.78rem', color: '#c4b5fd', fontWeight: 600, background: 'rgba(139, 92, 246, 0.15)', padding: '4px 10px', borderRadius: '999px', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
-              ⚡ 6 High-Conversion Themed Layouts
-            </span>
+
+            <div className={styles.layoutHeaderActions} onClick={(e) => e.stopPropagation()}>
+              {(() => {
+                const currentLayoutMeta = LAYOUT_DETAILS[form.profile_layout || 'classic'] || LAYOUT_DETAILS.classic;
+                return (
+                  <div
+                    className={styles.activeLayoutBadge}
+                    style={{
+                      borderColor: currentLayoutMeta.border,
+                      color: currentLayoutMeta.color,
+                    }}
+                    title="Current active layout theme"
+                  >
+                    <span className={styles.activeDot} style={{ background: currentLayoutMeta.color }} />
+                    <span style={{ fontSize: '0.72rem', opacity: 0.75, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Active:</span>
+                    <span>{currentLayoutMeta.label}</span>
+                  </div>
+                );
+              })()}
+
+              <span className={styles.layoutsCountTag}>
+                ⚡ 6 Layouts
+              </span>
+
+              <a
+                href={`/${initialProfile?.slug || 'admin-user'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.layoutHeaderPreviewBtn}
+                title="Open your live public profile"
+              >
+                Live Preview <ExternalLink size={12} />
+              </a>
+
+              <button
+                type="button"
+                className={styles.layoutToggleBtn}
+                onClick={() => setIsLayoutCollapsed(!isLayoutCollapsed)}
+                aria-expanded={!isLayoutCollapsed}
+              >
+                {isLayoutCollapsed ? (
+                  <>
+                    <span>Change Layout</span>
+                    <ChevronDown size={15} />
+                  </>
+                ) : (
+                  <>
+                    <span>Collapse</span>
+                    <ChevronUp size={15} />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
+          {!isLayoutCollapsed && (
           <div className={styles.layoutGrid}>
             {/* 1. Editorial Vogue */}
             <div
@@ -802,6 +877,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
               </div>
             </div>
           </div>
+          )}
         </div>
 
         {/* Profile Photo */}

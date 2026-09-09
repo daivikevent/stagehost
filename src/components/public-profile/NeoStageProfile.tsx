@@ -1246,17 +1246,15 @@ export function NeoStageProfile({
         {/* ==========================================================================
            Platform Branding Footer (StageHost Disclaimer)
            ========================================================================== */}
-        {shouldShowBranding(planTier, 'footer') && (
-          <footer className={styles.cyberFooter}>
-            <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
-              <Sparkles size={14} color="#00f2fe" />
-              <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
-            </a>
-            <div className={styles.cyberFooterNotice}>
-              StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
-            </div>
-          </footer>
-        )}
+        <footer className={styles.cyberFooter}>
+          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+            <Sparkles size={14} color="#00f2fe" />
+            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+          </a>
+          <div className={styles.cyberFooterNotice}>
+            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+          </div>
+        </footer>
       </div>
 
       {/* ==========================================================================
