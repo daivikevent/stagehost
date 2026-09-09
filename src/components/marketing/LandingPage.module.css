@@ -543,18 +543,22 @@
     grid-template-columns: minmax(280px, 420px);
     max-width: 440px;
   }
+
   .pricingGrid[data-count="2"] {
     grid-template-columns: repeat(2, minmax(280px, 380px));
     max-width: 800px;
   }
+
   .pricingGrid[data-count="3"] {
     grid-template-columns: repeat(3, minmax(280px, 360px));
     max-width: 1120px;
   }
+
   .pricingGrid[data-count="4"] {
     grid-template-columns: repeat(4, 1fr);
     max-width: 1240px;
   }
+
   .pricingGrid:not([data-count="1"]):not([data-count="2"]):not([data-count="3"]):not([data-count="4"]) {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     max-width: 1300px;
@@ -840,4 +844,337 @@
   font-size: var(--text-xs);
   color: var(--color-text-tertiary);
   text-align: center;
+}
+
+/* ============================================
+   MOBILE VIEW ENHANCEMENTS (max-width: 768px)
+   ============================================ */
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: calc(var(--navbar-height, 68px) + 20px) 16px 40px;
+  }
+
+  .heroGlow {
+    width: 260px;
+    height: 260px;
+    top: -30px;
+    right: -30px;
+    opacity: 0.65;
+  }
+
+  .heroBadge {
+    padding: 6px 14px;
+    font-size: 11.5px;
+    margin-bottom: 16px;
+    max-width: 95%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .heroTitle {
+    font-size: clamp(2.15rem, 8.2vw, 2.95rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+
+  .heroSubtitle {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 22px;
+    padding: 0 4px;
+  }
+
+  .heroCtas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto 22px;
+  }
+
+  .heroCtas a {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+  }
+
+  .heroTrust {
+    margin-bottom: 28px;
+    gap: 8px;
+  }
+
+  .heroAvatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+    margin-left: -6px;
+  }
+
+  .heroTrustText {
+    font-size: 12px;
+  }
+
+  .heroMockup {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .mockupPhone {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 22px;
+    padding: 10px;
+    transform: none !important;
+    background: linear-gradient(145deg, rgba(28, 24, 52, 0.95), rgba(14, 12, 26, 0.98));
+    border: 1.5px solid rgba(139, 92, 246, 0.4);
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(108, 92, 231, 0.2);
+  }
+
+  .mockupScreen {
+    border-radius: 16px;
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .mockupAvatar {
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .mockupName {
+    font-size: 14.5px;
+  }
+
+  .mockupTagline {
+    font-size: 11px;
+  }
+
+  .mockupVideoThumb {
+    padding: 16px 8px;
+    border-radius: 10px;
+  }
+
+  .mockupStat {
+    padding: 8px 4px;
+    border-radius: 8px;
+  }
+
+  .mockupStatValue {
+    font-size: 14px;
+  }
+
+  .mockupStatLabel {
+    font-size: 9.5px;
+  }
+
+  .mockupBtn,
+  .mockupBtnWa {
+    padding: 8px 6px;
+    font-size: 11.5px;
+    border-radius: 8px;
+  }
+
+  /* Social proof stats */
+  .socialProof {
+    padding: 24px 14px;
+    background: linear-gradient(180deg, rgba(16, 14, 32, 0.95), rgba(10, 10, 20, 0.98));
+  }
+
+  .socialProofGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 440px;
+  }
+
+  .socialProofItem {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 8px;
+  }
+
+  .socialProofValue {
+    font-size: 1.55rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 40%, #c4b5fd 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .socialProofLabel {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 2px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 42px 16px;
+  }
+
+  .sectionHeader {
+    margin-bottom: 24px;
+    gap: 8px;
+  }
+
+  .sectionHeader h2 {
+    font-size: clamp(1.65rem, 6vw, 2.15rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+  }
+
+  .sectionHeader p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding: 0 6px;
+  }
+
+  /* Features */
+  .featuresGrid {
+    gap: 12px;
+  }
+
+  .featureIcon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+  }
+
+  .featureTitle {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .featureDesc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* How It Works */
+  .stepsGrid {
+    gap: 12px;
+  }
+
+  .step {
+    padding: 18px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+  }
+
+  .stepNumber {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .stepTitle {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .stepDesc {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* Trust */
+  .trustSection {
+    padding: 42px 16px;
+  }
+
+  .trustGrid {
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  .trustCard {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  /* Pricing */
+  .pricingGrid {
+    gap: 16px;
+  }
+
+  .pricingCard {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .pricingPopular {
+    margin-top: 10px;
+  }
+
+  .popularBadge {
+    top: -11px;
+    font-size: 10.5px;
+    padding: 3px 12px;
+  }
+
+  /* FAQ */
+  .faqList {
+    gap: 8px;
+  }
+
+  .faqQuestion {
+    padding: 14px 16px;
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  .faqAnswer p {
+    padding: 0 16px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Final CTA */
+  .finalCta {
+    padding: 50px 16px;
+  }
+
+  .finalCta h2 {
+    font-size: clamp(1.75rem, 6.5vw, 2.35rem);
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .finalCta p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+
+  .finalCta a {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    padding: 13px 20px !important;
+    font-size: 14.5px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Footer */
+  .footerLinks {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
 }

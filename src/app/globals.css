@@ -1822,9 +1822,24 @@ input, textarea, select {
     max-width: 100%;
   }
 
-  .modal {
-    margin: var(--space-4);
-    max-height: calc(100dvh - var(--space-8));
+  .modal,
+  .modal-content {
+    margin: 8px !important;
+    max-height: calc(100dvh - 24px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: calc(100% - 16px) !important;
+  }
+
+  .modal-body {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .modal-footer {
+    flex-shrink: 0 !important;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 

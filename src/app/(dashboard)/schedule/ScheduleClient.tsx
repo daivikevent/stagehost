@@ -1474,7 +1474,7 @@ export function ScheduleClient({
     (selectedSlots?.evening === 'booked' || isFullDayBooked || (!!eveningBooking && !isBookingTentative(eveningBooking)));
 
   return (
-    <div>
+    <div className={styles.scheduleWrapper}>
       {/* Top Header */}
       <div className={styles.pageHeader}>
         <div className={styles.headerTitleGroup}>

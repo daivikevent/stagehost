@@ -1,5 +1,10 @@
 /* Schedule Manager Styles */
 
+.scheduleWrapper {
+  width: 100%;
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 50px);
+}
+
 .pageHeader {
   display: flex;
   align-items: center;
@@ -1441,6 +1446,14 @@
   overflow-x: auto;
   overflow-y: auto;
   max-height: calc(100vh - 210px);
+}
+
+@media (max-width: 768px) {
+  .tableResponsive {
+    max-height: none !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .modernTable {
