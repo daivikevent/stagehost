@@ -1,7 +1,6 @@
 import { Resend } from 'resend';
 
-// Initialize Resend with environment key
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend lazily inside sendInquiryAlertEmail if key is present
 
 interface InquiryEmailProps {
   anchorEmail: string;
@@ -26,10 +25,13 @@ export async function sendInquiryAlertEmail({
   anchorName,
   inquiry,
 }: InquiryEmailProps) {
-  if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 're_placeholder') {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || apiKey === 're_placeholder') {
     console.warn('⚠️ Resend API Key is not configured. Skipping email alert.');
     return { success: false, reason: 'unconfigured_key' };
   }
+
+  const resend = new Resend(apiKey);
 
   try {
     const formattedDate = inquiry.event_date || 'To be decided';
