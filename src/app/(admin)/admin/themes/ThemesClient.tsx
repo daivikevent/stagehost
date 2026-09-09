@@ -170,7 +170,7 @@ export function ThemesClient({ initialThemes, initialSiteTheme }: ThemesClientPr
       <GlobalThemeSwitcher initialTheme={initialSiteTheme || 'obsidian-violet'} />
 
       {/* 2. ANCHOR PORTFOLIO THEMES */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-3)', marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>
         <div>
           <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-primary)' }}>
             Anchor Portfolio Themes
@@ -184,7 +184,7 @@ export function ThemesClient({ initialThemes, initialSiteTheme }: ThemesClientPr
         </button>
       </div>
 
-      <div className={styles.plansGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+      <div className={styles.plansGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))' }}>
         {themes.map(theme => (
           <div key={theme.id} className={styles.planCard} style={{ opacity: theme.active ? 1 : 0.6 }}>
             {/* Visual Color Preview */}

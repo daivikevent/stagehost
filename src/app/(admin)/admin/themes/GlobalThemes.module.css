@@ -454,3 +454,24 @@
   align-items: center;
   gap: 3px;
 }
+
+@media (max-width: 640px) {
+  .globalThemeSection {
+    padding: var(--space-4);
+  }
+
+  .previewNotice {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .previewNoticeActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .cardHeader {
+    flex-wrap: wrap;
+  }
+}

@@ -235,7 +235,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
       </div>
 
       <div className={styles.filtersRow}>
-        <div style={{ position: 'relative', flex: 1, maxWidth: '300px' }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '320px' }}>
           <Search
             size={16}
             style={{
@@ -249,7 +249,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
           />
           <input
             className="input"
-            style={{ paddingLeft: '36px' }}
+            style={{ paddingLeft: '36px', width: '100%' }}
             placeholder="Search name, email, city, slug..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -258,7 +258,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
 
         <select
           className="input"
-          style={{ width: '130px' }}
+          style={{ width: '120px' }}
           value={filterPlan}
           onChange={(e) => setFilterPlan(e.target.value)}
         >
@@ -271,7 +271,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
 
         <select
           className="input"
-          style={{ width: '130px' }}
+          style={{ width: '120px' }}
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
         >
@@ -285,7 +285,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
           className="btn btn-secondary"
           onClick={handleExportAll}
           title="Download filtered anchors list as CSV"
-          style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 6 }}
         >
           <Download size={14} /> Export CSV
         </button>
@@ -481,22 +481,26 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
         <div
           style={{
             position: 'fixed',
-            bottom: 24,
+            bottom: 'calc(64px + env(safe-area-inset-bottom, 0px) + 12px)',
             left: '50%',
             transform: 'translateX(-50%)',
             backgroundColor: 'var(--color-bg-primary)',
             border: '1px solid var(--color-primary)',
             borderRadius: 'var(--radius-xl)',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.4)',
-            padding: '10px 20px',
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5)',
+            padding: '10px 16px',
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--space-3)',
+            justifyContent: 'center',
+            gap: 'var(--space-2)',
             zIndex: 900,
+            maxWidth: 'calc(100vw - 20px)',
+            width: 'max-content',
+            flexWrap: 'wrap',
             animation: 'fadeIn 0.2s ease-out',
           }}
         >
-          <span className="badge badge-primary" style={{ fontWeight: 700, padding: '6px 12px' }}>
+          <span className="badge badge-primary" style={{ fontWeight: 700, padding: '5px 10px', fontSize: '11px' }}>
             {selectedUserIds.length} Selected
           </span>
           <button
@@ -504,34 +508,34 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
             className="btn btn-sm btn-success"
             onClick={() => handleBulkStatus('active')}
             disabled={isPending}
-            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '12px', padding: '6px 10px' }}
           >
-            <UserCheck size={13} /> Bulk Activate
+            <UserCheck size={13} /> Activate
           </button>
           <button
             type="button"
             className="btn btn-sm btn-warning"
             onClick={() => handleBulkStatus('inactive')}
             disabled={isPending}
-            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '12px', padding: '6px 10px' }}
           >
-            <UserX size={13} /> Bulk Suspend
+            <UserX size={13} /> Suspend
           </button>
           <button
             type="button"
             className="btn btn-sm btn-secondary"
             onClick={handleExportSelected}
             disabled={isPending}
-            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '12px', padding: '6px 10px' }}
           >
-            <Download size={13} /> Export Selected (CSV)
+            <Download size={13} /> Export
           </button>
           <button
             type="button"
             className="btn btn-sm btn-ghost"
             onClick={() => setSelectedUserIds([])}
             disabled={isPending}
-            style={{ color: 'var(--color-text-tertiary)' }}
+            style={{ color: 'var(--color-text-tertiary)', fontSize: '12px', padding: '6px 8px' }}
           >
             Clear
           </button>

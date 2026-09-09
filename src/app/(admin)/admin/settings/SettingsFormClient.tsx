@@ -363,7 +363,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginTop: 'var(--space-3)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: 'var(--space-4)', marginTop: 'var(--space-3)' }}>
             <div>
               <label className="input-label">Action Link Label (Optional)</label>
               <input
@@ -487,80 +487,82 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
 
           {/* Domains Table */}
           <div className="card" style={{ overflow: 'hidden' }}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Anchor</th>
-                  <th>Custom Domain</th>
-                  <th>DNS Type</th>
-                  <th>Target Host</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {customDomains.length === 0 ? (
+            <div className={styles.tableResponsive}>
+              <table className={styles.table}>
+                <thead>
                   <tr>
-                    <td colSpan={6} style={{ textAlign: 'center', color: 'var(--color-text-tertiary)', padding: 'var(--space-6)' }}>
-                      No custom domain requests submitted yet.
-                    </td>
+                    <th>Anchor</th>
+                    <th>Custom Domain</th>
+                    <th>DNS Type</th>
+                    <th>Target Host</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
-                ) : (
-                  customDomains.map((dom) => (
-                    <tr key={dom.id}>
-                      <td><strong>{dom.anchor_name}</strong></td>
-                      <td>
-                        <a
-                          href={`https://${dom.domain}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: 'var(--color-primary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}
-                        >
-                          {dom.domain} <ExternalLink size={12} />
-                        </a>
-                      </td>
-                      <td><span className="badge badge-ghost font-mono">{dom.dns_type}</span></td>
-                      <td className="font-mono text-xs text-secondary">{dom.dns_target}</td>
-                      <td>
-                        <span
-                          className={`badge badge-${
-                            dom.status === 'active' ? 'success' : dom.status === 'rejected' ? 'error' : 'warning'
-                          }`}
-                        >
-                          {dom.status}
-                        </span>
-                      </td>
-                      <td>
-                        <div style={{ display: 'flex', gap: 6 }}>
-                          {dom.status !== 'active' && (
-                            <button
-                              type="button"
-                              className="btn btn-xs btn-success"
-                              onClick={() => handleDomainStatusChange(dom.id, 'active')}
-                              disabled={updatingDomainId === dom.id}
-                              title="Verify & mark active"
-                            >
-                              Approve
-                            </button>
-                          )}
-                          {dom.status !== 'rejected' && (
-                            <button
-                              type="button"
-                              className="btn btn-xs btn-danger"
-                              onClick={() => handleDomainStatusChange(dom.id, 'rejected')}
-                              disabled={updatingDomainId === dom.id}
-                              title="Reject domain request"
-                            >
-                              Reject
-                            </button>
-                          )}
-                        </div>
+                </thead>
+                <tbody>
+                  {customDomains.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} style={{ textAlign: 'center', color: 'var(--color-text-tertiary)', padding: 'var(--space-6)' }}>
+                        No custom domain requests submitted yet.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    customDomains.map((dom) => (
+                      <tr key={dom.id}>
+                        <td><strong>{dom.anchor_name}</strong></td>
+                        <td>
+                          <a
+                            href={`https://${dom.domain}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: 'var(--color-primary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}
+                          >
+                            {dom.domain} <ExternalLink size={12} />
+                          </a>
+                        </td>
+                        <td><span className="badge badge-ghost font-mono">{dom.dns_type}</span></td>
+                        <td className="font-mono text-xs text-secondary">{dom.dns_target}</td>
+                        <td>
+                          <span
+                            className={`badge badge-${
+                              dom.status === 'active' ? 'success' : dom.status === 'rejected' ? 'error' : 'warning'
+                            }`}
+                          >
+                            {dom.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            {dom.status !== 'active' && (
+                              <button
+                                type="button"
+                                className="btn btn-xs btn-success"
+                                onClick={() => handleDomainStatusChange(dom.id, 'active')}
+                                disabled={updatingDomainId === dom.id}
+                                title="Verify & mark active"
+                              >
+                                Approve
+                              </button>
+                            )}
+                            {dom.status !== 'rejected' && (
+                              <button
+                                type="button"
+                                className="btn btn-xs btn-danger"
+                                onClick={() => handleDomainStatusChange(dom.id, 'rejected')}
+                                disabled={updatingDomainId === dom.id}
+                                title="Reject domain request"
+                              >
+                                Reject
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

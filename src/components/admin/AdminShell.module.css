@@ -167,6 +167,266 @@
   box-sizing: border-box;
 }
 
+/* Mobile Header (Hidden on desktop) */
+.mobileHeader {
+  display: none;
+}
+
+/* Mobile Slide Drawer & Overlay */
+.overlay {
+  display: none;
+}
+
+.mobileSlide {
+  display: none;
+}
+
+/* Mobile Bottom Navigation (Hidden on desktop) */
+.mobileBottomNav {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Responsive Breakpoint for Mobile/Tablet (< 1024px) */
+@media (max-width: 1023px) {
+  .sidebar {
+    display: none !important;
+  }
+
+  .main,
+  .mainCollapsed {
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px) + 24px) !important;
+  }
+
+  .content {
+    padding: var(--space-4) var(--space-3) !important;
+  }
+
+  /* Mobile Sticky Top Header */
+  .mobileHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    height: 56px;
+    padding: 0 var(--space-3);
+    background: rgba(13, 15, 23, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobileMenuBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-default);
+  }
+
+  .mobileMenuBtn:active {
+    transform: scale(0.95);
+    background: var(--color-primary-light);
+  }
+
+  .mobileLogo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: var(--font-bold);
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+  }
+
+  .mobileLogo span:first-of-type {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .mobileAdminTag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    background: rgba(236, 72, 153, 0.15);
+    color: #ec4899;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .mobileAnchorLink {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--duration-fast) var(--ease-default);
+  }
+
+  .mobileAnchorLink:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* Drawer Overlay */
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  /* Drawer Container */
+  .mobileSlide {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 85vw);
+    background: var(--color-bg-secondary);
+    border-right: 1px solid var(--color-border);
+    z-index: 1001;
+    animation: slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+  }
+
+  .mobileSlideHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    height: 56px;
+  }
+
+  .mobileSlideTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-bold);
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+  }
+
+  .mobileCloseBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .mobileCloseBtn:hover {
+    color: var(--color-text-primary);
+  }
+
+  .mobileNavLinks {
+    flex: 1;
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobileDrawerFooter {
+    padding: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Fixed Bottom Nav Dock */
+  .mobileBottomNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(56px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: rgba(13, 15, 23, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--color-border);
+    z-index: 999;
+  }
+
+  .mobileBottomItem {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: var(--font-medium);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    padding: 0;
+  }
+
+  .mobileBottomItem:active {
+    transform: scale(0.96);
+  }
+
+  .mobileBottomItemActive {
+    color: var(--color-primary) !important;
+    font-weight: var(--font-bold);
+  }
+}
+
 @media (min-width: 1440px) {
   .content {
     padding: var(--space-6) var(--space-8);

@@ -66,7 +66,7 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
   return (
     <div className={styles.section}>
       <div className={styles.filtersRow} style={{ marginBottom: 'var(--space-4)' }}>
-        <div style={{ position: 'relative', flex: 1, maxWidth: '300px' }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '320px' }}>
           <Search
             size={16}
             style={{
@@ -80,7 +80,7 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
           />
           <input
             className="input"
-            style={{ paddingLeft: '36px' }}
+            style={{ paddingLeft: '36px', width: '100%' }}
             placeholder="Search payment ID, anchor, plan..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -103,7 +103,7 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
           className="btn btn-secondary"
           onClick={handleExport}
           title="Download payment ledger as CSV"
-          style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 6 }}
         >
           <Download size={14} /> Export CSV
         </button>
@@ -116,34 +116,36 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
             <div>No transaction records found matching your filters.</div>
           </div>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Payment ID</th>
-                <th>Anchor</th>
-                <th>Plan</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((p) => (
-                <tr key={p.id}>
-                  <td className="text-xs text-tertiary font-mono">{p.id}</td>
-                  <td><strong>{p.name}</strong></td>
-                  <td><span className="badge badge-primary">{p.plan}</span></td>
-                  <td><strong>₹{p.amount}</strong></td>
-                  <td>
-                    <span className={`badge badge-${p.status === 'success' ? 'success' : 'error'}`}>
-                      {p.status}
-                    </span>
-                  </td>
-                  <td className="text-xs text-tertiary">{p.date}</td>
+          <div className={styles.tableResponsive}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Payment ID</th>
+                  <th>Anchor</th>
+                  <th>Plan</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filtered.map((p) => (
+                  <tr key={p.id}>
+                    <td className="text-xs text-tertiary font-mono">{p.id}</td>
+                    <td><strong>{p.name}</strong></td>
+                    <td><span className="badge badge-primary">{p.plan}</span></td>
+                    <td><strong>₹{p.amount}</strong></td>
+                    <td>
+                      <span className={`badge badge-${p.status === 'success' ? 'success' : 'error'}`}>
+                        {p.status}
+                      </span>
+                    </td>
+                    <td className="text-xs text-tertiary">{p.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
