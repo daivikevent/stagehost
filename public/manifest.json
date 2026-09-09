@@ -1,0 +1,19 @@
+{
+  "name": "StageHost — Live Tour & Availability Manager",
+  "short_name": "StageHost",
+  "description": "Artist tour management, backstage cue sheets, live availability calendar, and booking confirmation for professional anchors.",
+  "start_url": "/schedule",
+  "display": "standalone",
+  "background_color": "#08090F",
+  "theme_color": "#6C5CE7",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/globe.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "entertainment"]
+}

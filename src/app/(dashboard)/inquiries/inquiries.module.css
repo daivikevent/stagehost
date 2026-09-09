@@ -1,0 +1,301 @@
+/* Inquiries Page Styles */
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .pageHeader {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.pageTitle { font-size: var(--text-2xl); font-weight: var(--font-bold); }
+.pageSubtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-1); }
+
+.headerStats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.headerStat { text-align: center; }
+.headerStatValue { display: block; font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: var(--font-bold); }
+.headerStatLabel { font-size: var(--text-xs); color: var(--color-text-tertiary); }
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .filters {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.searchBox {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .searchBox {
+    max-width: 100%;
+  }
+}
+
+.filterTabs {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.filterTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.filterTab {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  background: none;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.filterTab:hover { border-color: var(--color-border-hover); color: var(--color-text-primary); }
+.filterTabActive { background: var(--color-primary-light); border-color: var(--color-primary); color: var(--color-primary); }
+
+/* Layout */
+.layout,
+.inquiriesLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+@media (min-width: 960px) {
+  .layout,
+  .inquiriesLayout {
+    grid-template-columns: 380px 1fr;
+  }
+}
+
+@media (min-width: 1280px) {
+  .layout,
+  .inquiriesLayout {
+    grid-template-columns: 420px 1fr;
+  }
+}
+
+/* Inquiry List */
+.inquiryList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.inquiryCard {
+  width: 100%;
+  text-align: left;
+  padding: var(--space-4);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.inquiryCard:hover {
+  border-color: var(--color-border-hover);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.inquiryCardActive {
+  border-color: var(--color-primary);
+  background: rgba(108, 92, 231, 0.12) !important;
+  box-shadow: 0 0 15px rgba(108, 92, 231, 0.2);
+}
+
+.inquiryCardHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); }
+/* Mobile Master-Detail Navigation Support */
+.mobileBackBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: var(--space-4);
+  width: fit-content;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.mobileBackBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-primary);
+}
+
+@media (min-width: 960px) {
+  .mobileBackBtn {
+    display: none !important;
+  }
+  .inquiryList,
+  .inquiryDetail {
+    display: block !important;
+  }
+  .inquiryList {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 959px) {
+  .pageHeader {
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .headerStats {
+    gap: var(--space-2);
+    background: var(--color-bg-card);
+    padding: 8px 12px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    width: 100%;
+    justify-content: space-around;
+  }
+  .headerStatValue {
+    font-size: var(--text-lg);
+  }
+  .headerStatLabel {
+    font-size: 10px;
+  }
+  .searchBox {
+    max-width: 100%;
+  }
+  .hideOnMobile {
+    display: none !important;
+  }
+  .inquiryList {
+    max-height: none;
+    overflow-y: visible;
+  }
+  .inquiryDetail {
+    position: static;
+    box-shadow: none;
+    padding: var(--space-4);
+  }
+}
+
+.inquiryMeta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Detail Panel */
+.inquiryDetail {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  animation: fadeIn 150ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.detailHeader h3 { font-size: var(--text-lg); font-weight: var(--font-bold); }
+
+.detailContact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.contactItem:hover { text-decoration: underline; }
+
+.detailSection {
+  margin-bottom: var(--space-5);
+}
+
+.detailSection h4 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.detailGrid p {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  margin-top: var(--space-1);
+}
+
+.detailMessage {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.detailActions {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}

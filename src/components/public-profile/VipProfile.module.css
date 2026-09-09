@@ -1,0 +1,1171 @@
+/* ==========================================================================
+   StageHost — VIP Sovereign Black Label Layout (Haute Luxe Profile)
+   Aesthetic: Ultra-High Net Worth, Private Atelier, Brushed Champagne Gold,
+   Deep Obsidian Velvet, Sovereign Typography, Royal Crests.
+   ========================================================================== */
+
+.vipRoot {
+  background-color: #040406;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 10% 30%, rgba(197, 160, 89, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #07070a 0%, #030305 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle luxury noise texture simulation */
+.vipRoot::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Top Sovereign Atelier Status Banner */
+.atelierBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(10, 10, 14, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c5a059;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+@media (max-width: 768px) {
+  .atelierBar {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .atelierBadge {
+    justify-content: center;
+    font-size: 0.68rem;
+  }
+  .atelierActions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ghostActionBtn,
+  .conciergeBtn {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+.atelierBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #f3e5ab;
+}
+
+.crestDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4af37;
+  box-shadow: 0 0 10px #d4af37;
+  display: inline-block;
+}
+
+.atelierActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.conciergeBtn {
+  background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+  color: #050507;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
+  text-decoration: none;
+}
+
+.conciergeBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.45);
+  filter: brightness(1.1);
+}
+
+.ghostActionBtn {
+  background: transparent;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.ghostActionBtn:hover {
+  border-color: #d4af37;
+  color: #f3e5ab;
+  background: rgba(212, 175, 55, 0.05);
+}
+
+/* ==========================================================================
+   HERO SECTION: Grand Sovereign Showcase
+   ========================================================================== */
+.heroSection {
+  padding: 70px 0 60px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 50px;
+  align-items: center;
+  position: relative;
+}
+
+@media (max-width: 992px) {
+  .heroSection {
+    grid-template-columns: 1fr;
+    padding: 40px 0;
+    gap: 36px;
+    text-align: center;
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.royalSeal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: #f3e5ab;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  width: fit-content;
+}
+
+@media (max-width: 992px) {
+  .royalSeal {
+    margin: 0 auto;
+  }
+}
+
+.heroTitle {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 4.2rem;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  background: linear-gradient(180deg, #ffffff 15%, #e2e8f0 60%, #c5a059 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.8rem;
+  }
+}
+
+.heroTagline {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.heroLocationRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.92rem;
+  color: #94a3b8;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 992px) {
+  .heroLocationRow {
+    justify-content: center;
+  }
+}
+
+.locationPin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f3e5ab;
+  font-weight: 600;
+}
+
+/* Hero Portrait Canvas with Gilded Bevel */
+.heroPortraitFrame {
+  position: relative;
+  border-radius: 16px;
+  padding: 8px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.4) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(197, 160, 89, 0.3) 100%);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(212, 175, 55, 0.12);
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.heroPortraitInner {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0d0d12;
+}
+
+.heroPortraitImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.05) brightness(0.96);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heroPortraitFrame:hover .heroPortraitImg {
+  transform: scale(1.03);
+}
+
+.heroPortraitFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, #1a1624 0%, #08080d 100%);
+  color: #d4af37;
+  font-family: Georgia, serif;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.vipInsigniaBadge {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  background: rgba(5, 5, 8, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.insigniaLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.insigniaLabel {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.insigniaVal {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f3e5ab;
+}
+
+/* ==========================================================================
+   METRICS BAR: Aristocratic Provenance
+   ========================================================================== */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 30px 0 50px;
+}
+
+@media (max-width: 992px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricCard {
+  background: rgba(15, 15, 22, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 12px;
+  padding: 22px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.metricCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37, transparent);
+}
+
+.metricCard:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.08);
+}
+
+.metricValue {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f3e5ab;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.metricLabel {
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   MARQUEE: Prestigious Client Marquee Ticker
+   ========================================================================== */
+.marqueeSection {
+  padding: 24px 0;
+  background: #060609;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  margin: 20px 0 60px;
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  animation: scrollMarquee 35s linear infinite;
+  gap: 40px;
+  align-items: center;
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.marqueeDot {
+  color: #d4af37;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   SECTION HEADINGS
+   ========================================================================== */
+.sectionHeader {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 45px;
+  position: relative;
+}
+
+.sectionRoman {
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  color: #c5a059;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.sectionTitle {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f8fafc;
+  margin: 0 0 14px;
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+}
+
+.sectionSubtitle {
+  font-size: 1rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ==========================================================================
+   THE SOVEREIGN MONOGRAPH (Bio & Craft)
+   ========================================================================== */
+.monographWrap {
+  background: rgba(10, 10, 15, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 45px 50px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 50px;
+  margin-bottom: 70px;
+  position: relative;
+}
+
+@media (max-width: 992px) {
+  .monographWrap {
+    grid-template-columns: 1fr;
+    padding: 30px 24px;
+    gap: 36px;
+  }
+}
+
+.bioLead {
+  font-size: 1.12rem;
+  line-height: 1.8;
+  color: #e2e8f0;
+  font-weight: 300;
+  margin: 0;
+}
+
+.dropCap {
+  float: left;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 3.8rem;
+  line-height: 0.85;
+  padding-right: 14px;
+  padding-top: 4px;
+  color: #d4af37;
+  font-weight: 700;
+}
+
+.specialtiesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.specialtyCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #f1f5f9;
+}
+
+/* Languages Chips */
+.langChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #f3e5ab;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   REPERTOIRE: VIP Private Engagement Packages
+   ========================================================================== */
+.packagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-bottom: 80px;
+}
+
+.packageCard {
+  background: linear-gradient(180deg, rgba(16, 16, 24, 0.85) 0%, rgba(9, 9, 14, 0.95) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.35s ease;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.packageCard:hover {
+  border-color: #d4af37;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
+}
+
+.pkgCrown {
+  color: #d4af37;
+  margin-bottom: 12px;
+}
+
+.pkgName {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.45rem;
+  color: #ffffff;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.pkgType {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c5a059;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.pkgPrice {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.6rem;
+  color: #f3e5ab;
+  font-weight: 700;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  margin-bottom: 18px;
+}
+
+.pkgDesc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.inclusionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inclusionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+.reserveBtn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+  color: #050507;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+}
+
+.reserveBtn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.4);
+}
+
+/* ==========================================================================
+   VIDEO ARCHIVE: 4K Cinema Vault
+   ========================================================================== */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 26px;
+  margin-bottom: 80px;
+}
+
+.videoCard {
+  background: #09090e;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.videoCard:hover {
+  border-color: #d4af37;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+.videoThumbWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.videoThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.videoCard:hover .videoThumbImg {
+  transform: scale(1.05);
+}
+
+.playOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #050507;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+  transition: transform 0.25s ease;
+}
+
+.videoCard:hover .playCircle {
+  transform: scale(1.1);
+}
+
+.videoDetails {
+  padding: 16px 18px;
+}
+
+.videoTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 4px;
+}
+
+.videoSubtitle {
+  font-size: 0.75rem;
+  color: #c5a059;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   PHOTO GALLERY: Stage Presence Lightbox
+   ========================================================================== */
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 80px;
+}
+
+.photoCard {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  cursor: pointer;
+  background: #08080c;
+  transition: all 0.3s ease;
+}
+
+.photoCard:hover {
+  border-color: #d4af37;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.photoCard:hover .photoImg {
+  transform: scale(1.04);
+}
+
+.photoCaptionOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 5, 8, 0.92) 100%);
+  font-size: 0.78rem;
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   LIVE AVAILABILITY RADAR (USP CALENDAR)
+   ========================================================================== */
+.calendarSectionWrap {
+  background: rgba(12, 12, 18, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 80px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+  .vipContainer {
+    padding: 0 12px;
+  }
+  .calendarSectionWrap {
+    padding: 14px 6px;
+    border-radius: 14px;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .weekdaysGrid {
+    gap: 3px;
+    margin-bottom: 6px;
+    font-size: 0.65rem;
+  }
+  .datesGrid {
+    gap: 3px;
+  }
+  .dateCell {
+    padding: 2px;
+    border-radius: 6px;
+  }
+  .dateNumber {
+    font-size: 0.78rem;
+  }
+  .dateStatusDot {
+    width: 4px;
+    height: 4px;
+    margin-top: 2px;
+  }
+}
+
+.calNavRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  padding-bottom: 16px;
+}
+
+.calMonthHeading {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f3e5ab;
+  margin: 0;
+}
+
+.calNavBtn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.calNavBtn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: #d4af37;
+  color: #ffffff;
+}
+
+.weekdaysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c5a059;
+  font-weight: 700;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.datesGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dateCell {
+  aspect-ratio: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.dateCell:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.dateNumber {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.dateStatusDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.dotAvailable {
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.dotBooked {
+  background: #ef4444;
+}
+
+.dotTentative {
+  background: #f59e0b;
+}
+
+/* ==========================================================================
+   TESTIMONIALS: Aristocratic Endorsements
+   ========================================================================== */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+  margin-bottom: 90px;
+}
+
+.endorsementCard {
+  background: rgba(12, 12, 18, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 12px;
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.endorsementStars {
+  display: flex;
+  gap: 4px;
+  color: #d4af37;
+  margin-bottom: 14px;
+}
+
+.endorsementText {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin-bottom: 20px;
+}
+
+.clientMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  padding-top: 14px;
+}
+
+.clientName {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f3e5ab;
+}
+
+.clientDesignation {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   FLOATING VIP CONCIERGE DOCK
+   ========================================================================== */
+.conciergeDock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(8, 8, 12, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 100;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.18);
+  max-width: 90vw;
+}
+
+.dockLabel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f3e5ab;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.dockInquireBtn {
+  background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+  color: #050507;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.dockInquireBtn:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.dockWhatsAppBtn {
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.4);
+  color: #25d366;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.dockWhatsAppBtn:hover {
+  background: #25d366;
+  color: #000;
+}
+
+@media (max-width: 640px) {
+  .conciergeDock {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 12px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    gap: 8px;
+    justify-content: space-around;
+  }
+  .dockLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    color: #f3e5ab;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .dockInquireBtn,
+  .dockWhatsAppBtn {
+    padding: 8px 10px;
+    font-size: 0.72rem;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* ---------------- Platform Branding Footer ---------------- */
+.vipFooter {
+  text-align: center;
+  padding: 40px 20px 100px;
+  margin-top: 60px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vipFooter a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #a3a3a3;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.vipFooter a:hover {
+  color: #f3e5ab;
+}
+
+.vipFooterNotice {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+

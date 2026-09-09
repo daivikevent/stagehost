@@ -1,0 +1,323 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 9, 15, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: fadeIn 180ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(108, 92, 231, 0.2);
+  overflow: hidden;
+  animation: scaleUp 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+.title {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  background: #0d0f18;
+}
+
+/* ====================================================
+   A4 MEDIA KIT DOCUMENT (SCREEN & PRINT STYLING)
+   ==================================================== */
+.paper {
+  background: #ffffff;
+  color: #1a1b26;
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  max-width: 750px;
+  margin: 0 auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+/* Header Section */
+.docHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.docTitleName {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0 0 4px 0;
+}
+
+.docTagline {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c5ce7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 12px 0;
+}
+
+.docMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.docMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.docQrBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.docQrImg {
+  width: 90px;
+  height: 90px;
+  display: block;
+}
+
+.docQrCaption {
+  font-size: 9px;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* Section Common */
+.docSection {
+  margin-bottom: 24px;
+}
+
+.docSectionTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-left: 3px solid #6c5ce7;
+  padding-left: 8px;
+  margin: 0 0 12px 0;
+}
+
+.docBio {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #334155;
+  margin: 0;
+}
+
+/* Pills / Tags */
+.docPillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.docPill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* Rate Card Table */
+.docTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.docTable th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.docTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 12px;
+  color: #1e293b;
+}
+
+.docTablePrice {
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+/* Reviews Quote Box */
+.docReviewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.docReviewCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.docReviewQuote {
+  font-size: 11px;
+  line-height: 1.5;
+  font-style: italic;
+  color: #334155;
+  margin: 0 0 8px 0;
+}
+
+.docReviewAuthor {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Footer / Contact Bar */
+.docFooter {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.docFooterBrand {
+  font-weight: 700;
+  color: #6c5ce7;
+}
+
+/* ====================================================
+   PRINT MEDIA RULES (TRIGGERED BY WINDOW.PRINT())
+   ==================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .paper,
+  .paper * {
+    visibility: visible;
+  }
+
+  .backdrop {
+    position: static;
+    background: none;
+    padding: 0;
+    backdrop-filter: none;
+  }
+
+  .modal {
+    position: static;
+    border: none;
+    box-shadow: none;
+    max-width: 100%;
+    max-height: none;
+  }
+
+  .header {
+    display: none !important;
+  }
+
+  .scrollArea {
+    padding: 0 !important;
+    background: none !important;
+    overflow: visible !important;
+  }
+
+  .paper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 24px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+}
