@@ -5,6 +5,12 @@
   padding-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 80px);
 }
 
+@media (max-width: 768px) {
+  .scheduleWrapper {
+    zoom: 0.90;
+  }
+}
+
 .pageHeader {
   display: flex;
   align-items: center;
@@ -1792,5 +1798,31 @@
 
   .allShowsGrid {
     margin-bottom: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .allShowsSection {
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .showCard {
+    padding: 14px 14px !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .dateMain {
+    font-size: 13.5px !important;
+  }
+
+  .showCardFooter {
+    padding-top: 8px !important;
+  }
+
+  .actionIconBtn {
+    width: 28px !important;
+    height: 28px !important;
   }
 }
