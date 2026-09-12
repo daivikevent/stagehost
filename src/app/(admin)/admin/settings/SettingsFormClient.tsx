@@ -64,8 +64,12 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
     const target = testEmailTo || settings.support_email || 'admin@stagehost.in';
     setIsSendingTest(true);
     try {
-      await sendAdminTestEmail(target);
-      success(`Test email sent successfully to ${target}!`);
+      const res = await sendAdminTestEmail(target);
+      if (res.success) {
+        success(res.message || `Test email sent successfully to ${target}!`);
+      } else {
+        showError(res.error || 'Failed to send test email');
+      }
     } catch (err) {
       showError(err instanceof Error ? err.message : 'Failed to send test email');
     } finally {

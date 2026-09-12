@@ -421,46 +421,38 @@ export async function savePlatformSettings(settings: Record<string, string | boo
 /**
  * Send a live test email via Resend to verify configuration.
  */
-export async function sendAdminTestEmail(toEmail: string) {
-  const isAdmin = await checkIsAdmin();
-  if (!isAdmin) throw new Error('Unauthorized');
+export async function sendAdminTestEmail(toEmail: string): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+}> {
+  try {
+    const isAdmin = await checkIsAdmin();
+    if (!isAdmin) return { success: false, error: 'Unauthorized: Admin access required' };
 
-  const adminClient = createAdminClient();
-  let apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey || apiKey === 're_placeholder') {
-    const { data: row } = await adminClient
-      .from('platform_settings')
-      .select('value')
-      .eq('key', 'resend_api_key')
-      .maybeSingle();
-    if (row?.value && row.value !== 're_placeholder') {
-      apiKey = row.value;
+    const adminClient = createAdminClient();
+    let apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey || apiKey === 're_placeholder') {
+      const { data: row } = await adminClient
+        .from('platform_settings')
+        .select('value')
+        .eq('key', 'resend_api_key')
+        .maybeSingle();
+      if (row?.value && row.value !== 're_placeholder') {
+        apiKey = row.value;
+      }
     }
-  }
 
-  if (!apiKey || apiKey === 're_placeholder') {
-    throw new Error('Resend API key is not configured. Please add your Resend API key in Admin Settings or Vercel environment variables.');
-  }
+    if (!apiKey || apiKey === 're_placeholder') {
+      return {
+        success: false,
+        error: 'Resend API key is not configured. Please paste your Resend API key in Admin Settings and click Save Settings.',
+      };
+    }
 
-  const resend = new Resend(apiKey);
-  let res = await resend.emails.send({
-    from: 'StageHost <notifications@stagehost.in>',
-    to: [toEmail],
-    subject: '🧪 StageHost Admin Test Email',
-    html: `
-      <div style="font-family: sans-serif; background: #0A0A14; color: #fff; padding: 24px; border-radius: 12px;">
-        <h2 style="color: #6C5CE7;">StageHost Admin Test</h2>
-        <p>This is a verified test email sent from the <strong>StageHost SaaS Admin Panel</strong>.</p>
-        <p>Your email infrastructure (Resend) is working perfectly!</p>
-        <hr style="border-color: rgba(255,255,255,0.1);" />
-        <small style="color: #888;">Timestamp: ${new Date().toLocaleString()}</small>
-      </div>
-    `,
-  });
-
-  if (res.error && (res.error as any).message?.includes('not verified')) {
-    res = await resend.emails.send({
-      from: 'StageHost <onboarding@resend.dev>',
+    const resend = new Resend(apiKey);
+    let res = await resend.emails.send({
+      from: 'StageHost <notifications@stagehost.in>',
       to: [toEmail],
       subject: '🧪 StageHost Admin Test Email',
       html: `
@@ -473,10 +465,32 @@ export async function sendAdminTestEmail(toEmail: string) {
         </div>
       `,
     });
-  }
 
-  if (res.error) throw new Error(res.error.message);
-  return { success: true, data: res.data };
+    if (res.error && (res.error as any).message?.includes('not verified')) {
+      res = await resend.emails.send({
+        from: 'StageHost <onboarding@resend.dev>',
+        to: [toEmail],
+        subject: '🧪 StageHost Admin Test Email',
+        html: `
+          <div style="font-family: sans-serif; background: #0A0A14; color: #fff; padding: 24px; border-radius: 12px;">
+            <h2 style="color: #6C5CE7;">StageHost Admin Test</h2>
+            <p>This is a verified test email sent from the <strong>StageHost SaaS Admin Panel</strong>.</p>
+            <p>Your email infrastructure (Resend) is working perfectly!</p>
+            <hr style="border-color: rgba(255,255,255,0.1);" />
+            <small style="color: #888;">Timestamp: ${new Date().toLocaleString()}</small>
+          </div>
+        `,
+      });
+    }
+
+    if (res.error) {
+      return { success: false, error: res.error.message };
+    }
+
+    return { success: true, message: `Test email sent successfully to ${toEmail}!` };
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Failed to send test email' };
+  }
 }
 
 /**
