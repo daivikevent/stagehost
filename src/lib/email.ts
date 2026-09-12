@@ -25,7 +25,25 @@ export async function sendInquiryAlertEmail({
   anchorName,
   inquiry,
 }: InquiryEmailProps) {
-  const apiKey = process.env.RESEND_API_KEY;
+  let apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey || apiKey === 're_placeholder') {
+    try {
+      const { createAdminClient } = await import('@/lib/supabase/admin');
+      const adminClient = createAdminClient();
+      const { data: row } = await adminClient
+        .from('platform_settings')
+        .select('value')
+        .eq('key', 'resend_api_key')
+        .maybeSingle();
+      if (row?.value && row.value !== 're_placeholder') {
+        apiKey = row.value;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   if (!apiKey || apiKey === 're_placeholder') {
     console.warn('⚠️ Resend API Key is not configured. Skipping email alert.');
     return { success: false, reason: 'unconfigured_key' };

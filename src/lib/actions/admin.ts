@@ -364,7 +364,7 @@ export async function getPlatformSettings(): Promise<Record<string, string>> {
     branding_watermark_link: 'https://stagehost.in',
     email_from_name: 'StageHost',
     email_from_address: 'notifications@stagehost.in',
-    resend_api_key: process.env.RESEND_API_KEY ? '••••••••••••••••' : '',
+    resend_api_key: (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_placeholder') ? '••••••••••••••••' : '',
     site_theme: 'obsidian-violet',
   };
 
@@ -425,9 +425,21 @@ export async function sendAdminTestEmail(toEmail: string) {
   const isAdmin = await checkIsAdmin();
   if (!isAdmin) throw new Error('Unauthorized');
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('Resend API key is not configured in .env.local');
+  const adminClient = createAdminClient();
+  let apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey || apiKey === 're_placeholder') {
+    const { data: row } = await adminClient
+      .from('platform_settings')
+      .select('value')
+      .eq('key', 'resend_api_key')
+      .maybeSingle();
+    if (row?.value && row.value !== 're_placeholder') {
+      apiKey = row.value;
+    }
+  }
+
+  if (!apiKey || apiKey === 're_placeholder') {
+    throw new Error('Resend API key is not configured. Please add your Resend API key in Admin Settings or Vercel environment variables.');
   }
 
   const resend = new Resend(apiKey);
