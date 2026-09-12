@@ -1,75 +1,74 @@
 # 🚀 StageHost — Future Implementation Roadmap & Technical Specification
 
-> **Purpose:** This document details the strategic, architectural, and feature roadmap for StageHost. Any software engineer, product manager, or technical lead can reference this document to understand what needs to be built next, why it matters, and how to implement it.
+> **Purpose:** This document details the strategic, architectural, and future feature roadmap for StageHost. Any software engineer, product manager, or technical lead can reference this document to understand what is completed, what is pending (including Razorpay live setup), why it matters, and how to implement each feature.
 
 ---
 
-## 🗺️ Roadmap Overview
+## 📊 Development Status Overview (Live Tracker)
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   STAGEHOST EVOLUTION ROADMAP                                    │
-├───────────────────────┬───────────────────────┬──────────────────────────┬───────────────────────┤
-│    Phase 1: High ROI  │   Phase 2: CRM Power  │    Phase 3: Automation   │ Phase 4: Enterprise   │
-│  White-Label & Media  │   Proposals & Social  │      WhatsApp & 2-Way    │ PWA & Multi-Market    │
-├───────────────────────┼───────────────────────┼──────────────────────────┼───────────────────────┤
-│ 1. Custom Domains     │ 3. PDF Proposal       │ 5. Meta WhatsApp Cloud   │ 7. Mobile PWA & Push  │
-│    (anchorname.com)   │    Rate Card Gen      │    Automated API         │    Notifications      │
-│ 2. Client-side WebP   │ 4. Google / Social    │ 6. Two-Way Google        │ 8. GST Invoicing      │
-│    Media Compression  │    1-Click Auth       │    Calendar Sync         │    Engine for Subs    │
-└───────────────────────┴───────────────────────┴──────────────────────────┴───────────────────────┘
-```
+| Status | Feature / Milestone | Technology / Architecture |
+| :--- | :--- | :--- |
+| ✅ **Shipped** | **Google 1-Click Social Authentication** | Supabase OAuth + StageHost Branding |
+| ✅ **Shipped** | **Mobile PWA & Background WebPush Notifications** | VAPID, Service Worker, PushManager, Lockscreen Alerts |
+| ✅ **Shipped** | **Client-Side Image Compression** | HTML5 Canvas WebP conversion (15MB ➔ ~250KB) |
+| ✅ **Shipped** | **Live Resend Email Infrastructure** | Transactional & booking alert emails |
+| ✅ **Shipped** | **Admin & User Plan Dynamic Synchronization** | Supabase `platform_settings` + Pricing matrix |
+| ✅ **Shipped** | **Universal Multi-Artist Architecture (Foundation)** | 11 categories (DJ, Singer, Band, Emcee, etc.) |
+| 🔴 **Immediate** | **Razorpay Live Merchant Integration & Webhook** | Live API keys, UPI AutoPay, Webhook verification |
+| 🟡 **Phase 1** | **Meta WhatsApp Cloud API (Automated Alert)** | Meta Graph API, Pre-approved template, Direct ping |
+| 🟡 **Phase 1** | **PDF Quotation & Rate Card Generator** | Serverless / `@react-pdf` branded client proposals |
+| 🟡 **Phase 2** | **Custom Domains White-Labeling (`anchorname.com`)** | CNAME routing, Next.js proxy rewrite, SSL automation |
+| 🟡 **Phase 2** | **Two-Way Google Calendar Real-Time Sync** | Google Calendar API, webhook watch, automatic date block |
+| 🟡 **Phase 3** | **GST Tax Invoice Generator for Subscriptions** | 18% GST calculation, sequential numbering, PDF download |
+| 🟡 **Phase 3** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers |
+| 🟡 **Phase 4** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders |
+| 🟡 **Phase 4** | **AI Portfolio Bio & Repertoire Assistant** | Gemini API prompt engine for anchor bios & pitch decks |
 
 ---
 
-## 🌐 Feature 1: Custom Domains Multi-Tenant White-Labeling
+## 💳 Priority 0 (Immediate): Razorpay Live Merchant Integration & Automated Subscriptions
 
-### Problem Statement:
-Top-tier celebrity anchors and corporate emcees charge ₹50,000 to ₹2,00,000+ per event. They want to brand their own domain (e.g. `https://priyapatel.live` or `https://rahulsharma.com`) rather than sending `stagehost.in/rahulsharma`.
+### Current State:
+- Razorpay SDK, order creation endpoint (`/api/payment/create-order`), advance payment receipt flow (`/api/receipt/create-advance-order`), and webhook handler (`/api/payment/webhook`) are fully coded and tested with test fixtures.
+- Environment variables currently hold placeholder credentials (`rzp_test_placeholder`, `placeholder_razorpay_secret`).
 
-### Value Proposition:
-- Major upsell trigger for the **Premium Plan (₹1,299/mo)**.
-- Full white-label experience while StageHost silently powers the backend CRM, scheduling, and forms.
-
-### Architecture & Implementation Plan:
-1. **DNS Architecture:**
-   - Anchor adds a `CNAME` record in GoDaddy / Cloudflare pointing to `cname.stagehost.in`, or an `A` record pointing to StageHost's server IP (`76.76.21.21`).
-2. **Next.js Middleware Routing:**
-   - In Next.js middleware / proxy:
-     ```ts
-     // Extract Hostname
-     const hostname = request.headers.get('host') || '';
-     // If host is custom (not stagehost.in or localhost)
-     if (!hostname.includes('stagehost.in') && !hostname.includes('localhost')) {
-       // Look up profile slug for this custom domain in cache/DB
-       const slug = await getSlugForCustomDomain(hostname);
-       if (slug) {
-         // Rewrite to internal portfolio route
-         return NextResponse.rewrite(new URL(`/${slug}${request.nextUrl.pathname}`, request.url));
-       }
-     }
+### Activation Steps (Pending Merchant Onboarding):
+1. **Obtain Live Merchant Keys:**
+   - Complete KYC and business verification on [Razorpay Dashboard](https://dashboard.razorpay.com).
+   - Generate Live Key ID (`rzp_live_...`) and Live Key Secret.
+2. **Configure Production Environment:**
+   - Update `.env.local` and deployment hosting environment variables:
+     ```env
+     NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_live_xxxxxxxxxxxxxxxx
+     RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxx
+     RAZORPAY_WEBHOOK_SECRET=xxxxxxxxxxxxxxxxxxxxxxxx
      ```
-3. **Automated SSL:**
-   - Integrate Vercel Domains API (`POST /v1/domains`) or Cloudflare for SaaS (SSL for Custom Hostnames) to auto-provision Let's Encrypt certificates within 60 seconds of DNS propagation.
-4. **Admin Panel Status:**
-   - Admin settings already contains the **Custom Domains & DNS Verification** table (`SettingsFormClient.tsx`). Wire the "Approve" button to trigger the domain registration API.
+3. **Configure Webhook in Razorpay Dashboard:**
+   - URL: `https://stagehost.in/api/payment/webhook`
+   - Active Events:
+     - `payment.captured`
+     - `order.paid`
+     - `subscription.charged` / `subscription.cancelled`
+4. **Subscription Automation:**
+   - When payment succeeds, webhook handler automatically activates Pro (₹599) or Premium (₹1,299) subscription in Supabase `subscriptions` table and updates `profile.plan_tier`.
+   - Handles auto-renewal and failure notifications.
 
 ---
 
-## 🤖 Feature 2: Meta WhatsApp Cloud API (Automated Instant Ping)
+## 🤖 Feature 1: Meta WhatsApp Cloud API (Automated Instant Ping)
 
 ### Problem Statement:
-Right now, inquiries arrive via email and the anchor can click `wa.me` links to reply. However, anchors are often busy on stage, backstage, or traveling. A lead that isn't answered in the first 15 minutes has an 80% lower chance of conversion.
+Inquiries arrive via email and native device push notifications, but Indian anchors and event planners run their entire business on WhatsApp. An event inquiry answered within 10–15 minutes has an 80% higher closure rate.
 
 ### Value Proposition:
-Instant automated delivery directly into the anchor's WhatsApp personal chat the moment a client presses "Submit Inquiry".
+Instant automated delivery directly into the anchor's personal WhatsApp chat the second a client hits "Submit Inquiry" on their portfolio.
 
 ### Technical Implementation:
 1. **Meta WhatsApp Business Platform Integration:**
-   - Setup Meta Developer App with WhatsApp Cloud API enabled.
-   - Configure Webhook listener at `/api/whatsapp/webhook`.
-2. **Pre-approved WhatsApp Template (`inquiry_alert_v1`):**
-   ```
+   - Create Meta Developer App with WhatsApp Cloud API enabled.
+   - Obtain Phone Number ID, WhatsApp Business Account ID (WABA ID), and Permanent System User Access Token.
+2. **Pre-approved WhatsApp Message Template (`inquiry_alert_v1`):**
+   ```text
    🔔 *NEW STAGEHOST BOOKING LEAD* 🔔
    
    Hi {{1}}, you have received a new event booking inquiry!
@@ -84,176 +83,178 @@ Instant automated delivery directly into the anchor's WhatsApp personal chat the
    [ Button: Chat with Client on WhatsApp ]
    [ Button: View in Dashboard ]
    ```
-3. **Trigger Workflow:**
-   - Inside `src/lib/actions/inquiries.ts` `submitInquiry()`:
-   - Check if the anchor has phone notifications enabled.
-   - Make a `POST` request to `https://graph.facebook.com/v19.0/{PHONE_NUMBER_ID}/messages` with the template payload.
+3. **Trigger Workflow (`src/lib/actions/inquiries.ts`):**
+   - After saving inquiry in database, call Meta Graph API:
+     `POST https://graph.facebook.com/v19.0/{PHONE_NUMBER_ID}/messages`
+   - Send template payload with dynamic parameters.
 
 ---
 
-## 📄 Feature 3: Automated PDF Quotation & Rate Card Generator
+## 📄 Feature 2: Automated PDF Quotation & Rate Card Generator
 
 ### Problem Statement:
-Corporate event planners (Google, Amazon, TCS) and high-end wedding agencies require formal **PDF Quotation Proposals & Rate Cards** with letterheads and commercial terms before approving an anchor's booking. Currently anchors manually create these in Word or Canva.
+Corporate event planners (Google, Amazon, TCS, Reliance) and luxury wedding organizers require formal **PDF Proposals & Commercial Rate Cards** with professional letterheads and payment terms before booking an anchor. Anchors currently waste hours manually creating Canva or Word templates.
 
 ### Value Proposition:
-Anchor can click **"Generate PDF Quote"** from any lead in `/inquiries`, enter agreed amount, and download a pixel-perfect, branded PDF proposal in 5 seconds.
+Anchor can click **"Generate Quotation"** on any inquiry card in `/inquiries`, review the client details, adjust commercial pricing, and generate a pixel-perfect, branded PDF proposal in 5 seconds.
 
 ### Technical Implementation:
-1. **Library Selection:**
-   - Use `@react-pdf/renderer` or Next.js HTML-to-PDF serverless pipeline.
-2. **PDF Template Elements:**
-   - Anchor Stage Photo, Name, Verified Badge, and Contact info on top header.
-   - Client event details: Date, Venue, City, Event Category.
-   - Itemized Scope of Work:
-     - Pre-event coordination meeting & briefing.
-     - Stage hosting, crowd engagement & artist introductions.
-     - Rehearsals & run-throughs.
-   - Commercial Quotation Breakdown: Base fee + Outstation travel/accommodation note.
-   - Payment Milestones: 50% Advance on confirmation, 50% on event date before stage entry.
-   - Terms & Cancellation Policy.
-3. **Sharing:**
-   - 1-click button: **"Download PDF"** and **"Send PDF via WhatsApp"**.
+1. **Architecture:**
+   - Client or serverless PDF rendering using `@react-pdf/renderer` or Puppeteer/Chromium.
+2. **Quotation Components:**
+   - **Header:** Anchor name, profile photo, contact details, social handles, and verified badge.
+   - **Event Scope:** Client name, event date, venue, city, and stage responsibilities (e.g. Host briefings, guest interaction, rehearsals).
+   - **Commercial Breakdown:**
+     - Performance hosting fee.
+     - Outstation travel, logistics, and accommodation terms.
+     - Advance payment terms (e.g. 50% advance on confirmation, 50% before stage entry).
+   - **Terms & Cancellation Policy:** Explicit guidelines on date rescheduling and cancellation forfeits.
+3. **Export & Sharing Options:**
+   - Download PDF button.
+   - "Send PDF via WhatsApp" button using generated public link or WhatsApp Web API.
+
+---
+
+## 🌐 Feature 3: Custom Domains Multi-Tenant White-Labeling (`anchorname.com`)
+
+### Problem Statement:
+Celebrity anchors and top-tier emcees charge ₹50,000 to ₹2,00,000+ per event. They want to brand their own domain (e.g., `priyapatel.live` or `rahulsharma.com`) rather than sharing `stagehost.in/rahulsharma`.
+
+### Value Proposition:
+- The #1 conversion trigger for upgrading to the **Premium Plan (₹1,299/mo)**.
+- Provides a 100% white-labeled experience while StageHost powers the backend CRM, scheduling, and forms behind the scenes.
+
+### Technical Implementation:
+1. **DNS Architecture:**
+   - Anchor creates a `CNAME` record in GoDaddy / Cloudflare / Hostinger pointing to `cname.stagehost.in`.
+2. **Next.js Proxy Routing (`proxy.ts` / `middleware.ts`):**
+   - Check incoming `Host` header.
+   - If `host` is not `stagehost.in` or `localhost`:
+     - Query database or edge cache for custom domain mapping to anchor slug.
+     - Rewrite request to `/[slug]` without changing browser address bar.
+3. **Automated SSL:**
+   - Cloudflare for SaaS (Custom Hostnames) or Vercel Domains API (`POST /v1/domains`) to auto-provision SSL certificates within 60 seconds of DNS propagation.
 
 ---
 
 ## 🔄 Feature 4: Two-Way Google Calendar Real-Time Sync
 
 ### Problem Statement:
-StageHost currently supports 1-way iCal export (`/api/calendar/[slug]`). If an anchor adds an event in StageHost, it shows in Apple/Google Calendar. But if an anchor adds a family vacation or personal shoot in their Google Calendar, StageHost does not automatically block that date.
+StageHost currently supports 1-way iCal subscription (`/api/calendar/[slug]`). While events from StageHost appear in Apple/Google Calendar, personal appointments or family trips added in Google Calendar do not automatically block dates in StageHost.
 
 ### Value Proposition:
-Zero double-booking risk. StageHost's public portfolio calendar automatically shows dates as **"Booked"** if the host is busy in their personal Google Calendar.
+Eliminates double-booking risk completely. When an anchor marks a personal appointment in Google Calendar, StageHost's public portfolio calendar automatically marks the date as **"Booked"**.
 
 ### Technical Implementation:
-1. **Google OAuth Scope:**
-   - Request `https://www.googleapis.com/auth/calendar.readonly` or `events`.
-   - Store OAuth `refresh_token` securely in Supabase `anchor_settings` table.
-2. **Google Calendar Webhook / Watch API:**
-   - Register a webhook channel (`calendar.events.watch`).
-   - When Google fires a webhook on calendar change, StageHost queries Google Calendar API for updated busy ranges and creates or updates `schedule_slots` with `status: 'booked'`.
-3. **Privacy Protection:**
-   - Only sync the busy time slot. Personal meeting titles (e.g. "Doctor appointment") are masked as "Engaged / Private Booking" to protect host privacy.
+1. **Google OAuth 2.0 Scope:**
+   - Request `https://www.googleapis.com/auth/calendar.events.readonly` scope.
+   - Securely encrypt and store OAuth `refresh_token` in Supabase.
+2. **Webhook Watch Channel:**
+   - Call Google Calendar API `events.watch` to receive push notifications on calendar changes.
+   - When Google fires a change notification, query busy slots and synchronize with `schedule_slots` table.
+3. **Privacy Masking:**
+   - Private event titles (e.g., "Doctor Appointment") are strictly masked as "Engaged / Private Booking" on public calendars to protect privacy.
 
 ---
 
-## 🖼️ Feature 5: Client-Side Media Compression (WebP Pipeline)
+## 🧾 Feature 5: Automated GST Tax Invoice Generation for Subscriptions
 
 ### Problem Statement:
-Anchors routinely upload 15MB–25MB raw photographs taken by event photographers. Directly uploading these:
-- Fills Supabase storage quotas fast.
-- Dramatically slows down the anchor's public portfolio on mobile 4G networks in India.
+Indian artists and anchors registered as Sole Proprietorships, Partnerships, or Private Limited companies have GST numbers. When they subscribe to Pro (₹599) or Premium (₹1,299), they require a valid GST tax invoice with StageHost's GSTIN to claim Input Tax Credit (ITC).
 
 ### Technical Implementation:
-1. **Browser Compression via HTML5 Canvas or `browser-image-compression`:**
-   - Before firing `supabase.storage.upload()`:
-   - Resize dimensions to maximum width 1920px (full HD).
-   - Convert output MIME type to `image/webp` with quality factor `0.82`.
-   - Reduces a 15MB JPEG to ~250KB WebP with zero noticeable loss in visual clarity.
-2. **Responsive Image Sizes:**
-   - Generate a thumbnail (`400x400` WebP) for directory cards and mobile previews.
+1. **Tax Information Collection (`/settings` ➔ Billing Tab):**
+   - Anchor enters Registered Business Name, GSTIN, and Billing State.
+2. **Invoice Calculation Engine:**
+   - If billing state matches StageHost's state: CGST 9% + SGST 9%.
+   - If interstate: IGST 18%.
+3. **Automated Generation upon Razorpay Webhook:**
+   - Generate sequential invoice number (e.g. `SH-2026-00142`).
+   - Render PDF invoice and upload to Supabase Storage `invoices/` bucket.
+   - Display a "Download Tax Invoice" button in the anchor's billing history table.
 
 ---
 
-## 🔑 Feature 6: One-Click Social Authentication (Google & Apple OAuth)
+## 🎧 Feature 6: Audio & Stream Embeds for Multi-Artist Expansion
 
 ### Problem Statement:
-Traditional email/password authentication creates friction during signup and leads to forgotten passwords.
+With StageHost expanding beyond Anchors to DJs, Singers, Bands, and Voiceover Artists, video embeds alone are not enough. Musicians and DJs need to showcase their mixtapes, original compositions, and audio reels directly on their portfolios.
 
 ### Technical Implementation:
-1. **Supabase Auth Social Providers:**
-   - Enable Google Cloud OAuth credentials in Supabase Dashboard.
-   - Add Apple Developer Services ID for iOS safari users.
-2. **Frontend UI:**
-   - In `/login` and `/register`, add:
-     - `Continue with Google` (with standard Google G SVG icon).
-     - Standard separation divider (`OR`).
-3. **Automatic Profile Provisioning:**
-   - Upon first Google login, extract `user.user_metadata.full_name` and `avatar_url` to pre-fill the anchor's profile and generate their stage slug automatically.
+1. **Supported Providers:**
+   - **SoundCloud:** Track and playlist widget embeds (`w.soundcloud.com/player/`).
+   - **Spotify:** Artist, album, or track embeds (`open.spotify.com/embed/`).
+   - **Apple Music & Mixcloud:** Audio widgets.
+2. **Portfolio Audio Section (`/[slug]`):**
+   - Dedicated "Audio Showcase & Mixtapes" player section on portfolios for DJs, Singers, and Musicians.
+   - Lightweight preview player that streams tracks without page reloading.
 
 ---
 
-## 💳 Feature 7: Automated GST Tax Invoice Generation for Subscriptions
+## 📋 Feature 7: Gig Repertoire & Setlist Builder
 
 ### Problem Statement:
-Indian anchors who register as Sole Proprietorships or LLPs have GST numbers. When they subscribe to Pro (₹599) or Premium (₹1299), they require a GST-compliant tax invoice PDF to claim input tax credit (ITC) and record accounting expenses.
+Singers, Live Bands, and DJs need a structured way to present their song repertoire, genres (Bollywood, Sufi, Punjabi, Retro 90s, EDM, Commercial), and technical stage riders to event organizers.
 
 ### Technical Implementation:
-1. **Tax Information Collection:**
-   - In `/settings`, allow anchors to add their Registered Business Name, GSTIN, and Billing Address.
-2. **Invoice Generation upon Razorpay Webhook:**
-   - In `/api/payment/webhook/route.ts`:
-   - When `payment.captured` arrives, compute CGST 9% + SGST 9% (or IGST 18%).
-   - Generate sequential invoice number (e.g. `INV-2026-0042`).
-   - Store downloadable PDF in Supabase Storage `invoices/` bucket.
-   - Show a "Download Tax Invoice" button in the Anchor's Billing history tab.
+1. **Repertoire Manager in Dashboard (`/portfolio` ➔ Repertoire Tab):**
+   - Categorized song list builder (Title, Original Artist, Language/Genre).
+   - "Download Tech Rider / Sound Checklist" for sound engineers (Microphone types, DJ console model, in-ear monitors).
+2. **Public Presentation:**
+   - Searchable song list on the artist's portfolio allowing wedding planners to browse the artist's repertoire.
 
 ---
 
-## 📱 Feature 8: Mobile Progressive Web App (PWA) & Push Notifications
+## 🤝 Feature 8: Multi-Artist Booking Bundles (Agency / Crew Mode)
 
 ### Problem Statement:
-Anchors are constantly on the road between hotels, venues, and airports. They prefer opening StageHost like an app from their home screen rather than typing URLs in Chrome/Safari.
-
-### Technical Implementation:
-1. **Web App Manifest (`public/manifest.json`):**
-   - Brand icon, theme color (`#0a0a14`), standalone display mode.
-2. **Service Worker (`sw.js`):**
-   - Cache shell assets for instantaneous offline launch.
-3. **Web Push Notifications:**
-   - Send device push notifications when a new client inquiry is received or an event reminder is due.
-
----
-
----
-
-## 🎭 Feature 9: Universal Multi-Artist Platform Expansion (DJs, Singers, Bands, Standup Comedians, Dancers)
-
-### Problem Statement:
-While StageHost originated as a dedicated platform for Anchors and Emcees, the live entertainment ecosystem includes DJs, Singers, Live Bands, Standup Comedians, Dancers, Magicians, Keynote Speakers, Voiceover Artists, and Photographers who share the exact same pain points:
-1. Fragmented social profiles (Instagram links, scattered YouTube reels).
-2. Unprofessional pricing negotiations via WhatsApp screenshots.
-3. Lack of a unified high-converting media showcase with audio/video/repertoire embeds.
+Event planners and wedding couples rarely hire an Anchor in isolation; they book an entire entertainment package (e.g. Emcee + DJ + Live Band + Sound Setup).
 
 ### Value Proposition:
-- 10x Total Addressable Market (TAM): Expands user base from ~50,000 professional emcees to 500,000+ performing artists across India.
-- Cross-artist networking & agency booking packages (e.g. Wedding planners hiring Anchor + DJ + Live Band together).
+Allows anchors and artists to cross-promote each other and accept bundled inquiries.
 
-### Implemented Foundation:
-1. **Taxonomy & Metadata:**
-   - Centralized `ARTIST_CATEGORIES` in `src/constants/artists.ts` covering 11 categories:
-     `emcee`, `dj`, `singer`, `musician`, `standup`, `dancer`, `magician`, `speaker`, `voiceover`, `photographer`, `celebrity`.
-   - Dynamic badge helper functions for plural/singular titles and badges across all UI components.
-2. **Directory Multi-Artist Browsing (`/directory`):**
-   - Quick category pill filter bar ("All Artists", "🎤 Emcee", "🎧 DJ", "🎵 Singer", etc.).
-   - Type-aware badges on artist cards and fallback data showcasing various artist types.
-3. **Portfolio Category Selection (`/portfolio`):**
-   - Artist Category & Profession dropdown in basic information.
-   - Backward-compatible profile action fallback syncing with `auth.user_metadata` even before Supabase SQL migration runs.
-4. **Database Migration Script:**
-   - Ready-to-execute SQL in `supabase/add_artist_type_column.sql`.
+### Technical Implementation:
+1. **Artist Crews / Collectives:**
+   - Allow anchors to link partner DJs or photographers to their profile as "Recommended Crew".
+2. **Bundled Inquiries:**
+   - Inquiry form includes checkboxes: *"Do you also need a DJ or Live Band for this event?"*
+   - Automatically duplicates the lead and alerts the partner artists on StageHost.
 
-### Next Evolution Steps for Multi-Artist:
-1. **Audio Embeds Support (Singers, DJs, Musicians, Voiceover):**
-   - Add SoundCloud, Spotify, Apple Music, and Mixcloud widget embeds to the portfolio media showcase.
-2. **Gig Repertoire & Setlist Builder:**
-   - Allow singers and DJs to list genres (Bollywood, Sufi, Retro 90s, EDM, Commercial) and signature tracks.
-3. **Multi-Artist Booking Packages:**
-   - Event planners can create a single inquiry bundle for Anchor + DJ + Photographer for a wedding or corporate summit.
+---
+
+## 🧠 Feature 9: AI Portfolio Bio & Repertoire Assistant
+
+### Problem Statement:
+Many talented anchors and performers struggle to write compelling, high-converting bios and stage introductions for their portfolios.
+
+### Value Proposition:
+1-click AI bio writer that creates punchy, professional elevator pitches tailored for weddings, corporate summits, and concerts.
+
+### Technical Implementation:
+1. **Integration:**
+   - Lightweight integration with Google Gemini API via Supabase Edge Function or Next.js server action.
+2. **User Input:**
+   - Anchor inputs 3 bullet points: Years of experience, notable brands/events hosted, signature style (Energetic, Humorous, Sophisticated).
+3. **Output:**
+   - Generates 3 polished bio variations (Short elevator pitch, Detailed corporate profile, Luxury wedding bio).
 
 ---
 
 ## 🏁 Summary: Execution Priority Matrix
 
-| Feature | Effort | Business Impact | Recommended Sequence |
-| :--- | :--- | :--- | :--- |
-| **Universal Multi-Artist Architecture** | Low/Medium | 🟢 Massive (10x TAM Expansion to All Artists) | **Ready / Active** |
-| **Custom Domains (`anchorname.com`)** | Medium | 🟢 High (Drives ₹1299 Premium plan) | **Sprint 1** |
-| **PDF Quotation / Rate Card Generator** | Medium | 🟢 High (Daily utility for anchors/artists) | **Sprint 2** |
-| **Client-Side Image Compression** | Low | 🟢 High (Infrastructure & Speed) | **Sprint 3** |
-| **Google 1-Click Login** | Low | 🟡 Medium (Reduces signup drops) | **Sprint 4** |
-| **Meta WhatsApp Cloud API** | High | 🟢 High (Fastest lead response) | **Sprint 5** |
-| **2-Way Google Calendar Sync** | High | 🟡 Medium (Calendar power users) | **Sprint 6** |
-| **GST Tax Invoices for Subscriptions** | Medium | 🟡 Medium (Compliance & Pro users) | **Sprint 7** |
-| **PWA & Mobile Push Notifications** | Medium | 🟡 Medium (Long-term retention) | **Sprint 8** |
+| Feature | Target Audience | Effort | Business Impact | Status / Target Sprint |
+| :--- | :--- | :--- | :--- | :--- |
+| **Razorpay Live Merchant Integration** | All Users | Low | 🔴 Critical (Revenue & Monetization) | **Immediate / Live KYC** |
+| **Meta WhatsApp Cloud API** | All Artists | High | 🟢 Massive (Fastest lead response) | **Sprint 1** |
+| **PDF Quotation / Rate Card Generator** | Corporate & Wedding Hosts | Medium | 🟢 High (Daily commercial utility) | **Sprint 2** |
+| **Custom Domains (`anchorname.com`)** | Premium Anchors | Medium | 🟢 High (Drives ₹1,299/mo plan) | **Sprint 3** |
+| **2-Way Google Calendar Sync** | Active Hosts | High | 🟡 Medium (Calendar power users) | **Sprint 4** |
+| **GST Tax Invoices for Subscriptions** | Registered Businesses | Medium | 🟡 Medium (B2B Compliance) | **Sprint 5** |
+| **Audio & Mixtape Embeds (Spotify/SoundCloud)** | DJs, Singers, Musicians | Low | 🟢 High (Deepens multi-artist adoption) | **Sprint 6** |
+| **Gig Repertoire & Tech Rider Builder** | Musicians & DJs | Medium | 🟡 Medium (Professionalism boost) | **Sprint 7** |
+| **Multi-Artist Booking Bundles** | Event Planners & Crews | High | 🟢 High (Increases booking volume) | **Sprint 8** |
+| **AI Bio & Repertoire Assistant** | All Artists | Low | 🟡 Medium (Onboarding conversion) | **Sprint 9** |
 
+---
+
+*Last Updated: September 2026 — Verified against live codebase, Supabase database, and production build.*
