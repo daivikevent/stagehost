@@ -1786,11 +1786,11 @@
 
 @media (max-width: 1023px) {
   .allShowsSection {
-    margin-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 36px) !important;
-    padding-bottom: 24px !important;
+    margin-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 60px) !important;
+    padding-bottom: 36px !important;
   }
 
   .allShowsGrid {
-    margin-bottom: 20px !important;
+    margin-bottom: 24px !important;
   }
 }

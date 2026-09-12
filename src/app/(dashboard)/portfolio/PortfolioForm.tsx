@@ -417,37 +417,51 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
           <h1 className={styles.pageTitle}>Edit Portfolio & Showcase</h1>
           <p className={styles.pageSubtitle}>Update your details, bio, and showreel videos</p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          {initialProfile && (
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => setIsMediaKitOpen(true)}
-              style={{ gap: '8px' }}
-            >
-              <FileText size={16} />
-              PDF Media Kit
-            </button>
-          )}
-          {initialProfile?.slug && (
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => setIsShareOpen(true)}
-              style={{ gap: '8px' }}
-            >
-              <QrCode size={16} />
-              Share & QR Code
-            </button>
-          )}
+        <div className={styles.headerActions}>
           <button
-            className={`btn btn-primary ${isPending ? 'btn-loading' : ''}`}
+            type="button"
+            className={`${styles.actionBtn} ${styles.actionBtnPrimary}`}
             onClick={handleSave}
             disabled={isPending}
           >
             {isPending ? <Loader2 size={16} className="spin" /> : <Save size={16} />}
-            {isPending ? 'Saving...' : 'Save Changes'}
+            <span>{isPending ? 'Saving...' : 'Save Changes'}</span>
           </button>
+
+          {initialProfile?.slug && (
+            <a
+              href={`/${initialProfile.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.actionBtn} ${styles.actionBtnLive}`}
+              title="Open Public Live Profile"
+            >
+              <ExternalLink size={16} />
+              <span>Live Preview</span>
+            </a>
+          )}
+
+          {initialProfile?.slug && (
+            <button
+              type="button"
+              className={`${styles.actionBtn} ${styles.actionBtnSecondary}`}
+              onClick={() => setIsShareOpen(true)}
+            >
+              <QrCode size={16} />
+              <span>Share & QR</span>
+            </button>
+          )}
+
+          {initialProfile && (
+            <button
+              type="button"
+              className={`${styles.actionBtn} ${styles.actionBtnSecondary}`}
+              onClick={() => setIsMediaKitOpen(true)}
+            >
+              <FileText size={16} />
+              <span>PDF Media Kit</span>
+            </button>
+          )}
         </div>
       </div>
 
