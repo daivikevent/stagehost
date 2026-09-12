@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { PublicProfile } from '@/components/public-profile/PublicProfile';
 import { getPublicProfile } from '@/lib/actions/profile';
 import { getPublicAnchorSchedule } from '@/lib/actions/schedule';
-import { DEMO_PROFILES } from '@/lib/demo-data';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -12,7 +11,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const profile = (await getPublicProfile(slug)) || DEMO_PROFILES[slug];
+  const profile = await getPublicProfile(slug);
 
   if (!profile) return { title: 'Profile Not Found' };
 
@@ -64,7 +63,7 @@ export default async function ProfilePage({ params, searchParams }: PageProps) {
     ? (layoutParam === 'neostage' ? 'spotlight' : layoutParam as any)
     : undefined;
 
-  const profile = (await getPublicProfile(slug)) || DEMO_PROFILES[slug];
+  const profile = await getPublicProfile(slug);
 
   if (!profile) notFound();
 

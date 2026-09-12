@@ -632,11 +632,7 @@ export async function getAdminPayments() {
     .order('created_at', { ascending: false });
 
   if (!payments || payments.length === 0) {
-    return [
-      { id: 'pay_demo_1', name: 'Amit Joshi', plan: 'Pro', amount: 599, status: 'success', date: '01 Sep 2026' },
-      { id: 'pay_demo_2', name: 'Priya Kapoor', plan: 'Starter', amount: 199, status: 'success', date: '28 Aug 2026' },
-      { id: 'pay_demo_3', name: 'Karan Mehta', plan: 'Pro', amount: 599, status: 'failed', date: '25 Aug 2026' },
-    ];
+    return [];
   }
 
   // Correlate with users
@@ -1497,28 +1493,7 @@ export async function getCustomDomains(): Promise<CustomDomainRequest[]> {
     .maybeSingle();
 
   if (!row?.value) {
-    return [
-      {
-        id: 'dom_1',
-        profile_id: 'sample_1',
-        anchor_name: 'Rahul Sharma',
-        domain: 'rahulsharma.live',
-        status: 'active',
-        dns_type: 'CNAME',
-        dns_target: 'cname.stagehost.in',
-        created_at: new Date(Date.now() - 3600 * 1000 * 24 * 3).toISOString(),
-      },
-      {
-        id: 'dom_2',
-        profile_id: 'sample_2',
-        anchor_name: 'Priya Patel',
-        domain: 'priyapatel.in',
-        status: 'pending',
-        dns_type: 'CNAME',
-        dns_target: 'cname.stagehost.in',
-        created_at: new Date(Date.now() - 3600 * 1000 * 12).toISOString(),
-      },
-    ];
+    return [];
   }
   try {
     return JSON.parse(row.value);

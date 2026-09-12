@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { getMyProfile } from '@/lib/actions/profile';
 import { getInquiryCounts, getMyInquiries } from '@/lib/actions/inquiries';
 import { getUpcomingEvents, getScheduleData } from '@/lib/actions/schedule';
+import { getAnchorAnalytics } from '@/lib/actions/analytics';
 import { getWhatsAppLink, cn } from '@/lib/utils';
 import styles from './dashboard.module.css';
 import { DashboardShareButton } from '@/components/dashboard/DashboardShareButton';
@@ -40,14 +41,17 @@ function formatEventDate(dateStr: string) {
   }
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   // Fetch all dashboard data concurrently
-  const [profile, inquiryCounts, upcomingEvents, inquiries, scheduleData] = await Promise.all([
+  const [profile, inquiryCounts, upcomingEvents, inquiries, scheduleData, analytics] = await Promise.all([
     getMyProfile(),
     getInquiryCounts(),
     getUpcomingEvents(4),
     getMyInquiries(),
     getScheduleData(),
+    getAnchorAnalytics(30),
   ]);
 
   const firstName = profile?.name?.split(' ')[0] || 'there';
@@ -220,10 +224,12 @@ export default async function DashboardPage() {
               <ArrowUpRight size={15} className={styles.statArrow} />
             </div>
           </div>
-          <div className={styles.statMainValue}>0</div>
+          <div className={styles.statMainValue}>{(analytics?.totalViews ?? 0).toLocaleString('en-IN')}</div>
           <div className={styles.statFooter}>
             <TrendingUp size={12} color="var(--color-primary)" />
-            <span>Realtime tracking active</span>
+            <span>
+              {analytics?.totalViews ? `${analytics.totalViews} views in last 30 days` : 'Realtime tracking active'}
+            </span>
           </div>
         </Link>
 

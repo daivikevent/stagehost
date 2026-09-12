@@ -788,28 +788,21 @@ export async function submitClientReview(data: {
     created_at: new Date().toISOString(),
   };
 
-  try {
-    const { data: inserted, error } = await adminClient
-      .from('testimonials')
-      .insert(newTestimonial)
-      .select()
-      .maybeSingle();
+  const { data: inserted, error } = await adminClient
+    .from('testimonials')
+    .insert(newTestimonial)
+    .select()
+    .single();
 
-    if (!error && inserted) {
-      if (data.slug) {
-        revalidatePath(`/${data.slug}`);
-      }
-      return { success: true, review: inserted };
-    }
-  } catch (err) {
-    console.error('Direct testimonial insert error:', err);
+  if (error) {
+    console.error('Direct testimonial insert error:', error);
+    throw new Error('Failed to submit review. Please try again.');
   }
 
-  // Fallback return for demo/in-memory profiles
   if (data.slug) {
     revalidatePath(`/${data.slug}`);
   }
-  return { success: true, review: newTestimonial };
+  return { success: true, review: inserted };
 }
 
 // ---- Save Custom Slot Timings to DB & Profile ----

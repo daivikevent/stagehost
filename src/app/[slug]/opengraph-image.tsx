@@ -1,6 +1,5 @@
 import { ImageResponse } from 'next/og';
 import { getPublicProfile } from '@/lib/actions/profile';
-import { DEMO_PROFILES } from '@/lib/demo-data';
 
 export const alt = 'StageHost Artist Portfolio';
 export const size = {
@@ -11,7 +10,7 @@ export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const profile = (await getPublicProfile(slug)) || DEMO_PROFILES[slug];
+  const profile = await getPublicProfile(slug);
 
   const name = profile?.name || 'StageHost Artist';
   const tagline = profile?.tagline || 'Professional Event Emcee & Anchor';

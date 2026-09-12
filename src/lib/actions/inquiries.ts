@@ -42,9 +42,7 @@ export async function submitInquiry(profileSlug: string, formData: {
     .single();
 
   if (profileError || !profile) {
-    // If testing in demo mode where profile isn't in DB yet
-    console.log('Demo mode inquiry received for:', profileSlug, inquiryFields);
-    return { success: true };
+    throw new Error('Creator profile not found');
   }
 
   const { error } = await supabase

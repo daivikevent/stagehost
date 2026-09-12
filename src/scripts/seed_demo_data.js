@@ -1,6 +1,10 @@
 const { createClient } = require('@supabase/supabase-js');
 
 async function seed() {
+  if (process.env.ALLOW_DEMO_SEED !== 'true') {
+    console.error('REFUSING TO SEED: Demo seeding is disabled in production. Set ALLOW_DEMO_SEED=true to override.');
+    return;
+  }
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY

@@ -44,17 +44,6 @@ export interface DirectoryAnchor {
   is_verified?: boolean;
 }
 
-const DEMO_FALLBACK_ANCHORS: DirectoryAnchor[] = [
-  { id: 'd1', name: 'Rahul Sharma', slug: 'rahul-sharma', artist_type: 'emcee', tagline: 'Premium Wedding & Corporate Anchor', city: 'Mumbai', state: 'Maharashtra', languages: ['Hindi', 'English', 'Marathi'], event_types: ['Wedding', 'Sangeet', 'Corporate Event'], experience_years: 8, starting_price: 25000, profile_photo_url: null, whatsapp_number: '9876543210', is_featured: true, is_verified: true },
-  { id: 'd2', name: 'DJ Aaryan Roy', slug: 'dj-aaryan', artist_type: 'dj', tagline: 'Celebrity Wedding & Club DJ | EDM & Bollywood', city: 'Delhi', state: 'Delhi', languages: ['Hindi', 'English', 'Punjabi'], event_types: ['Sangeet', 'Cocktail Party', 'Concert'], experience_years: 9, starting_price: 35000, profile_photo_url: null, whatsapp_number: '9988776655', is_featured: true, is_verified: true },
-  { id: 'd3', name: 'Priya Kapoor', slug: 'priya-kapoor', artist_type: 'singer', tagline: 'Live Sufi & Bollywood Acoustic Vocalist', city: 'Bangalore', state: 'Karnataka', languages: ['Hindi', 'English', 'Punjabi'], event_types: ['Wedding', 'Reception', 'Concert'], experience_years: 6, starting_price: 28000, profile_photo_url: null, whatsapp_number: '9955443322', is_featured: true, is_verified: true },
-  { id: 'd4', name: 'Amit Joshi', slug: 'amit-joshi', artist_type: 'emcee', tagline: 'Corporate Emcee | Conferences & Award Nights', city: 'Pune', state: 'Maharashtra', languages: ['Hindi', 'English', 'Marathi'], event_types: ['Corporate Event', 'Conference', 'Award Ceremony'], experience_years: 10, starting_price: 30000, profile_photo_url: null, whatsapp_number: '9955443322', is_featured: false, is_verified: true },
-  { id: 'd5', name: 'Rohan Saxena', slug: 'rohan-saxena', artist_type: 'standup', tagline: 'Clean Corporate Comedy & Crowd Work Humorist', city: 'Mumbai', state: 'Maharashtra', languages: ['Hindi', 'English'], event_types: ['Corporate Event', 'College Festival', 'Award Ceremony'], experience_years: 5, starting_price: 20000, profile_photo_url: null, whatsapp_number: '9871234567', is_featured: false, is_verified: true },
-  { id: 'd6', name: 'The Sonic Rhythms', slug: 'sonic-rhythms', artist_type: 'musician', tagline: '5-Piece Fusion Band | Retro Bollywood & Pop', city: 'Goa', state: 'Goa', languages: ['Hindi', 'English'], event_types: ['Concert', 'Wedding', 'Cocktail Party'], experience_years: 7, starting_price: 55000, profile_photo_url: null, whatsapp_number: '9900112233', is_featured: false, is_verified: false },
-  { id: 'd7', name: 'Sneha Verma', slug: 'sneha-verma', artist_type: 'emcee', tagline: 'Vibrant Host for Weddings & Cultural Shows', city: 'Jaipur', state: 'Rajasthan', languages: ['Hindi', 'Rajasthani', 'English'], event_types: ['Wedding', 'Sangeet', 'College Festival'], experience_years: 4, starting_price: 12000, profile_photo_url: null, whatsapp_number: '9871234567', is_featured: false, is_verified: false },
-  { id: 'd8', name: 'Ananya Patel', slug: 'ananya-patel', artist_type: 'dancer', tagline: 'Celebrity Wedding Choreographer & Dance Troupe', city: 'Ahmedabad', state: 'Gujarat', languages: ['Hindi', 'Gujarati', 'English'], event_types: ['Wedding', 'Reception', 'Engagement'], experience_years: 6, starting_price: 25000, profile_photo_url: null, whatsapp_number: '9876001122', is_featured: false, is_verified: false },
-];
-
 export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryAnchor[] }) {
   const containerRef = useScrollRevealContainer<HTMLDivElement>();
   const [search, setSearch] = useState('');
@@ -65,14 +54,8 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState<'featured' | 'experience' | 'price_low' | 'price_high'>('featured');
 
-  // Combine real DB anchors with demo fallbacks if DB has few anchors
   const allAnchors = useMemo(() => {
-    if (!initialAnchors || initialAnchors.length === 0) {
-      return DEMO_FALLBACK_ANCHORS;
-    }
-    const realSlugs = new Set(initialAnchors.map(a => a.slug));
-    const extraDemos = DEMO_FALLBACK_ANCHORS.filter(d => !realSlugs.has(d.slug));
-    return [...initialAnchors, ...extraDemos];
+    return initialAnchors || [];
   }, [initialAnchors]);
 
   const filtered = useMemo(() => {
