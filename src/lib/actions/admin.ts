@@ -80,7 +80,7 @@ export async function getAdminStats() {
 
   return {
     totalUsers: totalUsers || 0,
-    activeProfiles: completeProfiles || (totalUsers ? Math.min(totalUsers, 1) : 0),
+    activeProfiles: completeProfiles || 0,
     paidSubscribers: paidSubscribers.length,
     mrr,
     recentSignups: recentSignups || [],
@@ -744,9 +744,23 @@ export async function updateAdminPlan(
     period_text: updates.period_text !== undefined ? (updates.period_text.trim() || null) : currentLimits.period_text,
   };
 
+  const dynamicFeatures: string[] = [
+    updates.videos === -1 ? 'Unlimited showreel videos' : `${updates.videos} showreel videos`,
+    updates.photos === -1 ? 'Unlimited photo gallery' : `${updates.photos} photos`,
+    updates.services === -1 ? 'Unlimited service packages' : `${updates.services} service packages`,
+    'Direct WhatsApp booking button',
+    'StageHost Directory listing',
+  ];
+  if (updates.verified_badge) dynamicFeatures.push('Verified Artist Blue Tick Badge');
+  if (updates.analytics) dynamicFeatures.push('Advanced visitor & lead analytics');
+  if (updates.custom_domain) dynamicFeatures.push('Custom domain connection');
+  if (!updates.branding) dynamicFeatures.push('Zero StageHost branding');
+  if ((updates.themes ?? 1) > 1) dynamicFeatures.push(`${updates.themes === -1 ? 'All' : updates.themes} themes unlocked`);
+
   const payload: Record<string, any> = {
     price_monthly: updates.price,
     limits: mergedLimits,
+    features: dynamicFeatures,
     updated_at: new Date().toISOString(),
   };
 
@@ -950,6 +964,7 @@ export async function deleteAdminPlan(planId: string) {
     revalidatePath('/admin/plans');
     revalidatePath('/pricing');
     revalidatePath('/');
+    revalidatePath('/settings');
     return {
       success: true,
       deactivated: true,
@@ -968,6 +983,7 @@ export async function deleteAdminPlan(planId: string) {
   revalidatePath('/admin/plans');
   revalidatePath('/pricing');
   revalidatePath('/');
+  revalidatePath('/settings');
   return {
     success: true,
     deactivated: false,

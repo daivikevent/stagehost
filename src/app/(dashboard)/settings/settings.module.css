@@ -149,7 +149,7 @@
   gap: var(--space-4);
 }
 
-@media (min-width: 768px) { .planGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) { .planGrid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); } }
 
 .upgradeCard {
   position: relative;

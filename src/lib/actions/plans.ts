@@ -14,6 +14,7 @@ export interface PublicPlan {
   description: string;
   features: string[];
   popular: boolean;
+  is_active?: boolean;
   limits: Record<string, any>;
   cta: string;
   href: string;
@@ -73,6 +74,7 @@ export async function getPublicPlans(): Promise<PublicPlan[]> {
         description: p.description || (p.price_monthly === 0 ? 'Perfect to get started' : 'For professional event hosts'),
         features,
         popular: !!p.is_popular,
+        is_active: p.is_active ?? true,
         limits: p.limits || {},
         cta: p.price_monthly === 0 ? 'Start Free' : p.slug === 'pro' ? 'Upgrade to Pro' : `Get ${p.name}`,
         href: p.price_monthly === 0 ? '/register' : `/register?plan=${p.slug}`,

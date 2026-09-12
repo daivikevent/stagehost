@@ -28,7 +28,7 @@ const DEFAULT_PLAN_PRICES: Record<string, number> = {
 };
 
 interface CheckoutButtonProps {
-  plan: 'starter' | 'pro' | 'premium';
+  plan: string;
   planName: string;
   price?: number;
   className?: string;

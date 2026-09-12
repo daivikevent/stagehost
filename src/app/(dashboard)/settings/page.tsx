@@ -1,12 +1,14 @@
 import { getMyProfile, getMySubscription } from '@/lib/actions/profile';
 import { getScheduleData } from '@/lib/actions/schedule';
+import { getPublicPlans } from '@/lib/actions/plans';
 import { SettingsClient } from './SettingsClient';
 
 export default async function SettingsPage() {
-  const [profile, subscription, scheduleData] = await Promise.all([
+  const [profile, subscription, scheduleData, plans] = await Promise.all([
     getMyProfile(),
     getMySubscription(),
     getScheduleData(),
+    getPublicPlans(),
   ]);
 
   return (
@@ -14,6 +16,7 @@ export default async function SettingsPage() {
       initialProfile={profile}
       initialSubscription={subscription}
       initialShowCalendar={scheduleData?.showCalendar ?? true}
+      plans={plans}
     />
   );
 }

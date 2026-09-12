@@ -22,17 +22,20 @@ const TABS = [
 type TabId = typeof TABS[number]['id'];
 
 import { toggleCalendarVisibility } from '@/lib/actions/schedule';
+import type { PublicPlan } from '@/lib/actions/plans';
 
 interface SettingsClientProps {
   initialProfile: AnchorProfile | null;
   initialSubscription: Partial<Subscription> | null;
   initialShowCalendar?: boolean;
+  plans?: PublicPlan[];
 }
 
 export function SettingsClient({
   initialProfile,
   initialSubscription,
   initialShowCalendar = true,
+  plans = [],
 }: SettingsClientProps) {
   const { success, error: showError } = useToast();
   const [activeTab, setActiveTab] = useState<TabId>('profile');
@@ -248,11 +251,12 @@ export function SettingsClient({
                     <Sparkles size={16} /> {initialSubscription?.plan_name || 'Free'} Plan
                   </div>
                   <p className={styles.planDesc}>
-                    {currentPlan === 'free'
-                      ? '3 videos · 6 photos · Powered by StageHost branding'
-                      : currentPlan === 'starter'
-                      ? '10 videos · 20 photos · No branding · 3 themes'
-                      : 'Unlimited packages · Analytics · Custom themes & domains'}
+                    {plans.find((p) => p.slug.toLowerCase() === currentPlan || p.name.toLowerCase() === currentPlan)?.description ||
+                      (currentPlan === 'free'
+                        ? '3 videos · 6 photos · Powered by StageHost branding'
+                        : currentPlan === 'starter'
+                        ? '10 videos · 20 photos · No branding · 3 themes'
+                        : 'Unlimited packages · Analytics · Custom themes & domains')}
                   </p>
                 </div>
               </div>
@@ -260,59 +264,72 @@ export function SettingsClient({
               {/* Upgrade Options */}
               <h3 style={{ marginTop: 'var(--space-8)' }}>Upgrade Your Plan</h3>
               <div className={styles.planGrid}>
-                {/* Starter */}
-                <div className={styles.upgradeCard}>
-                  <div className={styles.upgradeCardHeader}>
-                    <div className={styles.upgradeCardName}>Starter</div>
-                    <div className={styles.upgradeCardPrice}>₹199<span>/mo</span></div>
-                  </div>
-                  <ul className={styles.upgradeFeatures}>
-                    <li>✓ 10 videos</li>
-                    <li>✓ 20 photos</li>
-                    <li>✓ 10 service packages</li>
-                    <li>✓ Remove branding</li>
-                    <li>✓ 3 themes</li>
-                  </ul>
-                  <CheckoutButton plan="starter" planName="Starter" price={199}>
-                    <CreditCard size={14} /> Upgrade to Starter
-                  </CheckoutButton>
-                </div>
+                {plans
+                  .filter((p) => (p.tier > 0 || p.price_monthly > 0) && p.is_active !== false)
+                  .map((p) => {
+                    const isCurrent =
+                      currentPlan === p.slug.toLowerCase() ||
+                      currentPlan === p.name.toLowerCase() ||
+                      initialSubscription?.plan_id === p.id;
 
-                {/* Pro */}
-                <div className={cn(styles.upgradeCard, styles.upgradeCardFeatured)}>
-                  <div className={styles.upgradeBestValue}>Most Popular</div>
-                  <div className={styles.upgradeCardHeader}>
-                    <div className={styles.upgradeCardName}>Pro</div>
-                    <div className={styles.upgradeCardPrice}>₹599<span>/mo</span></div>
-                  </div>
-                  <ul className={styles.upgradeFeatures}>
-                    <li>✓ 30 videos</li>
-                    <li>✓ 60 photos</li>
-                    <li>✓ Unlimited services</li>
-                    <li>✓ Analytics dashboard</li>
-                    <li>✓ 5 themes</li>
-                  </ul>
-                  <CheckoutButton plan="pro" planName="Pro" className="btn btn-accent btn-block">
-                    <Crown size={14} /> Upgrade to Pro
-                  </CheckoutButton>
-                </div>
-
-                {/* Premium */}
-                <div className={styles.upgradeCard}>
-                  <div className={styles.upgradeCardHeader}>
-                    <div className={styles.upgradeCardName}>Premium</div>
-                    <div className={styles.upgradeCardPrice}>₹1299<span>/mo</span></div>
-                  </div>
-                  <ul className={styles.upgradeFeatures}>
-                    <li>✓ Unlimited everything</li>
-                    <li>✓ Custom domain</li>
-                    <li>✓ All themes</li>
-                    <li>✓ Priority support</li>
-                  </ul>
-                  <CheckoutButton plan="premium" planName="Premium" price={1299}>
-                    <Crown size={14} /> Upgrade to Premium
-                  </CheckoutButton>
-                </div>
+                    return (
+                      <div
+                        key={p.id}
+                        className={cn(styles.upgradeCard, p.popular && styles.upgradeCardFeatured)}
+                      >
+                        {p.popular && <div className={styles.upgradeBestValue}>Most Popular</div>}
+                        <div className={styles.upgradeCardHeader}>
+                          <div className={styles.upgradeCardName}>{p.name}</div>
+                          <div className={styles.upgradeCardPrice}>
+                            ₹{p.price_monthly}<span>/mo</span>
+                          </div>
+                        </div>
+                        {p.strike_price ? (
+                          <div
+                            style={{
+                              fontSize: '12px',
+                              color: 'var(--color-text-tertiary)',
+                              textDecoration: 'line-through',
+                              marginTop: '-8px',
+                            }}
+                          >
+                            ₹{p.strike_price}
+                          </div>
+                        ) : null}
+                        <ul className={styles.upgradeFeatures}>
+                          {(p.features || []).slice(0, 6).map((feat, idx) => (
+                            <li key={idx}>✓ {feat.replace(/^[✓✔•\s-]+/, '')}</li>
+                          ))}
+                        </ul>
+                        {isCurrent ? (
+                          <button
+                            type="button"
+                            className="btn btn-secondary btn-block"
+                            disabled
+                            style={{
+                              opacity: 0.8,
+                              cursor: 'default',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '6px',
+                            }}
+                          >
+                            <Check size={14} /> Current Plan
+                          </button>
+                        ) : (
+                          <CheckoutButton
+                            plan={p.slug}
+                            planName={p.name}
+                            price={p.price_monthly}
+                            className={p.popular ? 'btn btn-accent btn-block' : 'btn btn-primary btn-block'}
+                          >
+                            <Crown size={14} /> Upgrade to {p.name}
+                          </CheckoutButton>
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
 
               {/* Payment History */}
