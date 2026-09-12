@@ -23,6 +23,7 @@ type TabId = typeof TABS[number]['id'];
 
 import { toggleCalendarVisibility } from '@/lib/actions/schedule';
 import type { PublicPlan } from '@/lib/actions/plans';
+import PushNotificationToggle from '@/components/dashboard/PushNotificationToggle';
 
 interface SettingsClientProps {
   initialProfile: AnchorProfile | null;
@@ -345,6 +346,8 @@ export function SettingsClient({
           {/* NOTIFICATIONS TAB */}
           {activeTab === 'notifications' && (
             <div className={styles.settingsSection}>
+              <PushNotificationToggle />
+
               <h3>Email Notifications</h3>
               <div className={styles.toggleRow}>
                 <div>

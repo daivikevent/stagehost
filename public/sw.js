@@ -74,3 +74,70 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 });
+
+// ==========================================
+// PUSH NOTIFICATIONS (WebPush Background Handler)
+// ==========================================
+self.addEventListener('push', (event) => {
+  let data = {
+    title: 'StageHost Notification',
+    body: 'You have a new update on StageHost.',
+    icon: '/globe.svg',
+    badge: '/globe.svg',
+    url: '/inquiries',
+    tag: 'stagehost-notification',
+  };
+
+  if (event.data) {
+    try {
+      const parsed = event.data.json();
+      data = { ...data, ...parsed };
+    } catch (e) {
+      data.body = event.data.text();
+    }
+  }
+
+  const options = {
+    body: data.body,
+    icon: data.icon || '/globe.svg',
+    badge: data.badge || '/globe.svg',
+    tag: data.tag || 'stagehost-inquiry',
+    vibrate: [200, 100, 200, 100, 200],
+    requireInteraction: true,
+    data: {
+      url: data.url || '/inquiries',
+    },
+    actions: [
+      { action: 'open', title: 'View Inquiries' },
+      { action: 'close', title: 'Dismiss' },
+    ],
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  if (event.action === 'close') return;
+
+  const targetUrl = (event.notification.data && event.notification.data.url) ? event.notification.data.url : '/inquiries';
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      // Check if any tab is already open with the target origin
+      for (const client of windowClients) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          client.navigate(targetUrl);
+          return client.focus();
+        }
+      }
+      // If no tab is open, open a new window
+      if (clients.openWindow) {
+        return clients.openWindow(targetUrl);
+      }
+    })
+  );
+});

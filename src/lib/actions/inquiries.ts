@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import type { Inquiry, InquiryStatus } from '@/types';
 import { sendInquiryAlertEmail } from '@/lib/email';
+import { sendPushNotificationToAnchor } from '@/lib/actions/push';
 
 // ---- Submit inquiry (public — no auth required) ----
 export async function submitInquiry(profileSlug: string, formData: {
@@ -67,6 +68,22 @@ export async function submitInquiry(profileSlug: string, formData: {
     } catch (emailErr) {
       console.error('Email alert trigger error:', emailErr);
     }
+  }
+
+  // Send instant WebPush notification to Anchor's phone & desktop devices
+  try {
+    const eventDetail = formData.event_type || 'Event';
+    const cityDetail = formData.event_city ? ` in ${formData.event_city}` : '';
+    sendPushNotificationToAnchor(profile.id, {
+      title: '🔥 New Booking Inquiry!',
+      body: `${formData.name} requested a quote for ${eventDetail}${cityDetail} (📱 ${cleanPhone})`,
+      url: '/inquiries',
+      tag: `inquiry-${Date.now()}`,
+    }).catch((pushErr) => {
+      console.error('[WebPush] Async delivery error:', pushErr);
+    });
+  } catch (pushErr) {
+    console.error('[WebPush] Trigger error:', pushErr);
   }
 
   return { success: true };
