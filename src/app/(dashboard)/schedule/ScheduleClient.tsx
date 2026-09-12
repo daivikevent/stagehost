@@ -3314,8 +3314,13 @@ export function ScheduleClient({
             </div>
           </div>
         )}
+        {/* Mobile bottom clearance inside allShowsSection so cards never hug the bottom border */}
+        <div style={{ height: '24px', width: '100%', flexShrink: 0 }} aria-hidden="true" />
       </div>
     )}
+
+    {/* Dedicated mobile spacer to ensure complete clearance above fixed bottom navigation dock */}
+    <div style={{ height: 'calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 36px)', width: '100%', flexShrink: 0 }} aria-hidden="true" />
 
     {/* ========================================================= */}
   {/* 1. ADD / EDIT BOOKING MODAL (Supports custom city & venue) */ }

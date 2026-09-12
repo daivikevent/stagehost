@@ -2,6 +2,18 @@
    StageHost Advanced Dashboard Styles
    ============================================ */
 
+.container {
+  padding: var(--space-4) var(--space-3);
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -15,6 +27,78 @@
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.headerActions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    margin-top: 0;
+  }
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 42px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .actionBtn {
+    width: auto;
+    height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+}
+
+.actionBtnPrimary {
+  background: var(--gradient-accent);
+  color: #ffffff !important;
+  border: none;
+  box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+}
+
+.actionBtnPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(108, 92, 231, 0.5);
+  filter: brightness(1.08);
+}
+
+.actionBtnSecondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.actionBtnSecondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .title {

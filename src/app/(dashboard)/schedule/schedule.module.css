@@ -2,7 +2,7 @@
 
 .scheduleWrapper {
   width: 100%;
-  padding-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 50px);
+  padding-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 80px);
 }
 
 .pageHeader {
@@ -1784,5 +1784,13 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .allShowsSection {
+    margin-bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 36px) !important;
+    padding-bottom: 24px !important;
+  }
 
-
+  .allShowsGrid {
+    margin-bottom: 20px !important;
+  }
+}

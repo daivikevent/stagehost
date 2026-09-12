@@ -8,21 +8,24 @@ interface DashboardShareButtonProps {
   slug: string;
   name: string;
   tagline?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  label?: string;
 }
 
-export function DashboardShareButton({ slug, name, tagline }: DashboardShareButtonProps) {
+export function DashboardShareButton({ slug, name, tagline, className, style, label }: DashboardShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <button
         type="button"
-        className="btn btn-secondary"
+        className={className || "btn btn-secondary"}
         onClick={() => setIsOpen(true)}
-        style={{ gap: '8px' }}
+        style={{ gap: '8px', ...style }}
       >
-        <QrCode size={16} />
-        Share & QR Code
+        <QrCode size={15} />
+        <span>{label || 'Share & QR Code'}</span>
       </button>
 
       <ShareModal

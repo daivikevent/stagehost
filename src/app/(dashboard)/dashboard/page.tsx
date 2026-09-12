@@ -24,7 +24,7 @@ import Link from 'next/link';
 import { getMyProfile } from '@/lib/actions/profile';
 import { getInquiryCounts, getMyInquiries } from '@/lib/actions/inquiries';
 import { getUpcomingEvents, getScheduleData } from '@/lib/actions/schedule';
-import { getWhatsAppLink } from '@/lib/utils';
+import { getWhatsAppLink, cn } from '@/lib/utils';
 import styles from './dashboard.module.css';
 import { DashboardShareButton } from '@/components/dashboard/DashboardShareButton';
 import { DashboardMediaKitButton } from '@/components/dashboard/DashboardMediaKitButton';
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="container" style={{ padding: 'var(--space-8) var(--space-6)' }}>
+    <div className={cn('container', styles.container)}>
       {/* Header */}
       <div className={styles.header}>
         <div>
@@ -133,25 +133,31 @@ export default async function DashboardPage() {
             )}
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          {profile && <DashboardMediaKitButton profile={profile} />}
-          {profile?.slug && (
-            <>
-              <DashboardShareButton
-                slug={profile.slug}
-                name={profile.name || 'Anchor'}
-                tagline={profile.tagline || ''}
-              />
-              <Link href={`/${profile.slug}`} target="_blank" className="btn btn-secondary">
-                <ExternalLink size={16} />
-                View Profile
-              </Link>
-            </>
-          )}
-          <Link href="/portfolio" className="btn btn-primary">
-            <Plus size={18} />
-            Edit Portfolio
+        <div className={styles.headerActions}>
+          <Link href="/portfolio" className={cn(styles.actionBtn, styles.actionBtnPrimary)}>
+            <Sparkles size={15} />
+            <span>Edit Portfolio</span>
           </Link>
+          {profile?.slug && (
+            <Link href={`/${profile.slug}`} target="_blank" className={cn(styles.actionBtn, styles.actionBtnSecondary)}>
+              <ExternalLink size={15} />
+              <span>View Profile</span>
+            </Link>
+          )}
+          {profile?.slug && (
+            <DashboardShareButton
+              slug={profile.slug}
+              name={profile.name || 'Anchor'}
+              tagline={profile.tagline || ''}
+              className={cn(styles.actionBtn, styles.actionBtnSecondary)}
+            />
+          )}
+          {profile && (
+            <DashboardMediaKitButton
+              profile={profile}
+              className={cn(styles.actionBtn, styles.actionBtnSecondary)}
+            />
+          )}
         </div>
       </div>
 

@@ -7,21 +7,23 @@ import type { AnchorProfile } from '@/types';
 
 interface DashboardMediaKitButtonProps {
   profile: AnchorProfile;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export function DashboardMediaKitButton({ profile }: DashboardMediaKitButtonProps) {
+export function DashboardMediaKitButton({ profile, className, style }: DashboardMediaKitButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <button
         type="button"
-        className="btn btn-secondary"
+        className={className || "btn btn-secondary"}
         onClick={() => setIsOpen(true)}
-        style={{ gap: '8px' }}
+        style={{ gap: '8px', ...style }}
       >
-        <FileText size={16} />
-        PDF Media Kit
+        <FileText size={15} />
+        <span>PDF Media Kit</span>
       </button>
 
       <MediaKitModal
