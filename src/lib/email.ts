@@ -146,16 +146,31 @@ export async function sendInquiryAlertEmail({
 </html>
     `;
 
-    const data = await resend.emails.send({
-      from: 'StageHost <notifications@stagehost.in>', // Note: during dev, Resend allows onboarding@resend.dev or verified domain
+    let emailResult = await resend.emails.send({
+      from: 'StageHost <notifications@stagehost.in>',
       to: [anchorEmail],
       replyTo: inquiry.email || undefined,
       subject: `🎉 New Event Inquiry from ${inquiry.name} (${inquiry.event_type || 'Event'})`,
       html: htmlContent,
     });
 
-    console.log('✅ Resend email sent successfully:', data);
-    return { success: true, data };
+    if (emailResult.error && (emailResult.error as any).message?.includes('not verified')) {
+      emailResult = await resend.emails.send({
+        from: 'StageHost <onboarding@resend.dev>',
+        to: [anchorEmail],
+        replyTo: inquiry.email || undefined,
+        subject: `🎉 New Event Inquiry from ${inquiry.name} (${inquiry.event_type || 'Event'})`,
+        html: htmlContent,
+      });
+    }
+
+    if (emailResult.error) {
+      console.error('❌ Failed to send Resend email:', emailResult.error);
+      return { success: false, error: emailResult.error };
+    }
+
+    console.log('✅ Resend email sent successfully:', emailResult.data);
+    return { success: true, data: emailResult.data };
   } catch (error) {
     console.error('❌ Failed to send Resend email:', error);
     return { success: false, error };

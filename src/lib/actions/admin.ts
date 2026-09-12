@@ -443,7 +443,7 @@ export async function sendAdminTestEmail(toEmail: string) {
   }
 
   const resend = new Resend(apiKey);
-  const { data, error } = await resend.emails.send({
+  let res = await resend.emails.send({
     from: 'StageHost <notifications@stagehost.in>',
     to: [toEmail],
     subject: '🧪 StageHost Admin Test Email',
@@ -458,8 +458,25 @@ export async function sendAdminTestEmail(toEmail: string) {
     `,
   });
 
-  if (error) throw new Error(error.message);
-  return { success: true, data };
+  if (res.error && (res.error as any).message?.includes('not verified')) {
+    res = await resend.emails.send({
+      from: 'StageHost <onboarding@resend.dev>',
+      to: [toEmail],
+      subject: '🧪 StageHost Admin Test Email',
+      html: `
+        <div style="font-family: sans-serif; background: #0A0A14; color: #fff; padding: 24px; border-radius: 12px;">
+          <h2 style="color: #6C5CE7;">StageHost Admin Test</h2>
+          <p>This is a verified test email sent from the <strong>StageHost SaaS Admin Panel</strong>.</p>
+          <p>Your email infrastructure (Resend) is working perfectly!</p>
+          <hr style="border-color: rgba(255,255,255,0.1);" />
+          <small style="color: #888;">Timestamp: ${new Date().toLocaleString()}</small>
+        </div>
+      `,
+    });
+  }
+
+  if (res.error) throw new Error(res.error.message);
+  return { success: true, data: res.data };
 }
 
 /**
