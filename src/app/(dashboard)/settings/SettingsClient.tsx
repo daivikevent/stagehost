@@ -4,6 +4,7 @@ import { useState, useTransition, useEffect } from 'react';
 import {
   User, Bell, CreditCard, Shield, Link,
   Eye, Copy, Check, ExternalLink, Crown, Sparkles, Loader2, Edit3, Save, X,
+  Globe, Calendar,
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
@@ -14,6 +15,8 @@ import styles from './settings.module.css';
 
 const TABS = [
   { id: 'profile', label: 'Profile', icon: User },
+  { id: 'domain', label: 'Custom Domain', icon: Globe },
+  { id: 'calendar', label: 'Calendar Sync', icon: Calendar },
   { id: 'billing', label: 'Billing', icon: CreditCard },
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'privacy', label: 'Privacy', icon: Shield },
@@ -24,6 +27,8 @@ type TabId = typeof TABS[number]['id'];
 import { toggleCalendarVisibility } from '@/lib/actions/schedule';
 import type { PublicPlan } from '@/lib/actions/plans';
 import PushNotificationToggle from '@/components/dashboard/PushNotificationToggle';
+import CustomDomainCard from '@/components/dashboard/CustomDomainCard';
+import GoogleCalendarSyncCard from '@/components/dashboard/GoogleCalendarSyncCard';
 
 interface SettingsClientProps {
   initialProfile: AnchorProfile | null;
@@ -340,6 +345,20 @@ export function SettingsClient({
                 <div className="empty-state-title">No payments yet</div>
                 <div className="empty-state-text">Your payment history will appear here after upgrading</div>
               </div>
+            </div>
+          )}
+
+          {/* CUSTOM DOMAIN TAB */}
+          {activeTab === 'domain' && (
+            <div className={styles.settingsSection}>
+              <CustomDomainCard onUpgradeClick={() => setActiveTab('billing')} />
+            </div>
+          )}
+
+          {/* CALENDAR SYNC TAB */}
+          {activeTab === 'calendar' && (
+            <div className={styles.settingsSection}>
+              <GoogleCalendarSyncCard />
             </div>
           )}
 

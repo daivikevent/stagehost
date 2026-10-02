@@ -70,5 +70,49 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Custom Domain White-Labeling Rewrite:
+  // If host is a custom domain (e.g. rahulsharma.com), rewrite root '/' to '/[artist-slug]'
+  const host = (request.headers.get('host') || '').toLowerCase().replace(/:\d+$/, '');
+  const isPlatformDomain =
+    host.includes('localhost') ||
+    host.includes('127.0.0.1') ||
+    host.endsWith('.vercel.app') ||
+    host === 'bookmyartist.in' ||
+    host === 'www.bookmyartist.in' ||
+    host === 'stagehost.in' ||
+    host === 'www.stagehost.in';
+
+  if (!isPlatformDomain && host) {
+    try {
+      const { data: row } = await supabase
+        .from('platform_settings')
+        .select('value')
+        .eq('key', 'platform_custom_domains')
+        .maybeSingle();
+
+      if (row?.value) {
+        const domains = JSON.parse(row.value);
+        const match = domains.find((d: any) => d.domain?.toLowerCase() === host && d.status === 'active');
+        if (match) {
+          const { data: profile } = await supabase
+            .from('anchor_profiles')
+            .select('slug')
+            .eq('id', match.profile_id)
+            .maybeSingle();
+
+          if (profile?.slug) {
+            const url = request.nextUrl.clone();
+            if (pathname === '/') {
+              url.pathname = `/${profile.slug}`;
+              return NextResponse.rewrite(url, { headers: supabaseResponse.headers });
+            }
+          }
+        }
+      }
+    } catch (domainErr) {
+      console.warn('Custom domain middleware check error:', domainErr);
+    }
+  }
+
   return supabaseResponse;
 }
