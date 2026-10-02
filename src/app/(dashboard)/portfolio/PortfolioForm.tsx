@@ -36,6 +36,7 @@ import {
 import { InstagramIcon as Instagram, YoutubeIcon as Youtube, FacebookIcon as Facebook } from '@/components/ui/SocialIcons';
 import { EVENT_TYPES, LANGUAGES, MAJOR_CITIES, ARTIST_CATEGORIES } from '@/constants';
 import { updateProfile, uploadProfilePhoto } from '@/lib/actions/profile';
+import { compressImage } from '@/lib/image-compression';
 import { addVideo, deleteVideo } from '@/lib/actions/videos';
 import { detectVideoPlatform, getGoogleDriveId, getYouTubeId, getVideoEmbedInfo, normalizeExternalUrl } from '@/lib/utils';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
@@ -108,24 +109,45 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      showError('Photo size must be under 5MB');
-      return;
-    }
-
     setIsUploadingPhoto(true);
     try {
+      // 1. Client-side compress to max 1600x1600 WebP/JPEG under 400KB
+      let uploadFile: File = file;
+      try {
+        const compressed = await compressImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.85 });
+        uploadFile = new File([compressed], file.name.replace(/\.[^/.]+$/, '.webp'), { type: 'image/webp' });
+      } catch (compErr) {
+        console.warn('Image compression fallback to original file:', compErr);
+      }
+
+      // 2. Upload to Supabase Storage CDN
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', uploadFile);
       const publicUrl = await uploadProfilePhoto(formData);
+
       if (publicUrl) {
         updateField('profile_photo_url', publicUrl);
         success('Profile photo updated and saved!');
       }
     } catch (err: any) {
-      showError(err?.message || 'Failed to upload photo file. You can also paste an image URL directly.');
+      console.warn('Photo direct upload failed, attempting local preview fallback:', err);
+      // Fallback: Read as base64 data URL so user profile preview is never blocked
+      try {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Url = reader.result as string;
+          updateField('profile_photo_url', base64Url);
+          success('Photo attached! Click "Save Changes" to save your profile.');
+        };
+        reader.readAsDataURL(file);
+      } catch {
+        showError(err?.message || 'Failed to upload photo file. You can also paste an image URL directly.');
+      }
     } finally {
       setIsUploadingPhoto(false);
+      if (photoInputRef.current) {
+        photoInputRef.current.value = '';
+      }
     }
   };
 

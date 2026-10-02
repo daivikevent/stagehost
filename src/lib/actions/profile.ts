@@ -732,24 +732,41 @@ export async function uploadProfilePhoto(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  const isUserAdmin = await checkIsAdmin();
+  let targetUserId = user.id;
+
+  if (isUserAdmin) {
+    const cookieStore = await cookies();
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+    if (impersonateId) {
+      targetUserId = impersonateId;
+    }
+  }
+
   const file = formData.get('file') as File;
   if (!file) throw new Error('No file provided');
 
-  const ext = file.name.split('.').pop();
-  const path = `profile-photos/${user.id}.${ext}`;
+  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+  const validExt = ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext) ? ext : 'jpg';
+  const contentType = file.type || (validExt === 'png' ? 'image/png' : validExt === 'webp' ? 'image/webp' : 'image/jpeg');
+  const path = `profile-photos/${targetUserId}-${Date.now()}.${validExt}`;
 
-  const { error: uploadError } = await supabase.storage
+  const adminClient = createAdminClient();
+  const { error: uploadError } = await adminClient.storage
     .from('media')
-    .upload(path, file, { upsert: true });
+    .upload(path, file, { upsert: true, contentType });
 
-  if (uploadError) throw new Error(uploadError.message);
+  if (uploadError) {
+    console.error('Storage upload error in profile photo:', uploadError);
+    throw new Error(uploadError.message);
+  }
 
-  const { data: { publicUrl } } = supabase.storage.from('media').getPublicUrl(path);
+  const { data: { publicUrl } } = adminClient.storage.from('media').getPublicUrl(path);
 
-  await supabase
+  await adminClient
     .from('anchor_profiles')
     .update({ profile_photo_url: publicUrl })
-    .eq('user_id', user.id);
+    .eq('user_id', targetUserId);
 
   revalidatePath('/portfolio');
   return publicUrl;
