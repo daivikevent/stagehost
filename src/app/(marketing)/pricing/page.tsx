@@ -2,7 +2,7 @@ import { getPublicPlans } from '@/lib/actions/plans';
 import { PricingClient } from './PricingClient';
 
 export const metadata = {
-  title: 'Transparent Pricing | BookMyArtist',
+  title: 'Transparent Pricing',
   description: 'Simple, transparent pricing for live artists and performers. Free forever tier available. 100% commission-free bookings.',
 };
 

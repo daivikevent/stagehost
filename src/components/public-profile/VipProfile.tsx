@@ -86,6 +86,7 @@ interface VipProfileProps {
   onPreviewPhoto: (url: string) => void;
   onSaveContact: () => void;
   onOpenReview: () => void;
+  isModalOpen?: boolean;
 }
 
 export function VipProfile({
@@ -99,6 +100,7 @@ export function VipProfile({
   onPreviewPhoto,
   onSaveContact,
   onOpenReview,
+  isModalOpen,
 }: VipProfileProps) {
   // Calendar State
   const today = useMemo(() => new Date(), []);
@@ -718,31 +720,33 @@ export function VipProfile({
       </div>
 
       {/* FLOATING VIP CONCIERGE DOCK */}
-      <aside className={styles.conciergeDock}>
-        <div className={styles.dockLabel}>
-          <Crown size={15} color="#d4af37" />
-          <span>VIP Concierge Active</span>
-        </div>
+      {!isModalOpen && (
+        <aside className={styles.conciergeDock}>
+          <div className={styles.dockLabel}>
+            <Crown size={15} color="#d4af37" />
+            <span>VIP Concierge Active</span>
+          </div>
 
-        <button
-          type="button"
-          onClick={onOpenInquiry}
-          className={styles.dockInquireBtn}
-        >
-          <Send size={13} /> Check Dates
-        </button>
-
-        {profile.whatsapp_number && (
-          <a
-            href={getWhatsAppLink(profile.whatsapp_number, `Hello ${profile.name}! 👋 I am inquiring about your VIP availability and honorarium.`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.dockWhatsAppBtn}
+          <button
+            type="button"
+            onClick={onOpenInquiry}
+            className={styles.dockInquireBtn}
           >
-            <MessageCircle size={14} /> WhatsApp
-          </a>
-        )}
-      </aside>
+            <Send size={13} /> Check Dates
+          </button>
+
+          {profile.whatsapp_number && (
+            <a
+              href={getWhatsAppLink(profile.whatsapp_number, `Hello ${profile.name}! 👋 I am inquiring about your VIP availability and honorarium.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.dockWhatsAppBtn}
+            >
+              <MessageCircle size={14} /> WhatsApp
+            </a>
+          )}
+        </aside>
+      )}
     </div>
   );
 }

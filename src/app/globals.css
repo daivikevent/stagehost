@@ -149,13 +149,14 @@
 
   /* ---- Z-Index System ---- */
   --z-base: 0;
-  --z-dropdown: 10;
-  --z-sticky: 20;
-  --z-overlay: 25;
-  --z-modal: 30;
-  --z-toast: 40;
-  --z-tooltip: 50;
-  --z-loading-bar: 60;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-dock: 1030;
+  --z-overlay: 9990;
+  --z-modal: 9999;
+  --z-toast: 10000;
+  --z-tooltip: 10010;
+  --z-loading-bar: 10020;
 
   /* ---- Navbar Scrolled Background ---- */
   --navbar-scrolled-bg: #0A0A14;

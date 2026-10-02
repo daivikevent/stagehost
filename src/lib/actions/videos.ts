@@ -3,21 +3,45 @@
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { checkIsAdmin } from '@/lib/actions/admin';
 import type { Video, VideoPlatform } from '@/types';
 import { detectVideoPlatform, getYouTubeId, getGoogleDriveId } from '@/lib/utils';
 
-// ---- Get my videos ----
-export async function getMyVideos() {
+async function getCurrentProfile() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return [];
+  if (!user) return null;
 
-  const { data: profile } = await supabase
+  const isUserAdmin = await checkIsAdmin();
+
+  if (isUserAdmin) {
+    const cookieStore = await cookies();
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+    if (impersonateId) {
+      const adminClient = createAdminClient();
+      const { data: impProfile } = await adminClient
+        .from('anchor_profiles')
+        .select('id, slug')
+        .eq('user_id', impersonateId)
+        .single();
+      if (impProfile) return impProfile;
+    }
+  }
+
+  const adminClient = createAdminClient();
+  const { data: profile } = await adminClient
     .from('anchor_profiles')
-    .select('id')
+    .select('id, slug')
     .eq('user_id', user.id)
     .single();
 
+  return profile;
+}
+
+// ---- Get my videos ----
+export async function getMyVideos() {
+  const profile = await getCurrentProfile();
   if (!profile) return [];
 
   const adminClient = createAdminClient();
@@ -33,17 +57,8 @@ export async function getMyVideos() {
 
 // ---- Add video ----
 export async function addVideo(url: string, title: string) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('Not authenticated');
-
-  const { data: profile } = await supabase
-    .from('anchor_profiles')
-    .select('id, slug')
-    .eq('user_id', user.id)
-    .single();
-
-  if (!profile) throw new Error('Profile not found');
+  const profile = await getCurrentProfile();
+  if (!profile) throw new Error('Not authenticated');
 
   const trimmedUrl = url.trim();
   const platform = detectVideoPlatform(trimmedUrl) as VideoPlatform;
@@ -115,17 +130,8 @@ export async function addVideo(url: string, title: string) {
 
 // ---- Delete video ----
 export async function deleteVideo(videoId: string) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('Not authenticated');
-
-  const { data: profile } = await supabase
-    .from('anchor_profiles')
-    .select('id, slug')
-    .eq('user_id', user.id)
-    .single();
-
-  if (!profile) throw new Error('Profile not found');
+  const profile = await getCurrentProfile();
+  if (!profile) throw new Error('Not authenticated');
 
   const adminClient = createAdminClient();
   const { error } = await adminClient

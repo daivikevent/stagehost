@@ -64,6 +64,7 @@ interface NeoStageProfileProps {
   onPreviewPhoto: (url: string) => void;
   onSaveContact: () => void;
   onOpenReview: () => void;
+  isModalOpen?: boolean;
 }
 
 const TOUR_CITIES = [
@@ -112,6 +113,7 @@ export function NeoStageProfile({
   onPreviewPhoto,
   onSaveContact,
   onOpenReview,
+  isModalOpen,
 }: NeoStageProfileProps) {
   const [fastPassDate, setFastPassDate] = useState('');
   const [slotType, setSlotType] = useState<'evening' | 'morning' | 'full'>('evening');
@@ -1260,38 +1262,40 @@ export function NeoStageProfile({
       {/* ==========================================================================
          Floating Cyber HUD Bottom Bar
          ========================================================================== */}
-      <aside className={styles.cyberHudDock}>
-        <div className={styles.dockStatusGroup}>
-          <span className={styles.livePulseDot} />
-          <span className={styles.dockStatusText}>Stage Terminal</span>
-        </div>
+      {!isModalOpen && (
+        <aside className={styles.cyberHudDock}>
+          <div className={styles.dockStatusGroup}>
+            <span className={styles.livePulseDot} />
+            <span className={styles.dockStatusText}>Stage Terminal</span>
+          </div>
 
-        <button type="button" onClick={handleDirectWhatsApp} className={styles.hudDockBtnPrimary}>
-          <MessageCircle size={15} />
-          <span>WhatsApp</span>
-        </button>
+          <button type="button" onClick={handleDirectWhatsApp} className={styles.hudDockBtnPrimary}>
+            <MessageCircle size={15} />
+            <span>WhatsApp</span>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => {
-            const el = document.getElementById('live-calendar');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-              onOpenInquiry();
-            }
-          }}
-          className={styles.hudDockBtnGhost}
-        >
-          <Calendar size={14} />
-          <span>Tour Radar</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('live-calendar');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                onOpenInquiry();
+              }
+            }}
+            className={styles.hudDockBtnGhost}
+          >
+            <Calendar size={14} />
+            <span>Tour Radar</span>
+          </button>
 
-        <button type="button" onClick={onSaveContact} className={styles.hudDockBtnGhost}>
-          <UserPlus size={14} />
-          <span>Save Contact</span>
-        </button>
-      </aside>
+          <button type="button" onClick={onSaveContact} className={styles.hudDockBtnGhost}>
+            <UserPlus size={14} />
+            <span>Save Contact</span>
+          </button>
+        </aside>
+      )}
     </div>
   );
 }

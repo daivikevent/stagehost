@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://bookmyartist.in'),
-    title: `${profile.name} — ${profile.tagline || 'Live Artist'} | BookMyArtist`,
+    title: `${profile.name} — ${profile.tagline || 'Live Artist'}`,
     description: profile.bio?.slice(0, 160) || `${profile.name} is a professional live artist on BookMyArtist.`,
     openGraph: {
       title: `${profile.name} — ${profile.tagline || 'Event Anchor'}`,

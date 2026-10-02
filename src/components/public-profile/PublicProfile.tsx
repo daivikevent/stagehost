@@ -394,6 +394,14 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
 
   const whatsappMessage = `Hi ${profile.name}! I found your profile on BookMyArtist and I'm interested in booking you for an event. Can we discuss?`;
 
+  const isAnyModalOpen = Boolean(
+    showInquiryForm ||
+    isShareOpen ||
+    showReviewModal ||
+    previewPhoto ||
+    playingVideo
+  );
+
   return (
     <>
       {activeLayout === 'editorial' ? (
@@ -408,6 +416,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
           onPreviewPhoto={(url) => setPreviewPhoto(url)}
           onSaveContact={handleSaveContact}
           onOpenReview={() => setShowReviewModal(true)}
+          isModalOpen={isAnyModalOpen}
         />
       ) : activeLayout === 'spotlight' ? (
         <NeoStageProfile
@@ -421,6 +430,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
           onPreviewPhoto={(url) => setPreviewPhoto(url)}
           onSaveContact={handleSaveContact}
           onOpenReview={() => setShowReviewModal(true)}
+          isModalOpen={isAnyModalOpen}
         />
       ) : activeLayout === 'vip' ? (
         <VipProfile
@@ -434,6 +444,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
           onPreviewPhoto={(url) => setPreviewPhoto(url)}
           onSaveContact={handleSaveContact}
           onOpenReview={() => setShowReviewModal(true)}
+          isModalOpen={isAnyModalOpen}
         />
       ) : activeLayout === 'palace' ? (
         <PalaceProfile
@@ -447,6 +458,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
           onPreviewPhoto={(url) => setPreviewPhoto(url)}
           onSaveContact={handleSaveContact}
           onOpenReview={() => setShowReviewModal(true)}
+          isModalOpen={isAnyModalOpen}
         />
       ) : activeLayout === 'cinema' ? (
         <CinemaProfile
@@ -460,6 +472,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
           onPreviewPhoto={(url) => setPreviewPhoto(url)}
           onSaveContact={handleSaveContact}
           onOpenReview={() => setShowReviewModal(true)}
+          isModalOpen={isAnyModalOpen}
         />
       ) : (
         <div
@@ -1979,7 +1992,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
       )}
 
       {/* Mobile Sticky Quick-Action Bar */}
-      {activeLayout === 'classic' && (
+      {activeLayout === 'classic' && !isAnyModalOpen && (
         <div className={styles.mobileStickyBar}>
           <div className={styles.mobileStickyInfo}>
             {profile.profile_photo_url ? (

@@ -90,6 +90,7 @@ interface CinemaProfileProps {
   onPreviewPhoto: (url: string) => void;
   onSaveContact: () => void;
   onOpenReview: () => void;
+  isModalOpen?: boolean;
 }
 
 export function CinemaProfile({
@@ -103,6 +104,7 @@ export function CinemaProfile({
   onPreviewPhoto,
   onSaveContact,
   onOpenReview,
+  isModalOpen,
 }: CinemaProfileProps) {
   // Calendar State
   const today = useMemo(() => new Date(), []);
@@ -815,46 +817,48 @@ export function CinemaProfile({
       </div>
 
       {/* ---------------- Floating VIP Premiere Concierge Dock ---------------- */}
-      <div className={styles.cinemaDock}>
-        <button
-          type="button"
-          className={styles.dockTicketBtn}
-          onClick={onOpenInquiry}
-        >
-          <Ticket size={16} />
-          <span>Book Premiere Ticket</span>
-        </button>
-
-        {waLink && (
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.dockWaBtn}
+      {!isModalOpen && (
+        <div className={styles.cinemaDock}>
+          <button
+            type="button"
+            className={styles.dockTicketBtn}
+            onClick={onOpenInquiry}
           >
-            <MessageCircle size={16} />
-            <span>VIP WhatsApp</span>
-          </a>
-        )}
+            <Ticket size={16} />
+            <span>Book Premiere Ticket</span>
+          </button>
 
-        <button
-          type="button"
-          className={styles.dockCircleBtn}
-          onClick={onOpenShare}
-          title="Share Press Kit"
-        >
-          <Share2 size={16} />
-        </button>
+          {waLink && (
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.dockWaBtn}
+            >
+              <MessageCircle size={16} />
+              <span>VIP WhatsApp</span>
+            </a>
+          )}
 
-        <button
-          type="button"
-          className={styles.dockCircleBtn}
-          onClick={onSaveContact}
-          title="Save Contact"
-        >
-          <UserPlus size={16} />
-        </button>
-      </div>
+          <button
+            type="button"
+            className={styles.dockCircleBtn}
+            onClick={onOpenShare}
+            title="Share Press Kit"
+          >
+            <Share2 size={16} />
+          </button>
+
+          <button
+            type="button"
+            className={styles.dockCircleBtn}
+            onClick={onSaveContact}
+            title="Save Contact"
+          >
+            <UserPlus size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

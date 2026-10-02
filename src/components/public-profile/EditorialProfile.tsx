@@ -59,6 +59,7 @@ interface EditorialProfileProps {
   onPreviewPhoto: (url: string) => void;
   onSaveContact: () => void;
   onOpenReview: () => void;
+  isModalOpen?: boolean;
 }
 
 const LUXURY_BRANDS = [
@@ -85,6 +86,7 @@ export function EditorialProfile({
   onPreviewPhoto,
   onSaveContact,
   onOpenReview,
+  isModalOpen,
 }: EditorialProfileProps) {
   const featuredVideo = profile.videos && profile.videos.length > 0 ? profile.videos[0] : null;
   const otherVideos = profile.videos && profile.videos.length > 1 ? profile.videos.slice(1) : [];
@@ -1002,38 +1004,40 @@ export function EditorialProfile({
       </div>
 
       {/* Floating VIP Concierge Dock */}
-      <aside className={styles.conciergeDock}>
-        <div className={styles.dockLabel}>
-          <span className={styles.dockDot} />
-          <span>Concierge Desk</span>
-        </div>
+      {!isModalOpen && (
+        <aside className={styles.conciergeDock}>
+          <div className={styles.dockLabel}>
+            <span className={styles.dockDot} />
+            <span>Concierge Desk</span>
+          </div>
 
-        <button type="button" onClick={handleWhatsAppInquiry} className={styles.dockBtnGold}>
-          <MessageCircle size={15} />
-          <span>WhatsApp VIP</span>
-        </button>
+          <button type="button" onClick={handleWhatsAppInquiry} className={styles.dockBtnGold}>
+            <MessageCircle size={15} />
+            <span>WhatsApp VIP</span>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => {
-            const el = document.getElementById('live-calendar');
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-              onOpenInquiry();
-            }
-          }}
-          className={styles.dockBtnGhost}
-        >
-          <Calendar size={14} />
-          <span>Check Dates</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('live-calendar');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                onOpenInquiry();
+              }
+            }}
+            className={styles.dockBtnGhost}
+          >
+            <Calendar size={14} />
+            <span>Check Dates</span>
+          </button>
 
-        <button type="button" onClick={onSaveContact} className={styles.dockBtnGhost}>
-          <UserPlus size={14} />
-          <span>Save Contact</span>
-        </button>
-      </aside>
+          <button type="button" onClick={onSaveContact} className={styles.dockBtnGhost}>
+            <UserPlus size={14} />
+            <span>Save Contact</span>
+          </button>
+        </aside>
+      )}
     </div>
   );
 }

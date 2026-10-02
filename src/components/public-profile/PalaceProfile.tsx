@@ -88,6 +88,7 @@ interface PalaceProfileProps {
   onPreviewPhoto: (url: string) => void;
   onSaveContact: () => void;
   onOpenReview: () => void;
+  isModalOpen?: boolean;
 }
 
 export function PalaceProfile({
@@ -101,6 +102,7 @@ export function PalaceProfile({
   onPreviewPhoto,
   onSaveContact,
   onOpenReview,
+  isModalOpen,
 }: PalaceProfileProps) {
   // Calendar State
   const today = useMemo(() => new Date(), []);
@@ -804,46 +806,48 @@ export function PalaceProfile({
       </div>
 
       {/* ---------------- Floating Royal Concierge Dock ---------------- */}
-      <div className={styles.conciergeDock}>
-        <button
-          type="button"
-          className={styles.dockBtnPrimary}
-          onClick={onOpenInquiry}
-        >
-          <CalendarIcon size={16} />
-          <span>Reserve Shahi Date</span>
-        </button>
-
-        {waLink && (
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.dockBtnEmerald}
+      {!isModalOpen && (
+        <div className={styles.conciergeDock}>
+          <button
+            type="button"
+            className={styles.dockBtnPrimary}
+            onClick={onOpenInquiry}
           >
-            <MessageCircle size={16} />
-            <span>WhatsApp</span>
-          </a>
-        )}
+            <CalendarIcon size={16} />
+            <span>Reserve Shahi Date</span>
+          </button>
 
-        <button
-          type="button"
-          className={styles.dockIconBtn}
-          onClick={onOpenShare}
-          title="Share Royal Monograph"
-        >
-          <Share2 size={16} />
-        </button>
+          {waLink && (
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.dockBtnEmerald}
+            >
+              <MessageCircle size={16} />
+              <span>WhatsApp</span>
+            </a>
+          )}
 
-        <button
-          type="button"
-          className={styles.dockIconBtn}
-          onClick={onSaveContact}
-          title="Save Royal Contact"
-        >
-          <UserPlus size={16} />
-        </button>
-      </div>
+          <button
+            type="button"
+            className={styles.dockIconBtn}
+            onClick={onOpenShare}
+            title="Share Royal Monograph"
+          >
+            <Share2 size={16} />
+          </button>
+
+          <button
+            type="button"
+            className={styles.dockIconBtn}
+            onClick={onSaveContact}
+            title="Save Royal Contact"
+          >
+            <UserPlus size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
