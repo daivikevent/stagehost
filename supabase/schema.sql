@@ -541,7 +541,7 @@ INSERT INTO themes (name, description, category, is_active, is_default, min_plan
 INSERT INTO platform_settings (key, value, category, label, description, field_type) VALUES
 -- General
 ('site_name', 'BookMyArtist', 'general', 'Site Name', 'The name of your platform', 'text'),
-('site_tagline', 'Your Stage. Your Brand. Your Bookings.', 'general', 'Tagline', 'Platform tagline displayed on the landing page', 'text'),
+('site_tagline', 'Your Talent. Your Brand. Your Bookings.', 'general', 'Tagline', 'Platform tagline displayed on the landing page', 'text'),
 ('support_email', 'support@bookmyartist.in', 'general', 'Support Email', 'Email for customer support', 'text'),
 ('maintenance_mode', 'false', 'general', 'Maintenance Mode', 'Enable to show maintenance page to all users', 'toggle'),
 ('registration_open', 'true', 'general', 'Registration Open', 'Allow new user registrations', 'toggle'),
@@ -573,7 +573,7 @@ INSERT INTO platform_settings (key, value, category, label, description, field_t
 ('refund_policy', '', 'legal', 'Refund Policy', 'Refund Policy content (HTML supported)', 'textarea'),
 
 -- SEO
-('meta_title', 'BookMyArtist — Your Stage. Your Brand. Your Bookings.', 'seo', 'Meta Title', 'Default page title for SEO', 'text'),
+('meta_title', 'BookMyArtist — Your Talent. Your Brand. Your Bookings.', 'seo', 'Meta Title', 'Default page title for SEO', 'text'),
 ('meta_description', 'Build your professional artist portfolio, manage your tour schedule, and get more event bookings.', 'seo', 'Meta Description', 'Default meta description for SEO', 'textarea'),
 ('og_image_url', '', 'seo', 'OG Image', 'Default Open Graph image for social sharing', 'image'),
 

@@ -1,6 +1,6 @@
 # BookMyArtist — Enterprise Platform for Stage Anchors, Emcees & Live Artists
 
-> **Your Stage. Your Brand. Your Bookings.**
+> **Your Talent. Your Brand. Your Bookings.**
 > The all-in-one digital operating system and portfolio engine built specifically for event hosts, wedding emcees, corporate presenters, DJs, live musicians, and performing artists of all kinds.
 
 ---

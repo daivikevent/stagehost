@@ -247,7 +247,7 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
           </div>
 
           <h1 className={styles.heroTitle}>
-            Your Stage.<br />
+            Your Talent.<br />
             <span className={styles.heroGradient}>Your Brand.</span><br />
             Your Bookings.
           </h1>

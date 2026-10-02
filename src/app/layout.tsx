@@ -5,7 +5,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'BookMyArtist — Your Stage. Your Brand. Your Bookings.',
+    default: 'BookMyArtist — Your Talent. Your Brand. Your Bookings.',
     template: '%s | BookMyArtist',
   },
   description:
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     siteName: 'BookMyArtist',
-    title: 'BookMyArtist — Your Stage. Your Brand. Your Bookings.',
+    title: 'BookMyArtist — Your Talent. Your Brand. Your Bookings.',
     description:
       'Build your professional artist portfolio, manage your schedule, and get more bookings — all in one platform for live artists & performers.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BookMyArtist — Your Stage. Your Brand. Your Bookings.',
+    title: 'BookMyArtist — Your Talent. Your Brand. Your Bookings.',
     description:
       'Build your professional artist portfolio, manage your schedule, and get more bookings.',
   },

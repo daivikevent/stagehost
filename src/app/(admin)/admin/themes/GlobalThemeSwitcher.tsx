@@ -243,13 +243,13 @@ export function GlobalThemeSwitcher({ initialTheme }: GlobalThemeSwitcherProps) 
                       className={styles.mockupHeading}
                       style={{ color: theme.mode === 'light' ? '#0F172A' : '#FFFFFF' }}
                     >
-                      Your Stage. <span style={{ color: theme.primary }}>Your Brand.</span>
+                      Your Talent. <span style={{ color: theme.primary }}>Your Brand.</span>
                     </div>
                     <div
                       className={styles.mockupSubtext}
                       style={{ color: theme.mode === 'light' ? '#475569' : '#B0B0C0' }}
                     >
-                      The #1 portfolio platform for event emcees
+                      The #1 portfolio platform for live artists & performers
                     </div>
                     <div className={styles.mockupActions}>
                       <div

@@ -16,7 +16,7 @@ export function Footer() {
             <span>BookMyArtist</span>
           </Link>
           <p>
-            Your Stage. Your Brand. Your Bookings. India&apos;s dedicated digital portfolio &amp; booking management platform for live artists, performers, anchors, DJs, singers, and entertainment talent.
+            Your Talent. Your Brand. Your Bookings. India&apos;s dedicated digital portfolio &amp; booking management platform for live artists, performers, anchors, DJs, singers, and entertainment talent.
           </p>
           <div className={styles.footerBadge}>
             <ShieldCheck size={14} /> 100% Commission-Free
