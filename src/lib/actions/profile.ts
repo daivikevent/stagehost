@@ -163,7 +163,8 @@ export async function getMyProfile() {
       counter++;
     }
 
-    const { data: newProfile, error: insertError } = await supabase
+    const adminClient = createAdminClient();
+    const { data: newProfile, error: insertError } = await adminClient
       .from('anchor_profiles')
       .insert({
         user_id: user.id,
@@ -282,7 +283,8 @@ export async function createProfile(name: string) {
     counter++;
   }
 
-  const { data, error } = await supabase
+  const adminClient = createAdminClient();
+  const { data, error } = await adminClient
     .from('anchor_profiles')
     .insert({
       user_id: user.id,
@@ -305,7 +307,7 @@ export async function updateProfile(updates: Partial<AnchorProfile>) {
 
   // Support Admin Impersonation ("View As Anchor")
   let targetUserId = user.id;
-  let dbClient: any = supabase;
+  let dbClient: any = createAdminClient();
   const isUserAdmin = await checkIsAdmin();
 
   if (isUserAdmin) {
@@ -313,7 +315,6 @@ export async function updateProfile(updates: Partial<AnchorProfile>) {
     const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
     if (impersonateId) {
       targetUserId = impersonateId;
-      dbClient = createAdminClient();
     }
   }
 

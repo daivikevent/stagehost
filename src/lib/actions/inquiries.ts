@@ -1,7 +1,10 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { checkIsAdmin } from '@/lib/actions/admin';
 import type { Inquiry, InquiryStatus } from '@/types';
 import { sendInquiryAlertEmail } from '@/lib/email';
 import { sendPushNotificationToAnchor } from '@/lib/actions/push';
@@ -33,10 +36,10 @@ export async function submitInquiry(profileSlug: string, formData: {
   const { honeypot: _hp, ...inquiryFields } = formData;
   inquiryFields.phone = cleanPhone;
 
-  const supabase = await createClient();
+  const adminClient = createAdminClient();
 
   // Get profile by slug
-  const { data: profile, error: profileError } = await supabase
+  const { data: profile, error: profileError } = await adminClient
     .from('anchor_profiles')
     .select('id, user_id, name, email')
     .eq('slug', profileSlug)
@@ -46,7 +49,7 @@ export async function submitInquiry(profileSlug: string, formData: {
     throw new Error('Creator profile not found');
   }
 
-  const { error } = await supabase
+  const { error } = await adminClient
     .from('inquiries')
     .insert({
       profile_id: profile.id,
@@ -63,14 +66,23 @@ export async function submitInquiry(profileSlug: string, formData: {
       await sendInquiryAlertEmail({
         anchorEmail: profile.email,
         anchorName: profile.name || 'Anchor',
-        inquiry: formData,
+        inquiry: {
+          name: formData.name,
+          phone: cleanPhone,
+          email: formData.email,
+          event_type: formData.event_type,
+          event_date: formData.event_date,
+          event_city: formData.event_city,
+          budget_range: formData.budget_range,
+          message: formData.message,
+        },
       });
     } catch (emailErr) {
-      console.error('Email alert trigger error:', emailErr);
+      console.error('[Resend] Email notification error:', emailErr);
     }
   }
 
-  // Send instant WebPush notification to Anchor's phone & desktop devices
+  // Trigger web push notification to anchor device
   try {
     const eventDetail = formData.event_type || 'Event';
     const cityDetail = formData.event_city ? ` in ${formData.event_city}` : '';
@@ -95,15 +107,27 @@ export async function getMyInquiries(status?: InquiryStatus) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
 
-  const { data: profile } = await supabase
+  const isUserAdmin = await checkIsAdmin();
+  let targetUserId = user.id;
+
+  if (isUserAdmin) {
+    const cookieStore = await cookies();
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+    if (impersonateId) {
+      targetUserId = impersonateId;
+    }
+  }
+
+  const adminClient = createAdminClient();
+  const { data: profile } = await adminClient
     .from('anchor_profiles')
     .select('id')
-    .eq('user_id', user.id)
+    .eq('user_id', targetUserId)
     .single();
 
   if (!profile) return [];
 
-  let query = supabase
+  let query = adminClient
     .from('inquiries')
     .select('*')
     .eq('profile_id', profile.id)
@@ -125,7 +149,8 @@ export async function updateInquiryStatus(inquiryId: string, status: InquiryStat
   const updates: Record<string, string> = { status };
   if (notes !== undefined) updates.notes = notes;
 
-  const { error } = await supabase
+  const adminClient = createAdminClient();
+  const { error } = await adminClient
     .from('inquiries')
     .update(updates)
     .eq('id', inquiryId);
@@ -140,15 +165,27 @@ export async function getInquiryCounts() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { total: 0, new: 0, converted: 0 };
 
-  const { data: profile } = await supabase
+  const isUserAdmin = await checkIsAdmin();
+  let targetUserId = user.id;
+
+  if (isUserAdmin) {
+    const cookieStore = await cookies();
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+    if (impersonateId) {
+      targetUserId = impersonateId;
+    }
+  }
+
+  const adminClient = createAdminClient();
+  const { data: profile } = await adminClient
     .from('anchor_profiles')
     .select('id')
-    .eq('user_id', user.id)
+    .eq('user_id', targetUserId)
     .single();
 
   if (!profile) return { total: 0, new: 0, converted: 0 };
 
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from('inquiries')
     .select('status')
     .eq('profile_id', profile.id);
@@ -180,10 +217,22 @@ export async function createManualInquiry(data: {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const { data: profile } = await supabase
+  const isUserAdmin = await checkIsAdmin();
+  let targetUserId = user.id;
+
+  if (isUserAdmin) {
+    const cookieStore = await cookies();
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+    if (impersonateId) {
+      targetUserId = impersonateId;
+    }
+  }
+
+  const adminClient = createAdminClient();
+  const { data: profile } = await adminClient
     .from('anchor_profiles')
     .select('id')
-    .eq('user_id', user.id)
+    .eq('user_id', targetUserId)
     .single();
 
   if (!profile) throw new Error('Profile not found');
@@ -206,7 +255,7 @@ export async function createManualInquiry(data: {
     insertPayload.event_date = data.event_date.trim();
   }
 
-  const { data: newInquiry, error } = await supabase
+  const { data: newInquiry, error } = await adminClient
     .from('inquiries')
     .insert(insertPayload)
     .select()
@@ -223,7 +272,8 @@ export async function deleteInquiry(inquiryId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const { error } = await supabase
+  const adminClient = createAdminClient();
+  const { error } = await adminClient
     .from('inquiries')
     .delete()
     .eq('id', inquiryId);
