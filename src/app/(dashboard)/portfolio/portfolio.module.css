@@ -299,6 +299,12 @@
   justify-content: center;
 }
 
+@media (max-width: 1023px) {
+  .stickyBottomBar {
+    bottom: calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px) + 12px);
+  }
+}
+
 .stickyBarInner {
   display: flex;
   align-items: center;
@@ -314,11 +320,34 @@
   width: 100%;
 }
 
+.stickyActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 640px) {
   .stickyBarInner {
     flex-direction: column;
     border-radius: var(--radius-lg);
     gap: 10px;
+    padding: 12px 14px;
+  }
+  .stickyActions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stickyActions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .stickyActions > * {
+    width: 100%;
+    justify-content: center;
   }
 }
 

@@ -2044,7 +2044,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
                 : 'Profile changes ready'}
             </span>
           </div>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div className={styles.stickyActions}>
             {initialProfile?.slug && (
               <a
                 href={`/${initialProfile.slug}`}
