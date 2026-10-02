@@ -164,7 +164,7 @@ export function PalaceProfile({
   const defaultAvatar = `https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop`;
   const avatarUrl = profile.profile_photo_url || defaultAvatar;
 
-  const waMessage = `Namaste ${profile.name}! 🙏 I saw your Palace Royale profile on StageHost and would like to reserve your dates for an upcoming grand celebration.`;
+  const waMessage = `Namaste ${profile.name}! 🙏 I saw your Palace Royale profile on BookMyArtist and would like to reserve your dates for an upcoming grand celebration.`;
   const waLink = getWhatsAppLink(profile.whatsapp_number || profile.phone, waMessage);
   const packagesList = getEffectiveServicePackages(profile);
 
@@ -793,12 +793,12 @@ export function PalaceProfile({
 
         {/* ---------------- Branding Footer ---------------- */}
         <footer className={styles.palaceFooter}>
-          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+          <a href="https://bookmyartist.in/" target="_blank" rel="noopener noreferrer">
             <Sparkles size={14} color="#d4af37" />
-            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+            <span>Created on <strong>BookMyArtist</strong> · Elite Artist Infrastructure</span>
           </a>
           <div className={styles.palaceFooterNotice}>
-            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+            BookMyArtist is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
           </div>
         </footer>
       </div>

@@ -45,7 +45,9 @@ export function GlobalThemeSwitcher({ initialTheme }: GlobalThemeSwitcherProps) 
       // 1. Immediately apply to DOM and local storage
       document.documentElement.setAttribute('data-site-theme', theme.id);
       try {
+        localStorage.setItem('bookmyartist_site_theme', theme.id);
         localStorage.setItem('stagehost_site_theme', theme.id);
+        document.cookie = `bookmyartist_site_theme=${theme.id}; path=/; max-age=31536000; SameSite=Lax`;
         document.cookie = `stagehost_site_theme=${theme.id}; path=/; max-age=31536000; SameSite=Lax`;
       } catch {}
 
@@ -85,7 +87,7 @@ export function GlobalThemeSwitcher({ initialTheme }: GlobalThemeSwitcherProps) 
             </div>
           </div>
           <p className={styles.description}>
-            Select the master royal/modern aesthetic for the entire StageHost platform (Landing page, navbar, pricing, directory, dashboard & footer). Supports stunning high-contrast Dark and luminous Light modes.
+            Select the master royal/modern aesthetic for the entire BookMyArtist platform (Landing page, navbar, pricing, directory, dashboard & footer). Supports stunning high-contrast Dark and luminous Light modes.
           </p>
         </div>
       </div>
@@ -221,7 +223,7 @@ export function GlobalThemeSwitcher({ initialTheme }: GlobalThemeSwitcherProps) 
                   {/* Mockup Mini Navbar */}
                   <div className={styles.mockupNav}>
                     <div className={styles.mockupLogo} style={{ color: theme.primary }}>
-                      <Sparkles size={9} /> StageHost
+                      <Sparkles size={9} /> BookMyArtist
                     </div>
                     <div
                       className={styles.mockupNavBtn}

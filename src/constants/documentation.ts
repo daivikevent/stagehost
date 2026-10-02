@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — Platform Documentation & User Guide
+   BookMyArtist — Platform Documentation & User Guide
    Auto-updating Feature Registry & Interactive Knowledge Base
    ============================================ */
 
@@ -47,14 +47,14 @@ export const PLATFORM_DOC_CATEGORIES: DocCategory[] = [
       {
         stepNumber: 1,
         title: 'Sign Up & Claim Your Stage URL',
-        subtitle: 'Get clean links like stagehost.in/your-name',
+        subtitle: 'Get clean links like bookmyartist.in/your-name',
         description:
           'Create your free account. Choose your stage name and claim a clean, professional public URL without random hex codes or clutter.',
         actionUrl: '/register',
         actionText: 'Create Free Account',
         highlights: [
           'Instant verification via Supabase Auth',
-          'Clean vanity URL (e.g. stagehost.in/amit-joshi)',
+          'Clean vanity URL (e.g. bookmyartist.in/amit-joshi)',
           'Permanent link for your Instagram bio and business card',
         ],
         role: 'anchor',
@@ -151,7 +151,7 @@ export const PLATFORM_DOC_CATEGORIES: DocCategory[] = [
         highlights: [
           'Pre-formatted WhatsApp message with all event details',
           'Inquiries dashboard tracks status: New, Contacted, Converted, Lost',
-          'Zero commissions taken by StageHost—you keep 100% of your fee',
+          'Zero commissions taken by BookMyArtist—you keep 100% of your fee',
         ],
         role: 'anchor',
       },
@@ -172,16 +172,16 @@ export const PLATFORM_DOC_CATEGORIES: DocCategory[] = [
       },
       {
         stepNumber: 6,
-        title: 'Connect Custom Domain (e.g. anchorname.live)',
+        title: 'Connect Custom Domain (e.g. artistname.live)',
         subtitle: 'Brand your stage with your own domain',
         description:
-          'Premium users can connect their own domain. Simply enter your domain in Settings and add a CNAME record pointing to cname.stagehost.in. SSL is provisioned automatically.',
+          'Premium users can connect their own domain. Simply enter your domain in Settings and add a CNAME record pointing to cname.bookmyartist.in. SSL is provisioned automatically.',
         actionUrl: '/settings',
         actionText: 'Domain Settings',
         highlights: [
           'Automatic Let\'s Encrypt wildcard SSL certificate',
           'Seamless DNS verification with CNAME or A-record',
-          'Preserves your personal brand while powered by StageHost engine',
+          'Preserves your personal brand while powered by BookMyArtist engine',
         ],
         role: 'anchor',
       },
@@ -292,7 +292,7 @@ export const PLATFORM_DOC_CATEGORIES: DocCategory[] = [
 ];
 
 // ---- Master Dynamic Feature Registry (Auto-Updating) ----
-// ANY NEW FEATURE ADDED TO STAGEHOST SHOULD BE REGISTERED HERE!
+// ANY NEW FEATURE ADDED TO BOOKMYARTIST SHOULD BE REGISTERED HERE!
 export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
   {
     id: 'hold-expiry-nudge-system',
@@ -349,7 +349,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
       'Set an advance deposit amount or let the client select token presets (₹10k, ₹15k, ₹25k, or custom).',
       'Share the live /receipt/[id] link with your client.',
       'Client clicks "Pay Token Online" and completes payment via Razorpay UPI / Cards.',
-      'StageHost instantly marks payment verified, updates the slot to "booked", and converts the hold to Confirmed.',
+      'BookMyArtist instantly marks payment verified, updates the slot to "booked", and converts the hold to Confirmed.',
     ],
     iconName: 'CreditCard',
     tags: ['Razorpay', 'UPI', 'Token Payment', 'Advance', 'Receipt', 'Automation'],
@@ -383,7 +383,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     summary:
       'Progressive Web App (PWA) with service worker offline caching for zero-network ballrooms, plus printable 7-clause Artist Performance Engagement Agreement with digital E-Sign.',
     howToUse: [
-      'Install StageHost as an app on your phone or home screen via browser prompt (PWA manifest & service worker enabled).',
+      'Install BookMyArtist as an app on your phone or home screen via browser prompt (PWA manifest & service worker enabled).',
       'Access show schedules, receipts, and cue sheets even in basement venues with zero cellular reception.',
       'On any receipt page, toggle to "Legal Performance Contract" view.',
       'Generates a formal legal contract with technical rider, payment milestones, cancellation clauses, and e-signature seal ready to print or save as PDF.',
@@ -442,7 +442,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     howToUse: [
       'Copy any public share link from your Google Drive performance video.',
       'Navigate to Dashboard > Portfolio > Videos & Media.',
-      'Paste the Google Drive URL — StageHost automatically detects the platform and embeds an interactive high-speed video player.',
+      'Paste the Google Drive URL — BookMyArtist automatically detects the platform and embeds an interactive high-speed video player.',
     ],
     iconName: 'Video',
     tags: ['Google Drive', 'Videos', 'Showreel', 'Embed', 'Media'],
@@ -456,7 +456,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     version: 'v2.7',
     lastUpdated: 'September 2026',
     summary:
-      'Dynamic /api/calendar/[slug] feed allowing anchors and event agencies to subscribe to real-time booking availability in Apple Calendar, Google Calendar, and Outlook.',
+      'Dynamic /api/calendar/[slug] feed allowing artists and event agencies to subscribe to real-time booking availability in Apple Calendar, Google Calendar, and Outlook.',
     howToUse: [
       'Access your live calendar feed link via /api/calendar/[your-slug].',
       'Add it as a subscription calendar URL in Google Calendar or iOS Calendar.',
@@ -494,7 +494,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     summary:
       'Master theme switcher in the Admin Panel that transforms the entire platform into 5 modern and royal luxury aesthetics.',
     howToUse: [
-      'Log into Admin Panel as administrator (admin@stagehost.com).',
+      'Log into Admin Panel as administrator (admin@bookmyartist.in).',
       'Navigate to Admin > Themes or Admin > Platform Settings.',
       'Click "Live Preview" on any theme (Midnight Royal Gold, Royal Emerald, Imperial Sapphire, Crimson Velvet).',
       'Click "Apply to Entire Website" to make it active for all visitors across the globe.',
@@ -522,17 +522,17 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
   },
   {
     id: 'clean-profile-slugs',
-    title: 'Clean Anchor Slugs & Vanity URLs',
+    title: 'Clean Artist Slugs & Vanity URLs',
     category: 'anchor',
     tier: 'All Plans',
     status: 'Live',
     version: 'v2.3',
     lastUpdated: 'September 2026',
     summary:
-      'Anchors get clean vanity URLs like stagehost.in/rahul-sharma without random hex hash suffixes. Legacy URLs automatically redirect.',
+      'Artists get clean vanity URLs like bookmyartist.in/rahul-sharma without random hex hash suffixes. Legacy URLs automatically redirect.',
     howToUse: [
       'Set your stage name during registration or in Profile Settings.',
-      'The system automatically slugifies your name cleanly (e.g. stagehost.in/amit-joshi).',
+      'The system automatically slugifies your name cleanly (e.g. bookmyartist.in/amit-joshi).',
       'Old URLs with hash suffixes automatically redirect to the clean URL seamlessly.',
     ],
     iconName: 'Link2',
@@ -565,9 +565,9 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     version: 'v2.2',
     lastUpdated: 'September 2026',
     summary:
-      'For authenticated admin users, a direct "Admin Panel" tab appears in the anchor dashboard sidebar right above "View Portfolio".',
+      'For authenticated admin users, a direct "Admin Panel" tab appears in the artist dashboard sidebar right above "View Portfolio".',
     howToUse: [
-      'Log in with an administrator account (admin@stagehost.com).',
+      'Log in with an administrator account (admin@bookmyartist.in).',
       'Visit /dashboard.',
       'Look at the bottom sidebar footer to find the golden "Admin Panel" button.',
     ],
@@ -641,7 +641,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     howToUse: [
       'Go to Dashboard > Settings > Custom Domain.',
       'Enter your domain name (e.g. myname.live).',
-      'Create a CNAME DNS record pointing to cname.stagehost.in in your registrar.',
+      'Create a CNAME DNS record pointing to cname.bookmyartist.in in your registrar.',
       'Admin approves the domain in Admin > Platform Settings.',
     ],
     iconName: 'Globe',
@@ -656,9 +656,9 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
     version: 'v2.3',
     lastUpdated: 'September 2026',
     summary:
-      'Top-rated anchors get featured with Spotlight badges and verified blue checkmarks in the public directory.',
+      'Top-rated artists get featured with Spotlight badges and verified blue checkmarks in the public directory.',
     howToUse: [
-      'Admins toggle Spotlight and Verified status in Admin > Users & Anchors.',
+      'Admins toggle Spotlight and Verified status in Admin > Users & Artists.',
       'Featured anchors appear with gold badges and higher directory ranking.',
     ],
     iconName: 'Star',
@@ -750,7 +750,7 @@ export const FUTURE_ROADMAP_ITEMS: FutureRoadmapItem[] = [
     category: 'Team & Backstage',
     status: 'In Design',
     summary:
-      'Expands StageHost from emcees to all 11 performing artist categories (DJs, Live Singers, Bands, Standup Comedians, Dancers, Magicians, Photographers) with SoundCloud / Spotify audio players and gig setlists.',
+      'Expands BookMyArtist to all 11 performing artist categories (Emcees, DJs, Live Singers, Bands, Standup Comedians, Dancers, Magicians, Photographers) with SoundCloud / Spotify audio players and gig setlists.',
     keyCapabilities: [
       'SoundCloud, Spotify, Apple Music, and Mixcloud audio player embeds on public stage portfolios',
       'Gig Repertoire & Setlist Builder (Bollywood, Sufi, Retro 90s, EDM, Commercial playlists)',
@@ -760,12 +760,12 @@ export const FUTURE_ROADMAP_ITEMS: FutureRoadmapItem[] = [
   },
   {
     id: 'custom-domains-white-label',
-    title: 'Custom Domains Multi-Tenant White-Labeling (anchorname.com)',
+    title: 'Custom Domains Multi-Tenant White-Labeling (artistname.com)',
     quarter: 'Sprint 1 · High ROI',
     category: 'Commercial & Finance',
     status: 'In Design',
     summary:
-      'Allows premium artists to brand their own domain (e.g. priyapatel.live, rahulsharma.com) with automated Cloudflare/Vercel wildcard SSL certificates and hidden StageHost branding.',
+      'Allows premium artists to brand their own domain (e.g. priyapatel.live, rahulsharma.com) with automated Cloudflare/Vercel wildcard SSL certificates and hidden BookMyArtist branding.',
     keyCapabilities: [
       'DNS CNAME / A-Record verification with automatic 60-second Let\'s Encrypt SSL provisioning',
       'Next.js dynamic middleware hostname rewriting directly to the artist\'s internal slug route',
@@ -840,11 +840,11 @@ export const FUTURE_ROADMAP_ITEMS: FutureRoadmapItem[] = [
     category: 'AI & Automation',
     status: 'Planned',
     summary:
-      'Bi-directional synchronization: Personal events added in Google Calendar automatically block availability on StageHost, eliminating double-booking risks.',
+      'Bi-directional synchronization: Personal events added in Google Calendar automatically block availability on BookMyArtist, eliminating double-booking risks.',
     keyCapabilities: [
       'Google Calendar Webhook Watch API (calendar.events.watch) for real-time busy slot syncing',
       'Privacy protection: personal event titles are masked as "Engaged / Private Booking" to protect host privacy',
-      'Automatic two-way reconciliation between StageHost schedule slots and Google Calendar events',
+      'Automatic two-way reconciliation between BookMyArtist schedule slots and Google Calendar events',
     ],
     impactForArtists: 'Guarantees 100% schedule accuracy without manual calendar maintenance.',
   },

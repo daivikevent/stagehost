@@ -1,7 +1,7 @@
-# StageHost — Enterprise Platform for Stage Anchors, Emcees & Live Artists
+# BookMyArtist — Enterprise Platform for Stage Anchors, Emcees & Live Artists
 
 > **Your Stage. Your Brand. Your Bookings.**
-> The all-in-one digital operating system and portfolio engine built specifically for event hosts, wedding emcees, corporate presenters, DJs, live musicians, and stage anchors.
+> The all-in-one digital operating system and portfolio engine built specifically for event hosts, wedding emcees, corporate presenters, DJs, live musicians, and performing artists of all kinds.
 
 ---
 
@@ -69,17 +69,17 @@
 
 ---
 
-## 🔮 Future Scope & Development Roadmap (From STAGEHOST_FUTURE_ROADMAP.md)
+## 🔮 Future Scope & Development Roadmap (From BOOKMYARTIST_FUTURE_ROADMAP.md)
 
 | Feature | Sprint / Target | Category | Status | Summary |
 |---|---|---|---|---|
 | **🎭 Universal Multi-Artist Architecture & Audio Embeds** | Sprint 1 | Team & Backstage | Active / In Design | Expansion to all 11 performing artist categories (DJs, Live Singers, Bands, Standup Comedians, Dancers, Magicians, Photographers) with SoundCloud / Spotify players, repertoire setlists, and bundled event packages. |
-| **🌐 Custom Domains Multi-Tenant White-Labeling** | Sprint 1 | Commercial & Finance | In Design | Allows ₹1L+ celebrity emcees to point their personal domain (`anchorname.com`) with automated Cloudflare/Vercel Let's Encrypt SSL and zero StageHost branding. |
-| **📄 Automated PDF Quotation & Rate Card Proposal Generator** | Sprint 2 | Commercial & Finance | Planned | 1-click corporate quotation generator with itemized scope of work (briefing, rehearsals, event hosting), 50/50 payment milestones, and WhatsApp proposal delivery. |
+| **🌐 Custom Domains Multi-Tenant White-Labeling** | Sprint 1 | Commercial & Finance | In Design | Allows ₹1L+ celebrity performers to point their personal domain (`artistname.com`) with automated Cloudflare/Vercel Let's Encrypt SSL and zero BookMyArtist branding. |
+| **📄 Automated PDF Quotation & Rate Card Proposal Generator** | Sprint 2 | Commercial & Finance | Planned | 1-click corporate quotation generator with itemized scope of work (briefing, rehearsals, performance), 50/50 payment milestones, and WhatsApp proposal delivery. |
 | **🖼️ Client-Side Media Compression Pipeline (WebP)** | Sprint 3 | Infrastructure | Planned | Browser-based HTML5 canvas engine that resizes raw 15MB–25MB DSLR photographer photos to ~250KB WebP before upload, ensuring lightning-fast mobile loading. |
-| **🔑 One-Click Social Authentication (Google & Apple OAuth)** | Sprint 4 | Growth & Onboarding | Planned | Instant 1-tap artist registration and login with Google Cloud and Apple Services IDs, automatically provisioning profile avatars and stage vanity slugs. |
+| **🔑 One-Click Social Authentication (Google & Apple OAuth)** | Sprint 4 | Growth & Onboarding | Planned | Instant 1-tap artist registration and login with Google Cloud and Apple Services IDs, automatically provisioning profile avatars and artist vanity slugs. |
 | **🤖 Meta WhatsApp Cloud API (Automated Instant Ping)** | Sprint 5 | AI & Automation | Planned | Official WhatsApp Cloud API integration delivering structured lead notification templates to the artist's personal WhatsApp within seconds of form submission. |
-| **🔄 Two-Way Google Calendar Real-Time Sync** | Sprint 6 | Automation | Planned | Bi-directional synchronization: personal events added in Google Calendar automatically block availability on StageHost with privacy-masked labels. |
+| **🔄 Two-Way Google Calendar Real-Time Sync** | Sprint 6 | Automation | Planned | Bi-directional synchronization: personal events added in Google Calendar automatically block availability on BookMyArtist with privacy-masked labels. |
 | **📑 Automated GST Tax Invoicing for Subscriptions & Gigs** | Sprint 7 | Compliance & Finance | Planned | Official GST-compliant tax invoicing engine with sequential numbers (INV-2026-XXXX), SAC 9996/9983, and Input Tax Credit (ITC) data for LLPs. |
 | **📱 Mobile Progressive Web App (PWA) & Web Push Notifications** | Sprint 8 | Retention & Mobile | Planned | Standalone mobile home-screen app with background sync and native Web Push Notifications for new inquiries and hold expiry alerts. |
 
@@ -101,8 +101,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/stagehost/stagehost.git
-cd stagehost
+git clone https://github.com/bookmyartist/bookmyartist.git
+cd bookmyartist
 
 # Install dependencies
 npm install

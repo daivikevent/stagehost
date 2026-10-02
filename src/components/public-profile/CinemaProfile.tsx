@@ -152,7 +152,7 @@ export function CinemaProfile({
       onSelectDateForBooking(
         dateStr,
         preferred,
-        `Hey ${profile.name}! 🎬 Inquiring about locking your Red Carpet / StageHost availability for ${MONTHS[calMonth]} ${day}, ${calYear}. Please share your rider & premiere availability!`
+        `Hey ${profile.name}! 🎬 Inquiring about locking your Red Carpet / BookMyArtist availability for ${MONTHS[calMonth]} ${day}, ${calYear}. Please share your rider & premiere availability!`
       );
     } else {
       onOpenInquiry();
@@ -166,7 +166,7 @@ export function CinemaProfile({
   const defaultAvatar = `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop`;
   const avatarUrl = profile.profile_photo_url || defaultAvatar;
 
-  const waMessage = `Hey ${profile.name}! 🎬 Saw your CineStar Red Carpet profile on StageHost and would love to discuss booking you for our upcoming headline event.`;
+  const waMessage = `Hey ${profile.name}! 🎬 Saw your CineStar Red Carpet profile on BookMyArtist and would love to discuss booking you for our upcoming headline event.`;
   const waLink = getWhatsAppLink(profile.whatsapp_number || profile.phone, waMessage);
   const packagesList = getEffectiveServicePackages(profile);
 
@@ -178,9 +178,9 @@ export function CinemaProfile({
           {Array.from({ length: 4 }).map((_, idx) => (
             <div key={`ticker-${idx}`} className={styles.tickerItem}>
               <Flame size={14} color="#ffd700" />
-              <span>OFFICIAL RED CARPET PREMIERE • CELEBRITY STAGE HOST • HIGH-OCTANE ARENA PERFORMANCES</span>
+              <span>OFFICIAL RED CARPET PREMIERE • CELEBRITY STAGE ARTIST • HIGH-OCTANE ARENA PERFORMANCES</span>
               <Clapperboard size={14} color="#ffd700" />
-              <span>LIVE TOUR BOOKINGS OPEN • STAGEHOST VIP VERIFIED</span>
+              <span>LIVE TOUR BOOKINGS OPEN • BOOKMYARTIST VIP VERIFIED</span>
             </div>
           ))}
         </div>
@@ -804,12 +804,12 @@ export function CinemaProfile({
 
         {/* ---------------- Platform Branding Footer ---------------- */}
         <footer className={styles.cinemaFooter}>
-          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+          <a href="https://bookmyartist.in/" target="_blank" rel="noopener noreferrer">
             <Sparkles size={14} color="#f59e0b" />
-            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+            <span>Created on <strong>BookMyArtist</strong> · Elite Artist Infrastructure</span>
           </a>
           <div className={styles.cinemaFooterNotice}>
-            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+            BookMyArtist is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
           </div>
         </footer>
       </div>

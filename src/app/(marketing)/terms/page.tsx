@@ -5,8 +5,8 @@ import type { TermsContent } from '@/types/pages';
 import styles from '@/components/marketing/PolicyPage.module.css';
 
 export const metadata = {
-  title: 'Terms of Service | StageHost',
-  description: 'StageHost platform terms of service, anchor portfolio obligations, and booking facilitation disclaimers.',
+  title: 'Terms of Service | BookMyArtist',
+  description: 'BookMyArtist platform terms of service, artist portfolio obligations, and booking facilitation disclaimers.',
 };
 
 export default async function TermsPage() {

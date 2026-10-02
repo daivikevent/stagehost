@@ -14,7 +14,7 @@ export const DEFAULT_EVENT_FUNCTIONS = [
   { id: 'concert_fest', label: '🎤 Concert / College Fest' },
 ];
 
-const STORAGE_KEY = 'stagehost_custom_event_functions';
+const STORAGE_KEY = 'bookmyartist_custom_event_functions';
 
 interface EventFunctionsPickerProps {
   value: string; // Comma-separated or single string
@@ -38,7 +38,7 @@ export function EventFunctionsPicker({
   // Load custom functions from localStorage on mount
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('stagehost_custom_event_functions');
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {

@@ -45,7 +45,7 @@ function record(category, testName, isSuccess, details = '') {
 
 async function runComprehensiveFunctionalTest() {
   console.log('================================================================');
-  console.log('🎯 STAGEHOST FULL-PLATFORM FUNCTIONALITY VERIFICATION MATRIX');
+  console.log('🎯 BOOKMYARTIST FULL-PLATFORM FUNCTIONALITY VERIFICATION MATRIX');
   console.log('================================================================\n');
 
   // ============================================================================

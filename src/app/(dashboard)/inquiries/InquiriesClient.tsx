@@ -471,7 +471,7 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
                         e.stopPropagation();
                         const p = (inq.phone || '').replace(/\D/g, '');
                         const phone = p.startsWith('91') ? p : `91${p}`;
-                        const msg = `Hi ${inq.name}! This is regarding your booking inquiry on StageHost for ${inq.event_type || 'an event'}${inq.event_date ? ` on ${inq.event_date}` : ''}${inq.event_city ? ` in ${inq.event_city}` : ''}. I would love to host your event! Can we discuss details?`;
+                        const msg = `Hi ${inq.name}! This is regarding your booking inquiry on BookMyArtist for ${inq.event_type || 'an event'}${inq.event_date ? ` on ${inq.event_date}` : ''}${inq.event_city ? ` in ${inq.event_city}` : ''}. I would love to perform at your event! Can we discuss details?`;
                         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
                       }}
                       style={{
@@ -711,7 +711,7 @@ ${profileName}`;
                     const p = (selected.phone || '').replace(/\D/g, '');
                     return p.startsWith('91') ? p : `91${p}`;
                   })()}?text=${encodeURIComponent(
-                    `Hi ${selected.name}! This is regarding your booking inquiry on StageHost for ${selected.event_type || 'an event'}${selected.event_date ? ` on ${selected.event_date}` : ''}${selected.event_city ? ` in ${selected.event_city}` : ''}. I would love to host your event! Can we discuss commercials and details?`
+                    `Hi ${selected.name}! This is regarding your booking inquiry on BookMyArtist for ${selected.event_type || 'an event'}${selected.event_date ? ` on ${selected.event_date}` : ''}${selected.event_city ? ` in ${selected.event_city}` : ''}. I would love to perform at your event! Can we discuss commercials and details?`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

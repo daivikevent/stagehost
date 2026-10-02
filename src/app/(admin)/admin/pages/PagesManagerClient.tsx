@@ -498,7 +498,7 @@ export function PagesManagerClient({
               />
             </div>
             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-              <label className={styles.label}>StageHost Story &amp; Mission</label>
+              <label className={styles.label}>BookMyArtist Story &amp; Mission</label>
               <textarea
                 className={styles.textarea}
                 rows={5}
@@ -680,12 +680,12 @@ export function PagesManagerClient({
                     articles: [
                       {
                         id: Date.now().toString(),
-                        title: 'New Anchor Career Guide',
+                        title: 'New Artist Career Guide',
                         slug: `guide-${Date.now()}`,
                         category: 'Career Growth',
                         readTime: '4 min read',
                         publishedAt: 'September 2026',
-                        author: 'StageHost Editorial',
+                        author: 'BookMyArtist Editorial',
                         excerpt: 'Summary of the guide...',
                         content: 'Write the complete guide content here in markdown or clear text.',
                       },

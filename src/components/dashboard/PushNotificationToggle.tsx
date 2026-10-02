@@ -151,7 +151,7 @@ export default function PushNotificationToggle() {
         lineHeight: 1.5,
         marginBottom: '1.5rem',
       }}>
-        <strong>💡 Note for iPhone / iOS:</strong> Push notifications require adding StageHost to your Home Screen first (tap Share ➔ Add to Home Screen in Safari), then launching it as an App.
+        <strong>💡 Note for iPhone / iOS:</strong> Push notifications require adding BookMyArtist to your Home Screen first (tap Share ➔ Add to Home Screen in Safari), then launching it as an App.
       </div>
     );
   }

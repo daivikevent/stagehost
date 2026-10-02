@@ -139,7 +139,7 @@ export function CheckoutButton({
         key: orderData.key,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: 'StageHost',
+        name: 'BookMyArtist',
         description: `${planName} — Monthly Subscription${appliedCoupon ? ` (${appliedCoupon.code})` : ''}`,
         order_id: orderData.order_id,
         prefill: {

@@ -12,7 +12,7 @@ import type {
 import { PagesManagerClient } from './PagesManagerClient';
 
 export const metadata = {
-  title: 'Pages & Legal CMS | StageHost Admin',
+  title: 'Pages & Legal CMS | BookMyArtist Admin',
   description: 'Manage legal policies, about us details, support channels, and blog articles.',
 };
 

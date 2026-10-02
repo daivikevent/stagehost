@@ -103,8 +103,13 @@
 }
 
 @keyframes tickerMarquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ---------------- Sticky Cyber HUD Header ---------------- */
@@ -151,8 +156,13 @@
 }
 
 @keyframes cyberPulseBadge {
-  0% { box-shadow: 0 0 12px rgba(0, 242, 254, 0.3); }
-  100% { box-shadow: 0 0 24px rgba(0, 242, 254, 0.7); }
+  0% {
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+  }
+
+  100% {
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.7);
+  }
 }
 
 .brandTextGroup {
@@ -264,19 +274,24 @@
     height: 58px;
     gap: 8px;
   }
+
   .monogramBadge {
     width: 34px;
     height: 34px;
   }
+
   .brandNameRow {
     font-size: 0.94rem;
   }
+
   .brandSubtitle {
     font-size: 0.58rem;
   }
+
   .btnLabel {
     display: none;
   }
+
   .actionIconBtn {
     width: 36px;
     height: 36px;
@@ -284,15 +299,18 @@
     border-radius: 50%;
     justify-content: center;
   }
+
   .btnCyberNeon {
     height: 36px;
     padding: 0 14px;
     font-size: 0.74rem;
     gap: 6px;
   }
+
   .btnFullText {
     display: none;
   }
+
   .btnShortText {
     display: inline;
   }
@@ -350,8 +368,17 @@
 }
 
 @keyframes radarBlink {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.3); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(1.3);
+  }
 }
 
 /* Artist Holographic Pod */
@@ -388,8 +415,13 @@
 }
 
 @keyframes holoRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .holoAvatarImg {
@@ -454,7 +486,8 @@
 }
 
 .heroCyberGradient {
-  background: linear-gradient(90deg, #00f2fe 0%, #ff007a 100%);
+  background: linear-gradient(90deg, #002f2e 0%, #ff007a 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 35px rgba(0, 242, 254, 0.4);
@@ -522,9 +555,17 @@
 }
 
 @keyframes eqFrequency {
-  0% { transform: scaleY(0.3); }
-  50% { transform: scaleY(1); }
-  100% { transform: scaleY(0.4); }
+  0% {
+    transform: scaleY(0.3);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0.4);
+  }
 }
 
 /* Hero Meta Row */
@@ -971,9 +1012,17 @@
 }
 
 @keyframes playPulse {
-  0% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); }
-  50% { box-shadow: 0 0 40px rgba(255, 0, 122, 0.8); }
-  100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); }
+  0% {
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(255, 0, 122, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+  }
 }
 
 .clipCard {
@@ -1491,43 +1540,54 @@
     padding: 14px 8px;
     border-radius: 14px;
   }
+
   .telemetryStrip {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
+
   .cyberMonthTitle {
     font-size: 1.15rem;
   }
+
   .cyberWeekdays {
     gap: 2px;
     margin-bottom: 4px;
   }
+
   .cyberWeekdayCell {
     font-size: 0.6rem;
     padding: 2px 0;
   }
+
   .cyberDaysGrid {
     gap: 2px;
   }
+
   .cyberDayEmpty {
     min-height: 52px;
   }
+
   .cyberDayCell {
     min-height: 52px;
     padding: 4px 2px;
     border-radius: 6px;
   }
+
   .dayNum {
     font-size: 0.74rem;
   }
+
   .cyberChip {
     font-size: 0.5rem;
     padding: 1px 2px;
     line-height: 1.1;
   }
+
   .cityText {
     font-size: 7px;
   }
+
   .cyberLegend {
     gap: 8px;
     font-size: 0.62rem;
@@ -1827,7 +1887,7 @@
 }
 
 /* ==========================================================================
-   Platform Branding Footer (StageHost Disclaimer)
+   Platform Branding Footer (BookMyArtist Disclaimer)
    ========================================================================== */
 .cyberFooter {
   text-align: center;
@@ -1866,11 +1926,13 @@
   .cyberFooter {
     padding: 32px 14px 120px;
   }
+
   .cyberFooter a {
     font-size: 0.78rem;
     flex-wrap: wrap;
     justify-content: center;
   }
+
   .cyberFooterNotice {
     font-size: 0.7rem;
   }
@@ -1971,9 +2033,11 @@
     gap: 8px;
     justify-content: space-around;
   }
+
   .dockStatusGroup {
     display: none;
   }
+
   .hudDockBtnPrimary,
   .hudDockBtnGhost {
     padding: 8px 12px;

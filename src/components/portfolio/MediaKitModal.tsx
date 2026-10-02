@@ -31,8 +31,8 @@ export function MediaKitModal({ isOpen, onClose, profile }: MediaKitModalProps) 
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copiedText, setCopiedText] = useState(false);
 
-  const cleanSlug = profile.slug || 'anchor';
-  const liveBrandUrl = `https://stagehost.in/${cleanSlug}`;
+  const cleanSlug = profile.slug || 'artist';
+  const liveBrandUrl = `https://bookmyartist.in/${cleanSlug}`;
 
   useEffect(() => {
     if (!isOpen || !cleanSlug) return;
@@ -319,7 +319,7 @@ Email: ${profile.email || ''}`;
               </div>
 
               <div style={{ textAlign: 'right' }}>
-                <span className={styles.docFooterBrand}>StageHost Verified Media Kit</span>
+                <span className={styles.docFooterBrand}>BookMyArtist Verified Media Kit</span>
                 <div style={{ fontSize: '10px', color: '#94a3b8' }}>{liveBrandUrl}</div>
               </div>
             </div>

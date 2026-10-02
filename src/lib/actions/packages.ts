@@ -16,7 +16,7 @@ async function getCurrentProfile() {
 
   if (isUserAdmin) {
     const cookieStore = await cookies();
-    const impersonateId = cookieStore.get('stagehost_impersonate_user_id')?.value;
+    const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
     if (impersonateId) {
       const adminClient = createAdminClient();
       const { data: impProfile } = await adminClient

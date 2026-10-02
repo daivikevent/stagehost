@@ -61,7 +61,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
   };
 
   const handleSendTestEmail = async () => {
-    const target = testEmailTo || settings.support_email || 'admin@stagehost.in';
+    const target = testEmailTo || settings.support_email || 'admin@bookmyartist.in';
     setIsSendingTest(true);
     try {
       const res = await sendAdminTestEmail(target);
@@ -96,7 +96,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
       <div className={styles.pageHeader}>
         <div>
           <h1 className={styles.pageTitle}>Platform Settings</h1>
-          <p className={styles.pageSubtitle}>Global configuration for the StageHost platform</p>
+          <p className={styles.pageSubtitle}>Global configuration for the BookMyArtist platform</p>
         </div>
         <button className="btn btn-primary" onClick={handleSaveSettings} disabled={isPending}>
           {isPending ? <Loader2 size={16} className="spin" /> : <Save size={16} />} Save All Settings
@@ -174,7 +174,9 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
                 update('site_theme', nextTheme);
                 document.documentElement.setAttribute('data-site-theme', nextTheme);
                 try {
+                  localStorage.setItem('bookmyartist_site_theme', nextTheme);
                   localStorage.setItem('stagehost_site_theme', nextTheme);
+                  document.cookie = `bookmyartist_site_theme=${nextTheme}; path=/; max-age=31536000; SameSite=Lax`;
                   document.cookie = `stagehost_site_theme=${nextTheme}; path=/; max-age=31536000; SameSite=Lax`;
                 } catch {}
               }}
@@ -222,7 +224,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
           <div className={styles.settingRow}>
             <div>
               <div className={styles.settingLabel}>Auto-list in Directory</div>
-              <div className={styles.settingDesc}>New anchor profiles appear in directory by default</div>
+              <div className={styles.settingDesc}>New artist profiles appear in directory by default</div>
             </div>
             <label className="toggle">
               <input
@@ -245,7 +247,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             </div>
             <input
               className={styles.settingInput}
-              value={settings.branding_watermark_text || 'Powered by StageHost'}
+              value={settings.branding_watermark_text || 'Powered by BookMyArtist'}
               onChange={(e) => update('branding_watermark_text', e.target.value)}
             />
           </div>
@@ -255,7 +257,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             </div>
             <input
               className={styles.settingInput}
-              value={settings.branding_watermark_link || 'https://stagehost.in'}
+              value={settings.branding_watermark_link || 'https://bookmyartist.in'}
               onChange={(e) => update('branding_watermark_link', e.target.value)}
             />
           </div>
@@ -270,7 +272,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             </div>
             <input
               className={styles.settingInput}
-              value={settings.email_from_name || 'StageHost'}
+              value={settings.email_from_name || 'BookMyArtist'}
               onChange={(e) => update('email_from_name', e.target.value)}
             />
           </div>
@@ -280,7 +282,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             </div>
             <input
               className={styles.settingInput}
-              value={settings.email_from_address || 'notifications@stagehost.in'}
+              value={settings.email_from_address || 'notifications@bookmyartist.in'}
               onChange={(e) => update('email_from_address', e.target.value)}
             />
           </div>
@@ -361,7 +363,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
               className="input"
               rows={2}
               style={{ width: '100%', resize: 'vertical' }}
-              placeholder="e.g. 🚀 StageHost 2.0 is live! You can now customize your hero themes and track direct WhatsApp analytics."
+              placeholder="e.g. 🚀 BookMyArtist 2.0 is live! You can now customize your hero themes and track direct WhatsApp analytics."
               value={banner.message}
               onChange={(e) => setBanner({ ...banner, message: e.target.value })}
             />
@@ -473,7 +475,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--color-text-tertiary)', fontWeight: 600 }}>
                 CNAME Target Record
               </div>
-              <code style={{ fontSize: '13px', color: 'var(--color-primary)', fontWeight: 600 }}>cname.stagehost.in</code>
+              <code style={{ fontSize: '13px', color: 'var(--color-primary)', fontWeight: 600 }}>cname.bookmyartist.in</code>
             </div>
             <div>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--color-text-tertiary)', fontWeight: 600 }}>

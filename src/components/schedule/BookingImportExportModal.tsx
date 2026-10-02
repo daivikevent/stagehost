@@ -107,7 +107,7 @@ export function BookingImportExportModal({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `stagehost_bookings_${scope}_${today}.csv`);
+    link.setAttribute('download', `bookmyartist_bookings_${scope}_${today}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -129,7 +129,7 @@ ${date2},full_day,tentative,Corporate Annual Gala,Corporate,Mumbai,Grand Hyatt,M
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'stagehost_bookings_import_template.csv');
+    link.setAttribute('download', 'bookmyartist_bookings_import_template.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -748,7 +748,7 @@ ${date2},full_day,tentative,Corporate Annual Gala,Corporate,Mumbai,Grand Hyatt,M
                     style={{ width: '100%', justifyContent: 'center', gap: '8px', fontWeight: 700, padding: '10px' }}
                   >
                     {isImporting ? <Loader2 size={16} className="spin" /> : <Upload size={16} />}
-                    {isImporting ? 'Importing Bookings into Calendar...' : `Import ${parsedRows.length} Bookings to StageHost`}
+                    {isImporting ? 'Importing Bookings into Calendar...' : `Import ${parsedRows.length} Bookings to BookMyArtist`}
                   </button>
                 </div>
               )}

@@ -245,13 +245,13 @@ export function AdminInquiriesClient({
               : '';
             const waUrl = waParam
               ? `https://wa.me/${waParam}?text=${encodeURIComponent(
-                  `Hi ${item.name}! This is the StageHost admin desk regarding your contact inquiry regarding "${item.subject}".`
+                  `Hi ${item.name}! This is the BookMyArtist admin desk regarding your contact inquiry regarding "${item.subject}".`
                 )}`
               : null;
             const mailtoUrl = `mailto:${item.email}?subject=${encodeURIComponent(
-              `Re: [StageHost Support] ${item.subject}`
+              `Re: [BookMyArtist Support] ${item.subject}`
             )}&body=${encodeURIComponent(
-              `Hi ${item.name},\n\nThank you for contacting StageHost. In response to your inquiry:\n\n"${item.message}"\n\n`
+              `Hi ${item.name},\n\nThank you for contacting BookMyArtist. In response to your inquiry:\n\n"${item.message}"\n\n`
             )}`;
 
             const cardStatusClass =

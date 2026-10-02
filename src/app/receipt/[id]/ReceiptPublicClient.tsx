@@ -191,7 +191,7 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: profile.name || 'StageHost Anchor',
+        name: profile.name || 'BookMyArtist Artist',
         description: `Advance Token for ${booking.event_name || 'Show Booking'} (${formatEventDate(booking.date)})`,
         order_id: orderData.orderId,
         prefill: {
@@ -284,7 +284,7 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
         <div className={styles.brandGroup}>
           <Link href={`/${profile.slug || ''}`} className={styles.logoTitle} style={{ textDecoration: 'none' }}>
             <Receipt size={18} color="#6C5CE7" />
-            <span>StageHost</span>
+            <span>BookMyArtist</span>
           </Link>
           <span className={styles.badge}>
             Issued by {profile.name}
@@ -405,7 +405,7 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
             <div className={styles.watermarkTitle}>
               {viewMode === 'contract' ? '★ OFFICIAL AGREEMENT ★' : '★ TOKEN CONFIRMATION ★'}
             </div>
-            <div className={styles.watermarkSub}>Direct Artist Booking · StageHost Verified</div>
+            <div className={styles.watermarkSub}>Direct Artist Booking · BookMyArtist Verified</div>
           </div>
 
           {/* Top Bar: Anchor Branding & Slip Meta */}
@@ -442,7 +442,7 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
                   Artist Performance Engagement Agreement
                 </h2>
                 <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
-                  Execution Date: {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })} · Validated via StageHost
+                  Execution Date: {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })} · Validated via BookMyArtist
                 </div>
               </div>
 
@@ -456,13 +456,13 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
                     {profile.name}
                   </div>
                   <div style={{ fontSize: '12px', color: '#475569', marginTop: '2px' }}>
-                    Professional Event Anchor & Host
+                    {profile.tagline || 'Professional Event Artist & Performer'}
                   </div>
                   <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
                     Contact: +91 {profile.whatsapp_number || profile.phone || 'Direct Artist Line'}
                   </div>
                   <div style={{ fontSize: '12px', color: '#64748b' }}>
-                    Email: {profile.email || 'bookings@stagehost.in'}
+                    Email: {profile.email || 'bookings@bookmyartist.in'}
                   </div>
                 </div>
 
@@ -561,7 +561,7 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
                   <div style={{ fontSize: '11px', color: '#6C5CE7', textTransform: 'uppercase', fontWeight: 700 }}>Official Artist Seal & E-Signature</div>
                   <div style={{ fontWeight: 800, fontSize: '15px', color: '#4338CA', marginTop: '10px' }}>{profile.name}</div>
                   <div style={{ fontSize: '10px', color: '#10B981', fontWeight: 600, marginTop: '4px' }}>
-                    ✓ Digitally Verified via StageHost ID Auth
+                    ✓ Digitally Verified via BookMyArtist ID Auth
                   </div>
                   <div style={{ fontSize: '9px', color: '#94a3b8', marginTop: '2px' }}>
                     Security Ref: {receiptNo} · Timestamp: {new Date().toISOString().slice(0, 10)}
@@ -756,18 +756,18 @@ export function ReceiptPublicClient({ booking, profile }: ReceiptPublicClientPro
           <div className={styles.footerBar}>
             <div>
               <div>Direct Artist Contact: +91 {profile.whatsapp_number || profile.phone || '9820198201'}</div>
-              <div>Direct Email: {profile.email || 'bookings@stagehost.in'}</div>
+              <div>Direct Email: {profile.email || 'bookings@bookmyartist.in'}</div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <span style={{ fontWeight: 700, color: '#6C5CE7' }}>Created with StageHost</span>
-              <div style={{ fontSize: '10px', color: '#94a3b8' }}>stagehost.in/{profile.slug || ''}</div>
+              <span style={{ fontWeight: 700, color: '#6C5CE7' }}>Created with BookMyArtist</span>
+              <div style={{ fontSize: '10px', color: '#94a3b8' }}>bookmyartist.in/{profile.slug || ''}</div>
             </div>
           </div>
 
           {/* Legal Platform Disclaimer */}
           <div className={styles.platformDisclaimer}>
-            Disclaimer: This document is issued for scheduling, contractual agreement, and token confirmation. StageHost provides technology infrastructure and is not a party to the contractual agreement between the artist and organizer.
+            Disclaimer: This document is issued for scheduling, contractual agreement, and token confirmation. BookMyArtist provides technology infrastructure and is not a party to the contractual agreement between the artist and organizer.
           </div>
         </div>
       </main>

@@ -225,7 +225,7 @@ export function NeoStageProfile({
     const slotLabel = slotType === 'evening' ? 'Evening Prime Slot' : slotType === 'morning' ? 'Morning / Daytime Slot' : 'Full Day Stage';
 
     if (profile.whatsapp_number || profile.phone) {
-      const msg = `Hey ${profile.name}! ⚡ I am viewing your Neo-Stage Festival portfolio on StageHost and want to instantly lock your availability for ${formattedDate} (${slotLabel} · ${targetEventType}). Please let me know if this slot is open!`;
+      const msg = `Hey ${profile.name}! ⚡ I am viewing your Neo-Stage Festival portfolio on BookMyArtist and want to instantly lock your availability for ${formattedDate} (${slotLabel} · ${targetEventType}). Please let me know if this slot is open!`;
       window.open(getWhatsAppLink(profile.whatsapp_number || profile.phone, msg), '_blank');
     } else {
       if (onSelectDateForBooking && fastPassDate) {
@@ -236,7 +236,7 @@ export function NeoStageProfile({
     }
   };
 
-  const waMessage = `Hey ${profile.name}! ⚡ Inquiring from your official StageHost Neo-Stage portfolio regarding booking availability for an upcoming arena event.`;
+  const waMessage = `Hey ${profile.name}! ⚡ Inquiring from your official BookMyArtist Neo-Stage portfolio regarding booking availability for an upcoming arena event.`;
   const waLink = getWhatsAppLink(profile.whatsapp_number || profile.phone, waMessage);
 
   const handleDirectWhatsApp = () => {
@@ -1244,15 +1244,15 @@ export function NeoStageProfile({
         </section>
 
         {/* ==========================================================================
-           Platform Branding Footer (StageHost Disclaimer)
+           Platform Branding Footer (BookMyArtist Disclaimer)
            ========================================================================== */}
         <footer className={styles.cyberFooter}>
-          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+          <a href="https://bookmyartist.in/" target="_blank" rel="noopener noreferrer">
             <Sparkles size={14} color="#00f2fe" />
-            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+            <span>Created on <strong>BookMyArtist</strong> · Elite Artist Infrastructure</span>
           </a>
           <div className={styles.cyberFooterNotice}>
-            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+            BookMyArtist is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
           </div>
         </footer>
       </div>

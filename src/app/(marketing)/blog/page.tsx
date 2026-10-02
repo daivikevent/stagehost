@@ -3,8 +3,8 @@ import type { BlogContent } from '@/types/pages';
 import { BlogClient } from './BlogClient';
 
 export const metadata = {
-  title: 'Blog & Anchor Guides | StageHost',
-  description: 'Stagecraft playbooks, emcee pricing strategies, and event management insights for live hosts in India.',
+  title: 'Blog & Artist Guides | BookMyArtist',
+  description: 'Stagecraft playbooks, artist pricing strategies, and event management insights for live performers in India.',
 };
 
 export default async function BlogPage() {

@@ -15,7 +15,7 @@ export function BlogClient({ content }: { content: BlogContent }) {
       <div className={styles.hero}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginBottom: 12 }}>
           <div className={styles.badge}>
-            <Sparkles size={14} /> StageHost Editorial
+            <Sparkles size={14} /> BookMyArtist Editorial
           </div>
           <Link href="/admin/pages" style={{ fontSize: 12, color: 'var(--color-text-tertiary)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
             <Edit3 size={12} /> Edit in Admin CMS

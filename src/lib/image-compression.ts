@@ -1,5 +1,5 @@
 /**
- * StageHost — Client-Side Image Compression Utility
+ * BookMyArtist — Client-Side Image Compression Utility
  * Resizes and compresses heavy DSLR/phone photos (10-25MB) into lightweight,
  * ultra-fast WebP/JPEG files (< 400KB) directly in the browser before upload.
  */

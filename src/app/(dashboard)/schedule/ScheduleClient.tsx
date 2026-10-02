@@ -168,7 +168,7 @@ export function generateGoogleCalendarUrl(booking: {
   const endStr = `${y}${pad(m)}${pad(d)}T${pad(endHour)}${pad(endMin)}00`;
 
   const details = [
-    `🎤 StageHost Show Booking`,
+    `🎤 BookMyArtist Show Booking`,
     `Artist: ${profileName}`,
     `Event: ${booking.event_name || booking.event_type}`,
     `Timing: ${booking.event_time || ''}`,
@@ -325,7 +325,7 @@ export function ScheduleClient({
   // Load and persist schedule view mode
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('stagehost_schedule_view');
+      const saved = localStorage.getItem('bookmyartist_schedule_view') || localStorage.getItem('stagehost_schedule_view');
       if (saved === 'grid' || saved === 'list') {
         setBookingViewMode(saved);
       }
@@ -335,7 +335,7 @@ export function ScheduleClient({
   const handleSetViewMode = (mode: 'grid' | 'list') => {
     setBookingViewMode(mode);
     try {
-      localStorage.setItem('stagehost_schedule_view', mode);
+      localStorage.setItem('bookmyartist_schedule_view', mode);
     } catch { }
   };
 
@@ -344,7 +344,7 @@ export function ScheduleClient({
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('stagehost_schedule_main_view');
+      const saved = localStorage.getItem('bookmyartist_schedule_main_view') || localStorage.getItem('stagehost_schedule_main_view');
       if (saved === 'calendar' || saved === 'pipeline' || saved === 'all') {
         setMainView(saved);
       }
@@ -354,7 +354,7 @@ export function ScheduleClient({
   const handleSetMainView = (mode: 'calendar' | 'pipeline' | 'all') => {
     setMainView(mode);
     try {
-      localStorage.setItem('stagehost_schedule_main_view', mode);
+      localStorage.setItem('bookmyartist_schedule_main_view', mode);
     } catch { }
   };
 
@@ -445,7 +445,7 @@ export function ScheduleClient({
     }
     if (typeof window !== 'undefined') {
       try {
-        const saved = localStorage.getItem('stagehost_custom_slot_times');
+        const saved = localStorage.getItem('bookmyartist_custom_slot_times') || localStorage.getItem('stagehost_custom_slot_times');
         if (saved) return JSON.parse(saved);
       } catch (e) { }
     }
@@ -466,7 +466,7 @@ export function ScheduleClient({
     const updated = { ...slotTimes, [slot]: tempTimeVal.trim() };
     setSlotTimes(updated);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('stagehost_custom_slot_times', JSON.stringify(updated));
+      localStorage.setItem('bookmyartist_custom_slot_times', JSON.stringify(updated));
     }
     setEditingSlotTime(null);
     success(`${slot === 'morning' ? 'Morning' : 'Evening'} timing updated to "${tempTimeVal.trim()}"`);
@@ -1129,9 +1129,9 @@ export function ScheduleClient({
     let cleanPhone = (clientPhone || '').replace(/\D/g, '');
     if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.replace(/^0+/, '');
     const phoneWithCountry = cleanPhone.startsWith('91') && cleanPhone.length > 10 ? cleanPhone : `91${cleanPhone}`;
-    const slug = initialProfile?.slug || 'anchor';
+    const slug = initialProfile?.slug || 'artist';
     const name = clientName ? `Hi ${clientName}!` : 'Hi!';
-    const message = `${name} Thank you so much for having me host your event! It was an absolute pleasure bringing energy to the stage. 🎉\n\nCould you please take 20 seconds to share your quick rating & review on my official StageHost page? It means a lot to an independent artist:\n👉 https://stagehost.in/${slug}?action=review\n\nLooking forward to hosting your next big celebration! ✨`;
+    const message = `${name} Thank you so much for having me perform at your event! It was an absolute pleasure bringing energy to the stage. 🎉\n\nCould you please take 20 seconds to share your quick rating & review on my official BookMyArtist page? It means a lot to an independent artist:\n👉 https://bookmyartist.in/${slug}?action=review\n\nLooking forward to performing at your next big celebration! ✨`;
 
     if (cleanPhone && cleanPhone.length >= 10) {
       window.open(`https://wa.me/${phoneWithCountry}?text=${encodeURIComponent(message)}`, '_blank');
@@ -2615,7 +2615,7 @@ export function ScheduleClient({
                             </div>
                             {iq.phone && (
                               <a
-                                href={`https://wa.me/${iq.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${iq.name}! Thank you for inquiring on StageHost for ${selectedDate}. Can we discuss your event requirements?`)}`}
+                                href={`https://wa.me/${iq.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${iq.name}! Thank you for inquiring on BookMyArtist for ${selectedDate}. Can we discuss your event requirements?`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-ghost btn-xs"
@@ -2907,7 +2907,7 @@ export function ScheduleClient({
                                   const p = b.client_phone.replace(/\D/g, '');
                                   return p.startsWith('91') ? p : `91${p}`;
                                 })()}?text=${encodeURIComponent(
-                                  `Hi ${b.client_name}! This is regarding your booking on StageHost for ${b.event_name || 'the event'} on ${b.date} in ${b.city || ''}.`
+                                  `Hi ${b.client_name}! This is regarding your booking on BookMyArtist for ${b.event_name || 'the event'} on ${b.date} in ${b.city || ''}.`
                                 )}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -3167,7 +3167,7 @@ export function ScheduleClient({
                                       const p = b.client_phone.replace(/\D/g, '');
                                       return p.startsWith('91') ? p : `91${p}`;
                                     })()}?text=${encodeURIComponent(
-                                      `Hi ${b.client_name}! This is regarding your booking on StageHost for ${b.event_name || 'the event'} on ${b.date} in ${b.city || ''}.`
+                                      `Hi ${b.client_name}! This is regarding your booking on BookMyArtist for ${b.event_name || 'the event'} on ${b.date} in ${b.city || ''}.`
                                     )}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -4373,10 +4373,10 @@ export function ScheduleClient({
               <Sparkles size={16} style={{ flexShrink: 0 }} />
               <span>
                 {travelForm.slot_type === 'morning'
-                  ? 'StageHost marks Morning for transit and keeps your Evening 100% AVAILABLE for gigs!'
+                  ? 'BookMyArtist marks Morning for transit and keeps your Evening 100% AVAILABLE for gigs!'
                   : travelForm.slot_type === 'evening'
-                    ? 'StageHost keeps your Morning open for shows and marks Evening for transit!'
-                    : 'StageHost marks the full day as traveling. No bookings will be accepted.'}
+                    ? 'BookMyArtist keeps your Morning open for shows and marks Evening for transit!'
+                    : 'BookMyArtist marks the full day as traveling. No bookings will be accepted.'}
               </span>
             </div>
 

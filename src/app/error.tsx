@@ -13,7 +13,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     // Log exception to monitoring
-    console.error('Unhandled StageHost error:', error);
+    console.error('Unhandled BookMyArtist error:', error);
   }, [error]);
 
   return (

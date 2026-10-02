@@ -33,16 +33,16 @@ interface HowItWorksClientProps {
 
 const FAQS = [
   {
-    q: 'How much commission does StageHost charge on event bookings?',
-    a: 'Zero percent (0%). StageHost is 100% commission-free. All booking fees, deposits, and client payments go directly from the client to the anchor via direct UPI/bank transfer or personal invoice.',
+    q: 'How much commission does BookMyArtist charge on event bookings?',
+    a: 'Zero percent (0%). BookMyArtist is 100% commission-free. All booking fees, deposits, and client payments go directly from the client to the artist via direct UPI/bank transfer or personal invoice.',
   },
   {
-    q: 'Can I connect my own custom domain like anchorname.live or emceepriya.com?',
-    a: 'Yes! On the Premium plan, you can connect your apex or subdomain. You only need to add a single CNAME record pointing to cname.stagehost.in. SSL certificates are provisioned automatically via Let\'s Encrypt.',
+    q: 'Can I connect my own custom domain like artistname.live or emceepriya.com?',
+    a: 'Yes! On the Premium plan, you can connect your apex or subdomain. You only need to add a single CNAME record pointing to cname.bookmyartist.in. SSL certificates are provisioned automatically via Let\'s Encrypt.',
   },
   {
     q: 'How do video showreels work? Can I upload directly or embed from YouTube?',
-    a: 'You can embed YouTube videos and shorts, Instagram reels, Facebook videos, or share Google Drive media links. StageHost automatically fetches the video thumbnail and embeds a high-speed player on your profile.',
+    a: 'You can embed YouTube videos and shorts, Instagram reels, Facebook videos, or share Google Drive media links. BookMyArtist automatically fetches the video thumbnail and embeds a high-speed player on your profile.',
   },
   {
     q: 'How does the Live Booking Calendar prevent double bookings?',
@@ -50,7 +50,7 @@ const FAQS = [
   },
   {
     q: 'How do I get the Verified Blue Tick and Spotlight Badge in the directory?',
-    a: 'Verified badges are awarded to anchors who have completed their full profile, added active showreels, and confirmed their phone number and past event credentials.',
+    a: 'Verified badges are awarded to artists who have completed their full profile, added active showreels, and confirmed their phone number and past event credentials.',
   },
 ];
 
@@ -117,10 +117,10 @@ export function HowItWorksClient({ customFeatures = [] }: HowItWorksClientProps)
           <BookOpen size={13} /> Complete Platform User Guide
         </div>
         <h1 className={styles.headline}>
-          How <span className={styles.headlineGradient}>StageHost</span> Works
+          How <span className={styles.headlineGradient}>BookMyArtist</span> Works
         </h1>
         <p className={styles.subtitle}>
-          Everything you need to master your digital anchor stage, manage availability, receive direct WhatsApp bookings, and book top event talent.
+          Everything you need to master your digital artist stage, manage availability, receive direct WhatsApp bookings, and book top event talent.
         </p>
 
         {/* Real-time Interactive Search Bar */}
@@ -259,7 +259,7 @@ export function HowItWorksClient({ customFeatures = [] }: HowItWorksClientProps)
               Platform Feature Directory &amp; Capabilities
             </h2>
             <p className={styles.sectionDesc}>
-              A live, auto-updating catalog of every single tool, module, and feature in the StageHost platform.
+              A live, auto-updating catalog of every single tool, module, and feature in the BookMyArtist platform.
             </p>
           </div>
 
@@ -416,7 +416,7 @@ export function HowItWorksClient({ customFeatures = [] }: HowItWorksClientProps)
             Frequently Asked Questions
           </h2>
           <p className={styles.sectionDesc}>
-            Quick answers about StageHost workflows, payments, and client booking guarantees.
+            Quick answers about BookMyArtist workflows, payments, and client booking guarantees.
           </p>
         </div>
 
@@ -434,7 +434,7 @@ export function HowItWorksClient({ customFeatures = [] }: HowItWorksClientProps)
       <div className={styles.ctaBanner}>
         <h2 className={styles.ctaTitle}>Ready to Command Your Digital Stage?</h2>
         <p className={styles.ctaText}>
-          Join hundreds of top-rated wedding, corporate, and celebrity anchors across India. Build your stage in 3 minutes.
+          Join hundreds of top-rated wedding, corporate, and celebrity artists across India. Build your stage in 3 minutes.
         </p>
         <div className={styles.ctaActions}>
           <Link href="/register" className="btn btn-accent btn-lg">

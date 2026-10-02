@@ -102,10 +102,10 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
     <div ref={containerRef}>
       {/* Page Header */}
       <section className={styles.hero}>
-        <div className={styles.heroBadge}><Sparkles size={14} /> Anchor Directory</div>
-        <h1 className={styles.heroTitle}>Find Your Perfect Event Anchor</h1>
+        <div className={styles.heroBadge}><Sparkles size={14} /> Artist Directory</div>
+        <h1 className={styles.heroTitle}>Find Your Perfect Live Artist &amp; Performer</h1>
         <p className={styles.heroSubtitle}>
-          Browse verified professional anchors across India. Filter by city, event type, and language.
+          Browse verified professional artists across India. Filter by category, city, event type, and language.
         </p>
 
         {/* Search Bar */}
@@ -265,7 +265,7 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
                   </Link>
                   {anchor.whatsapp_number && (
                     <a
-                      href={getWhatsAppLink(anchor.whatsapp_number, `Hi ${anchor.name}! Found you on StageHost. Interested in booking you.`)}
+                      href={getWhatsAppLink(anchor.whatsapp_number, `Hi ${anchor.name}! Found you on BookMyArtist. Interested in booking you.`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn('btn btn-sm', styles.waBtn)}
@@ -281,10 +281,10 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
         )}
       </section>
 
-      {/* CTA for anchors */}
+      {/* CTA for artists */}
       <section className={styles.anchorCta}>
         <Sparkles size={28} color="var(--color-accent)" />
-        <h2>Are you an anchor?</h2>
+        <h2>Are you an artist or performer?</h2>
         <p>Create your free professional portfolio and get discovered by clients across India.</p>
         <Link href="/register" className="btn btn-accent btn-lg">
           Build Your Portfolio Free
@@ -297,7 +297,7 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
           <ShieldCheck size={16} color="#818cf8" />
         </div>
         <div className={styles.noticeText}>
-          <strong>Independent Artist Discovery:</strong> StageHost is an open discovery and SaaS portfolio platform. All artists listed are independent professionals. Event contracts, schedule coordination, and payments are conducted directly between client and artist without platform intermediary liability.
+          <strong>Independent Artist Discovery:</strong> BookMyArtist is an open discovery and SaaS portfolio platform. All artists listed are independent professionals. Event contracts, schedule coordination, and payments are conducted directly between client and artist without platform intermediary liability.
         </div>
       </div>
     </div>

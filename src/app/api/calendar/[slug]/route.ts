@@ -31,10 +31,10 @@ export async function GET(
     const lines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//StageHost//Anchor Tour Schedule//EN',
+      'PRODID:-//BookMyArtist//Artist Tour Schedule//EN',
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
-      `X-WR-CALNAME:${profile.name} - Stage Tour`,
+      `X-WR-CALNAME:${profile.name} - Artist Tour`,
       `X-WR-TIMEZONE:Asia/Kolkata`,
     ];
 
@@ -54,13 +54,13 @@ export async function GET(
         dtEnd = `${cleanDate}T233000`;
       }
 
-      const summary = b.event_name || b.event_type || 'Anchor Show';
+      const summary = b.event_name || b.event_type || 'Artist Show';
       const location = [b.venue, b.city, profile.city].filter(Boolean).join(', ');
-      const desc = `Client: ${b.client_name || 'Confirmed Client'}\\nSlot: ${b.slot_type}\\nVenue: ${location}\\nManaged via StageHost`;
+      const desc = `Client: ${b.client_name || 'Confirmed Client'}\\nSlot: ${b.slot_type}\\nVenue: ${location}\\nManaged via BookMyArtist`;
 
       lines.push(
         'BEGIN:VEVENT',
-        `UID:${b.id || Math.random().toString(36).slice(2)}@stagehost.in`,
+        `UID:${b.id || Math.random().toString(36).slice(2)}@bookmyartist.in`,
         `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
         `DTSTART:${dtStart}`,
         `DTEND:${dtEnd}`,

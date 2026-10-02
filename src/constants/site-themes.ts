@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — Global Site Themes
+   BookMyArtist — Global Site Themes
    Curated Modern & Royal themes for the entire platform
    (Supports both Regal Dark & Luminous Light Modes)
    ============================================ */
@@ -43,7 +43,7 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
     glow: 'rgba(108, 92, 231, 0.4)',
     previewGradient: 'linear-gradient(135deg, #0A0A14 0%, #1A1A2E 50%, #12121F 100%)',
     previewColors: ['#6C5CE7', '#F0A500', '#16162A', '#0A0A14'],
-    features: ['Vibrant Neon Indigo', 'Amber Accents', 'Deep Space Glassmorphism', 'Default StageHost Vibe'],
+    features: ['Vibrant Neon Indigo', 'Amber Accents', 'Deep Space Glassmorphism', 'Default BookMyArtist Vibe'],
   },
   {
     id: 'midnight-gold',

@@ -18,9 +18,9 @@ export function ShareModal({ isOpen, onClose, slug, name, tagline }: ShareModalP
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://stagehost.in';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://bookmyartist.in';
   const profileUrl = origin.includes('localhost') || origin.includes('127.0.0.1')
-    ? `https://stagehost.in/${slug}`
+    ? `https://bookmyartist.in/${slug}`
     : `${origin}/${slug}`;
 
   // Generate QR Code data URL when modal opens
@@ -66,7 +66,7 @@ export function ShareModal({ isOpen, onClose, slug, name, tagline }: ShareModalP
     if (!qrDataUrl) return;
     const a = document.createElement('a');
     a.href = qrDataUrl;
-    a.download = `${slug}-stagehost-qr.png`;
+    a.download = `${slug}-bookmyartist-qr.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -74,7 +74,7 @@ export function ShareModal({ isOpen, onClose, slug, name, tagline }: ShareModalP
 
   // Pre-crafted WhatsApp message
   const whatsappMessage = encodeURIComponent(
-    `Namaste! 🙏\n\nCheck out my official hosting portfolio, performance videos & live tour availability here:\n👉 ${profileUrl}\n\nBookings open for Weddings, Corporate Events, Sangeet & College Fests! 🎤✨`
+    `Namaste! 🙏\n\nCheck out my official artist portfolio, performance videos & live tour availability here:\n👉 ${profileUrl}\n\nBookings open for Weddings, Corporate Events, Sangeet & Live Concerts! 🎤✨`
   );
 
   return (
@@ -98,7 +98,7 @@ export function ShareModal({ isOpen, onClose, slug, name, tagline }: ShareModalP
             {qrDataUrl ? (
               <img
                 src={qrDataUrl}
-                alt={`${name} StageHost QR Code`}
+                alt={`${name} BookMyArtist QR Code`}
                 className={styles.qrImage}
               />
             ) : (
@@ -177,7 +177,7 @@ export function ShareModal({ isOpen, onClose, slug, name, tagline }: ShareModalP
               <Linkedin size={13} /> LinkedIn
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out ${name}'s official hosting portfolio on StageHost:`)}&url=${encodeURIComponent(profileUrl)}`}
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out ${name}'s official artist portfolio on BookMyArtist:`)}&url=${encodeURIComponent(profileUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialBtn}

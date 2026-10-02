@@ -21,8 +21,8 @@ import {
 import styles from '@/components/marketing/AboutPage.module.css';
 
 export const metadata = {
-  title: 'Platform Features',
-  description: 'Explore the complete feature suite of StageHost: custom portfolios, video showreels, verified reviews, and WhatsApp booking tools.',
+  title: 'Platform Features | BookMyArtist',
+  description: 'Explore the complete feature suite of BookMyArtist: custom portfolios, video showreels, verified reviews, and WhatsApp booking tools.',
 };
 
 const FEATURES = [
@@ -54,7 +54,7 @@ const FEATURES = [
   {
     icon: Globe,
     title: 'Branded Digital Stage URL',
-    desc: 'Get your official personal portfolio URL (stagehost.in/your-name). Mobile-first, blazingly fast, and designed to look stunning on any screen size.',
+    desc: 'Get your official personal portfolio URL (bookmyartist.in/your-name). Mobile-first, blazingly fast, and designed to look stunning on any screen size.',
   },
   {
     icon: Award,
@@ -94,7 +94,7 @@ const FEATURES = [
   {
     icon: ShieldCheck,
     title: 'Verified Artist Badge',
-    desc: 'Stand out from amateur hosts with an official StageHost Verified Emcee checkmark on your portfolio and directory listing.',
+    desc: 'Stand out from amateur performers with an official BookMyArtist Verified checkmark on your portfolio and directory listing.',
   },
 ];
 
@@ -106,10 +106,10 @@ export default function FeaturesPage() {
           <Sparkles size={14} /> Comprehensive Feature Suite
         </div>
         <h1 className={styles.headline}>
-          Everything You Need to Run Your <span className={styles.headlineGradient}>Anchor Career</span>
+          Everything You Need to Run Your <span className={styles.headlineGradient}>Artist Career</span>
         </h1>
         <p className={styles.subtitle}>
-          StageHost replaces messy Google Drives, heavy PDFs, and scattered Instagram DMs with one sleek, high-converting digital command center.
+          BookMyArtist replaces messy Google Drives, heavy PDFs, and scattered Instagram DMs with one sleek, high-converting digital command center.
         </p>
       </div>
 

@@ -107,7 +107,7 @@ const PRICING: LandingPricingPlan[] = [
       'Inquiry form',
       'WhatsApp button',
       'Directory listing',
-      'StageHost subdomain',
+      'BookMyArtist subdomain',
     ],
     cta: 'Start Free',
     href: '/register',
@@ -117,7 +117,7 @@ const PRICING: LandingPricingPlan[] = [
     name: 'Starter',
     price: 199,
     period: '/month',
-    description: 'For growing anchors',
+    description: 'For growing artists',
     features: [
       '15 video showcases',
       '30 photo gallery',
@@ -155,7 +155,7 @@ const PRICING: LandingPricingPlan[] = [
     name: 'Premium',
     price: 1299,
     period: '/month',
-    description: 'For top-tier anchors',
+    description: 'For top-tier artists',
     features: [
       'Everything in Pro',
       'Custom domain',
@@ -181,17 +181,17 @@ const FAQS = [
   {
     question: 'Can I use my own domain name?',
     answer:
-      'Yes! With the Premium plan, you can connect your own custom domain (like yourname.com). Free and Starter plans use a StageHost subdomain (yourname.stagehost.in) which still looks professional.',
+      'Yes! With the Premium plan, you can connect your own custom domain (like yourname.com). Free and Starter plans use a BookMyArtist subdomain (yourname.bookmyartist.in) which still looks professional.',
   },
   {
     question: 'How do clients find me?',
     answer:
-      'You get a personal portfolio link to share on WhatsApp, Instagram, visiting cards, etc. Plus, you\'re listed in our public Anchor Directory where clients can search by city, event type, and more.',
+      'You get a personal portfolio link to share on WhatsApp, Instagram, visiting cards, etc. Plus, you\'re listed in our public Artist Directory where clients can search by category, city, event type, and more.',
   },
   {
     question: 'Do you take a commission on my bookings?',
     answer:
-      'No, never! StageHost is a SaaS platform — you pay a flat monthly fee (or use free forever). We don\'t take any commission on your bookings. 100% of your earnings are yours.',
+      'No, never! BookMyArtist is a SaaS platform — you pay a flat monthly fee (or use free forever). We don\'t take any commission on your bookings. 100% of your earnings are yours.',
   },
   {
     question: 'Can I manage multiple events on the same day?',
@@ -243,7 +243,7 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
         <div className={styles.heroContent}>
           <div className={styles.heroBadge}>
             <Sparkles size={14} />
-            <span>The #1 Platform for Event Anchors in India</span>
+            <span>The #1 Platform for Live Artists & Performers in India</span>
           </div>
 
           <h1 className={styles.heroTitle}>
@@ -276,7 +276,7 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
               ))}
             </div>
             <p className={styles.heroTrustText}>
-              <strong>7500+ anchors</strong> already building their brand
+              <strong>7500+ artists</strong> already building their brand
             </p>
           </div>
         </div>
@@ -384,9 +384,9 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
       {/* ---- TRUST SECTION (Desire) ---- */}
       <section className={styles.trustSection}>
         <div className={styles.sectionHeader}>
-          <span className="badge badge-success reveal">Why StageHost?</span>
+          <span className="badge badge-success reveal">Why BookMyArtist?</span>
           <h2 className="reveal reveal-delay-1">
-            Built for Anchors,<br />
+            Built for Artists,<br />
             <span className={styles.heroGradient}>Not Marketplaces</span>
           </h2>
         </div>
@@ -527,7 +527,7 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
           <span className={styles.heroGradient}>Digital Stage?</span>
         </h2>
         <p className="reveal reveal-delay-1">
-          Join hundreds of anchors who are already growing their career with StageHost.
+          Join hundreds of artists who are already growing their career with BookMyArtist.
           Free forever. No credit card required.
         </p>
         <Link href="/register" className="btn btn-accent btn-xl reveal reveal-delay-2">

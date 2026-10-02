@@ -5,8 +5,8 @@ import type { AboutContent } from '@/types/pages';
 import styles from '@/components/marketing/AboutPage.module.css';
 
 export const metadata = {
-  title: 'About Us | StageHost',
-  description: 'Learn about StageHost’s mission to empower India’s anchors, emcees, and event hosts with professional digital portfolios.',
+  title: 'About Us | BookMyArtist',
+  description: 'Learn about BookMyArtist’s mission to empower India’s live artists, performers, emcees, and entertainers with professional digital portfolios.',
 };
 
 const VALUE_ICONS = [HeartHandshake, Zap, Shield, Users];
@@ -47,7 +47,7 @@ export default async function AboutPage() {
 
       {/* Story */}
       <div className={styles.storySection}>
-        <h2 className={styles.storyTitle}>Why We Built StageHost</h2>
+        <h2 className={styles.storyTitle}>Why We Built BookMyArtist</h2>
         <div className={styles.storyText}>{content.story}</div>
       </div>
 
@@ -78,14 +78,14 @@ export default async function AboutPage() {
       <div className={styles.cta}>
         <h2>Ready to Build Your Digital Stage?</h2>
         <p>
-          Join hundreds of professional emcees who are growing their bookings and commanding premium rates with StageHost.
+          Join hundreds of professional artists and performers who are growing their bookings and commanding premium rates with BookMyArtist.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
           <Link href="/register" className="btn btn-accent btn-lg">
             Create Your Free Portfolio <ArrowRight size={18} />
           </Link>
           <Link href="/directory" className="btn btn-ghost btn-lg">
-            Browse Anchor Directory
+            Browse Artist Directory
           </Link>
         </div>
       </div>

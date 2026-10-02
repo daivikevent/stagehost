@@ -13,10 +13,10 @@ export function Footer() {
         <div className={styles.footerBrand}>
           <Link href="/" className={styles.footerLogo}>
             <Sparkles size={20} />
-            <span>StageHost</span>
+            <span>BookMyArtist</span>
           </Link>
           <p>
-            Your Stage. Your Brand. Your Bookings. India&apos;s dedicated digital portfolio &amp; booking management platform for live event anchors and emcees.
+            Your Stage. Your Brand. Your Bookings. India&apos;s dedicated digital portfolio &amp; booking management platform for live artists, performers, anchors, DJs, singers, and entertainment talent.
           </p>
           <div className={styles.footerBadge}>
             <ShieldCheck size={14} /> 100% Commission-Free
@@ -36,7 +36,7 @@ export function Footer() {
               Pricing
             </Link>
             <Link href="/directory" className={styles.footerLink}>
-              Find Anchors
+              Find Artists
             </Link>
           </div>
 
@@ -69,7 +69,7 @@ export function Footer() {
       </div>
 
       <div className={styles.footerBottom}>
-        <p>© {currentYear} StageHost. All rights reserved. Made with ❤️ in India.</p>
+        <p>© {currentYear} BookMyArtist. All rights reserved. Made with ❤️ in India.</p>
         <div className={styles.footerBottomLinks}>
           <Link href="/privacy">Privacy</Link>
           <span>·</span>

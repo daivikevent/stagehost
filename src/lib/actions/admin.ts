@@ -19,6 +19,8 @@ export async function checkIsAdmin(): Promise<boolean> {
   if (role === 'admin') return true;
 
   const allowedAdminEmails = [
+    'admin@bookmyartist.in',
+    'admin@bookmyartist.com',
     'admin@stagehost.in',
     'admin@stagehost.com',
     process.env.ADMIN_EMAIL,
@@ -352,18 +354,18 @@ export async function getPlatformSettings(): Promise<Record<string, string>> {
   const { data } = await adminClient.from('platform_settings').select('key, value');
 
   const defaults: Record<string, string> = {
-    platform_name: 'StageHost',
-    platform_tagline: 'The Professional Platform for Event Anchors',
-    support_email: 'support@stagehost.in',
+    platform_name: 'BookMyArtist',
+    platform_tagline: 'The Professional Platform for Live Artists & Performers',
+    support_email: 'support@bookmyartist.in',
     support_whatsapp: '',
     maintenance_mode: 'false',
     allow_new_registrations: 'true',
     require_email_verification: 'false',
     directory_auto_list: 'true',
-    branding_watermark_text: 'Powered by StageHost',
-    branding_watermark_link: 'https://stagehost.in',
-    email_from_name: 'StageHost',
-    email_from_address: 'notifications@stagehost.in',
+    branding_watermark_text: 'Powered by BookMyArtist',
+    branding_watermark_link: 'https://bookmyartist.in',
+    email_from_name: 'BookMyArtist',
+    email_from_address: 'notifications@bookmyartist.in',
     resend_api_key: (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_placeholder') ? '••••••••••••••••' : '',
     site_theme: 'obsidian-violet',
   };
@@ -404,6 +406,11 @@ export async function savePlatformSettings(settings: Record<string, string | boo
   if (settings.site_theme && typeof settings.site_theme === 'string') {
     try {
       const cookieStore = await cookies();
+      cookieStore.set('bookmyartist_site_theme', settings.site_theme, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+      });
       cookieStore.set('stagehost_site_theme', settings.site_theme, {
         path: '/',
         maxAge: 60 * 60 * 24 * 365,
@@ -452,13 +459,13 @@ export async function sendAdminTestEmail(toEmail: string): Promise<{
 
     const resend = new Resend(apiKey);
     let res = await resend.emails.send({
-      from: 'StageHost <notifications@stagehost.in>',
+      from: 'BookMyArtist <notifications@bookmyartist.in>',
       to: [toEmail],
-      subject: '🧪 StageHost Admin Test Email',
+      subject: '🧪 BookMyArtist Admin Test Email',
       html: `
         <div style="font-family: sans-serif; background: #0A0A14; color: #fff; padding: 24px; border-radius: 12px;">
-          <h2 style="color: #6C5CE7;">StageHost Admin Test</h2>
-          <p>This is a verified test email sent from the <strong>StageHost SaaS Admin Panel</strong>.</p>
+          <h2 style="color: #6C5CE7;">BookMyArtist Admin Test</h2>
+          <p>This is a verified test email sent from the <strong>BookMyArtist SaaS Admin Panel</strong>.</p>
           <p>Your email infrastructure (Resend) is working perfectly!</p>
           <hr style="border-color: rgba(255,255,255,0.1);" />
           <small style="color: #888;">Timestamp: ${new Date().toLocaleString()}</small>
@@ -468,13 +475,13 @@ export async function sendAdminTestEmail(toEmail: string): Promise<{
 
     if (res.error && (res.error as any).message?.includes('not verified')) {
       res = await resend.emails.send({
-        from: 'StageHost <onboarding@resend.dev>',
+        from: 'BookMyArtist <onboarding@resend.dev>',
         to: [toEmail],
-        subject: '🧪 StageHost Admin Test Email',
+        subject: '🧪 BookMyArtist Admin Test Email',
         html: `
           <div style="font-family: sans-serif; background: #0A0A14; color: #fff; padding: 24px; border-radius: 12px;">
-            <h2 style="color: #6C5CE7;">StageHost Admin Test</h2>
-            <p>This is a verified test email sent from the <strong>StageHost SaaS Admin Panel</strong>.</p>
+            <h2 style="color: #6C5CE7;">BookMyArtist Admin Test</h2>
+            <p>This is a verified test email sent from the <strong>BookMyArtist SaaS Admin Panel</strong>.</p>
             <p>Your email infrastructure (Resend) is working perfectly!</p>
             <hr style="border-color: rgba(255,255,255,0.1);" />
             <small style="color: #888;">Timestamp: ${new Date().toLocaleString()}</small>
@@ -792,12 +799,12 @@ export async function updateAdminPlan(
     updates.photos === -1 ? 'Unlimited photo gallery' : `${updates.photos} photos`,
     updates.services === -1 ? 'Unlimited service packages' : `${updates.services} service packages`,
     'Direct WhatsApp booking button',
-    'StageHost Directory listing',
+    'BookMyArtist Directory listing',
   ];
   if (updates.verified_badge) dynamicFeatures.push('Verified Artist Blue Tick Badge');
   if (updates.analytics) dynamicFeatures.push('Advanced visitor & lead analytics');
   if (updates.custom_domain) dynamicFeatures.push('Custom domain connection');
-  if (!updates.branding) dynamicFeatures.push('Zero StageHost branding');
+  if (!updates.branding) dynamicFeatures.push('Zero BookMyArtist branding');
   if ((updates.themes ?? 1) > 1) dynamicFeatures.push(`${updates.themes === -1 ? 'All' : updates.themes} themes unlocked`);
 
   const payload: Record<string, any> = {
@@ -905,13 +912,13 @@ export async function createAdminPlan(data: {
     data.photos === -1 ? 'Unlimited photo gallery' : `${data.photos} photos`,
     data.services === -1 ? 'Unlimited service packages' : `${data.services} service packages`,
     'Direct WhatsApp booking button',
-    'StageHost Directory listing',
+    'BookMyArtist Directory listing',
     'Zero booking commissions',
   ];
   if (data.verified_badge) features.push('Verified Artist Blue Tick Badge');
   if (data.analytics) features.push('Advanced visitor & lead analytics');
   if (data.custom_domain) features.push('Custom domain connection (yourname.com)');
-  if (!data.branding) features.push('Zero StageHost footer branding');
+  if (!data.branding) features.push('Zero BookMyArtist footer branding');
 
   const { data: newPlan, error } = await adminClient
     .from('plans')
@@ -921,7 +928,7 @@ export async function createAdminPlan(data: {
       tier,
       price_monthly: monthly,
       price_yearly: yearly,
-      description: data.description?.trim() || 'Custom plan for event anchors',
+      description: data.description?.trim() || 'Custom plan for event artists',
       features,
       limits,
       is_active: true,
@@ -1426,13 +1433,13 @@ export async function startImpersonation(userId: string, anchorName: string) {
   if (!isAdmin) throw new Error('Unauthorized');
 
   const cookieStore = await cookies();
-  cookieStore.set('stagehost_impersonate_user_id', userId, {
+  cookieStore.set('bookmyartist_impersonate_user_id', userId, {
     path: '/',
     httpOnly: true,
     sameSite: 'lax',
     maxAge: 60 * 60 * 4,
   });
-  cookieStore.set('stagehost_impersonate_anchor_name', anchorName, {
+  cookieStore.set('bookmyartist_impersonate_anchor_name', anchorName, {
     path: '/',
     httpOnly: false,
     sameSite: 'lax',
@@ -1445,6 +1452,8 @@ export async function startImpersonation(userId: string, anchorName: string) {
 
 export async function stopImpersonation() {
   const cookieStore = await cookies();
+  cookieStore.delete('bookmyartist_impersonate_user_id');
+  cookieStore.delete('bookmyartist_impersonate_anchor_name');
   cookieStore.delete('stagehost_impersonate_user_id');
   cookieStore.delete('stagehost_impersonate_anchor_name');
 
@@ -1459,14 +1468,14 @@ export async function getImpersonationStatus(): Promise<{
   anchorName?: string;
 }> {
   const cookieStore = await cookies();
-  const impersonateId = cookieStore.get('stagehost_impersonate_user_id')?.value;
-  const anchorName = cookieStore.get('stagehost_impersonate_anchor_name')?.value;
+  const impersonateId = cookieStore.get('bookmyartist_impersonate_user_id')?.value || cookieStore.get('stagehost_impersonate_user_id')?.value;
+  const anchorName = cookieStore.get('bookmyartist_impersonate_anchor_name')?.value || cookieStore.get('stagehost_impersonate_anchor_name')?.value;
 
   if (impersonateId) {
     return {
       isImpersonating: true,
       userId: impersonateId,
-      anchorName: anchorName || 'Anchor',
+      anchorName: anchorName || 'Artist',
     };
   }
   return { isImpersonating: false };
@@ -1593,7 +1602,7 @@ export async function addCustomDomainRequest(data: {
     domain: cleanDomain,
     status: 'pending',
     dns_type: 'CNAME',
-    dns_target: 'cname.stagehost.in',
+    dns_target: 'cname.bookmyartist.in',
     created_at: new Date().toISOString(),
   };
 

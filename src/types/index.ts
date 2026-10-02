@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — TypeScript Type Definitions
+   BookMyArtist — TypeScript Type Definitions
    ============================================ */
 
 // ---- User & Auth ----

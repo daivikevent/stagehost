@@ -70,7 +70,7 @@ export default function RegisterPage() {
         success('Account created! Please check your email to confirm, or log in.');
         router.push('/login');
       } else {
-        success('Account created! Welcome to StageHost.');
+        success('Account created! Welcome to BookMyArtist.');
         router.push('/dashboard');
         router.refresh();
       }
@@ -104,11 +104,11 @@ export default function RegisterPage() {
       {/* Logo */}
       <Link href="/" className={styles.logo}>
         <Sparkles size={24} />
-        <span>StageHost</span>
+        <span>BookMyArtist</span>
       </Link>
 
       <h1 className={styles.title}>Build Your Digital Stage</h1>
-      <p className={styles.subtitle}>Create your professional anchor portfolio in minutes</p>
+      <p className={styles.subtitle}>Create your professional artist portfolio in minutes</p>
 
       {/* Benefits */}
       <div className={styles.benefits}>

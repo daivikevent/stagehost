@@ -1,5 +1,5 @@
 /**
- * Production Database Cleansing Script for StageHost
+ * Production Database Cleansing Script for BookMyArtist
  * Removes all seeded demo/test data (fake bookings, fake testimonials,
  * stock photos, dummy showreels, test inquiries, and fake profiles)
  * while preserving real user accounts (aish85, Super Admin, admin-user).

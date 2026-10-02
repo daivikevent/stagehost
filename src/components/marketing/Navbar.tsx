@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { href: '/features', label: 'Features', route: '/features' },
   { href: '/how-it-works', label: 'How It Works', route: '/how-it-works' },
   { href: '/pricing', label: 'Pricing', route: '/pricing' },
-  { href: '/directory', label: 'Find Anchors', route: '/directory' },
+  { href: '/directory', label: 'Find Artists', route: '/directory' },
 ];
 
 export function Navbar() {
@@ -44,7 +44,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className={styles.logo}>
           <Sparkles size={24} />
-          <span className={styles.logoText}>StageHost</span>
+          <span className={styles.logoText}>BookMyArtist</span>
         </Link>
 
         {/* Desktop Nav */}

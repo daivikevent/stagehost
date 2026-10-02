@@ -136,7 +136,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
     }
     if (profile.whatsapp_number) {
       const formattedDate = formatEventDate(quickDate) || quickDate;
-      const msg = `Hi ${profile.name}! 👋 I was viewing your official StageHost profile and wanted to check your availability for a ${quickEventType} on ${formattedDate}. Could you please share your availability and package quote?`;
+      const msg = `Hi ${profile.name}! 👋 I was viewing your official BookMyArtist profile and wanted to check your availability for a ${quickEventType} on ${formattedDate}. Could you please share your availability and package quote?`;
       window.open(getWhatsAppLink(profile.whatsapp_number, msg), '_blank');
     } else {
       setInquiryForm((prev) => ({
@@ -201,12 +201,12 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
       'VERSION:3.0',
       `FN:${profile.name}`,
       `N:${profile.name};;;;`,
-      `TITLE:${profile.tagline || 'Live Event Anchor & Emcee'}`,
-      `ORG:StageHost Verified Artist`,
+      `TITLE:${profile.tagline || 'Live Event Artist & Performer'}`,
+      `ORG:BookMyArtist Verified Artist`,
       phoneWithCountry ? `TEL;TYPE=CELL:${phoneWithCountry}` : '',
       profile.email ? `EMAIL:${profile.email}` : '',
-      `URL:https://stagehost.in/${profile.slug}`,
-      `NOTE:Bookings & Tour Schedule: https://stagehost.in/${profile.slug}`,
+      `URL:https://bookmyartist.in/${profile.slug}`,
+      `NOTE:Bookings & Tour Schedule: https://bookmyartist.in/${profile.slug}`,
       'END:VCARD',
     ].filter(Boolean).join('\r\n');
 
@@ -214,7 +214,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${profile.slug || 'anchor'}-contact.vcf`;
+    link.download = `${profile.slug || 'artist'}-contact.vcf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -311,7 +311,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
 
   const getDirectChatWhatsAppUrl = () => {
     const cleanPhone = formatIndianPhoneForWa(profile.whatsapp_number || profile.phone);
-    const text = `Hi ${profile.name}! I saw your StageHost portfolio (stagehost.in/${profile.slug}) and would love to check your availability for an upcoming event.`;
+    const text = `Hi ${profile.name}! I saw your BookMyArtist portfolio (bookmyartist.in/${profile.slug}) and would love to check your availability for an upcoming event.`;
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
   };
 
@@ -392,7 +392,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
     }
   };
 
-  const whatsappMessage = `Hi ${profile.name}! I found your profile on StageHost and I'm interested in booking you for an event. Can we discuss?`;
+  const whatsappMessage = `Hi ${profile.name}! I found your profile on BookMyArtist and I'm interested in booking you for an event. Can we discuss?`;
 
   return (
     <>
@@ -745,7 +745,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
             </p>
             {profile.whatsapp_number && (
               <a
-                href={getWhatsAppLink(profile.whatsapp_number, `Hi ${profile.name}, I am reviewing your StageHost portfolio and would like to see your latest stage performance video clips.`)}
+                href={getWhatsAppLink(profile.whatsapp_number, `Hi ${profile.name}, I am reviewing your BookMyArtist portfolio and would like to see your latest stage performance video clips.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-secondary btn-sm"
@@ -1452,12 +1452,12 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
 
       {/* Branding Footer */}
       <footer className={styles.brandingFooter}>
-        <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+        <a href="https://bookmyartist.in/" target="_blank" rel="noopener noreferrer">
           <Sparkles size={14} />
-          <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+          <span>Created on <strong>BookMyArtist</strong> · Elite Artist Infrastructure</span>
         </a>
         <div className={styles.brandingFooterNotice}>
-          StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+          BookMyArtist is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
         </div>
       </footer>
         </div>

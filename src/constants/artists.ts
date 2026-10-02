@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — Universal Artist & Performer Taxonomy
+   BookMyArtist — Universal Artist & Performer Taxonomy
    Multi-Artist Engine: Scalable taxonomy for Anchors,
    DJs, Singers, Musicians, Comedians, Dancers, etc.
    ============================================ */

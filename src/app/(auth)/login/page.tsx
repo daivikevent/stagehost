@@ -65,7 +65,7 @@ export default function LoginPage() {
       {/* Logo */}
       <Link href="/" className={styles.logo}>
         <Sparkles size={24} />
-        <span>StageHost</span>
+        <span>BookMyArtist</span>
       </Link>
 
       <h1 className={styles.title}>Welcome Back</h1>

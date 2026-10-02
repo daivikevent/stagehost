@@ -1,5 +1,5 @@
 -- ============================================
--- StageHost — Database Schema
+-- BookMyArtist — Database Schema
 -- Version: 1.0
 -- Run this in Supabase SQL Editor
 -- ============================================
@@ -411,7 +411,7 @@ CREATE POLICY "Users can read own analytics" ON analytics_events FOR SELECT USIN
 -- Seed Plans
 INSERT INTO plans (name, slug, tier, price_monthly, price_yearly, description, features, limits, is_active, is_popular, sort_order) VALUES
 ('Free', 'free', 0, 0, 0, 'Perfect to get started',
- ARRAY['5 video showcases', '10 photo gallery', '3 service packages', 'Basic calendar', 'Inquiry form', 'WhatsApp button', 'Directory listing', 'StageHost subdomain'],
+ ARRAY['5 video showcases', '10 photo gallery', '3 service packages', 'Basic calendar', 'Inquiry form', 'WhatsApp button', 'Directory listing', 'BookMyArtist subdomain'],
  '{"max_videos": 5, "max_photos": 10, "max_service_packages": 3, "custom_domain": false, "remove_branding_footer": false, "remove_branding_badge": false, "remove_branding_email": false, "remove_branding_full": false, "google_drive_integration": false, "travel_buffer_scheduling": false, "analytics_dashboard": false, "lead_management": false, "priority_directory_listing": false, "featured_directory_listing": false, "custom_theme_colors": false, "seo_tools": false, "invoice_generation": false, "google_calendar_sync": false}'::jsonb,
  true, false, 1),
 
@@ -540,9 +540,9 @@ INSERT INTO themes (name, description, category, is_active, is_default, min_plan
 -- Seed Platform Settings
 INSERT INTO platform_settings (key, value, category, label, description, field_type) VALUES
 -- General
-('site_name', 'StageHost', 'general', 'Site Name', 'The name of your platform', 'text'),
+('site_name', 'BookMyArtist', 'general', 'Site Name', 'The name of your platform', 'text'),
 ('site_tagline', 'Your Stage. Your Brand. Your Bookings.', 'general', 'Tagline', 'Platform tagline displayed on the landing page', 'text'),
-('support_email', 'support@stagehost.in', 'general', 'Support Email', 'Email for customer support', 'text'),
+('support_email', 'support@bookmyartist.in', 'general', 'Support Email', 'Email for customer support', 'text'),
 ('maintenance_mode', 'false', 'general', 'Maintenance Mode', 'Enable to show maintenance page to all users', 'toggle'),
 ('registration_open', 'true', 'general', 'Registration Open', 'Allow new user registrations', 'toggle'),
 
@@ -559,7 +559,7 @@ INSERT INTO platform_settings (key, value, category, label, description, field_t
 
 -- Email
 ('resend_api_key', '', 'email', 'Resend API Key', 'Your Resend email service API key', 'text'),
-('email_from', 'StageHost <hello@stagehost.in>', 'email', 'From Email', 'Email sender name and address', 'text'),
+('email_from', 'BookMyArtist <hello@bookmyartist.in>', 'email', 'From Email', 'Email sender name and address', 'text'),
 
 -- Social
 ('social_instagram', '', 'social', 'Instagram URL', 'Platform Instagram page URL', 'text'),
@@ -573,8 +573,8 @@ INSERT INTO platform_settings (key, value, category, label, description, field_t
 ('refund_policy', '', 'legal', 'Refund Policy', 'Refund Policy content (HTML supported)', 'textarea'),
 
 -- SEO
-('meta_title', 'StageHost — Your Stage. Your Brand. Your Bookings.', 'seo', 'Meta Title', 'Default page title for SEO', 'text'),
-('meta_description', 'Build your professional anchor portfolio, manage your schedule, and get more bookings.', 'seo', 'Meta Description', 'Default meta description for SEO', 'textarea'),
+('meta_title', 'BookMyArtist — Your Stage. Your Brand. Your Bookings.', 'seo', 'Meta Title', 'Default page title for SEO', 'text'),
+('meta_description', 'Build your professional artist portfolio, manage your tour schedule, and get more event bookings.', 'seo', 'Meta Description', 'Default meta description for SEO', 'textarea'),
 ('og_image_url', '', 'seo', 'OG Image', 'Default Open Graph image for social sharing', 'image'),
 
 -- Analytics

@@ -2,8 +2,8 @@ import { getDirectoryAnchors } from '@/lib/actions/profile';
 import { DirectoryClient, type DirectoryAnchor } from './DirectoryClient';
 
 export const metadata = {
-  title: 'Find Event Anchors & Emcees | StageHost Directory',
-  description: 'Browse top verified event anchors, wedding emcees, and corporate hosts across India.',
+  title: 'Find Live Artists, Anchors & Performers | BookMyArtist Directory',
+  description: 'Browse top verified live artists, anchors, emcees, DJs, singers, comedians, and performers across India.',
 };
 
 export default async function DirectoryPage() {

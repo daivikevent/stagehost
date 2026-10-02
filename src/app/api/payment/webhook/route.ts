@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
       .maybeSingle();
 
     const fallbackConfig = PLAN_LIMITS[targetSlug] || PLAN_LIMITS['starter'];
-    const planName = dbPlan?.name || fallbackConfig?.plan_name || 'StageHost Plan';
+    const planName = dbPlan?.name || fallbackConfig?.plan_name || 'BookMyArtist Plan';
     const limits = (dbPlan?.limits && typeof dbPlan.limits === 'object') ? dbPlan.limits : {};
 
     const max_videos = limits.max_videos !== undefined ? limits.max_videos : fallbackConfig?.max_videos ?? 15;

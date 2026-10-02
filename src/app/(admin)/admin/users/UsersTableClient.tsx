@@ -27,7 +27,7 @@ interface UsersTableClientProps {
   initialUsers: AdminUser[];
 }
 
-function exportUsersToCSV(userList: AdminUser[], fileName = 'stagehost_users') {
+function exportUsersToCSV(userList: AdminUser[], fileName = 'bookmyartist_users') {
   const headers = ['Name', 'Email', 'City', 'Slug', 'Plan', 'Status', 'Directory Listed', 'Featured', 'Joined Date'];
   const rows = userList.map((u) => [
     `"${(u.name || '').replace(/"/g, '""')}"`,
@@ -185,13 +185,13 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
   };
 
   const handleExportAll = () => {
-    exportUsersToCSV(filtered, 'stagehost_all_users');
+    exportUsersToCSV(filtered, 'bookmyartist_all_users');
     success(`Exported ${filtered.length} users to CSV!`);
   };
 
   const handleExportSelected = () => {
     const selectedUsers = users.filter((u) => selectedUserIds.includes(u.user_id));
-    exportUsersToCSV(selectedUsers, 'stagehost_selected_users');
+    exportUsersToCSV(selectedUsers, 'bookmyartist_selected_users');
     success(`Exported ${selectedUsers.length} selected users to CSV!`);
   };
 

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           url: profile.profile_photo_url,
           width: 800,
           height: 800,
-          alt: `${profile.name} — Verified Anchor Portfolio`,
+          alt: `${profile.name} — Verified Artist Portfolio`,
         },
       ]
     : [
@@ -29,14 +29,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           url: '/og-image.png',
           width: 1200,
           height: 630,
-          alt: 'StageHost — Verified Event Anchors & Emcees',
+          alt: 'BookMyArtist — Verified Live Artists & Performers',
         },
       ];
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://stagehost.in'),
-    title: `${profile.name} — ${profile.tagline || 'Event Anchor'} | StageHost`,
-    description: profile.bio?.slice(0, 160) || `${profile.name} is a professional event anchor on StageHost.`,
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://bookmyartist.in'),
+    title: `${profile.name} — ${profile.tagline || 'Live Artist'} | BookMyArtist`,
+    description: profile.bio?.slice(0, 160) || `${profile.name} is a professional live artist on BookMyArtist.`,
     openGraph: {
       title: `${profile.name} — ${profile.tagline || 'Event Anchor'}`,
       description: profile.bio?.slice(0, 160),

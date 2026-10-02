@@ -13,7 +13,7 @@ import { DEFAULT_SITE_THEME, GLOBAL_SITE_THEMES } from '@/constants/site-themes'
 export async function getGlobalSiteTheme(): Promise<string> {
   try {
     const cookieStore = await cookies();
-    const cookieTheme = cookieStore.get('stagehost_site_theme')?.value;
+    const cookieTheme = cookieStore.get('bookmyartist_site_theme')?.value || cookieStore.get('stagehost_site_theme')?.value;
     if (cookieTheme && GLOBAL_SITE_THEMES.some((t) => t.id === cookieTheme)) {
       return cookieTheme;
     }
@@ -65,7 +65,7 @@ export async function setGlobalSiteTheme(themeId: string) {
         value: themeId,
         category: 'branding',
         label: 'Active Website Theme',
-        description: 'Global theme applied to the entire StageHost website',
+        description: 'Global theme applied to the entire BookMyArtist website',
         field_type: 'select',
         updated_at: new Date().toISOString(),
       },
@@ -79,6 +79,11 @@ export async function setGlobalSiteTheme(themeId: string) {
   // 2. Set server cookie for immediate zero-latency SSR
   try {
     const cookieStore = await cookies();
+    cookieStore.set('bookmyartist_site_theme', themeId, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      sameSite: 'lax',
+    });
     cookieStore.set('stagehost_site_theme', themeId, {
       path: '/',
       maxAge: 60 * 60 * 24 * 365, // 1 year

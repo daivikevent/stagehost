@@ -1,7 +1,7 @@
 {
-  "name": "StageHost — Live Tour & Availability Manager",
-  "short_name": "StageHost",
-  "description": "Artist tour management, backstage cue sheets, live availability calendar, and booking confirmation for professional anchors.",
+  "name": "BookMyArtist — Live Tour & Availability Manager",
+  "short_name": "BookMyArtist",
+  "description": "Artist tour management, backstage cue sheets, live availability calendar, and booking confirmation for professional artists and performers.",
   "start_url": "/schedule",
   "display": "standalone",
   "background_color": "#08090F",

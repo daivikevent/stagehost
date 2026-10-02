@@ -58,7 +58,7 @@ export function ContactClient({ content }: { content: ContactContent }) {
       <div className={styles.hero}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginBottom: 12 }}>
           <div className={styles.badge}>
-            <Sparkles size={14} /> StageHost Support Desk
+            <Sparkles size={14} /> BookMyArtist Support Desk
           </div>
           <Link href="/admin/pages" style={{ fontSize: 12, color: 'var(--color-text-tertiary)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
             <Edit3 size={12} /> Edit in Admin CMS
@@ -86,7 +86,7 @@ export function ContactClient({ content }: { content: ContactContent }) {
 
           {/* WhatsApp Direct */}
           <a
-            href={`https://wa.me/${cleanWaNumber}?text=${encodeURIComponent('Hi StageHost team! I need assistance with my anchor portfolio.')}`}
+            href={`https://wa.me/${cleanWaNumber}?text=${encodeURIComponent('Hi BookMyArtist team! I need assistance with my artist portfolio.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.channelCard}
@@ -109,7 +109,7 @@ export function ContactClient({ content }: { content: ContactContent }) {
             <div className={styles.channelInfo}>
               <h4>Hours of Operation</h4>
               <div className={styles.channelValue}>{content.hours}</div>
-              <div className={styles.channelDesc}>Dedicated support for anchors across India</div>
+              <div className={styles.channelDesc}>Dedicated support for artists across India</div>
             </div>
           </div>
 
@@ -120,7 +120,7 @@ export function ContactClient({ content }: { content: ContactContent }) {
             </div>
             <div className={styles.channelInfo}>
               <h4>Headquarters</h4>
-              <div className={styles.channelValue}>StageHost Technologies</div>
+              <div className={styles.channelValue}>BookMyArtist Technologies</div>
               <div className={styles.channelDesc}>{content.address}</div>
             </div>
           </div>

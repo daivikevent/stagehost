@@ -5,8 +5,8 @@ import type { PrivacyContent } from '@/types/pages';
 import styles from '@/components/marketing/PolicyPage.module.css';
 
 export const metadata = {
-  title: 'Privacy Policy | StageHost',
-  description: 'Learn how StageHost collects, stores, and protects personal data and portfolio media across India.',
+  title: 'Privacy Policy | BookMyArtist',
+  description: 'Learn how BookMyArtist collects, stores, and protects personal data and portfolio media across India.',
 };
 
 export default async function PrivacyPage() {

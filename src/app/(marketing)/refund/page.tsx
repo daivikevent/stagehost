@@ -5,8 +5,8 @@ import type { RefundContent } from '@/types/pages';
 import styles from '@/components/marketing/PolicyPage.module.css';
 
 export const metadata = {
-  title: 'Refund & Cancellation Policy | StageHost',
-  description: 'StageHost subscription refund guarantees, cancellation policies, and gig booking dispute disclaimers.',
+  title: 'Refund & Cancellation Policy | BookMyArtist',
+  description: 'BookMyArtist subscription refund guarantees, cancellation policies, and gig booking dispute disclaimers.',
 };
 
 export default async function RefundPage() {

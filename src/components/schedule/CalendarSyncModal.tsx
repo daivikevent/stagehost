@@ -30,7 +30,7 @@ export function CalendarSyncModal({
 
   if (!isOpen) return null;
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://stagehost.in';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://bookmyartist.in';
   const icsUrl = `${origin}/api/calendar/${slug}`;
   const webcalUrl = icsUrl.replace(/^https?:\/\//, 'webcal://');
 

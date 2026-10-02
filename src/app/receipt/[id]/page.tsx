@@ -22,14 +22,14 @@ export async function generateMetadata({ params }: ReceiptPageProps): Promise<Me
 
   if (!booking) {
     return {
-      title: 'Booking Confirmation Slip | StageHost',
+      title: 'Booking Confirmation Slip | BookMyArtist',
     };
   }
 
-  const artistName = (booking.profile as any)?.name || 'Anchor';
+  const artistName = (booking.profile as any)?.name || 'Artist';
   const showName = booking.event_name || booking.event_type || 'Show Event';
   const pageTitle = `Booking Confirmation & Token Slip — ${showName} | ${artistName}`;
-  const pageDesc = `Official artist booking confirmation and slot lock slip for ${showName} on ${booking.date} with ${artistName}. Created with StageHost.`;
+  const pageDesc = `Official artist booking confirmation and slot lock slip for ${showName} on ${booking.date} with ${artistName}. Created with BookMyArtist.`;
 
   return {
     title: pageTitle,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: ReceiptPageProps): Promise<Me
     openGraph: {
       title: pageTitle,
       description: pageDesc,
-      siteName: 'StageHost',
+      siteName: 'BookMyArtist',
       type: 'website',
     },
     twitter: {

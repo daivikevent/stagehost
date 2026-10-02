@@ -3,8 +3,8 @@ import type { ContactContent } from '@/types/pages';
 import { ContactClient } from './ContactClient';
 
 export const metadata = {
-  title: 'Contact Support & Inquiries | StageHost',
-  description: 'Reach out to the StageHost team for customer support, portfolio guidance, and corporate partnership inquiries.',
+  title: 'Contact Support & Inquiries | BookMyArtist',
+  description: 'Reach out to the BookMyArtist team for customer support, portfolio guidance, and corporate partnership inquiries.',
 };
 
 export default async function ContactPage() {

@@ -60,7 +60,7 @@ export function DashboardShell({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const dismissed = sessionStorage.getItem('stagehost_announcement_dismissed');
+      const dismissed = sessionStorage.getItem('bookmyartist_announcement_dismissed') || sessionStorage.getItem('stagehost_announcement_dismissed');
       if (dismissed === 'true') {
         setBannerDismissed(true);
       }
@@ -93,7 +93,7 @@ export function DashboardShell({
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.logo}>
             <Sparkles size={22} />
-            {!collapsed && <span>StageHost</span>}
+            {!collapsed && <span>BookMyArtist</span>}
           </Link>
           <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)}>
             <ChevronLeft size={18} style={{ transform: collapsed ? 'rotate(180deg)' : 'none', transition: 'transform 200ms' }} />
@@ -164,7 +164,7 @@ export function DashboardShell({
           </button>
           <Link href="/" className={styles.mobileLogo}>
             <Sparkles size={20} />
-            <span>StageHost</span>
+            <span>BookMyArtist</span>
           </Link>
           <div className="avatar avatar-sm" style={{ cursor: 'pointer' }}>{initials}</div>
         </header>
@@ -187,7 +187,7 @@ export function DashboardShell({
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Shield size={16} color="#fbbf24" />
               <span>
-                Viewing StageHost as <strong>{impersonation.anchorName || 'Anchor'}</strong> (Admin Support Mode)
+                Viewing BookMyArtist as <strong>{impersonation.anchorName || 'Artist'}</strong> (Admin Support Mode)
               </span>
             </div>
             <button
@@ -263,7 +263,7 @@ export function DashboardShell({
               onClick={() => {
                 setBannerDismissed(true);
                 if (typeof window !== 'undefined') {
-                  sessionStorage.setItem('stagehost_announcement_dismissed', 'true');
+                  sessionStorage.setItem('bookmyartist_announcement_dismissed', 'true');
                 }
               }}
               style={{
@@ -300,7 +300,7 @@ export function DashboardShell({
           <div className={styles.overlay} onClick={() => setMobileOpen(false)} />
           <div className={styles.mobileSlide}>
             <div className={styles.mobileSlideHeader}>
-              <Link href="/" className={styles.mobileLogo}><Sparkles size={20} /><span>StageHost</span></Link>
+              <Link href="/" className={styles.mobileLogo}><Sparkles size={20} /><span>BookMyArtist</span></Link>
               <button onClick={() => setMobileOpen(false)}><X size={22} /></button>
             </div>
             {SIDEBAR_LINKS.map(link => (

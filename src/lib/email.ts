@@ -86,10 +86,10 @@ export async function sendInquiryAlertEmail({
 <body>
   <div class="container">
     <div class="header">
-      <div class="brand">StageHost</div>
+      <div class="brand">BookMyArtist</div>
       <div><span class="badge">🔥 New Client Inquiry</span></div>
       <h1 class="heading">You received a new inquiry!</h1>
-      <p class="subtext">Hi ${anchorName}, a potential client just reached out through your StageHost portfolio.</p>
+      <p class="subtext">Hi ${anchorName}, a potential client just reached out through your BookMyArtist portfolio.</p>
     </div>
 
     <div class="details-box">
@@ -133,13 +133,13 @@ export async function sendInquiryAlertEmail({
       💬 Quick WhatsApp Reply (+91 ${inquiry.phone})
     </a>
 
-    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://stagehost.in'}/inquiries" class="btn-primary" style="margin-top: 10px;">
-      ⚡ View in StageHost Inquiries
+    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://bookmyartist.in'}/inquiries" class="btn-primary" style="margin-top: 10px;">
+      ⚡ View in BookMyArtist Inquiries
     </a>
 
     <div class="footer">
-      Sent via <strong>StageHost</strong> — The #1 Portfolio & Booking Platform for Anchors & Emcees in India.<br>
-      © ${new Date().getFullYear()} StageHost. All rights reserved.
+      Sent via <strong>BookMyArtist</strong> — The #1 Portfolio & Availability Platform for Artists & Performers in India.<br>
+      © ${new Date().getFullYear()} BookMyArtist. All rights reserved.
     </div>
   </div>
 </body>
@@ -147,7 +147,7 @@ export async function sendInquiryAlertEmail({
     `;
 
     let emailResult = await resend.emails.send({
-      from: 'StageHost <notifications@stagehost.in>',
+      from: 'BookMyArtist <notifications@bookmyartist.in>',
       to: [anchorEmail],
       replyTo: inquiry.email || undefined,
       subject: `🎉 New Event Inquiry from ${inquiry.name} (${inquiry.event_type || 'Event'})`,
@@ -156,7 +156,7 @@ export async function sendInquiryAlertEmail({
 
     if (emailResult.error && (emailResult.error as any).message?.includes('not verified')) {
       emailResult = await resend.emails.send({
-        from: 'StageHost <onboarding@resend.dev>',
+        from: 'BookMyArtist <onboarding@resend.dev>',
         to: [anchorEmail],
         replyTo: inquiry.email || undefined,
         subject: `🎉 New Event Inquiry from ${inquiry.name} (${inquiry.event_type || 'Event'})`,

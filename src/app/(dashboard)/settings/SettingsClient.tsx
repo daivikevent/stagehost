@@ -254,7 +254,7 @@ export function SettingsClient({
                   <p className={styles.planDesc}>
                     {plans.find((p) => p.slug.toLowerCase() === currentPlan || p.name.toLowerCase() === currentPlan)?.description ||
                       (currentPlan === 'free'
-                        ? '3 videos · 6 photos · Powered by StageHost branding'
+                        ? '3 videos · 6 photos · Powered by BookMyArtist branding'
                         : currentPlan === 'starter'
                         ? '10 videos · 20 photos · No branding · 3 themes'
                         : 'Unlimited packages · Analytics · Custom themes & domains')}

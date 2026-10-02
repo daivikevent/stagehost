@@ -1,5 +1,5 @@
-// StageHost Backstage & Cue Sheet Offline Service Worker
-const CACHE_NAME = 'stagehost-v1';
+// BookMyArtist Backstage & Cue Sheet Offline Service Worker
+const CACHE_NAME = 'bookmyartist-v1';
 const OFFLINE_URLS = [
   '/schedule',
   '/manifest.json',
@@ -80,12 +80,12 @@ self.addEventListener('fetch', (event) => {
 // ==========================================
 self.addEventListener('push', (event) => {
   let data = {
-    title: 'StageHost Notification',
-    body: 'You have a new update on StageHost.',
+    title: 'BookMyArtist Notification',
+    body: 'You have a new update on BookMyArtist.',
     icon: '/globe.svg',
     badge: '/globe.svg',
     url: '/inquiries',
-    tag: 'stagehost-notification',
+    tag: 'bookmyartist-notification',
   };
 
   if (event.data) {
@@ -101,7 +101,7 @@ self.addEventListener('push', (event) => {
     body: data.body,
     icon: data.icon || '/globe.svg',
     badge: data.badge || '/globe.svg',
-    tag: data.tag || 'stagehost-inquiry',
+    tag: data.tag || 'bookmyartist-inquiry',
     vibrate: [200, 100, 200, 100, 200],
     requireInteraction: true,
     data: {

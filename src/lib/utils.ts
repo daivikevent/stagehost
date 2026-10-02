@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — Utility Functions
+   BookMyArtist — Utility Functions
    ============================================ */
 
 import type { BrandingPlacement, PlanTier } from '@/types';

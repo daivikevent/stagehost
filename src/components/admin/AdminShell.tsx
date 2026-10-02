@@ -54,7 +54,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <div className={styles.headerTop}>
             <Link href="/" className={styles.logo}>
               <Sparkles size={20} />
-              {!collapsed && <span>StageHost</span>}
+              {!collapsed && <span>BookMyArtist</span>}
             </Link>
             <button
               type="button"
@@ -135,7 +135,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
           <Link href="/admin/dashboard" className={styles.mobileLogo}>
             <Sparkles size={18} style={{ color: '#ec4899' }} />
-            <span>StageHost</span>
+            <span>BookMyArtist</span>
             <span className={styles.mobileAdminTag}>ADMIN</span>
           </Link>
           <Link

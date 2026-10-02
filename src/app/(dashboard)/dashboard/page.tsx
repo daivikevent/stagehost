@@ -132,7 +132,7 @@ export default async function DashboardPage() {
             {profile?.slug && (
               <Link href={`/${profile.slug}`} target="_blank" className={styles.liveBadge}>
                 <span className={styles.liveDot} />
-                Live: stagehost.in/{profile.slug}
+                Live: bookmyartist.in/{profile.slug}
               </Link>
             )}
           </div>
@@ -532,7 +532,7 @@ export default async function DashboardPage() {
           {profile?.slug && (
             <div style={{ marginTop: '14px' }}>
               <code style={{ fontSize: 'var(--text-xs)', color: 'var(--color-primary)', background: 'var(--color-primary-light)', padding: '6px 12px', borderRadius: '6px' }}>
-                stagehost.in/{profile.slug}
+                bookmyartist.in/{profile.slug}
               </code>
             </div>
           )}

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { getPublicProfile } from '@/lib/actions/profile';
 
-export const alt = 'StageHost Artist Portfolio';
+export const alt = 'BookMyArtist Artist Portfolio';
 export const size = {
   width: 1200,
   height: 630,
@@ -12,8 +12,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const profile = await getPublicProfile(slug);
 
-  const name = profile?.name || 'StageHost Artist';
-  const tagline = profile?.tagline || 'Professional Event Emcee & Anchor';
+  const name = profile?.name || 'BookMyArtist Performer';
+  const tagline = profile?.tagline || 'Professional Live Artist & Performer';
   const city = profile?.city ? `${profile.city}, India` : 'Available Pan-India';
   const events = profile?.event_types?.slice(0, 3).join(' · ') || 'Weddings · Corporate · Live Shows';
   const photoUrl = profile?.profile_photo_url;
@@ -64,7 +64,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                 gap: '8px',
               }}
             >
-              <span>✦</span> STAGEHOST VERIFIED ANCHOR
+              <span>✦</span> BOOKMYARTIST VERIFIED ARTIST
             </div>
             <div
               style={{
@@ -142,7 +142,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '18px', color: '#6C5CE7', fontWeight: 700 }}>
-              stagehost.in/{slug}
+              bookmyartist.in/{slug}
             </div>
             <div style={{ fontSize: '14px', color: '#64748b' }}>
               Instant Booking & Live Availability

@@ -21,7 +21,7 @@ const SETTINGS_KEY = 'platform_push_subscriptions';
 async function configureVapid(): Promise<{ publicKey: string; privateKey: string } | null> {
   let publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   let privateKey = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT || 'mailto:support@stagehost.in';
+  const subject = process.env.VAPID_SUBJECT || 'mailto:support@bookmyartist.in';
 
   if (!publicKey || !privateKey) {
     try {
@@ -221,7 +221,7 @@ export async function sendPushNotificationToAnchor(
     url: payload.url || '/inquiries',
     icon: payload.icon || '/globe.svg',
     badge: payload.badge || '/globe.svg',
-    tag: payload.tag || 'stagehost-inquiry',
+    tag: payload.tag || 'bookmyartist-inquiry',
   });
 
   await Promise.allSettled(
@@ -279,10 +279,10 @@ export async function sendTestPushToSelf(): Promise<{
     }
 
     const result = await sendPushNotificationToAnchor(profile.id, {
-      title: '🔔 StageHost Push Active!',
-      body: `Hello ${profile.full_name || 'Anchor'}! Your phone & browser will now get instant alerts when clients send booking inquiries.`,
+      title: '🔔 BookMyArtist Push Active!',
+      body: `Hello ${profile.full_name || 'Artist'}! Your phone & browser will now get instant alerts when clients send booking inquiries.`,
       url: '/inquiries',
-      tag: 'stagehost-test',
+      tag: 'bookmyartist-test',
     });
 
     if (result.sent > 0) {

@@ -52,14 +52,14 @@ export async function getPublicPlans(): Promise<PublicPlan[]> {
           servicesText,
           'Direct WhatsApp booking button',
           'Verified client reviews system',
-          'StageHost Directory listing',
+          'BookMyArtist Directory listing',
           'Zero booking commissions',
         ];
 
         if (p.limits?.verified_badge) features.push('Verified Artist Blue Tick Badge');
         if (p.limits?.analytics_dashboard) features.push('Advanced visitor & lead analytics');
         if (p.limits?.custom_domain) features.push('Custom domain connection (yourname.com)');
-        if (p.limits?.remove_branding_footer) features.push('Zero StageHost footer branding');
+        if (p.limits?.remove_branding_footer) features.push('Zero BookMyArtist footer branding');
       }
 
       return {
@@ -71,7 +71,7 @@ export async function getPublicPlans(): Promise<PublicPlan[]> {
         price_yearly: p.price_yearly || p.price_monthly * 10,
         strike_price: p.limits?.strike_price ? Number(p.limits.strike_price) : undefined,
         period_text: p.limits?.period_text || (p.price_monthly === 0 ? 'forever' : undefined),
-        description: p.description || (p.price_monthly === 0 ? 'Perfect to get started' : 'For professional event hosts'),
+        description: p.description || (p.price_monthly === 0 ? 'Perfect to get started' : 'For professional event artists & performers'),
         features,
         popular: !!p.is_popular,
         is_active: p.is_active ?? true,
@@ -104,7 +104,7 @@ function getFallbackPlans(): PublicPlan[] {
         'Inquiry form',
         'WhatsApp button',
         'Directory listing',
-        'StageHost subdomain',
+        'BookMyArtist subdomain',
       ],
       popular: false,
       limits: { max_videos: 5, max_photos: 10, max_service_packages: 3 },

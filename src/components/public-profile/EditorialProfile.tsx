@@ -189,7 +189,7 @@ export function EditorialProfile({
     }
   };
 
-  const waMessage = `Hello ${profile.name}! 👋 I am viewing your official Vogue Editorial showcase on StageHost and would love to inquire about your availability and bespoke packages for an upcoming event.`;
+  const waMessage = `Hello ${profile.name}! 👋 I am viewing your official Vogue Editorial showcase on BookMyArtist and would love to inquire about your availability and bespoke packages for an upcoming event.`;
   const waLink = getWhatsAppLink(profile.whatsapp_number || profile.phone, waMessage);
 
   const handleWhatsAppInquiry = () => {
@@ -209,7 +209,7 @@ export function EditorialProfile({
         <div className={styles.tickerTrack}>
           {[0, 1, 2, 3].map((idx) => (
             <div key={idx} className={styles.tickerContent}>
-              <span className={styles.tickerGold}>STAGEHOST PRIVATE DOSSIER</span>
+              <span className={styles.tickerGold}>BOOKMYARTIST PRIVATE DOSSIER</span>
               <span className={styles.tickerDot}>✦</span>
               <span>ISSUE № 24</span>
               <span className={styles.tickerDot}>✦</span>
@@ -991,12 +991,12 @@ export function EditorialProfile({
 
         {/* ---------------- Platform Branding Footer ---------------- */}
         <footer className={styles.editorialFooter}>
-          <a href="https://stagehost.in/" target="_blank" rel="noopener noreferrer">
+          <a href="https://bookmyartist.in/" target="_blank" rel="noopener noreferrer">
             <Sparkles size={14} color="#d4af37" />
-            <span>Created on <strong>StageHost</strong> · Elite Artist Infrastructure</span>
+            <span>Created on <strong>BookMyArtist</strong> · Elite Artist Infrastructure</span>
           </a>
           <div className={styles.editorialFooterNotice}>
-            StageHost is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
+            BookMyArtist is an artist booking platform. Bookings & performance riders are agreed directly between client & artist.
           </div>
         </footer>
       </div>

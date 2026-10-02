@@ -1,5 +1,5 @@
 /* ============================================
-   StageHost — App Constants
+   BookMyArtist — App Constants
    ============================================ */
 
 // ---- Plan Configuration ----

@@ -545,7 +545,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
               </li>
               <li>All themes included</li>
               <li>
-                {plan.branding ? 'Shows StageHost branding' : 'No branding (White-label)'}
+                {plan.branding ? 'Shows BookMyArtist branding' : 'No branding (White-label)'}
               </li>
             </ul>
 
@@ -1172,7 +1172,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                     }}
                   >
                     <div>
-                      <div className="text-sm font-semibold">Show StageHost Watermark</div>
+                      <div className="text-sm font-semibold">Show BookMyArtist Watermark</div>
                       <div className="text-xs text-secondary">
                         Turn off for 100% white-label experience
                       </div>
@@ -1559,7 +1559,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                     }}
                   >
                     <div>
-                      <div className="text-sm font-semibold">Show StageHost Watermark</div>
+                      <div className="text-sm font-semibold">Show BookMyArtist Watermark</div>
                       <div className="text-xs text-secondary">
                         Turn off for 100% white-label experience
                       </div>

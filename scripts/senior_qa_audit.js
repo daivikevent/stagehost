@@ -54,7 +54,7 @@ function assert(condition, message, suiteName, isWarning = false) {
 
 async function runAudit() {
   console.log('====================================================');
-  console.log('🚀 STAGEHOST SENIOR QA COMPREHENSIVE PLATFORM AUDIT');
+  console.log('🚀 BOOKMYARTIST SENIOR QA COMPREHENSIVE PLATFORM AUDIT');
   console.log('====================================================\n');
 
   // ----------------------------------------------------
@@ -62,7 +62,7 @@ async function runAudit() {
   // ----------------------------------------------------
   console.log('📦 SUITE 1: Critical Routes Availability & Response Time');
   const routesToTest = [
-    { path: '/', expectedText: 'StageHost', name: 'Homepage' },
+    { path: '/', expectedText: 'BookMyArtist', name: 'Homepage' },
     { path: '/admin-user', expectedText: 'Aman', name: 'Public Anchor Profile' },
     { path: '/directory', expectedText: 'Directory', name: 'Anchor Directory' },
     { path: '/pricing', expectedText: 'Pricing', name: 'Pricing Plans' },

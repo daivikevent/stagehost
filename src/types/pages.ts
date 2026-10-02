@@ -74,27 +74,27 @@ export const DEFAULT_PAGE_CONTENTS: {
     title: 'Privacy Policy',
     lastUpdated: 'September 2026',
     summary:
-      'At StageHost, we take your privacy and data security with utmost seriousness. This policy details how we collect, store, and process your information across our website and individual anchor portfolios.',
+      'At BookMyArtist, we take your privacy and data security with utmost seriousness. This policy details how we collect, store, and process your information across our website and individual artist portfolios.',
     sections: [
       {
         title: '1. Information We Collect',
         content:
-          'We collect information that you directly provide when registering as an anchor (name, phone number, email address, bio, social media profiles, performance media, event pricing) and when submitting event inquiries or client reviews (name, phone number, event dates, event city, and review comments).',
+          'We collect information that you directly provide when registering as an artist (name, phone number, email address, bio, social media profiles, performance media, event pricing) and when submitting event inquiries or client reviews (name, phone number, event dates, event city, and review comments).',
       },
       {
         title: '2. How We Use Your Data',
         content:
-          'Your information is used to power your public anchor portfolio, facilitate direct client bookings via WhatsApp and email, prevent spam and fraud, generate verified trust badges, and deliver platform notifications and analytics.',
+          'Your information is used to power your public artist portfolio, facilitate direct client bookings via WhatsApp and email, prevent spam and fraud, generate verified trust badges, and deliver platform notifications and analytics.',
       },
       {
         title: '3. Data Sharing & Third Parties',
         content:
-          'StageHost does NOT sell, rent, or monetize your personal data. When a client submits an inquiry through an anchor portfolio, their contact details are shared directly and exclusively with that anchor. We use trusted infrastructure providers (Supabase, Razorpay, Resend) strictly for authentication, payments, and transactional communication.',
+          'BookMyArtist does NOT sell, rent, or monetize your personal data. When a client submits an inquiry through an artist portfolio, their contact details are shared directly and exclusively with that artist. We use trusted infrastructure providers (Supabase, Razorpay, Resend) strictly for authentication, payments, and transactional communication.',
       },
       {
         title: '4. Cookie Policy & Analytics',
         content:
-          'We use privacy-friendly local storage and session cookies solely to maintain your authentication state and record anonymous page views on anchor portfolios to provide accurate traffic analytics.',
+          'We use privacy-friendly local storage and session cookies solely to maintain your authentication state and record anonymous page views on artist portfolios to provide accurate traffic analytics.',
       },
       {
         title: '5. Security & Data Retention',
@@ -104,7 +104,7 @@ export const DEFAULT_PAGE_CONTENTS: {
       {
         title: '6. Grievance Officer & Contact',
         content:
-          'For any questions or privacy grievances under the Information Technology Act (India), you may reach our designated Data Protection Officer at privacy@stagehost.in.',
+          'For any questions or privacy grievances under the Information Technology Act (India), you may reach our designated Data Protection Officer at privacy@bookmyartist.in.',
       },
     ],
   },
@@ -112,22 +112,22 @@ export const DEFAULT_PAGE_CONTENTS: {
     title: 'Terms of Service',
     lastUpdated: 'September 2026',
     summary:
-      'Please review these Terms of Service carefully before utilizing the StageHost platform or creating your digital anchor portfolio.',
+      'Please review these Terms of Service carefully before utilizing the BookMyArtist platform or creating your digital artist portfolio.',
     sections: [
       {
         title: '1. Acceptance of Terms',
         content:
-          'By accessing or using StageHost, you agree to be bound by these Terms of Service and our Privacy Policy. If you disagree with any part of these terms, you must not use our service.',
+          'By accessing or using BookMyArtist, you agree to be bound by these Terms of Service and our Privacy Policy. If you disagree with any part of these terms, you must not use our service.',
       },
       {
-        title: '2. User Accounts & Anchor Verification',
+        title: '2. User Accounts & Artist Verification',
         content:
-          'Anchors must provide accurate, current, and genuine information regarding their identity, experience, and media. StageHost reserves the right to suspend or remove profiles that use deceptive media, impersonate other artists, or violate intellectual property rights.',
+          'Artists must provide accurate, current, and genuine information regarding their identity, experience, and media. BookMyArtist reserves the right to suspend or remove profiles that use deceptive media, impersonate other artists, or violate intellectual property rights.',
       },
       {
         title: '3. Booking Inquiries, Direct Dealings & Intermediary Safe Harbor',
         content:
-          'StageHost operates strictly as an intermediary technology platform and portfolio hosting service under Section 79 of the Information Technology Act, 2000 (India). StageHost does NOT charge commissions on event bookings, does NOT act as an employer, agent, or event organizer, and is NOT a party to contracts or financial arrangements between clients and independent anchors. All bookings, negotiations, advance deposits, and cancellations are executed directly between the client and the artist.',
+          'BookMyArtist operates strictly as an intermediary technology platform and portfolio hosting service under Section 79 of the Information Technology Act, 2000 (India). BookMyArtist does NOT charge commissions on event bookings, does NOT act as an employer, agent, or event organizer, and is NOT a party to contracts or financial arrangements between clients and independent artists. All bookings, negotiations, advance deposits, and cancellations are executed directly between the client and the artist.',
       },
       {
         title: '4. Subscription Fees & Renewals',
@@ -137,27 +137,27 @@ export const DEFAULT_PAGE_CONTENTS: {
       {
         title: '5. Prohibited Conduct',
         content:
-          'Users agree not to upload defamatory, obscene, or infringing content, abuse the inquiry messaging system for spam or harassment, or attempt to reverse-engineer or scrape the StageHost platform.',
+          'Users agree not to upload defamatory, obscene, or infringing content, abuse the inquiry messaging system for spam or harassment, or attempt to reverse-engineer or scrape the BookMyArtist platform.',
       },
       {
         title: '6. Limitation of Liability & Artist Absence / No-Show Disclaimers',
         content:
-          'StageHost shall not be held liable for any direct, indirect, incidental, punitive, or consequential damages arising from artist delays, unexcused absences, no-shows, failure to perform, event disruption, or advance payment disputes. Clients and organizers expressly acknowledge that their sole legal recourse in the event of an artist cancellation or breach of contract is directly against the individual artist or anchor.',
+          'BookMyArtist shall not be held liable for any direct, indirect, incidental, punitive, or consequential damages arising from artist delays, unexcused absences, no-shows, failure to perform, event disruption, or advance payment disputes. Clients and organizers expressly acknowledge that their sole legal recourse in the event of an artist cancellation or breach of contract is directly against the individual artist or performer.',
       },
       {
         title: '7. Verified Artist Badge Policy (Paid Subscription & KYC Records)',
         content:
-          'The Verified Artist badge is awarded exclusively to artists holding an active paid subscription (Starter, Pro, Premium) or verified through administrative review. Verification confirms that the artist has completed identity and contact authentication via active electronic payment gateway records. A Verified Badge does NOT constitute a performance warranty, fidelity bond, or personal guarantee of service by StageHost.',
+          'The Verified Artist badge is awarded exclusively to artists holding an active paid subscription (Starter, Pro, Premium) or verified through administrative review. Verification confirms that the artist has completed identity and contact authentication via active electronic payment gateway records. A Verified Badge does NOT constitute a performance warranty, fidelity bond, or personal guarantee of service by BookMyArtist.',
       },
       {
         title: '8. Artist Code of Conduct & Fraud Blacklisting',
         content:
-          'StageHost maintains zero tolerance for fraudulent artist behavior, booking misrepresentation, or unexcused no-shows. Upon receipt of a verified complaint from a client or event organizer, StageHost reserves the unconditional right to immediately suspend or permanently terminate the artist’s profile, revoke verified badges, delete the artist’s directory listing and custom URL slug, and cooperate fully with law enforcement or legal authorities.',
+          'BookMyArtist maintains zero tolerance for fraudulent artist behavior, booking misrepresentation, or unexcused no-shows. Upon receipt of a verified complaint from a client or event organizer, BookMyArtist reserves the unconditional right to immediately suspend or permanently terminate the artist’s profile, revoke verified badges, delete the artist’s directory listing and custom URL slug, and cooperate fully with law enforcement or legal authorities.',
       },
       {
         title: '9. Governing Law & Dispute Resolution',
         content:
-          'These terms and any disputes arising from or in connection with the StageHost platform shall be governed by and construed in accordance with the laws of India, subject to the exclusive jurisdiction of the competent courts in Mumbai, Maharashtra.',
+          'These terms and any disputes arising from or in connection with the BookMyArtist platform shall be governed by and construed in accordance with the laws of India, subject to the exclusive jurisdiction of the competent courts in Mumbai, Maharashtra.',
       },
     ],
   },
@@ -165,12 +165,12 @@ export const DEFAULT_PAGE_CONTENTS: {
     title: 'Refund & Cancellation Policy',
     lastUpdated: 'September 2026',
     summary:
-      'We believe in complete transparency and customer satisfaction for all StageHost subscription tiers and platform services.',
+      'We believe in complete transparency and customer satisfaction for all BookMyArtist subscription tiers and platform services.',
     sections: [
       {
-        title: '1. StageHost Pro & Elite Subscription Refunds',
+        title: '1. BookMyArtist Pro & Elite Subscription Refunds',
         content:
-          'We offer a 7-day no-questions-asked refund guarantee on all new annual Pro and Elite subscriptions. If you feel StageHost is not the right fit for your anchor career within 7 days of initial purchase, contact support@stagehost.in for a full refund.',
+          'We offer a 7-day no-questions-asked refund guarantee on all new annual Pro and Elite subscriptions. If you feel BookMyArtist is not the right fit for your artist career within 7 days of initial purchase, contact support@bookmyartist.in for a full refund.',
       },
       {
         title: '2. Monthly Subscription Cancellations',
@@ -180,7 +180,7 @@ export const DEFAULT_PAGE_CONTENTS: {
       {
         title: '3. Event Booking Advance & Fee Disputes',
         content:
-          'StageHost does not handle or hold advance deposits for event performances. All performance fee negotiations, deposits, and cancellation terms are directly agreed upon between the anchor and the event client. StageHost is not responsible for issuing refunds for artist cancellations.',
+          'BookMyArtist does not handle or hold advance deposits for event performances. All performance fee negotiations, deposits, and cancellation terms are directly agreed upon between the artist and the event client. BookMyArtist is not responsible for issuing refunds for artist cancellations.',
       },
       {
         title: '4. Refund Processing Time',
@@ -190,16 +190,16 @@ export const DEFAULT_PAGE_CONTENTS: {
     ],
   },
   about: {
-    headline: 'Empowering India’s Emcees & Event Anchors',
+    headline: 'Empowering India’s Performing Artists & Entertainers',
     subtitle:
-      'StageHost is India’s dedicated digital portfolio and booking management platform built specifically for stage artists, corporate emcees, and wedding anchors.',
+      'BookMyArtist is India’s dedicated digital portfolio and booking management platform built specifically for stage artists, corporate emcees, live singers, DJs, musicians, and performers.',
     story:
-      'Before StageHost, live event hosts had to rely on scattered social media links, heavy PDF presentations, and unreliable WhatsApp forwards. We recognized that India’s live event industry is booming, yet anchors lacked a professional, high-performance home for their craft.\n\nStageHost was built to give every anchor a lightning-fast, mobile-optimized digital stage—complete with verified client reviews, video showreels, calendar availability, and direct WhatsApp inquiries with zero commissions.',
+      'Before BookMyArtist, live event performers had to rely on scattered social media links, heavy PDF presentations, and unreliable WhatsApp forwards. We recognized that India’s live event industry is booming, yet artists lacked a professional, high-performance home for their craft.\n\nBookMyArtist was built to give every performer a lightning-fast, mobile-optimized digital stage—complete with verified client reviews, video showreels, calendar availability, and direct WhatsApp inquiries with zero commissions.',
     stats: [
-      { label: 'Active Anchors', value: '7500+' },
+      { label: 'Active Artists', value: '7500+' },
       { label: 'Cities Represented', value: '50+' },
       { label: 'Inquiries Generated', value: '10,000+' },
-      { label: 'Commission Kept by Anchors', value: '100%' },
+      { label: 'Commission Kept by Artists', value: '100%' },
     ],
     values: [
       {
@@ -208,7 +208,7 @@ export const DEFAULT_PAGE_CONTENTS: {
       },
       {
         title: 'Blazing Fast Speed',
-        desc: 'Every anchor portfolio loads in under 400ms on mobile networks, ensuring zero lost client impressions.',
+        desc: 'Every artist portfolio loads in under 400ms on mobile networks, ensuring zero lost client impressions.',
       },
       {
         title: 'Verified Trust Badges',
@@ -223,31 +223,31 @@ export const DEFAULT_PAGE_CONTENTS: {
   contact: {
     title: 'Contact Support & Inquiries',
     subtitle:
-      'Have a question about StageHost or need support setting up your anchor portfolio? Our team is here to assist you.',
-    email: 'support@stagehost.in',
+      'Have a question about BookMyArtist or need support setting up your artist portfolio? Our team is here to assist you.',
+    email: 'support@bookmyartist.in',
     whatsapp: '+91 98765 43210',
     phone: '+91 98765 43210',
-    address: 'StageHost Digital Media, Bandra West, Mumbai, Maharashtra 400050',
+    address: 'BookMyArtist Digital Media, Bandra West, Mumbai, Maharashtra 400050',
     hours: 'Monday to Saturday, 10:00 AM – 7:00 PM IST',
     responseCommitment:
       'We typically respond to all emails and WhatsApp messages within 2 hours during active business hours.',
   },
   blog: {
-    title: 'StageHost Blog & Host Guides',
+    title: 'BookMyArtist Blog & Artist Guides',
     subtitle:
-      'Insider advice, industry playbooks, and stagecraft tips for professional anchors and event organizers.',
+      'Insider advice, industry playbooks, and stagecraft tips for professional artists, performers, and event organizers.',
     articles: [
       {
         id: '1',
-        title: '10 Proven Ways to Charge Higher Rates as a Wedding Anchor',
-        slug: 'charge-higher-rates-wedding-anchor',
+        title: '10 Proven Ways to Charge Higher Rates as a Live Performer',
+        slug: 'charge-higher-rates-live-performer',
         category: 'Career Growth',
         readTime: '5 min read',
         publishedAt: 'September 2026',
-        author: 'StageHost Editorial Team',
+        author: 'BookMyArtist Editorial Team',
         excerpt:
-          'Learn the positioning techniques, video showreel secrets, and client inquiry scripts top emcees use to command ₹50,000+ per night.',
-        content: `### Why Most Anchors Undercharge\n\nMany talented emcees struggle to command premium pricing simply because their online presence does not reflect their on-stage brilliance. Sending a low-resolution PDF or asking clients to scroll through months of personal Instagram posts creates friction.\n\n### 1. Build a Dedicated Portfolio URL\nHaving a branded website like **stagehost.in/your-name** immediately positions you in the top 5% of professional hosts.\n\n### 2. Showcase Categorized Video Showreels\nOrganizers want to see you in action at their specific event type—whether that is a high-energy Sangeet, a formal corporate summit, or an intimate cocktail evening.\n\n### 3. Display Verified Client Testimonials\nTrust is the number one driver of wedding booking decisions. Collect reviews directly from couples and event planners with photo verification.`,
+          'Learn the positioning techniques, video showreel secrets, and client inquiry scripts top artists use to command ₹50,000+ per night.',
+        content: `### Why Most Artists Undercharge\n\nMany talented performers struggle to command premium pricing simply because their online presence does not reflect their on-stage brilliance. Sending a low-resolution PDF or asking clients to scroll through months of personal Instagram posts creates friction.\n\n### 1. Build a Dedicated Portfolio URL\nHaving a branded website like **bookmyartist.in/your-name** immediately positions you in the top 5% of professional performers.\n\n### 2. Showcase Categorized Video Showreels\nOrganizers want to see you in action at their specific event type—whether that is a high-energy Sangeet, a formal corporate summit, or an intimate cocktail evening.\n\n### 3. Display Verified Client Testimonials\nTrust is the number one driver of event booking decisions. Collect reviews directly from couples and event planners with photo verification.`,
       },
       {
         id: '2',
@@ -276,8 +276,8 @@ export const DEFAULT_PAGE_CONTENTS: {
     ],
   },
   how_it_works: {
-    title: 'How StageHost Works',
-    subtitle: 'Everything you need to master your digital anchor stage and book top event talent',
+    title: 'How BookMyArtist Works',
+    subtitle: 'Everything you need to master your digital artist stage and book top event talent',
     badge: 'Complete User Guide',
     customNotes: 'All new platform features are registered automatically in the live feature directory.',
   },
