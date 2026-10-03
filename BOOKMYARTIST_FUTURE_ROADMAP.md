@@ -14,11 +14,11 @@
 | ✅ **Shipped** | **Live Resend Email Infrastructure** | Transactional & booking alert emails |
 | ✅ **Shipped** | **Admin & User Plan Dynamic Synchronization** | Supabase `platform_settings` + Pricing matrix |
 | ✅ **Shipped** | **Universal Multi-Artist Architecture (Foundation)** | 11 categories (DJ, Singer, Band, Emcee, etc.) |
+| ✅ **Shipped** | **Custom Domains White-Labeling (`artistname.com`)** | CNAME routing, Next.js proxy rewrite, SSL automation |
+| ✅ **Shipped** | **Two-Way Google Calendar Real-Time Sync** | iCal parser, auto date-blocking, double-booking prevention |
 | 🔴 **Immediate** | **Razorpay Live Merchant Integration & Webhook** | Live API keys, UPI AutoPay, Webhook verification |
 | 🟡 **Phase 1** | **Meta WhatsApp Cloud API (Automated Alert)** | Meta Graph API, Pre-approved template, Direct ping |
 | 🟡 **Phase 1** | **PDF Quotation & Rate Card Generator** | Serverless / `@react-pdf` branded client proposals |
-| 🟡 **Phase 2** | **Custom Domains White-Labeling (`artistname.com`)** | CNAME routing, Next.js proxy rewrite, SSL automation |
-| 🟡 **Phase 2** | **Two-Way Google Calendar Real-Time Sync** | Google Calendar API, webhook watch, automatic date block |
 | 🟡 **Phase 3** | **GST Tax Invoice Generator for Subscriptions** | 18% GST calculation, sequential numbering, PDF download |
 | 🟡 **Phase 3** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers |
 | 🟡 **Phase 4** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders |

@@ -71,17 +71,17 @@
 
 ## 🔮 Future Scope & Development Roadmap (From BOOKMYARTIST_FUTURE_ROADMAP.md)
 
-| Feature | Sprint / Target | Category | Status | Summary |
-|---|---|---|---|---|
-| **🎭 Universal Multi-Artist Architecture & Audio Embeds** | Sprint 1 | Team & Backstage | Active / In Design | Expansion to all 11 performing artist categories (DJs, Live Singers, Bands, Standup Comedians, Dancers, Magicians, Photographers) with SoundCloud / Spotify players, repertoire setlists, and bundled event packages. |
-| **🌐 Custom Domains Multi-Tenant White-Labeling** | Sprint 1 | Commercial & Finance | In Design | Allows ₹1L+ celebrity performers to point their personal domain (`artistname.com`) with automated Cloudflare/Vercel Let's Encrypt SSL and zero BookMyArtist branding. |
-| **📄 Automated PDF Quotation & Rate Card Proposal Generator** | Sprint 2 | Commercial & Finance | Planned | 1-click corporate quotation generator with itemized scope of work (briefing, rehearsals, performance), 50/50 payment milestones, and WhatsApp proposal delivery. |
-| **🖼️ Client-Side Media Compression Pipeline (WebP)** | Sprint 3 | Infrastructure | Planned | Browser-based HTML5 canvas engine that resizes raw 15MB–25MB DSLR photographer photos to ~250KB WebP before upload, ensuring lightning-fast mobile loading. |
-| **🔑 One-Click Social Authentication (Google & Apple OAuth)** | Sprint 4 | Growth & Onboarding | Planned | Instant 1-tap artist registration and login with Google Cloud and Apple Services IDs, automatically provisioning profile avatars and artist vanity slugs. |
-| **🤖 Meta WhatsApp Cloud API (Automated Instant Ping)** | Sprint 5 | AI & Automation | Planned | Official WhatsApp Cloud API integration delivering structured lead notification templates to the artist's personal WhatsApp within seconds of form submission. |
-| **🔄 Two-Way Google Calendar Real-Time Sync** | Sprint 6 | Automation | Planned | Bi-directional synchronization: personal events added in Google Calendar automatically block availability on BookMyArtist with privacy-masked labels. |
-| **📑 Automated GST Tax Invoicing for Subscriptions & Gigs** | Sprint 7 | Compliance & Finance | Planned | Official GST-compliant tax invoicing engine with sequential numbers (INV-2026-XXXX), SAC 9996/9983, and Input Tax Credit (ITC) data for LLPs. |
-| **📱 Mobile Progressive Web App (PWA) & Web Push Notifications** | Sprint 8 | Retention & Mobile | Planned | Standalone mobile home-screen app with background sync and native Web Push Notifications for new inquiries and hold expiry alerts. |
+| Feature | Category | Status | Summary |
+|---|---|---|---|
+| **🎭 Universal Multi-Artist Architecture** | Categories & Media | ✅ **Shipped** | Expansion to 11 performing artist categories (DJs, Singers, Bands, Emcees, Comedians, Dancers, Magicians) with custom specialties & tags. |
+| **🌐 Custom Domains White-Labeling (`artistname.com`)** | Commercial & Branding | ✅ **Shipped** | CNAME routing & Next.js transparent rewrite with automated SSL for Premium artists. |
+| **🔄 Two-Way Google Calendar Real-Time Sync** | Automation & Schedule | ✅ **Shipped** | Bi-directional synchronization: personal Google/Apple calendar events automatically block dates on BookMyArtist. |
+| **🔑 One-Click Social Auth (Google OAuth)** | Growth & Onboarding | ✅ **Shipped** | 1-tap Google login & onboarding with automatic avatar and profile provisioning. |
+| **🖼️ Client-Side Media Compression (WebP)** | Infrastructure | ✅ **Shipped** | HTML5 Canvas WebP compression (15MB ➔ ~250KB) before upload to Supabase Storage. |
+| **📱 Mobile PWA & Background Web Push Notifications** | Mobile & Notifications | ✅ **Shipped** | Standalone PWA installable on iOS/Android with lockscreen inquiry notifications. |
+| **📄 Automated PDF Quotation & Rate Card Generator** | Commercial & Proposals | 🟡 Planned | 1-click corporate quotation generator with itemized scope of work and payment terms. |
+| **🤖 Meta WhatsApp Cloud API (Automated Ping)** | AI & Automation | 🟡 Planned | Official WhatsApp Cloud API integration delivering lead notifications directly to artist chats. |
+| **📑 Automated GST Tax Invoicing for Subscriptions** | Compliance & Finance | 🟡 Planned | GST-compliant tax invoicing with B2B GSTIN collection and downloadable PDF invoices. |
 
 ---
 
