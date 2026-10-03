@@ -199,11 +199,126 @@
    BOOKMYARTIST GLOBAL THEMES (Platform-Wide Themes)
    =================================================== */
 
-/* 0. BookMyArtist Signature (Neon Stage) — Matches Official Brand Logo ✨ */
-html[data-site-theme="signature-neon"],
-:root[data-site-theme="signature-neon"],
+/* 0A. BookMyArtist Electric Royal (Indigo Stage) — Official Logo Ultramarine Arc ⚡ */
+html[data-site-theme="royal-ultramarine"],
+:root[data-site-theme="royal-ultramarine"],
 html:not([data-site-theme]),
 :root:not([data-site-theme]) {
+  --color-primary: #2563EB;
+  --color-primary-hover: #3B82F6;
+  --color-primary-light: rgba(37, 99, 235, 0.16);
+  --color-primary-glow: rgba(37, 99, 235, 0.5);
+  --color-accent: #FF007A;
+  --color-accent-hover: #FF3399;
+  --color-accent-light: rgba(255, 0, 122, 0.16);
+  --color-accent-glow: rgba(255, 0, 122, 0.4);
+  --color-bg-primary: #060713;
+  --color-bg-secondary: #0B0E22;
+  --color-bg-tertiary: #121738;
+  --color-bg-card: #0E122B;
+  --color-bg-card-hover: #151B3D;
+  --color-bg-input: #0B0E22;
+  --color-bg-elevated: #182046;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #CBD5E1;
+  --color-text-tertiary: #64748B;
+  --color-text-link: #3B82F6;
+  --color-text-link-hover: #60A5FA;
+  --color-border: rgba(37, 99, 235, 0.22);
+  --color-border-hover: rgba(37, 99, 235, 0.50);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(37, 99, 235, 0.22);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37, 99, 235, 0.24) 0%, rgba(255, 0, 122, 0.12) 50%, #060713 100%);
+  --gradient-accent: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 40%, #FF007A 100%);
+  --gradient-card: linear-gradient(145deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 0, 122, 0.03) 100%);
+  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(37, 99, 235, 0.16), transparent 40%);
+  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #DBEAFE 40%, #3B82F6 100%);
+  --shadow-glow: 0 0 35px rgba(37, 99, 235, 0.45);
+  --navbar-scrolled-bg: rgba(6, 7, 19, 0.92);
+}
+
+html[data-site-theme="royal-ultramarine"] .btn-primary,
+:root:not([data-site-theme]) .btn-primary {
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 40%, #EC4899 100%) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(37, 99, 235, 0.6) !important;
+  box-shadow: 0 4px 22px rgba(37, 99, 235, 0.45) !important;
+  font-weight: 600 !important;
+}
+
+html[data-site-theme="royal-ultramarine"] .btn-primary:hover,
+:root:not([data-site-theme]) .btn-primary:hover {
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 40%, #F43F5E 100%) !important;
+  box-shadow: 0 6px 30px rgba(37, 99, 235, 0.65) !important;
+  transform: translateY(-1px);
+}
+
+html[data-site-theme="royal-ultramarine"] .badge-primary,
+:root:not([data-site-theme]) .badge-primary {
+  background: rgba(37, 99, 235, 0.16) !important;
+  color: #60A5FA !important;
+  border: 1px solid rgba(37, 99, 235, 0.35) !important;
+}
+
+/* 0B. BookMyArtist Sunset Gala (Gold & Magenta Luxe) — VIP Red Carpet 🌅 */
+html[data-site-theme="solar-sunset-luxe"],
+:root[data-site-theme="solar-sunset-luxe"] {
+  --color-primary: #FF9500;
+  --color-primary-hover: #FFAE33;
+  --color-primary-light: rgba(255, 149, 0, 0.16);
+  --color-primary-glow: rgba(255, 149, 0, 0.5);
+  --color-accent: #FF007A;
+  --color-accent-hover: #FF2A93;
+  --color-accent-light: rgba(255, 0, 122, 0.16);
+  --color-accent-glow: rgba(255, 0, 122, 0.4);
+  --color-bg-primary: #08070B;
+  --color-bg-secondary: #0F0E14;
+  --color-bg-tertiary: #17151F;
+  --color-bg-card: #13111A;
+  --color-bg-card-hover: #1B1925;
+  --color-bg-input: #0F0E14;
+  --color-bg-elevated: #211E2D;
+  --color-text-primary: #FFFDF7;
+  --color-text-secondary: #D4CEBF;
+  --color-text-tertiary: #8C8678;
+  --color-text-link: #FF9500;
+  --color-text-link-hover: #FFAE33;
+  --color-border: rgba(255, 149, 0, 0.20);
+  --color-border-hover: rgba(255, 149, 0, 0.45);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 149, 0, 0.20);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 149, 0, 0.22) 0%, rgba(255, 0, 122, 0.14) 50%, #08070B 100%);
+  --gradient-accent: linear-gradient(135deg, #FF9500 0%, #FF5500 40%, #FF007A 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255, 149, 0, 0.07) 0%, rgba(255, 0, 122, 0.03) 100%);
+  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 149, 0, 0.14), transparent 40%);
+  --gradient-text: linear-gradient(135deg, #FFFDF7 0%, #FFE6CC 40%, #FF9500 100%);
+  --shadow-glow: 0 0 35px rgba(255, 149, 0, 0.45);
+  --navbar-scrolled-bg: rgba(8, 7, 11, 0.92);
+}
+
+html[data-site-theme="solar-sunset-luxe"] .btn-primary {
+  background: linear-gradient(135deg, #FF9500 0%, #FF5500 45%, #FF007A 100%) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 149, 0, 0.6) !important;
+  box-shadow: 0 4px 22px rgba(255, 149, 0, 0.45) !important;
+  font-weight: 600 !important;
+}
+
+html[data-site-theme="solar-sunset-luxe"] .btn-primary:hover {
+  background: linear-gradient(135deg, #FFAE33 0%, #FF6B00 45%, #FF2A93 100%) !important;
+  box-shadow: 0 6px 30px rgba(255, 149, 0, 0.65) !important;
+  transform: translateY(-1px);
+}
+
+html[data-site-theme="solar-sunset-luxe"] .badge-primary {
+  background: rgba(255, 149, 0, 0.16) !important;
+  color: #FFAE33 !important;
+  border: 1px solid rgba(255, 149, 0, 0.35) !important;
+}
+
+/* 0C. BookMyArtist Signature (Neon Stage) — Matches Official Brand Logo ✨ */
+html[data-site-theme="signature-neon"],
+:root[data-site-theme="signature-neon"] {
   --color-primary: #FF007A;
   --color-primary-hover: #FF2A93;
   --color-primary-light: rgba(255, 0, 122, 0.16);
@@ -237,8 +352,7 @@ html:not([data-site-theme]),
   --navbar-scrolled-bg: rgba(7, 6, 12, 0.9);
 }
 
-html[data-site-theme="signature-neon"] .btn-primary,
-:root:not([data-site-theme]) .btn-primary {
+html[data-site-theme="signature-neon"] .btn-primary {
   background: linear-gradient(135deg, #FF7A00 0%, #FF007A 45%, #7928CA 100%) !important;
   color: #FFFFFF !important;
   border-color: rgba(255, 0, 122, 0.5) !important;
@@ -246,15 +360,13 @@ html[data-site-theme="signature-neon"] .btn-primary,
   font-weight: 600 !important;
 }
 
-html[data-site-theme="signature-neon"] .btn-primary:hover,
-:root:not([data-site-theme]) .btn-primary:hover {
+html[data-site-theme="signature-neon"] .btn-primary:hover {
   background: linear-gradient(135deg, #FFA233 0%, #FF2A93 45%, #8B5CF6 100%) !important;
   box-shadow: 0 6px 28px rgba(255, 0, 122, 0.6) !important;
   transform: translateY(-1px);
 }
 
-html[data-site-theme="signature-neon"] .badge-primary,
-:root:not([data-site-theme]) .badge-primary {
+html[data-site-theme="signature-neon"] .badge-primary {
   background: rgba(255, 0, 122, 0.15) !important;
   color: #FF4DA6 !important;
   border: 1px solid rgba(255, 0, 122, 0.3) !important;

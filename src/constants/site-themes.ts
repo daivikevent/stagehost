@@ -25,11 +25,49 @@ export interface GlobalSiteTheme {
 }
 
 export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
-  // ── OFFICIAL BRAND SIGNATURE THEME ──
+  // ── 3 DISTINCT LOGO-INSPIRED BRAND THEMES ──
+  {
+    id: 'royal-ultramarine',
+    name: 'BookMyArtist Electric Royal (Indigo Stage)',
+    hindiName: 'रॉयल अल्ट्रा-मरीन (Official Logo Arc)',
+    badge: '⚡ Royal Sapphire',
+    category: 'modern',
+    mode: 'dark',
+    description: 'Deep Royal Ultramarine Blue & Electric Sapphire inspired by the bottom curve of the 3D logo, with glowing Hot Pink & Sunset Amber micro-accents on obsidian velvet.',
+    primary: '#2563EB',
+    primaryHover: '#3B82F6',
+    accent: '#FF007A',
+    bg: '#060713',
+    cardBg: '#0E122B',
+    border: 'rgba(37, 99, 235, 0.22)',
+    glow: 'rgba(37, 99, 235, 0.5)',
+    previewGradient: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 40%, #FF007A 100%)',
+    previewColors: ['#2563EB', '#3B82F6', '#FF007A', '#060713'],
+    features: ['Royal Ultramarine Blue', 'Hot Pink Mic Accents', 'Deep Velvet Midnight Stage', 'High-Tech Stadium Vibe'],
+  },
+  {
+    id: 'solar-sunset-luxe',
+    name: 'BookMyArtist Sunset Gala (Gold & Magenta Luxe)',
+    hindiName: 'गोल्डन सनसेट गाला (VIP Red Carpet)',
+    badge: '🌅 Sunset Luxe',
+    category: 'luxury',
+    mode: 'dark',
+    description: 'Solar Amber Gold, Sunset Tangerine & Vivid Magenta on deep Obsidian Onyx. Red carpet glamour for high-end wedding, corporate & celebrity talent.',
+    primary: '#FF9500',
+    primaryHover: '#FFAE33',
+    accent: '#FF007A',
+    bg: '#08070B',
+    cardBg: '#13111A',
+    border: 'rgba(255, 149, 0, 0.20)',
+    glow: 'rgba(255, 149, 0, 0.5)',
+    previewGradient: 'linear-gradient(135deg, #FF9500 0%, #FF5500 40%, #FF007A 100%)',
+    previewColors: ['#FF9500', '#FF5500', '#FF007A', '#08070B'],
+    features: ['Solar Amber Gold Peak', 'Electric Magenta Highlights', 'Glossy Obsidian Onyx', 'VIP Red Carpet Glamour'],
+  },
   {
     id: 'signature-neon',
     name: 'BookMyArtist Signature (Neon Stage)',
-    hindiName: 'सिग्नेचर स्टेज (Official Brand)',
+    hindiName: 'सिग्नेचर स्टेज (Hot Pink & Violet)',
     badge: '✨ Official Brand',
     category: 'modern',
     mode: 'dark',
@@ -203,4 +241,4 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   },
 ];
 
-export const DEFAULT_SITE_THEME = 'signature-neon';
+export const DEFAULT_SITE_THEME = 'royal-ultramarine';
