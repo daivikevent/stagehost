@@ -277,12 +277,7 @@ html[data-site-theme="indigo-sapphire-aura"] .btn-accent,
   font-weight: 600 !important;
 }
 
-html[data-site-theme="indigo-sapphire-aura"] .btn-accent:hover,
-:root:not([data-site-theme]) .btn-accent:hover {
-  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 50%, #2563EB 100%) !important;
-  box-shadow: 0 6px 28px rgba(37, 99, 235, 0.6) !important;
-  transform: translateY(-1px);
-}
+
 
 html[data-site-theme="indigo-sapphire-aura"] .badge-primary,
 :root:not([data-site-theme]) .badge-primary {
@@ -365,6 +360,7 @@ html[data-site-theme="cyber-cobalt-pulse"] .btn-accent {
 
 html[data-site-theme="cyber-cobalt-pulse"] .btn-accent:hover {
   background: linear-gradient(135deg, #4C1D95 0%, #5B21B6 50%, #6D28D9 100%) !important;
+  color: #FFFFFF !important;
   box-shadow: 0 6px 28px rgba(124, 58, 237, 0.6) !important;
   transform: translateY(-1px);
 }
@@ -436,6 +432,7 @@ html[data-site-theme="royal-ultramarine"] .btn-accent {
 
 html[data-site-theme="royal-ultramarine"] .btn-accent:hover {
   background: linear-gradient(135deg, #4338CA 0%, #4F46E5 50%, #6366F1 100%) !important;
+  color: #FFFFFF !important;
   box-shadow: 0 6px 28px rgba(99, 102, 241, 0.6) !important;
   transform: translateY(-1px);
 }
@@ -505,14 +502,15 @@ html[data-site-theme="solar-sunset-luxe"] .badge-primary {
 /* 0C. BookMyArtist Signature (Neon Stage) — Matches Official Brand Logo ✨ */
 html[data-site-theme="signature-neon"],
 :root[data-site-theme="signature-neon"] {
-  --color-primary: #FF007A;
-  --color-primary-hover: #FF2A93;
-  --color-primary-light: rgba(255, 0, 122, 0.16);
-  --color-primary-glow: rgba(255, 0, 122, 0.5);
-  --color-accent: #FF8A00;
-  --color-accent-hover: #FFA233;
-  --color-accent-light: rgba(255, 138, 0, 0.16);
-  --color-accent-glow: rgba(255, 138, 0, 0.4);
+  --color-primary: #7C3AED;
+  --color-primary-hover: #6D28D9;
+  --color-primary-light: rgba(124, 58, 237, 0.16);
+  --color-primary-glow: rgba(124, 58, 237, 0.5);
+  --color-accent: #2563EB;
+  --color-accent-hover: #1D4ED8;
+  --color-accent-light: rgba(37, 99, 235, 0.16);
+  --color-accent-glow: rgba(37, 99, 235, 0.4);
+  --color-accent-text: #FFFFFF;
   --color-bg-primary: #07060C;
   --color-bg-secondary: #0E0A18;
   --color-bg-tertiary: #171128;
@@ -523,32 +521,56 @@ html[data-site-theme="signature-neon"],
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #C8BEDC;
   --color-text-tertiary: #84759E;
-  --color-text-link: #FF007A;
-  --color-text-link-hover: #FF4DA6;
-  --color-border: rgba(255, 0, 122, 0.18);
-  --color-border-hover: rgba(255, 0, 122, 0.45);
+  --color-text-link: #818CF8;
+  --color-text-link-hover: #A5B4FC;
+  --color-border: rgba(124, 58, 237, 0.22);
+  --color-border-hover: rgba(124, 58, 237, 0.50);
   --glass-bg: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 0, 122, 0.18);
-  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 0, 122, 0.22) 0%, rgba(121, 40, 202, 0.14) 50%, #07060C 100%);
-  --gradient-accent: linear-gradient(135deg, #FF8A00 0%, #FF007A 50%, #7928CA 100%);
-  --gradient-card: linear-gradient(145deg, rgba(255, 0, 122, 0.06) 0%, rgba(121, 40, 202, 0.02) 100%);
-  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 0, 122, 0.12), transparent 40%);
-  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #FFE6F2 40%, #FF007A 100%);
-  --shadow-glow: 0 0 35px rgba(255, 0, 122, 0.45);
+  --glass-border: rgba(124, 58, 237, 0.22);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124, 58, 237, 0.24) 0%, rgba(37, 99, 235, 0.12) 50%, #07060C 100%);
+  --gradient-accent: linear-gradient(135deg, #7C3AED 0%, #6366F1 50%, #2563EB 100%);
+  --gradient-card: linear-gradient(145deg, rgba(124, 58, 237, 0.06) 0%, rgba(37, 99, 235, 0.02) 100%);
+  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(124, 58, 237, 0.16), transparent 40%);
+  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #E0E7FF 40%, #818CF8 100%);
+  --shadow-glow: 0 0 35px rgba(124, 58, 237, 0.45);
   --navbar-scrolled-bg: rgba(7, 6, 12, 0.9);
 }
 
-html[data-site-theme="signature-neon"] .btn-primary {
-  background: linear-gradient(135deg, #FF7A00 0%, #FF007A 45%, #7928CA 100%) !important;
+html[data-site-theme="signature-neon"] .btn-primary,
+html[data-site-theme="signature-neon"] a.btn-primary,
+html[data-site-theme="signature-neon"] button.btn-primary {
+  background: linear-gradient(135deg, #7C3AED 0%, #6366F1 50%, #4F46E5 100%) !important;
   color: #FFFFFF !important;
-  border-color: rgba(255, 0, 122, 0.5) !important;
-  box-shadow: 0 4px 20px rgba(255, 0, 122, 0.4) !important;
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4) !important;
   font-weight: 600 !important;
 }
 
-html[data-site-theme="signature-neon"] .btn-primary:hover {
-  background: linear-gradient(135deg, #FFA233 0%, #FF2A93 45%, #8B5CF6 100%) !important;
-  box-shadow: 0 6px 28px rgba(255, 0, 122, 0.6) !important;
+html[data-site-theme="signature-neon"] .btn-primary:hover,
+html[data-site-theme="signature-neon"] a.btn-primary:hover,
+html[data-site-theme="signature-neon"] button.btn-primary:hover {
+  background: linear-gradient(135deg, #6D28D9 0%, #4F46E5 50%, #4338CA 100%) !important;
+  box-shadow: 0 6px 28px rgba(124, 58, 237, 0.6) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+}
+
+html[data-site-theme="signature-neon"] .btn-accent,
+html[data-site-theme="signature-neon"] a.btn-accent,
+html[data-site-theme="signature-neon"] button.btn-accent {
+  background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(37, 99, 235, 0.5) !important;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4) !important;
+  font-weight: 600 !important;
+}
+
+html[data-site-theme="signature-neon"] .btn-accent:hover,
+html[data-site-theme="signature-neon"] a.btn-accent:hover,
+html[data-site-theme="signature-neon"] button.btn-accent:hover {
+  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 50%, #2563EB 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 28px rgba(37, 99, 235, 0.6) !important;
   transform: translateY(-1px);
 }
 
@@ -1149,43 +1171,72 @@ input, textarea, select {
 }
 
 /* Primary Button */
-.btn-primary {
+.btn-primary,
+a.btn-primary,
+button.btn-primary {
   background: var(--color-primary);
-  color: white;
+  color: #FFFFFF !important;
   box-shadow: var(--shadow-sm);
+  text-decoration: none !important;
 }
 
-.btn-primary:hover:not(:disabled) {
+.btn-primary:hover:not(:disabled),
+a.btn-primary:hover:not(:disabled),
+button.btn-primary:hover:not(:disabled),
+.btn-primary:focus,
+a.btn-primary:focus,
+.btn-primary:active,
+a.btn-primary:active {
   background: var(--color-primary-hover);
+  color: #FFFFFF !important;
   transform: translateY(-1px) scale(1.02);
   box-shadow: var(--shadow-glow);
+  text-decoration: none !important;
 }
 
 /* Accent Button */
-.btn-accent {
+.btn-accent,
+a.btn-accent,
+button.btn-accent {
   background: var(--color-accent);
-  color: var(--color-accent-text, var(--color-bg-primary));
+  color: #FFFFFF !important;
   font-weight: var(--font-semibold);
   box-shadow: var(--shadow-sm);
+  text-decoration: none !important;
 }
 
-.btn-accent:hover:not(:disabled) {
+.btn-accent:hover:not(:disabled),
+a.btn-accent:hover:not(:disabled),
+button.btn-accent:hover:not(:disabled),
+.btn-accent:focus,
+a.btn-accent:focus,
+.btn-accent:active,
+a.btn-accent:active {
   background: var(--color-accent-hover);
+  color: #FFFFFF !important;
   transform: translateY(-1px) scale(1.02);
   box-shadow: var(--shadow-glow-accent);
+  text-decoration: none !important;
 }
 
 /* Ghost Button */
-.btn-ghost {
+.btn-ghost,
+a.btn-ghost,
+button.btn-ghost {
   background: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text-primary) !important;
   border: 1px solid var(--color-border);
+  text-decoration: none !important;
 }
 
-.btn-ghost:hover:not(:disabled) {
+.btn-ghost:hover:not(:disabled),
+a.btn-ghost:hover:not(:disabled),
+button.btn-ghost:hover:not(:disabled) {
   background: var(--glass-bg);
+  color: #FFFFFF !important;
   border-color: var(--color-border-hover);
   transform: translateY(-1px);
+  text-decoration: none !important;
 }
 
 /* Outline Button */

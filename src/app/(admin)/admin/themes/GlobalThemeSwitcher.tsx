@@ -73,26 +73,7 @@ export function GlobalThemeSwitcher({
       styleEl.id = 'bma-dynamic-theme-vars';
       document.head.appendChild(styleEl);
     }
-    styleEl.innerHTML = `
-      html[data-site-theme="${theme.id}"],
-      :root[data-site-theme="${theme.id}"] {
-        --color-primary: ${theme.primary};
-        --color-primary-hover: ${theme.primaryHover};
-        --color-accent: ${theme.accent};
-        --color-bg-primary: ${theme.bg};
-        --color-bg-card: ${theme.cardBg};
-        --color-border: ${theme.border};
-        --color-primary-glow: ${theme.glow};
-      }
-      html[data-site-theme="${theme.id}"] .btn-primary {
-        background: ${theme.primary} !important;
-        border-color: ${theme.primary} !important;
-      }
-      html[data-site-theme="${theme.id}"] .btn-accent {
-        background: ${theme.accent} !important;
-        border-color: ${theme.accent} !important;
-      }
-    `;
+
   };
 
   // Sync DOM with state on mount & load localStorage cache if available
