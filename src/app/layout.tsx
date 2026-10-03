@@ -57,7 +57,7 @@ export const viewport: Viewport = {
   themeColor: '#0A0A14',
 };
 
-import { getGlobalSiteTheme } from '@/lib/actions/themes';
+import { getGlobalSiteTheme, getCustomSiteThemes } from '@/lib/actions/themes';
 import { getBrandSettings } from '@/lib/actions/brand';
 import { BrandProvider } from '@/contexts/BrandContext';
 import { PwaRegistrar } from '@/components/common/PwaRegistrar';
@@ -67,10 +67,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [activeTheme, brand] = await Promise.all([
+  const [activeTheme, brand, customThemes] = await Promise.all([
     getGlobalSiteTheme(),
     getBrandSettings(),
+    getCustomSiteThemes(),
   ]);
+
+  const activeCustomTheme = customThemes.find((t) => t.id === activeTheme);
 
   return (
     <html lang="en" data-site-theme={activeTheme} suppressHydrationWarning>
@@ -97,6 +100,33 @@ export default async function RootLayout({
             `,
           }}
         />
+        {activeCustomTheme && (
+          <style
+            id="bma-custom-theme-vars"
+            dangerouslySetInnerHTML={{
+              __html: `
+                html[data-site-theme="${activeCustomTheme.id}"],
+                :root[data-site-theme="${activeCustomTheme.id}"] {
+                  --color-primary: ${activeCustomTheme.primary};
+                  --color-primary-hover: ${activeCustomTheme.primaryHover};
+                  --color-accent: ${activeCustomTheme.accent};
+                  --color-bg-primary: ${activeCustomTheme.bg};
+                  --color-bg-card: ${activeCustomTheme.cardBg};
+                  --color-border: ${activeCustomTheme.border};
+                  --color-primary-glow: ${activeCustomTheme.glow};
+                }
+                html[data-site-theme="${activeCustomTheme.id}"] .btn-primary {
+                  background: ${activeCustomTheme.primary} !important;
+                  border-color: ${activeCustomTheme.primary} !important;
+                }
+                html[data-site-theme="${activeCustomTheme.id}"] .btn-accent {
+                  background: ${activeCustomTheme.accent} !important;
+                  border-color: ${activeCustomTheme.accent} !important;
+                }
+              `,
+            }}
+          />
+        )}
         <script
           dangerouslySetInnerHTML={{
             __html: `

@@ -7,7 +7,6 @@
 export interface GlobalSiteTheme {
   id: string;
   name: string;
-  hindiName: string;
   badge: string;
   category: 'royal' | 'modern' | 'luxury';
   mode: 'dark' | 'light';
@@ -29,7 +28,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'indigo-sapphire-aura',
     name: 'BookMyArtist Indigo Sapphire (Purple Elite)',
-    hindiName: 'इन्डिगो नीलम (Royal Violet & Sapphire)',
     badge: '👑 Royal Violet (User Pick)',
     category: 'royal',
     mode: 'dark',
@@ -48,7 +46,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'cyber-cobalt-pulse',
     name: 'BookMyArtist Cobalt Horizon (Deep Blue Stage)',
-    hindiName: 'कोबाल्ट होराइजन (Electric Blue & Indigo)',
     badge: '🌊 Electric Blue (User Pick)',
     category: 'modern',
     mode: 'dark',
@@ -67,7 +64,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'royal-ultramarine',
     name: 'BookMyArtist Electric Royal (Indigo Stage)',
-    hindiName: 'रॉयल अल्ट्रा-मरीन (Official Logo Arc)',
     badge: '⚡ Royal Sapphire',
     category: 'modern',
     mode: 'dark',
@@ -86,7 +82,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'solar-sunset-luxe',
     name: 'BookMyArtist Sunset Gala (Gold & Magenta Luxe)',
-    hindiName: 'गोल्डन सनसेट गाला (VIP Red Carpet)',
     badge: '🌅 Sunset Luxe',
     category: 'luxury',
     mode: 'dark',
@@ -105,7 +100,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'signature-neon',
     name: 'BookMyArtist Signature (Neon Stage)',
-    hindiName: 'सिग्नेचर स्टेज (Hot Pink & Violet)',
     badge: '✨ Official Brand',
     category: 'modern',
     mode: 'dark',
@@ -126,7 +120,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'obsidian-violet',
     name: 'Obsidian Violet',
-    hindiName: 'द मॉडर्न स्टेज',
     badge: 'Modern Neon',
     category: 'modern',
     mode: 'dark',
@@ -145,7 +138,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'midnight-gold',
     name: 'Midnight Royal Gold',
-    hindiName: 'शाही स्वर्ण (Sovereign Gold)',
     badge: '👑 Royal Sovereign',
     category: 'royal',
     mode: 'dark',
@@ -164,7 +156,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'royal-emerald',
     name: 'Royal Emerald & Gold',
-    hindiName: 'पन्ना लग्जरी (Crown Jewel)',
     badge: '💎 Crown Jewel',
     category: 'royal',
     mode: 'dark',
@@ -183,7 +174,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'imperial-sapphire',
     name: 'Imperial Sapphire & Platinum',
-    hindiName: 'नीलम रोयाल (Grand Gala)',
     badge: '🌌 Neelam Royale',
     category: 'royal',
     mode: 'dark',
@@ -202,7 +192,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'crimson-velvet',
     name: 'Crimson Velvet & Rose Gold',
-    hindiName: 'शाही गुलाब (Red Carpet)',
     badge: '🌹 Red Carpet',
     category: 'luxury',
     mode: 'dark',
@@ -223,7 +212,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'ivory-gold',
     name: 'Ivory Royal Gold',
-    hindiName: 'शाही आइवरी स्वर्ण (Royal Wedding)',
     badge: '☀️ Royal Ivory',
     category: 'royal',
     mode: 'light',
@@ -242,7 +230,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'crystal-sapphire',
     name: 'Crystal Sapphire & Platinum',
-    hindiName: 'क्रिस्टल सफायर (Corporate Gala)',
     badge: '☀️ Crystal Luxe',
     category: 'modern',
     mode: 'light',
@@ -261,7 +248,6 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   {
     id: 'rose-quartz',
     name: 'Rose Quartz & Champagne',
-    hindiName: 'गुलाबी रॉयल (Red Carpet Luxury)',
     badge: '☀️ Rose Quartz',
     category: 'luxury',
     mode: 'light',

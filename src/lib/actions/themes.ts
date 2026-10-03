@@ -4,7 +4,88 @@ import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { checkIsAdmin } from './admin';
-import { DEFAULT_SITE_THEME, GLOBAL_SITE_THEMES } from '@/constants/site-themes';
+import { DEFAULT_SITE_THEME, GLOBAL_SITE_THEMES, type GlobalSiteTheme } from '@/constants/site-themes';
+
+/**
+ * Public action: Get list of all available global themes
+ * Returns database customized list if present, else default factory list.
+ */
+export async function getCustomSiteThemes(): Promise<GlobalSiteTheme[]> {
+  try {
+    const adminClient = createAdminClient();
+    const { data } = await adminClient
+      .from('platform_settings')
+      .select('value')
+      .eq('key', 'custom_site_themes_config')
+      .maybeSingle();
+
+    if (data?.value) {
+      const parsed = JSON.parse(data.value);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching custom site themes:', err);
+  }
+  return GLOBAL_SITE_THEMES;
+}
+
+/**
+ * Admin action: Save updated list of site themes (after add, edit or delete)
+ */
+export async function saveCustomSiteThemes(themes: GlobalSiteTheme[]) {
+  const isAdmin = await checkIsAdmin();
+  if (!isAdmin) {
+    throw new Error('Unauthorized: Admin access required');
+  }
+
+  const adminClient = createAdminClient();
+  const { error } = await adminClient
+    .from('platform_settings')
+    .upsert(
+      {
+        key: 'custom_site_themes_config',
+        value: JSON.stringify(themes),
+        category: 'branding',
+        label: 'Configured Site Themes',
+        description: 'JSON list of configured themes including edits and user additions',
+        field_type: 'json',
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'key' }
+    );
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/admin/themes');
+  revalidatePath('/admin/settings');
+  revalidatePath('/', 'layout');
+  return { success: true };
+}
+
+/**
+ * Admin action: Reset site themes back to factory defaults
+ */
+export async function resetCustomSiteThemesToDefault() {
+  const isAdmin = await checkIsAdmin();
+  if (!isAdmin) {
+    throw new Error('Unauthorized: Admin access required');
+  }
+
+  const adminClient = createAdminClient();
+  await adminClient
+    .from('platform_settings')
+    .delete()
+    .eq('key', 'custom_site_themes_config');
+
+  revalidatePath('/admin/themes');
+  revalidatePath('/admin/settings');
+  revalidatePath('/', 'layout');
+  return { success: true };
+}
 
 /**
  * Public action: Get current global website theme.
@@ -14,7 +95,7 @@ export async function getGlobalSiteTheme(): Promise<string> {
   try {
     const cookieStore = await cookies();
     const cookieTheme = cookieStore.get('bookmyartist_site_theme')?.value || cookieStore.get('stagehost_site_theme')?.value;
-    if (cookieTheme && GLOBAL_SITE_THEMES.some((t) => t.id === cookieTheme)) {
+    if (cookieTheme) {
       return cookieTheme;
     }
   } catch {
@@ -29,7 +110,7 @@ export async function getGlobalSiteTheme(): Promise<string> {
       .eq('key', 'site_theme')
       .maybeSingle();
 
-    if (data?.value && GLOBAL_SITE_THEMES.some((t) => t.id === data.value)) {
+    if (data?.value) {
       return data.value;
     }
   } catch (err) {
@@ -47,11 +128,6 @@ export async function setGlobalSiteTheme(themeId: string) {
   const isAdmin = await checkIsAdmin();
   if (!isAdmin) {
     throw new Error('Unauthorized: Admin access required');
-  }
-
-  const isValid = GLOBAL_SITE_THEMES.some((t) => t.id === themeId);
-  if (!isValid) {
-    throw new Error(`Invalid theme ID: ${themeId}`);
   }
 
   const adminClient = createAdminClient();

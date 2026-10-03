@@ -1,13 +1,20 @@
 import { getAdminThemesList } from '@/lib/actions/admin';
-import { getGlobalSiteTheme } from '@/lib/actions/themes';
+import { getGlobalSiteTheme, getCustomSiteThemes } from '@/lib/actions/themes';
 import { ThemesClient } from './ThemesClient';
 
 export default async function AdminThemesPage() {
-  const [themes, siteTheme] = await Promise.all([
+  const [themes, siteTheme, customSiteThemes] = await Promise.all([
     getAdminThemesList(),
     getGlobalSiteTheme(),
+    getCustomSiteThemes(),
   ]);
 
-  return <ThemesClient initialThemes={themes} initialSiteTheme={siteTheme} />;
+  return (
+    <ThemesClient
+      initialThemes={themes}
+      initialSiteTheme={siteTheme}
+      initialCustomSiteThemes={customSiteThemes}
+    />
+  );
 }
 

@@ -207,7 +207,7 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
             >
               {GLOBAL_SITE_THEMES.map((t) => (
                 <option key={t.id} value={t.id}>
-                  {t.name} — {t.badge} ({t.hindiName})
+                  {t.name} — {t.badge}
                 </option>
               ))}
             </select>

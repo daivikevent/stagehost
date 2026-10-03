@@ -14,6 +14,8 @@ import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { GlobalThemeSwitcher } from './GlobalThemeSwitcher';
 import styles from '../dashboard/admin.module.css';
 
+import type { GlobalSiteTheme } from '@/constants/site-themes';
+
 export interface ThemeItem {
   id: string;
   name: string;
@@ -28,9 +30,14 @@ export interface ThemeItem {
 interface ThemesClientProps {
   initialThemes: ThemeItem[];
   initialSiteTheme?: string;
+  initialCustomSiteThemes?: GlobalSiteTheme[];
 }
 
-export function ThemesClient({ initialThemes, initialSiteTheme }: ThemesClientProps) {
+export function ThemesClient({
+  initialThemes,
+  initialSiteTheme,
+  initialCustomSiteThemes,
+}: ThemesClientProps) {
   const { success, error: showError } = useToast();
   const [themes, setThemes] = useState<ThemeItem[]>(initialThemes);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -166,8 +173,11 @@ export function ThemesClient({ initialThemes, initialSiteTheme }: ThemesClientPr
         </div>
       </div>
 
-      {/* 1. GLOBAL WEBSITE THEME (Puri Website Ka Theme) */}
-      <GlobalThemeSwitcher initialTheme={initialSiteTheme || 'obsidian-violet'} />
+      {/* 1. GLOBAL WEBSITE MASTER THEME */}
+      <GlobalThemeSwitcher
+        initialTheme={initialSiteTheme || 'indigo-sapphire-aura'}
+        initialThemesList={initialCustomSiteThemes}
+      />
 
       {/* 2. ANCHOR PORTFOLIO THEMES */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-3)', marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>
