@@ -8,6 +8,7 @@ import { checkIsAdmin } from '@/lib/actions/admin';
 import type { Inquiry, InquiryStatus } from '@/types';
 import { sendInquiryAlertEmail } from '@/lib/email';
 import { sendPushNotificationToAnchor } from '@/lib/actions/push';
+import { sendWhatsAppInquiryAlert } from '@/lib/whatsapp';
 
 // ---- Submit inquiry (public — no auth required) ----
 export async function submitInquiry(profileSlug: string, formData: {
@@ -41,7 +42,7 @@ export async function submitInquiry(profileSlug: string, formData: {
   // Get profile by slug
   const { data: profile, error: profileError } = await adminClient
     .from('anchor_profiles')
-    .select('id, user_id, name, email')
+    .select('id, user_id, name, email, phone, whatsapp_number, slug')
     .eq('slug', profileSlug)
     .single();
 
@@ -60,7 +61,25 @@ export async function submitInquiry(profileSlug: string, formData: {
 
   if (error) throw new Error(error.message);
 
-  // Send real-time email notification via Resend
+  // 1. Send automated WhatsApp notification alert via Meta WhatsApp Cloud API
+  const artistWhatsAppNumber = profile.whatsapp_number || profile.phone;
+  if (artistWhatsAppNumber) {
+    sendWhatsAppInquiryAlert({
+      artistPhone: artistWhatsAppNumber,
+      artistName: profile.name || 'Artist',
+      clientName: formData.name,
+      clientPhone: cleanPhone,
+      eventType: formData.event_type || 'Event',
+      eventDate: formData.event_date || 'TBD',
+      eventCity: formData.event_city || 'India',
+      budgetRange: formData.budget_range || 'Flexible',
+      artistSlug: profile.slug,
+    }).catch((waErr) => {
+      console.error('[Meta WhatsApp Cloud API] Async delivery error:', waErr);
+    });
+  }
+
+  // 2. Send real-time email notification via Resend
   if (profile.email) {
     try {
       await sendInquiryAlertEmail({
@@ -82,7 +101,7 @@ export async function submitInquiry(profileSlug: string, formData: {
     }
   }
 
-  // Trigger web push notification to anchor device
+  // 3. Trigger web push notification to anchor device
   try {
     const eventDetail = formData.event_type || 'Event';
     const cityDetail = formData.event_city ? ` in ${formData.event_city}` : '';

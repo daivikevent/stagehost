@@ -16,9 +16,9 @@
 | ✅ **Shipped** | **Universal Multi-Artist Architecture (Foundation)** | 11 categories (DJ, Singer, Band, Emcee, etc.) |
 | ✅ **Shipped** | **Custom Domains White-Labeling (`artistname.com`)** | CNAME routing, Next.js proxy rewrite, SSL automation |
 | ✅ **Shipped** | **Two-Way Google Calendar Real-Time Sync** | iCal parser, auto date-blocking, double-booking prevention |
-| 🔴 **Immediate** | **Razorpay Live Merchant Integration & Webhook** | Live API keys, UPI AutoPay, Webhook verification |
-| 🟡 **Phase 1** | **Meta WhatsApp Cloud API (Automated Alert)** | Meta Graph API, Pre-approved template, Direct ping |
-| 🟡 **Phase 1** | **PDF Quotation & Rate Card Generator** | Serverless / `@react-pdf` branded client proposals |
+| ✅ **Shipped** | **Razorpay Merchant Integration & Auto-Activation** | Sandbox simulation mode, signature verification, live-key support |
+| ✅ **Shipped** | **Meta WhatsApp Cloud API (Automated Alert)** | Meta Graph API, instant lead alerts, webhook listener, admin test ping |
+| ✅ **Shipped** | **PDF Quotation & Rate Card Generator** | Branded executive client proposals, A4 PDF print/download, WhatsApp sharing |
 | 🟡 **Phase 3** | **GST Tax Invoice Generator for Subscriptions** | 18% GST calculation, sequential numbering, PDF download |
 | 🟡 **Phase 3** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers |
 | 🟡 **Phase 4** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders |

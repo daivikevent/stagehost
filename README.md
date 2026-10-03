@@ -78,9 +78,8 @@
 | **🔄 Two-Way Google Calendar Real-Time Sync** | Automation & Schedule | ✅ **Shipped** | Bi-directional synchronization: personal Google/Apple calendar events automatically block dates on BookMyArtist. |
 | **🔑 One-Click Social Auth (Google OAuth)** | Growth & Onboarding | ✅ **Shipped** | 1-tap Google login & onboarding with automatic avatar and profile provisioning. |
 | **🖼️ Client-Side Media Compression (WebP)** | Infrastructure | ✅ **Shipped** | HTML5 Canvas WebP compression (15MB ➔ ~250KB) before upload to Supabase Storage. |
-| **📱 Mobile PWA & Background Web Push Notifications** | Mobile & Notifications | ✅ **Shipped** | Standalone PWA installable on iOS/Android with lockscreen inquiry notifications. |
-| **📄 Automated PDF Quotation & Rate Card Generator** | Commercial & Proposals | 🟡 Planned | 1-click corporate quotation generator with itemized scope of work and payment terms. |
-| **🤖 Meta WhatsApp Cloud API (Automated Ping)** | AI & Automation | 🟡 Planned | Official WhatsApp Cloud API integration delivering lead notifications directly to artist chats. |
+| **📄 Automated PDF Quotation & Rate Card Generator** | Commercial & Proposals | ✅ **Shipped** | 1-click corporate quotation generator with itemized scope of work, A4 PDF print/download, and WhatsApp sharing. |
+| **🤖 Meta WhatsApp Cloud API (Automated Ping)** | AI & Automation | ✅ **Shipped** | Official WhatsApp Cloud API integration delivering lead notifications directly to artist chats with sandbox test fallback. |
 | **📑 Automated GST Tax Invoicing for Subscriptions** | Compliance & Finance | 🟡 Planned | GST-compliant tax invoicing with B2B GSTIN collection and downloadable PDF invoices. |
 
 ---

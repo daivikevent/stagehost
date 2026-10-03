@@ -20,15 +20,17 @@ import {
   Share2,
   ChevronRight,
   ArrowLeft,
+  FileText,
 } from 'lucide-react';
 import { INQUIRY_STATUS, INQUIRY_STATUS_COLORS, EVENT_TYPES, BUDGET_RANGES, MAJOR_CITIES } from '@/constants';
 import { formatRelativeTime, cn, formatEventDate } from '@/lib/utils';
 import { updateInquiryStatus, createManualInquiry, deleteInquiry } from '@/lib/actions/inquiries';
-import type { Inquiry, InquiryStatus } from '@/types';
+import type { Inquiry, InquiryStatus, AnchorProfile } from '@/types';
 import type { BookingRecord } from '@/lib/actions/schedule';
 import { useToast } from '@/hooks/useToast';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { EventFunctionsPicker } from '@/components/common/EventFunctionsPicker';
+import { QuotationGeneratorModal } from '@/components/quotation/QuotationGeneratorModal';
 import styles from './inquiries.module.css';
 
 const STATUS_LABELS: Record<InquiryStatus, string> = {
@@ -49,9 +51,10 @@ interface InquiriesClientProps {
   initialInquiries: Inquiry[];
   initialBookings?: BookingRecord[];
   profileName?: string;
+  profile?: AnchorProfile | null;
 }
 
-export function InquiriesClient({ initialInquiries, initialBookings = [], profileName = 'Artist' }: InquiriesClientProps) {
+export function InquiriesClient({ initialInquiries, initialBookings = [], profileName = 'Artist', profile }: InquiriesClientProps) {
   const { success, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
   const [inquiries, setInquiries] = useState<Inquiry[]>(initialInquiries);
@@ -61,6 +64,10 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
   const [pendingStatus, setPendingStatus] = useState<InquiryStatus | ''>('');
   const [mobileActiveView, setMobileActiveView] = useState<'list' | 'detail'>('list');
   const detailRef = useRef<HTMLDivElement>(null);
+
+  // Quotation Generator Modal State
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [quoteInquiry, setQuoteInquiry] = useState<Inquiry | null>(null);
 
   // Helper to detect if a booking is tentative/pencil hold
   const isBookingTentative = (b?: BookingRecord | null) => {
@@ -271,6 +278,24 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
               <span className={styles.headerStatLabel}>Converted</span>
             </div>
           </div>
+
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              setQuoteInquiry(inquiries.find((i) => i.id === selectedId) || null);
+              setIsQuoteModalOpen(true);
+            }}
+            style={{
+              gap: '8px',
+              border: '1px solid rgba(212, 175, 55, 0.4)',
+              background: 'rgba(212, 175, 55, 0.08)',
+              color: '#D4AF37',
+              fontWeight: 600,
+            }}
+          >
+            <FileText size={16} /> Create Quotation PDF
+          </button>
 
           <button
             type="button"
@@ -730,6 +755,24 @@ ${profileName}`;
                     <Mail size={14} /> {selected.email}
                   </a>
                 )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuoteInquiry(selected);
+                    setIsQuoteModalOpen(true);
+                  }}
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 151, 46, 0.05) 100%)',
+                    borderColor: 'rgba(212, 175, 55, 0.4)',
+                    color: '#D4AF37',
+                    fontWeight: 600,
+                    gap: '6px',
+                  }}
+                >
+                  <FileText size={14} /> Generate Quote & Rate Card PDF
+                </button>
               </div>
 
               {/* Event Details Grid */}
@@ -1118,6 +1161,15 @@ ${profileName}`;
         cancelText="Cancel"
         variant="danger"
         isLoading={isPending}
+      />
+
+      {/* PDF Quotation & Rate Card Studio Modal */}
+      <QuotationGeneratorModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        inquiry={quoteInquiry}
+        profile={profile}
+        profileName={profileName}
       />
     </div>
   );

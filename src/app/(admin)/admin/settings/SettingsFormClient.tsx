@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Check, Save, Loader2, Send, Megaphone, AlertCircle, Sparkles, Globe, ExternalLink, Palette } from 'lucide-react';
+import { Check, Save, Loader2, Send, Megaphone, AlertCircle, Sparkles, Globe, ExternalLink, Palette, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
-import { savePlatformSettings, sendAdminTestEmail, saveAnnouncementBanner, updateCustomDomainStatus } from '@/lib/actions/admin';
+import { savePlatformSettings, sendAdminTestEmail, sendTestWhatsAppAlert, saveAnnouncementBanner, updateCustomDomainStatus } from '@/lib/actions/admin';
 import { GLOBAL_SITE_THEMES } from '@/constants/site-themes';
 import type { AnnouncementBanner, CustomDomainRequest } from '@/types';
 import styles from '../dashboard/admin.module.css';
@@ -74,6 +74,26 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
       showError(err instanceof Error ? err.message : 'Failed to send test email');
     } finally {
       setIsSendingTest(false);
+    }
+  };
+
+  const [testWhatsAppPhone, setTestWhatsAppPhone] = useState('');
+  const [isSendingWhatsAppTest, setIsSendingWhatsAppTest] = useState(false);
+
+  const handleSendTestWhatsApp = async () => {
+    const target = testWhatsAppPhone || settings.support_whatsapp || '9820198201';
+    setIsSendingWhatsAppTest(true);
+    try {
+      const res = await sendTestWhatsAppAlert(target);
+      if (res.success) {
+        success(res.message || `Test WhatsApp alert delivered to +${target}!`);
+      } else {
+        showError(res.error || 'Failed to send WhatsApp alert');
+      }
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'WhatsApp test failed');
+    } finally {
+      setIsSendingWhatsAppTest(false);
     }
   };
 
@@ -298,6 +318,75 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
               />
               <button className="btn btn-ghost btn-sm" onClick={handleSendTestEmail} disabled={isSendingTest}>
                 {isSendingTest ? <Loader2 size={14} className="spin" /> : <Send size={14} />} Send Test
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Meta WhatsApp Cloud API Configuration */}
+        <div className={styles.settingSection}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}>
+            <MessageCircle size={18} color="#25D366" />
+            <h3 style={{ margin: 0 }}>Meta WhatsApp Cloud API (Automated Alert)</h3>
+          </div>
+          <p className="text-secondary text-xs" style={{ margin: '0 0 var(--space-3) 0' }}>
+            Sends instant automated booking alert pings directly to artists' personal WhatsApp chats when a new inquiry arrives.
+          </p>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Phone Number ID</div>
+              <div className={styles.settingDesc}>From Meta for Developers WhatsApp Cloud Dashboard</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              placeholder="e.g. 104829104820194"
+              value={settings.whatsapp_phone_number_id || ''}
+              onChange={(e) => update('whatsapp_phone_number_id', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Permanent Access Token</div>
+              <div className={styles.settingDesc}>System User token with whatsapp_business_messaging scope</div>
+            </div>
+            <input
+              type="password"
+              className={styles.settingInput}
+              placeholder="EAAGm..."
+              value={settings.whatsapp_access_token || ''}
+              onChange={(e) => update('whatsapp_access_token', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Webhook Verify Token</div>
+              <div className={styles.settingDesc}>Used for /api/whatsapp/webhook handshake</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              placeholder="bookmyartist_whatsapp_verify_token"
+              value={settings.whatsapp_verify_token || ''}
+              onChange={(e) => update('whatsapp_verify_token', e.target.value)}
+            />
+          </div>
+
+          <div style={{ marginTop: 'var(--space-4)', padding: '12px', background: 'rgba(37, 211, 102, 0.05)', borderRadius: '8px', border: '1px solid rgba(37, 211, 102, 0.2)' }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px', color: '#25D366' }}>Test WhatsApp Lead Notification</div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input
+                className="input"
+                style={{ flex: 1, fontSize: '13px', padding: '6px 10px' }}
+                placeholder="Enter 10-digit mobile (e.g. 9820198201)"
+                value={testWhatsAppPhone}
+                onChange={(e) => setTestWhatsAppPhone(e.target.value)}
+              />
+              <button
+                className="btn btn-sm"
+                style={{ background: '#25D366', borderColor: '#25D366', color: '#000', fontWeight: 600 }}
+                onClick={handleSendTestWhatsApp}
+                disabled={isSendingWhatsAppTest}
+              >
+                {isSendingWhatsAppTest ? <Loader2 size={14} className="spin" /> : <MessageCircle size={14} />} Send Test Ping
               </button>
             </div>
           </div>

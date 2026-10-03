@@ -504,6 +504,47 @@ export async function sendAdminTestEmail(toEmail: string): Promise<{
 }
 
 /**
+ * Send a test Meta WhatsApp Cloud API alert for admin verification.
+ */
+export async function sendTestWhatsAppAlert(recipientPhone: string): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  simulated?: boolean;
+}> {
+  try {
+    const isAdmin = await checkIsAdmin();
+    if (!isAdmin) return { success: false, error: 'Unauthorized: Admin access required' };
+
+    const { sendWhatsAppInquiryAlert } = await import('@/lib/whatsapp');
+    const result = await sendWhatsAppInquiryAlert({
+      artistPhone: recipientPhone,
+      artistName: 'BookMyArtist VIP Artist',
+      clientName: 'Rahul Verma (Luxury Weddings & Events)',
+      clientPhone: '9820198201',
+      eventType: 'Grand Sangeet & Reception',
+      eventDate: '24 Dec 2026',
+      eventCity: 'Mumbai',
+      budgetRange: '₹85,000 - ₹1,20,000',
+    });
+
+    if (result.success) {
+      return {
+        success: true,
+        simulated: result.simulated,
+        message: result.simulated
+          ? `[Sandbox Mode] WhatsApp alert simulated for +${result.recipient}. Check terminal/server logs.`
+          : `WhatsApp alert sent successfully to +${result.recipient}!`,
+      };
+    } else {
+      return { success: false, error: result.error || 'Failed to send WhatsApp alert' };
+    }
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'WhatsApp alert error' };
+  }
+}
+
+/**
  * Fetch all themes from database for Admin Themes page.
  */
 export async function getAdminThemesList() {
