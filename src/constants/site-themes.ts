@@ -25,7 +25,45 @@ export interface GlobalSiteTheme {
 }
 
 export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
-  // ── 3 DISTINCT LOGO-INSPIRED BRAND THEMES ──
+  // ── BRAND LOGO THEMES (PURPLE & BLUE BUTTON TONES, ORANGE/PINK HIGHLIGHTS ONLY) ──
+  {
+    id: 'indigo-sapphire-aura',
+    name: 'BookMyArtist Indigo Sapphire (Purple Elite)',
+    hindiName: 'इन्डिगो नीलम (Royal Violet & Sapphire)',
+    badge: '👑 Royal Violet (User Pick)',
+    category: 'royal',
+    mode: 'dark',
+    description: 'Royal Indigo & Velvet Violet buttons with Electric Sapphire accents. Brand logo Sunset Amber & Hot Pink tones are used strictly for subtle highlights, badges & glowing borders.',
+    primary: '#6366F1',
+    primaryHover: '#4F46E5',
+    accent: '#2563EB',
+    bg: '#070814',
+    cardBg: '#0F1226',
+    border: 'rgba(99, 102, 241, 0.22)',
+    glow: 'rgba(99, 102, 241, 0.45)',
+    previewGradient: 'linear-gradient(135deg, #4F46E5 0%, #6366F1 45%, #2563EB 80%, #EC4899 100%)',
+    previewColors: ['#6366F1', '#2563EB', '#7C3AED', '#FF2E93'],
+    features: ['Royal Indigo & Purple Buttons', 'Electric Sapphire Blue Secondary CTAs', 'Pink/Orange Micro-Highlights Only', 'Ultra-Luxe Stage Presence'],
+  },
+  {
+    id: 'cyber-cobalt-pulse',
+    name: 'BookMyArtist Cobalt Horizon (Deep Blue Stage)',
+    hindiName: 'कोबाल्ट होराइजन (Electric Blue & Indigo)',
+    badge: '🌊 Electric Blue (User Pick)',
+    category: 'modern',
+    mode: 'dark',
+    description: 'Deep Electric Cobalt Blue and Midnight Purple buttons on dark obsidian. Sunset Gold and Neon Pink touches are limited to highlight badges, stars and border micro-glows.',
+    primary: '#2563EB',
+    primaryHover: '#1D4ED8',
+    accent: '#7C3AED',
+    bg: '#060811',
+    cardBg: '#0D1324',
+    border: 'rgba(37, 99, 235, 0.22)',
+    glow: 'rgba(37, 99, 235, 0.45)',
+    previewGradient: 'linear-gradient(135deg, #1D4ED8 0%, #2563EB 40%, #7C3AED 80%, #F59E0B 100%)',
+    previewColors: ['#2563EB', '#7C3AED', '#38BDF8', '#F59E0B'],
+    features: ['Electric Cobalt Blue Buttons', 'Deep Royal Purple Secondary Buttons', 'Sunset Amber Highlight Pills', 'High-Contrast Midnight Vibe'],
+  },
   {
     id: 'royal-ultramarine',
     name: 'BookMyArtist Electric Royal (Indigo Stage)',
@@ -241,4 +279,4 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   },
 ];
 
-export const DEFAULT_SITE_THEME = 'royal-ultramarine';
+export const DEFAULT_SITE_THEME = 'indigo-sapphire-aura';
