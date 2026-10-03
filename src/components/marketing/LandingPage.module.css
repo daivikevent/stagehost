@@ -595,15 +595,14 @@
   .stepsGrid::before {
     content: '';
     position: absolute;
-    top: 28px;
+    top: 52px; /* padding-top (24px) + half circle height (28px) */
     left: calc(16.66% + 28px);
     right: calc(16.66% + 28px);
-    height: 2px;
+    height: 3px;
     background: var(--gradient-accent);
-    opacity: 0.3;
+    opacity: 0.4;
     z-index: 0;
-    animation: stepLineDraw 1.5s ease-out 600ms both;
-    transform-origin: left;
+    border-radius: 2px;
   }
 }
 
