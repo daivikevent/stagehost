@@ -2339,6 +2339,125 @@ button.btn-ghost:hover:not(:disabled) {
   100% { background-position: 0% 50%; }
 }
 
+/* ---- Cinematic Landing Page Keyframes ---- */
+
+@keyframes heroTextReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) rotateX(8deg);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes gradientTextShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, -70px) scale(0.95); }
+  75% { transform: translate(40px, -30px) scale(1.02); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 30px) scale(0.97); }
+  50% { transform: translate(30px, 50px) scale(1.04); }
+  75% { transform: translate(-20px, -20px) scale(0.98); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -20px) scale(1.06); }
+  66% { transform: translate(-30px, 40px) scale(0.94); }
+}
+
+@keyframes mockupEntrance {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) translateX(60px) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(-5deg) rotateX(2deg) translateX(0) translateY(0);
+  }
+}
+
+@keyframes counterPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes iconBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(var(--color-primary-rgb, 108, 92, 231), 0.1); }
+  50% { box-shadow: 0 0 35px rgba(var(--color-primary-rgb, 108, 92, 231), 0.25); }
+}
+
+@keyframes conicRotate {
+  from { --conic-angle: 0deg; }
+  to { --conic-angle: 360deg; }
+}
+
+@keyframes stepLineDraw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes ctaGlowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(var(--color-accent-rgb, 240, 165, 0), 0.2); }
+  50% { box-shadow: 0 0 40px rgba(var(--color-accent-rgb, 240, 165, 0), 0.4), 0 0 80px rgba(var(--color-accent-rgb, 240, 165, 0), 0.1); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes textGlowPulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(var(--color-primary-rgb, 108, 92, 231), 0.3); }
+  50% { text-shadow: 0 0 40px rgba(var(--color-primary-rgb, 108, 92, 231), 0.5), 0 0 80px rgba(var(--color-accent-rgb, 240, 165, 0), 0.15); }
+}
+
+@keyframes noiseGrain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ---- Smooth Scroll ---- */
+html {
+  scroll-behavior: smooth;
+}
+
 /* ---- Scroll Reveal Animation ---- */
 .reveal {
   opacity: 0;
@@ -2358,6 +2477,17 @@ button.btn-ghost:hover:not(:disabled) {
 .reveal-delay-2 { transition-delay: 200ms; }
 .reveal-delay-3 { transition-delay: 300ms; }
 .reveal-delay-4 { transition-delay: 400ms; }
+.reveal-delay-5 { transition-delay: 500ms; }
+.reveal-delay-6 { transition-delay: 600ms; }
+.reveal-delay-7 { transition-delay: 700ms; }
+
+/* ---- Accessibility: Reduced Motion (softened) ---- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
 
 /* ---- Stagger Animation ---- */
 .stagger > * {

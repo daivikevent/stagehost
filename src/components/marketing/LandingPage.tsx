@@ -238,86 +238,90 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
   return (
     <div ref={containerRef}>
       {/* ---- HERO (Attention) ---- */}
-      <section className={styles.hero}>
+      <div className={styles.heroWrapper}>
         <div className={styles.heroGlow} />
-        <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>
-            <Sparkles size={14} />
-            <span>The #1 Platform for Live Artists & Performers in India</span>
-          </div>
-
-          <h1 className={styles.heroTitle}>
-            Your Talent.<br />
-            <span className={styles.heroGradient}>Your Brand.</span><br />
-            Your Bookings.
-          </h1>
-
-          <p className={styles.heroSubtitle}>
-            Build a stunning portfolio website, manage your schedule, and convert
-            more clients — all from one powerful platform. Free to start.
-          </p>
-
-          <div className={styles.heroCtas}>
-            <Link href="/register" className="btn btn-accent btn-xl">
-              Build Your Portfolio Free
-              <ArrowRight size={20} />
-            </Link>
-            <Link href="/artists" className="btn btn-ghost btn-xl">
-              Find Artists
-            </Link>
-          </div>
-
-          <div className={styles.heroTrust}>
-            <div className={styles.heroAvatars}>
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className={styles.heroAvatar}>
-                  {['R', 'P', 'A', 'S', 'M'][i - 1]}
-                </div>
-              ))}
+        <div className={styles.heroOrb2} />
+        <div className={styles.heroOrb3} />
+        <section className={styles.hero}>
+          <div className={styles.heroContent}>
+            <div className={styles.heroBadge}>
+              <Sparkles size={14} />
+              <span>The #1 Platform for Live Artists & Performers in India</span>
             </div>
-            <p className={styles.heroTrustText}>
-              <strong>7500+ artists</strong> already building their brand
+
+            <h1 className={styles.heroTitle}>
+              Your Talent.<br />
+              <span className={styles.heroGradient}>Your Brand.</span><br />
+              Your Bookings.
+            </h1>
+
+            <p className={styles.heroSubtitle}>
+              Build a stunning portfolio website, manage your schedule, and convert
+              more clients — all from one powerful platform. Free to start.
             </p>
-          </div>
-        </div>
 
-        {/* Hero Mockup Preview */}
-        <div className={styles.heroMockup}>
-          <div className={styles.mockupPhone}>
-            <div className={styles.mockupScreen}>
-              <div className={styles.mockupHeader}>
-                <div className={styles.mockupAvatar}>RS</div>
-                <div>
-                  <div className={styles.mockupName}>Rahul Sharma</div>
-                  <div className={styles.mockupTagline}>Premium Wedding & Corporate Anchor</div>
-                </div>
+            <div className={styles.heroCtas}>
+              <Link href="/register" className="btn btn-accent btn-xl">
+                Build Your Portfolio Free
+                <ArrowRight size={20} />
+              </Link>
+              <Link href="/artists" className="btn btn-ghost btn-xl">
+                Find Artists
+              </Link>
+            </div>
+
+            <div className={styles.heroTrust}>
+              <div className={styles.heroAvatars}>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className={styles.heroAvatar}>
+                    {['R', 'P', 'A', 'S', 'M'][i - 1]}
+                  </div>
+                ))}
               </div>
-              <div className={styles.mockupVideoThumb}>
-                <Video size={32} />
-                <span>Watch My Best Performance</span>
-              </div>
-              <div className={styles.mockupStats}>
-                <div className={styles.mockupStat}>
-                  <span className={styles.mockupStatValue}>150+</span>
-                  <span className={styles.mockupStatLabel}>Events</span>
+              <p className={styles.heroTrustText}>
+                <strong>7500+ artists</strong> already building their brand
+              </p>
+            </div>
+          </div>
+
+          {/* Hero Mockup Preview */}
+          <div className={styles.heroMockup}>
+            <div className={styles.mockupPhone}>
+              <div className={styles.mockupScreen}>
+                <div className={styles.mockupHeader}>
+                  <div className={styles.mockupAvatar}>RS</div>
+                  <div>
+                    <div className={styles.mockupName}>Rahul Sharma</div>
+                    <div className={styles.mockupTagline}>Premium Wedding & Corporate Anchor</div>
+                  </div>
                 </div>
-                <div className={styles.mockupStat}>
-                  <span className={styles.mockupStatValue}>4.9★</span>
-                  <span className={styles.mockupStatLabel}>Rating</span>
+                <div className={styles.mockupVideoThumb}>
+                  <Video size={32} />
+                  <span>Watch My Best Performance</span>
                 </div>
-                <div className={styles.mockupStat}>
-                  <span className={styles.mockupStatValue}>8+</span>
-                  <span className={styles.mockupStatLabel}>Years</span>
+                <div className={styles.mockupStats}>
+                  <div className={styles.mockupStat}>
+                    <span className={styles.mockupStatValue}>150+</span>
+                    <span className={styles.mockupStatLabel}>Events</span>
+                  </div>
+                  <div className={styles.mockupStat}>
+                    <span className={styles.mockupStatValue}>4.9★</span>
+                    <span className={styles.mockupStatLabel}>Rating</span>
+                  </div>
+                  <div className={styles.mockupStat}>
+                    <span className={styles.mockupStatValue}>8+</span>
+                    <span className={styles.mockupStatLabel}>Years</span>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.mockupCta}>
-                <div className={styles.mockupBtn}>Book Now</div>
-                <div className={styles.mockupBtnWa}>WhatsApp</div>
+                <div className={styles.mockupCta}>
+                  <div className={styles.mockupBtn}>Book Now</div>
+                  <div className={styles.mockupBtnWa}>WhatsApp</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* ---- SOCIAL PROOF BAR ---- */}
       <section className={styles.socialProof}>

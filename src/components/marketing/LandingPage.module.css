@@ -1,8 +1,27 @@
 /* ============================================
-   Landing Page Styles
+   Landing Page Styles — Cinematic "Alive" Edition
+   Fluxora-inspired animations with BMA theme
    ============================================ */
 
-/* ---- HERO ---- */
+/* ---- HERO WRAPPER (full-bleed background) ---- */
+.heroWrapper {
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-hero);
+}
+
+/* Noise texture overlay for premium grain feel */
+.heroWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ---- HERO (inner content) ---- */
 .hero {
   min-height: 100vh;
   min-height: 100dvh;
@@ -12,7 +31,6 @@
   justify-content: center;
   padding: calc(var(--navbar-height) + var(--space-8)) var(--space-4) var(--space-12);
   position: relative;
-  overflow: hidden;
   text-align: center;
 }
 
@@ -27,21 +45,59 @@
   }
 }
 
+/* ---- Floating Ambient Orbs (positioned within bounds) ---- */
 .heroGlow {
   position: absolute;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%);
-  top: -100px;
-  right: -100px;
+  background: radial-gradient(circle, var(--color-primary, #6C5CE7) 0%, transparent 70%);
+  opacity: 0.15;
+  top: 5%;
+  right: 10%;
   pointer-events: none;
-  animation: float 8s ease-in-out infinite;
+  animation: orbFloat1 12s ease-in-out infinite;
+  z-index: 0;
+  filter: blur(80px);
 }
 
+.heroOrb2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-accent, #F0A500) 0%, transparent 70%);
+  opacity: 0.1;
+  bottom: 10%;
+  left: 5%;
+  pointer-events: none;
+  animation: orbFloat2 15s ease-in-out infinite;
+  z-index: 0;
+  filter: blur(90px);
+}
+
+.heroOrb3 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-primary, #6C5CE7) 0%, var(--color-accent, #F0A500) 50%, transparent 70%);
+  opacity: 0.08;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: orbFloat3 18s ease-in-out infinite;
+  z-index: 0;
+  filter: blur(100px);
+}
+
+/* ---- Hero Content with Staggered Entry ---- */
 .heroContent {
   max-width: 640px;
-  animation: fadeInUp 800ms var(--ease-out);
+  position: relative;
+  z-index: 1;
+  perspective: 800px;
 }
 
 .heroBadge {
@@ -56,6 +112,13 @@
   font-weight: var(--font-medium);
   color: var(--color-primary);
   margin-bottom: var(--space-6);
+  animation: heroTextReveal 800ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+  backdrop-filter: blur(8px);
+}
+
+/* Badge sparkle icon */
+.heroBadge svg {
+  animation: iconBreathe 2s ease-in-out infinite;
 }
 
 .heroTitle {
@@ -64,13 +127,21 @@
   line-height: 1.05;
   margin-bottom: var(--space-6);
   letter-spacing: -0.02em;
+  animation: heroTextReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
 }
 
 .heroGradient {
-  background: var(--gradient-accent);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary, #6C5CE7),
+    var(--color-accent, #F0A500),
+    var(--color-primary, #6C5CE7)
+  );
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientTextShimmer 4s linear infinite;
 }
 
 .heroSubtitle {
@@ -79,6 +150,7 @@
   line-height: var(--leading-relaxed);
   margin-bottom: var(--space-8);
   max-width: 520px;
+  animation: heroTextReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) 600ms both;
 }
 
 @media (min-width: 1024px) {
@@ -92,6 +164,18 @@
   flex-direction: column;
   gap: var(--space-3);
   margin-bottom: var(--space-8);
+  animation: heroTextReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) 800ms both;
+}
+
+/* CTA glow pulse on primary button */
+.heroCtas a:first-child {
+  position: relative;
+  animation: ctaGlowPulse 3s ease-in-out infinite;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.heroCtas a:first-child:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
 @media (min-width: 480px) {
@@ -104,6 +188,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  animation: heroTextReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms both;
 }
 
 @media (max-width: 1024px) {
@@ -129,10 +214,16 @@
   color: white;
   border: 2px solid var(--color-bg-primary);
   margin-left: -8px;
+  transition: transform 300ms ease;
 }
 
 .heroAvatar:first-child {
   margin-left: 0;
+}
+
+.heroAvatar:hover {
+  transform: translateY(-4px) scale(1.1);
+  z-index: 2;
 }
 
 .heroTrustText {
@@ -140,14 +231,16 @@
   color: var(--color-text-secondary);
 }
 
-/* ---- Hero Mockup ---- */
+/* ---- Hero Mockup with 3D entrance ---- */
 .heroMockup {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: var(--space-8);
   width: 100%;
-  animation: fadeInUp 1000ms var(--ease-out) 200ms both;
+  animation: mockupEntrance 1200ms cubic-bezier(0.16, 1, 0.3, 1) 600ms both;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 1024px) {
@@ -165,20 +258,27 @@
   border: 1px solid var(--color-border);
   border-radius: 28px;
   padding: var(--space-3);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 60px rgba(var(--color-primary-rgb, 108, 92, 231), 0.1);
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-  transition: transform var(--duration-slow) var(--ease-default);
+  transition: transform var(--duration-slow) var(--ease-default), 
+              box-shadow var(--duration-slow) var(--ease-default);
 }
 
 @media (max-width: 1023px) {
   .mockupPhone {
     transform: none;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(var(--color-primary-rgb, 108, 92, 231), 0.15);
   }
 }
 
 .mockupPhone:hover {
   transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 80px rgba(var(--color-primary-rgb, 108, 92, 231), 0.2);
 }
 
 .mockupScreen {
@@ -234,6 +334,11 @@
   color: var(--color-text-tertiary);
   font-size: var(--text-xs);
   border: 1px solid var(--color-border);
+  transition: border-color 300ms ease;
+}
+
+.mockupVideoThumb:hover {
+  border-color: var(--color-primary);
 }
 
 .mockupStats {
@@ -247,6 +352,11 @@
   padding: var(--space-2);
   background: var(--glass-bg);
   border-radius: var(--radius-md);
+  transition: transform 300ms ease;
+}
+
+.mockupStat:hover {
+  transform: scale(1.05);
 }
 
 .mockupStatValue {
@@ -276,6 +386,11 @@
   text-align: center;
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.mockupBtn:hover {
+  transform: scale(1.03);
 }
 
 .mockupBtnWa {
@@ -287,15 +402,31 @@
   text-align: center;
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
+  transition: transform 200ms ease;
+}
+
+.mockupBtnWa:hover {
+  transform: scale(1.03);
 }
 
 
-/* ---- SOCIAL PROOF BAR ---- */
+/* ---- SOCIAL PROOF BAR with glassmorphism ---- */
 .socialProof {
   background: var(--color-bg-secondary);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-8) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gradient sweep behind stats */
+.socialProof::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-primary-rgb, 108, 92, 231), 0.04), transparent);
+  pointer-events: none;
 }
 
 .socialProofGrid {
@@ -317,6 +448,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  transition: transform 300ms ease;
+}
+
+.socialProofItem:hover {
+  transform: translateY(-3px);
 }
 
 .socialProofValue {
@@ -343,6 +479,7 @@
   padding: var(--space-20) var(--space-4);
   max-width: var(--max-width);
   margin: 0 auto;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -370,7 +507,7 @@
 }
 
 
-/* ---- FEATURES GRID ---- */
+/* ---- FEATURES GRID with 3D card hover ---- */
 .featuresGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -389,6 +526,23 @@
   }
 }
 
+/* Feature card — 3D tilt on hover */
+.featuresGrid > div {
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 300ms ease;
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+
+.featuresGrid > div:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(var(--color-primary-rgb, 108, 92, 231), 0.1);
+  border-color: var(--color-primary);
+}
+
 .featureIcon {
   width: 48px;
   height: 48px;
@@ -399,6 +553,14 @@
   justify-content: center;
   color: var(--color-primary);
   margin-bottom: var(--space-4);
+  transition: transform 400ms ease, background 400ms ease;
+}
+
+/* Icon breathe on card hover */
+.featuresGrid > div:hover .featureIcon {
+  animation: iconBreathe 1.5s ease-in-out infinite;
+  background: var(--gradient-accent);
+  color: white;
 }
 
 .featureTitle {
@@ -413,13 +575,14 @@
 }
 
 
-/* ---- HOW IT WORKS ---- */
+/* ---- HOW IT WORKS with timeline ---- */
 .stepsGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-8);
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -427,11 +590,33 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-6);
   }
+  
+  /* Connecting timeline line between steps */
+  .stepsGrid::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: calc(16.66% + 28px);
+    right: calc(16.66% + 28px);
+    height: 2px;
+    background: var(--gradient-accent);
+    opacity: 0.3;
+    z-index: 0;
+    animation: stepLineDraw 1.5s ease-out 600ms both;
+    transform-origin: left;
+  }
 }
 
 .step {
   text-align: center;
   padding: var(--space-6);
+  position: relative;
+  z-index: 1;
+  transition: transform 300ms ease;
+}
+
+.step:hover {
+  transform: translateY(-4px);
 }
 
 .stepNumber {
@@ -447,6 +632,13 @@
   font-weight: var(--font-bold);
   color: white;
   margin: 0 auto var(--space-4);
+  position: relative;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms ease;
+}
+
+.step:hover .stepNumber {
+  transform: scale(1.15);
+  box-shadow: 0 0 30px rgba(var(--color-accent-rgb, 240, 165, 0), 0.3);
 }
 
 .stepTitle {
@@ -462,7 +654,7 @@
 }
 
 
-/* ---- TRUST SECTION ---- */
+/* ---- TRUST SECTION with hover glow ---- */
 .trustSection {
   padding: var(--space-20) var(--space-4);
   max-width: var(--max-width);
@@ -503,12 +695,42 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  transition: all var(--duration-normal) var(--ease-default);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Warm edge glow on hover */
+.trustCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(var(--color-primary-rgb, 108, 92, 231), 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+
+.trustCard:hover::before {
+  opacity: 1;
 }
 
 .trustCard:hover {
   border-color: var(--color-border-hover);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(var(--color-primary-rgb, 108, 92, 231), 0.08);
+}
+
+/* Icon breathe on hover */
+.trustCard:hover svg {
+  animation: iconBreathe 1.5s ease-in-out infinite;
 }
 
 .trustCard h4 {
@@ -522,7 +744,7 @@
 }
 
 
-/* ---- PRICING ---- */
+/* ---- PRICING with rotating gradient border on popular ---- */
 .pricingGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -573,23 +795,50 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: all var(--duration-normal) var(--ease-default);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pricingCard:hover {
   border-color: var(--color-border-hover);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(var(--color-primary-rgb, 108, 92, 231), 0.06);
 }
 
+/* Popular card — animated gradient border */
 .pricingPopular {
   border-color: var(--color-accent);
   box-shadow: 0 0 30px rgba(240, 165, 0, 0.1);
+  position: relative;
+  overflow: visible;
+}
+
+/* Rotating gradient glow behind popular card */
+.pricingPopular::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-accent, #F0A500),
+    var(--color-primary, #6C5CE7),
+    var(--color-accent, #F0A500),
+    var(--color-primary, #6C5CE7),
+    var(--color-accent, #F0A500)
+  );
+  z-index: -1;
+  animation: spin 6s linear infinite;
+  opacity: 0.4;
+  filter: blur(2px);
 }
 
 .pricingPopular:hover {
   border-color: var(--color-accent);
-  box-shadow: 0 0 40px rgba(240, 165, 0, 0.15);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(240, 165, 0, 0.15);
 }
 
 .popularBadge {
@@ -604,6 +853,7 @@
   padding: var(--space-1) var(--space-4);
   border-radius: var(--radius-full);
   white-space: nowrap;
+  z-index: 2;
 }
 
 .pricingName {
@@ -627,12 +877,29 @@
   color: var(--color-text-secondary);
 }
 
+/* Price amount with subtle shimmer */
 .pricingAmount {
   font-family: var(--font-heading);
   font-size: var(--text-4xl);
   font-weight: var(--font-bold);
   color: var(--color-text-primary);
   line-height: 1;
+  background: linear-gradient(
+    90deg,
+    var(--color-text-primary) 0%,
+    var(--color-text-primary) 40%,
+    var(--color-primary, #6C5CE7) 50%,
+    var(--color-text-primary) 60%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricingPopular .pricingAmount {
+  animation: gradientTextShimmer 3s linear infinite;
 }
 
 .pricingPeriod {
@@ -663,7 +930,7 @@
 }
 
 
-/* ---- FAQ ---- */
+/* ---- FAQ with smooth accordion ---- */
 .faqList {
   max-width: 700px;
   margin: 0 auto;
@@ -677,7 +944,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color var(--duration-normal) var(--ease-default);
+  transition: border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .faqItem:hover {
@@ -686,6 +953,7 @@
 
 .faqOpen {
   border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb, 108, 92, 231), 0.08);
 }
 
 .faqQuestion {
@@ -702,22 +970,28 @@
   cursor: pointer;
   background: none;
   border: none;
+  transition: color 200ms ease;
+}
+
+.faqQuestion:hover {
+  color: var(--color-primary);
 }
 
 .faqChevron {
   flex-shrink: 0;
   color: var(--color-text-tertiary);
-  transition: transform var(--duration-normal) var(--ease-default);
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .faqOpen .faqChevron {
   transform: rotate(180deg);
+  color: var(--color-primary);
 }
 
 .faqAnswer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--duration-slow) var(--ease-default);
+  transition: max-height 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faqOpen .faqAnswer {
@@ -731,7 +1005,7 @@
 }
 
 
-/* ---- FINAL CTA ---- */
+/* ---- FINAL CTA with dramatic glow ---- */
 .finalCta {
   text-align: center;
   padding: var(--space-24) var(--space-4);
@@ -741,14 +1015,17 @@
 
 .finalCtaGlow {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(240, 165, 0, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--color-accent, #F0A500) 0%, transparent 60%);
+  opacity: 0.08;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  animation: ctaGlowPulse 4s ease-in-out infinite;
+  filter: blur(40px);
 }
 
 .finalCta h2 {
@@ -763,6 +1040,17 @@
   font-size: var(--text-lg);
   text-align: center;
   position: relative;
+}
+
+/* Final CTA button glow */
+.finalCta a {
+  position: relative;
+  animation: ctaGlowPulse 3s ease-in-out infinite;
+  transition: transform 200ms ease;
+}
+
+.finalCta a:hover {
+  transform: translateY(-3px) scale(1.03);
 }
 
 
@@ -826,11 +1114,13 @@
   font-size: var(--text-sm);
   color: var(--color-text-tertiary);
   text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-default);
+  transition: color var(--duration-fast) var(--ease-default),
+              transform 200ms ease;
 }
 
 .footerCol a:hover {
   color: var(--color-text-primary);
+  transform: translateX(3px);
 }
 
 .footerBottom {
@@ -858,9 +1148,21 @@
   .heroGlow {
     width: 260px;
     height: 260px;
-    top: -30px;
-    right: -30px;
-    opacity: 0.65;
+    top: 5%;
+    right: 5%;
+    opacity: 0.1;
+    filter: blur(50px);
+  }
+
+  .heroOrb2 {
+    width: 200px;
+    height: 200px;
+    opacity: 0.06;
+    filter: blur(60px);
+  }
+
+  .heroOrb3 {
+    display: none;
   }
 
   .heroBadge {
