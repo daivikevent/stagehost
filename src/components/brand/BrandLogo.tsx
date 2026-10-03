@@ -5,7 +5,7 @@ import { useBrand } from '@/contexts/BrandContext';
 import styles from './BrandLogo.module.css';
 
 export interface BrandLogoProps {
-  variant?: 'navbar' | 'navbar-mobile' | 'footer' | 'sidebar' | 'sidebar-icon' | 'auth' | 'quotation' | 'custom';
+  variant?: 'navbar' | 'navbar-mobile' | 'footer' | 'sidebar' | 'sidebar-icon' | 'auth' | 'quotation' | 'stacked' | 'custom';
   src?: string;
   customHeight?: number;
   customWidth?: number;
@@ -33,13 +33,13 @@ export function BrandLogo({
   else if (variant === 'footer') variantClass = styles.variantFooter;
   else if (variant === 'sidebar') variantClass = styles.variantSidebar;
   else if (variant === 'sidebar-icon') variantClass = styles.variantSidebarIcon;
-  else if (variant === 'auth') variantClass = styles.variantAuth;
+  else if (variant === 'auth' || variant === 'stacked') variantClass = styles.variantAuth;
   else if (variant === 'quotation') variantClass = styles.variantQuotation;
 
   // Determine resolved source from props or brand context
-  const isIconOnly = variant === 'sidebar-icon';
-  const defaultFallback = isIconOnly ? '/images/logo-icon.png' : '/images/logo.png';
-  const contextSrc = isIconOnly ? (brand?.logoIconUrl || defaultFallback) : (brand?.logoUrl || defaultFallback);
+  const isStackedOrIcon = variant === 'sidebar-icon' || variant === 'auth' || variant === 'stacked';
+  const defaultFallback = isStackedOrIcon ? '/images/logo-icon.png' : '/images/logo.png';
+  const contextSrc = isStackedOrIcon ? (brand?.logoIconUrl || defaultFallback) : (brand?.logoUrl || defaultFallback);
   const resolvedSrc = src || contextSrc;
 
   // Custom inline style overrides if specifically provided

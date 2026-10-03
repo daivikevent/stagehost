@@ -43,11 +43,7 @@ export const metadata: Metadata = {
     description:
       'Build your professional artist portfolio, manage your schedule, and get more bookings.',
   },
-  manifest: '/manifest.json',
-  robots: {
-    index: true,
-    follow: true,
-  },
+
 };
 
 export const viewport: Viewport = {
