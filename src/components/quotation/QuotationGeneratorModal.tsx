@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { formatEventDate } from '@/lib/utils';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import type { Inquiry, AnchorProfile } from '@/types';
 
 interface QuotationGeneratorModalProps {
@@ -539,12 +540,9 @@ Please let us know once transferred so we can officially lock the date on the ca
               >
                 <div>
                   {/* Official BookMyArtist Brand Logo */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/logo.png"
-                    alt="BookMyArtist"
-                    style={{ height: '34px', width: 'auto', marginBottom: '8px', display: 'block' }}
-                  />
+                  <div style={{ marginBottom: '8px' }}>
+                    <BrandLogo variant="quotation" />
+                  </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span
                       style={{

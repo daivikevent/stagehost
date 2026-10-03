@@ -371,6 +371,15 @@ export async function getPlatformSettings(): Promise<Record<string, string>> {
     email_from_address: 'notifications@bookmyartist.in',
     resend_api_key: (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_placeholder') ? '••••••••••••••••' : '',
     site_theme: 'signature-neon',
+    brand_logo_url: '/images/logo.png',
+    brand_logo_icon_url: '/images/logo-icon.png',
+    brand_logo_navbar_height: '42',
+    brand_logo_navbar_mobile_height: '32',
+    brand_logo_footer_height: '38',
+    brand_logo_sidebar_height: '34',
+    brand_logo_sidebar_icon_size: '32',
+    brand_logo_auth_height: '48',
+    brand_logo_quotation_height: '40',
   };
 
   if (!data) return defaults;
@@ -422,6 +431,37 @@ export async function savePlatformSettings(settings: Record<string, string | boo
     } catch {}
     revalidatePath('/', 'layout');
     revalidatePath('/admin/themes');
+  }
+
+  // If brand logo settings were updated, sync brand cookie
+  const hasBrandKeys = Object.keys(settings).some((k) => k.startsWith('brand_logo_'));
+  if (hasBrandKeys) {
+    try {
+      const cookieStore = await cookies();
+      const currentBrand = {
+        logoUrl: String(settings.brand_logo_url || '/images/logo.png'),
+        logoIconUrl: String(settings.brand_logo_icon_url || '/images/logo-icon.png'),
+        navbarHeight: Number(settings.brand_logo_navbar_height) || 42,
+        navbarMobileHeight: Number(settings.brand_logo_navbar_mobile_height) || 32,
+        footerHeight: Number(settings.brand_logo_footer_height) || 38,
+        sidebarHeight: Number(settings.brand_logo_sidebar_height) || 34,
+        sidebarIconSize: Number(settings.brand_logo_sidebar_icon_size) || 32,
+        authHeight: Number(settings.brand_logo_auth_height) || 48,
+        quotationHeight: Number(settings.brand_logo_quotation_height) || 40,
+      };
+      const cookieVal = encodeURIComponent(JSON.stringify(currentBrand));
+      cookieStore.set('bookmyartist_brand_config', cookieVal, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+      });
+      cookieStore.set('stagehost_brand_config', cookieVal, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: 'lax',
+      });
+    } catch {}
+    revalidatePath('/', 'layout');
   }
 
   revalidatePath('/admin/settings');

@@ -58,6 +58,8 @@ export const viewport: Viewport = {
 };
 
 import { getGlobalSiteTheme } from '@/lib/actions/themes';
+import { getBrandSettings } from '@/lib/actions/brand';
+import { BrandProvider } from '@/contexts/BrandContext';
 import { PwaRegistrar } from '@/components/common/PwaRegistrar';
 
 export default async function RootLayout({
@@ -65,7 +67,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const activeTheme = await getGlobalSiteTheme();
+  const [activeTheme, brand] = await Promise.all([
+    getGlobalSiteTheme(),
+    getBrandSettings(),
+  ]);
 
   return (
     <html lang="en" data-site-theme={activeTheme} suppressHydrationWarning>
@@ -75,6 +80,22 @@ export default async function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
+        />
+        <style
+          id="bma-brand-vars"
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --brand-logo-navbar-h: ${brand.navbarHeight}px;
+                --brand-logo-navbar-mobile-h: ${brand.navbarMobileHeight}px;
+                --brand-logo-footer-h: ${brand.footerHeight}px;
+                --brand-logo-sidebar-h: ${brand.sidebarHeight}px;
+                --brand-logo-sidebar-icon-size: ${brand.sidebarIconSize}px;
+                --brand-logo-auth-h: ${brand.authHeight}px;
+                --brand-logo-quotation-h: ${brand.quotationHeight}px;
+              }
+            `,
+          }}
         />
         <script
           dangerouslySetInnerHTML={{
@@ -93,10 +114,12 @@ export default async function RootLayout({
       </head>
       <body>
         <PwaRegistrar />
-        <ToastProvider>
-          {children}
-          <ToastContainer />
-        </ToastProvider>
+        <BrandProvider initialSettings={brand}>
+          <ToastProvider>
+            {children}
+            <ToastContainer />
+          </ToastProvider>
+        </BrandProvider>
       </body>
     </html>
   );

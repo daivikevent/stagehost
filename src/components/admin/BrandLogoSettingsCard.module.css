@@ -1,0 +1,437 @@
+.container {
+  background: var(--color-bg-card, #12111d);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-lg, 14px);
+  padding: var(--space-5, 20px);
+  margin-bottom: var(--space-6, 24px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-5, 20px);
+  padding-bottom: var(--space-4, 16px);
+  border-bottom: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 0, 122, 0.12);
+  color: #ff007a;
+  border: 1px solid rgba(255, 0, 122, 0.3);
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary, #9ca3af);
+  margin: 0;
+  max-width: 580px;
+  line-height: 1.4;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Content Grid */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5, 20px);
+  margin-bottom: var(--space-5, 20px);
+}
+
+@media (min-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 340px 1fr;
+  }
+}
+
+/* Left Assets Column */
+.assetsCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.assetCard {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.assetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.assetLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.assetDesc {
+  display: block;
+  font-size: 10px;
+  color: #888888;
+}
+
+.previewBox {
+  height: 72px;
+  background: #08070d;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 12px 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.previewImg {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.urlInputRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.inputPrefix {
+  font-size: 10px;
+  font-weight: 700;
+  color: #777;
+}
+
+.urlInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 11px;
+  color: #eee;
+  width: 100%;
+  font-family: monospace;
+}
+
+/* Right Sliders Column */
+.slidersCol {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.slidersHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary, #ff007a);
+  margin-bottom: 4px;
+}
+
+.sliderItem {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.sliderLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sliderLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ddd;
+}
+
+.sliderValueBadge {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: monospace;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 0, 122, 0.15);
+  color: #ff007a;
+  border: 1px solid rgba(255, 0, 122, 0.25);
+}
+
+.sliderControlRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rangeInput {
+  flex: 1;
+  accent-color: #ff007a;
+  cursor: pointer;
+  height: 5px;
+}
+
+.numInput {
+  width: 54px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  text-align: center;
+}
+
+/* Simulator Card */
+.simulatorCard {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.simulatorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.simulatorTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ccc;
+}
+
+.tabList {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  background: transparent;
+  color: #888;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.tabBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tabActive {
+  background: rgba(255, 0, 122, 0.15) !important;
+  color: #ff007a !important;
+  border-color: rgba(255, 0, 122, 0.3) !important;
+  font-weight: 600;
+}
+
+/* Stage Window */
+.stageWindow {
+  padding: 20px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #08070e;
+}
+
+/* Mock Desktop Nav */
+.mockDesktopNav {
+  width: 100%;
+  max-width: 720px;
+  background: rgba(14, 12, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.mockNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* Mock Mobile Nav */
+.mockMobileWrapper {
+  width: 100%;
+  max-width: 320px;
+}
+
+.mockMobileNav {
+  background: rgba(14, 12, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Mock Sidebar */
+.mockSidebarWrapper {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.mockSidebarExpanded {
+  flex: 1;
+  background: #0f0d19;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.mockSidebarHeader {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+}
+
+.mockSidebarItems {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  color: #777;
+}
+
+.mockActiveItem {
+  background: rgba(255, 0, 122, 0.12);
+  color: #ff007a;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.mockSidebarCollapsed {
+  width: 60px;
+  background: #0f0d19;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mockActiveDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: #ff007a;
+  margin-bottom: 8px;
+}
+
+.mockDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+}
+
+/* Mock Auth Card */
+.mockAuthCard {
+  width: 100%;
+  max-width: 280px;
+  background: #110f1c;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Mock Quotation */
+.mockQuotationHeader {
+  width: 100%;
+  max-width: 580px;
+  background: #ffffff;
+  color: #111111;
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}

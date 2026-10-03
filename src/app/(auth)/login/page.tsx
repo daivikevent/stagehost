@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useToast } from '@/hooks/useToast';
 import { Sparkles, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import styles from '../auth.module.css';
 
 export default function LoginPage() {
@@ -65,14 +66,7 @@ export default function LoginPage() {
     <div className={styles.authCard}>
       {/* Logo */}
       <Link href="/" className={styles.logo} style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: '16px' }}>
-        <Image
-          src="/images/logo.png"
-          alt="BookMyArtist"
-          width={190}
-          height={56}
-          priority
-          style={{ height: '42px', width: 'auto', objectFit: 'contain' }}
-        />
+        <BrandLogo variant="auth" priority />
       </Link>
 
       <h1 className={styles.title}>Welcome Back</h1>

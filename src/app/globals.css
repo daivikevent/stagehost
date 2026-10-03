@@ -158,6 +158,15 @@
   --z-tooltip: 10010;
   --z-loading-bar: 10020;
 
+  /* ---- Brand Logo Display Dimensions ---- */
+  --brand-logo-navbar-h: 42px;
+  --brand-logo-navbar-mobile-h: 32px;
+  --brand-logo-footer-h: 38px;
+  --brand-logo-sidebar-h: 34px;
+  --brand-logo-sidebar-icon-size: 32px;
+  --brand-logo-auth-h: 48px;
+  --brand-logo-quotation-h: 40px;
+
   /* ---- Navbar Scrolled Background ---- */
   --navbar-scrolled-bg: #0A0A14;
 

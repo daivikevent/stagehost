@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Sparkles } from 'lucide-react';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
@@ -44,14 +45,7 @@ export function Navbar() {
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
-          <Image
-            src="/images/logo.png"
-            alt="BookMyArtist"
-            width={180}
-            height={56}
-            priority
-            style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
-          />
+          <BrandLogo variant="navbar" priority />
         </Link>
 
         {/* Desktop Nav */}

@@ -22,6 +22,7 @@ import {
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import styles from './AdminShell.module.css';
 
 const ADMIN_NAV = [
@@ -55,9 +56,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <div className={styles.headerTop}>
             <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
               {collapsed ? (
-                <NextImage src="/images/logo-icon.png" alt="BMA" width={30} height={30} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                <BrandLogo variant="sidebar-icon" />
               ) : (
-                <NextImage src="/images/logo.png" alt="BookMyArtist" width={150} height={44} priority style={{ height: '30px', width: 'auto', objectFit: 'contain' }} />
+                <BrandLogo variant="sidebar" priority />
               )}
             </Link>
             <button
@@ -138,7 +139,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <Menu size={20} />
           </button>
           <Link href="/admin/dashboard" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <NextImage src="/images/logo.png" alt="BookMyArtist" width={130} height={38} style={{ height: '26px', width: 'auto', objectFit: 'contain' }} />
+            <BrandLogo variant="navbar-mobile" />
             <span className={styles.mobileAdminTag}>ADMIN</span>
           </Link>
           <Link

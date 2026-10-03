@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 import { stopImpersonation } from '@/lib/actions/admin';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import type { AnnouncementBanner } from '@/types';
 import styles from './DashboardLayout.module.css';
 
@@ -94,9 +95,9 @@ export function DashboardShell({
         <div className={styles.sidebarHeader}>
           <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
             {collapsed ? (
-              <NextImage src="/images/logo-icon.png" alt="BMA" width={32} height={32} style={{ height: '30px', width: 'auto', objectFit: 'contain' }} />
+              <BrandLogo variant="sidebar-icon" />
             ) : (
-              <NextImage src="/images/logo.png" alt="BookMyArtist" width={160} height={46} priority style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+              <BrandLogo variant="sidebar" priority />
             )}
           </Link>
           <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)}>
@@ -167,7 +168,7 @@ export function DashboardShell({
             <Menu size={22} />
           </button>
           <Link href="/" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center' }}>
-            <NextImage src="/images/logo.png" alt="BookMyArtist" width={140} height={40} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+            <BrandLogo variant="navbar-mobile" />
           </Link>
           <div className="avatar avatar-sm" style={{ cursor: 'pointer' }}>{initials}</div>
         </header>
@@ -304,7 +305,7 @@ export function DashboardShell({
           <div className={styles.mobileSlide}>
             <div className={styles.mobileSlideHeader}>
               <Link href="/" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center' }}>
-                <NextImage src="/images/logo.png" alt="BookMyArtist" width={140} height={40} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                <BrandLogo variant="sidebar" />
               </Link>
               <button onClick={() => setMobileOpen(false)}><X size={22} /></button>
             </div>

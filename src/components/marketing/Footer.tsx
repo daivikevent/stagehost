@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ShieldCheck } from 'lucide-react';
+import { BrandLogo } from '@/components/brand/BrandLogo';
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -13,13 +13,7 @@ export function Footer() {
       <div className={styles.footerContent}>
         <div className={styles.footerBrand}>
           <Link href="/" className={styles.footerLogo} style={{ display: 'inline-block', marginBottom: '8px' }}>
-            <Image
-              src="/images/logo.png"
-              alt="BookMyArtist"
-              width={170}
-              height={52}
-              style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
-            />
+            <BrandLogo variant="footer" />
           </Link>
           <p>
             Your Talent. Your Brand. Your Bookings. India&apos;s dedicated digital portfolio &amp; booking management platform for live artists, performers, anchors, DJs, singers, and entertainment talent.

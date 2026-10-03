@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/useToast';
 import { savePlatformSettings, sendAdminTestEmail, sendTestWhatsAppAlert, saveAnnouncementBanner, updateCustomDomainStatus } from '@/lib/actions/admin';
 import { GLOBAL_SITE_THEMES } from '@/constants/site-themes';
 import type { AnnouncementBanner, CustomDomainRequest } from '@/types';
+import { BrandLogoSettingsCard } from '@/components/admin/BrandLogoSettingsCard';
 import styles from '../dashboard/admin.module.css';
 
 interface SettingsFormClientProps {
@@ -124,6 +125,9 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
       </div>
 
       <div className={styles.settingsGrid}>
+        {/* Brand Logo & Multi-Placement Sizing Studio */}
+        <BrandLogoSettingsCard settings={settings} onSettingChange={update} />
+
         {/* General */}
         <div className={styles.settingSection}>
           <h3>General & Branding</h3>
