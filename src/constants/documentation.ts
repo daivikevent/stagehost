@@ -199,7 +199,7 @@ export const PLATFORM_DOC_CATEGORIES: DocCategory[] = [
         subtitle: 'Filter by city, genre, language, and budget',
         description:
           'Discover verified professional emcees across Mumbai, Delhi, Bengaluru, Jaipur, Pune, and all across India. Filter by your specific event criteria with zero login required.',
-        actionUrl: '/directory',
+        actionUrl: '/artists',
         actionText: 'Explore Directory',
         highlights: [
           'Search by anchor name, city, or event specialty',
@@ -477,7 +477,7 @@ export const PLATFORM_FEATURES_REGISTRY: PlatformFeature[] = [
       'Full architectural expansion supporting 11 distinct artist categories: Emcees, DJs, Live Singers, Musicians, Standup Comedians, Dancers, Magicians, Keynote Speakers, Voiceover Artists, Photographers, and Celebrities.',
     howToUse: [
       'Artists can choose their specific category in Dashboard > Edit Portfolio > Basic Information.',
-      'Visitors and event planners can filter talent by category pill tabs directly on /directory.',
+      'Visitors and event planners can filter talent by category pill tabs directly on /artists.',
       'Includes category-specific badges, taxonomy helpers, and seamless fallback resilience.',
     ],
     iconName: 'Sparkles',

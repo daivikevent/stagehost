@@ -84,7 +84,7 @@ export default async function AboutPage() {
           <Link href="/register" className="btn btn-accent btn-lg">
             Create Your Free Portfolio <ArrowRight size={18} />
           </Link>
-          <Link href="/directory" className="btn btn-ghost btn-lg">
+          <Link href="/artists" className="btn btn-ghost btn-lg">
             Browse Artist Directory
           </Link>
         </div>

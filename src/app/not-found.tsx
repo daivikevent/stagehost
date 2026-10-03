@@ -76,7 +76,7 @@ export default function NotFound() {
         }}
       >
         <Link
-          href="/directory"
+          href="/artists"
           style={{
             display: 'inline-flex',
             alignItems: 'center',

@@ -190,6 +190,7 @@ export async function toggleUserStatus(userId: string, targetStatus: 'active' | 
   revalidatePath('/admin/users');
   revalidatePath('/admin/dashboard');
   revalidatePath('/directory');
+  revalidatePath('/artists');
   return { success: true, status: targetStatus };
 }
 
@@ -230,6 +231,7 @@ export async function bulkUpdateUserStatus(userIds: string[], targetStatus: 'act
   revalidatePath('/admin/users');
   revalidatePath('/admin/dashboard');
   revalidatePath('/directory');
+  revalidatePath('/artists');
   return { success: true, count: userIds.length, status: targetStatus };
 }
 
@@ -321,6 +323,7 @@ export async function updateUserDirectoryListing(profileId: string, isListed: bo
 
   revalidatePath('/admin/users');
   revalidatePath('/directory');
+  revalidatePath('/artists');
   return { success: true };
 }
 
@@ -1078,6 +1081,7 @@ export async function toggleFeaturedAnchor(profileId: string, isFeatured: boolea
 
   revalidatePath('/admin/users');
   revalidatePath('/directory');
+  revalidatePath('/artists');
   return { success: true, isFeatured };
 }
 
@@ -1113,6 +1117,7 @@ export async function toggleVerifiedAnchor(profileId: string, isVerified: boolea
 
   revalidatePath('/admin/users');
   revalidatePath('/directory');
+  revalidatePath('/artists');
   return { success: true, isVerified };
 }
 

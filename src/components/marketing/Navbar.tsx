@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { href: '/features', label: 'Features', route: '/features' },
   { href: '/how-it-works', label: 'How It Works', route: '/how-it-works' },
   { href: '/pricing', label: 'Pricing', route: '/pricing' },
-  { href: '/directory', label: 'Find Artists', route: '/directory' },
+  { href: '/artists', label: 'Find Artists', route: '/artists' },
 ];
 
 export function Navbar() {

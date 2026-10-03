@@ -440,8 +440,8 @@ export function HowItWorksClient({ customFeatures = [] }: HowItWorksClientProps)
           <Link href="/register" className="btn btn-accent btn-lg">
             Create Your Portfolio Free <ArrowRight size={18} />
           </Link>
-          <Link href="/directory" className="btn btn-ghost btn-lg">
-            Browse Verified Anchors
+          <Link href="/artists" className="btn btn-ghost btn-lg">
+            Browse Verified Artists
           </Link>
         </div>
       </div>

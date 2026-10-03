@@ -262,8 +262,8 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
               Build Your Portfolio Free
               <ArrowRight size={20} />
             </Link>
-            <Link href="/features" className="btn btn-ghost btn-xl">
-              Explore Features
+            <Link href="/artists" className="btn btn-ghost btn-xl">
+              Find Artists
             </Link>
           </div>
 

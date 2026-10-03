@@ -1,12 +1,5 @@
-import { getDirectoryAnchors } from '@/lib/actions/profile';
-import { DirectoryClient, type DirectoryAnchor } from './DirectoryClient';
+import { redirect } from 'next/navigation';
 
-export const metadata = {
-  title: 'Find Live Artists, Anchors & Performers | BookMyArtist Directory',
-  description: 'Browse top verified live artists, anchors, emcees, DJs, singers, comedians, and performers across India.',
-};
-
-export default async function DirectoryPage() {
-  const anchors = await getDirectoryAnchors();
-  return <DirectoryClient initialAnchors={anchors as DirectoryAnchor[]} />;
+export default function DirectoryRedirectPage() {
+  redirect('/artists');
 }

@@ -35,7 +35,7 @@ export function Footer() {
             <Link href="/pricing" className={styles.footerLink}>
               Pricing
             </Link>
-            <Link href="/directory" className={styles.footerLink}>
+            <Link href="/artists" className={styles.footerLink}>
               Find Artists
             </Link>
           </div>

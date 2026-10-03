@@ -106,14 +106,6 @@ export function CheckoutButton({
     setLoading(true);
 
     try {
-      // 1. Load Razorpay SDK
-      const loaded = await loadRazorpay();
-      if (!loaded) {
-        showError('Razorpay failed to load. Check your internet connection.');
-        setLoading(false);
-        return;
-      }
-
       // 2. Create order on server with coupon if applied
       const res = await fetch('/api/payment/create-order', {
         method: 'POST',
@@ -133,7 +125,40 @@ export function CheckoutButton({
 
       const orderData = await res.json();
 
-      // 3. Open Razorpay checkout
+      // If in sandbox test mode, simulate verification and activate instantly
+      if (orderData.is_test_mode) {
+        const verifyRes = await fetch('/api/payment/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            razorpay_order_id: orderData.order_id,
+            razorpay_payment_id: `pay_test_${Date.now()}`,
+            razorpay_signature: 'test_signature_mock',
+            plan,
+            is_test_mode: true,
+          }),
+        });
+
+        if (verifyRes.ok) {
+          setIsModalOpen(false);
+          success(`🎉 [Test Mode] Welcome to ${orderData.plan_name || planName}! Your plan is now active.`);
+          router.push('/settings?upgraded=true');
+          router.refresh();
+        } else {
+          showError('Test verification failed. Please try again.');
+        }
+        setLoading(false);
+        return;
+      }
+
+      // 3. Open Razorpay checkout for live/test merchant keys
+      const loaded = await loadRazorpay();
+      if (!loaded) {
+        showError('Razorpay failed to load. Check your internet connection.');
+        setLoading(false);
+        return;
+      }
+
       const RazorpayConstructor = (window as unknown as { Razorpay: new (options: RazorpayOptions) => RazorpayInstance }).Razorpay;
       const rzp = new RazorpayConstructor({
         key: orderData.key,
@@ -153,10 +178,33 @@ export function CheckoutButton({
         modal: {
           ondismiss: () => setLoading(false),
         },
-        handler: () => {
-          setIsModalOpen(false);
-          success(`🎉 Welcome to ${planName}! Your plan is now active.`);
-          router.push('/settings?upgraded=true');
+        handler: async (response: RazorpayResponse) => {
+          try {
+            const verifyRes = await fetch('/api/payment/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                plan,
+                is_test_mode: false,
+              }),
+            });
+
+            if (verifyRes.ok) {
+              setIsModalOpen(false);
+              success(`🎉 Welcome to ${planName}! Your plan is now active.`);
+              router.push('/settings?upgraded=true');
+              router.refresh();
+            } else {
+              showError('Payment received but verification failed. Please contact support.');
+            }
+          } catch {
+            showError('Verification error. Please contact support.');
+          } finally {
+            setLoading(false);
+          }
         },
       });
 

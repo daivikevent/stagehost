@@ -99,6 +99,7 @@ export async function setGlobalSiteTheme(themeId: string) {
   revalidatePath('/admin/settings');
   revalidatePath('/pricing');
   revalidatePath('/directory');
+  revalidatePath('/artists');
 
   return { success: true, themeId };
 }

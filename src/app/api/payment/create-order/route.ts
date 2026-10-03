@@ -2,6 +2,7 @@
  * Razorpay Order Creation API
  * POST /api/payment/create-order
  * Creates a Razorpay order for a plan upgrade.
+ * Supports both Live/Test Razorpay Keys and Sandbox Simulation Mode.
  */
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
@@ -17,20 +18,8 @@ const PLAN_PRICES: Record<string, { amount: number; name: string }> = {
 
 export async function POST(request: NextRequest) {
   try {
-    const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    const adminClient = createAdminClient();
 
-    if (!keyId || !keySecret) {
-      return NextResponse.json(
-        { error: 'Razorpay payment keys are not configured. Please contact support or update API keys in admin settings.' },
-        { status: 503 }
-      );
-    }
-
-    const razorpay = new Razorpay({
-      key_id: keyId,
-      key_secret: keySecret,
-    });
     // Verify auth
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -38,11 +27,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Retrieve Keys (env or platform_settings)
+    let keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+    let keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || keyId.includes('placeholder')) {
+      const { data: dbKeyId } = await adminClient
+        .from('platform_settings')
+        .select('value')
+        .eq('key', 'razorpay_key_id')
+        .maybeSingle();
+      if (dbKeyId?.value && !dbKeyId.value.includes('placeholder')) {
+        keyId = dbKeyId.value;
+      }
+    }
+
+    if (!keySecret || keySecret.includes('placeholder')) {
+      const { data: dbKeySecret } = await adminClient
+        .from('platform_settings')
+        .select('value')
+        .eq('key', 'razorpay_key_secret')
+        .maybeSingle();
+      if (dbKeySecret?.value && !dbKeySecret.value.includes('placeholder')) {
+        keySecret = dbKeySecret.value;
+      }
+    }
+
+    const isTestMode = !keyId || keyId.includes('placeholder') || !keySecret || keySecret.includes('placeholder');
+
     const { plan, coupon_code, billing_cycle = 'monthly' } = await request.json();
-    const targetSlug = (plan || '').toLowerCase().trim();
+    const targetSlug = (plan || 'starter').toLowerCase().trim();
 
     // 1. Dynamic Plan Lookup from Database
-    const adminClient = createAdminClient();
     const { data: dbPlan } = await adminClient
       .from('plans')
       .select('*')
@@ -88,7 +104,29 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Create Razorpay order
+    // 2. If sandbox test mode, generate test order
+    if (isTestMode) {
+      const mockOrderId = `order_test_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+      return NextResponse.json({
+        order_id: mockOrderId,
+        amount: finalAmount,
+        currency: 'INR',
+        key: keyId || 'rzp_test_placeholder',
+        plan: targetSlug,
+        plan_name: planName,
+        original_amount: baseAmountPaise,
+        discount_percent: discountPercent,
+        coupon_applied: appliedCoupon,
+        is_test_mode: true,
+      });
+    }
+
+    // 3. Create real Razorpay order with active credentials
+    const razorpay = new Razorpay({
+      key_id: keyId!,
+      key_secret: keySecret!,
+    });
+
     const order = await razorpay.orders.create({
       amount: finalAmount,
       currency: 'INR',
@@ -108,16 +146,16 @@ export async function POST(request: NextRequest) {
       order_id: order.id,
       amount: order.amount,
       currency: order.currency,
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      key: keyId,
       plan: targetSlug,
       plan_name: planName,
       original_amount: baseAmountPaise,
       discount_percent: discountPercent,
       coupon_applied: appliedCoupon,
+      is_test_mode: false,
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error('Razorpay order error:', err);
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 });
+    return NextResponse.json({ error: err.message || 'Failed to create order' }, { status: 500 });
   }
 }
-
