@@ -95,8 +95,18 @@ export function GlobalThemeSwitcher({
     `;
   };
 
-  // Sync DOM with state on mount
+  // Sync DOM with state on mount & load localStorage cache if available
   useEffect(() => {
+    try {
+      const cached = localStorage.getItem('bookmyartist_custom_site_themes');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setThemesList(parsed);
+        }
+      }
+    } catch {}
+
     const currentAttr = document.documentElement.getAttribute('data-site-theme');
     if (!currentAttr) {
       document.documentElement.setAttribute('data-site-theme', activeThemeId);
@@ -155,6 +165,10 @@ export function GlobalThemeSwitcher({
         t.id === editingTheme.id ? { ...editingTheme } : t
       );
       setThemesList(updatedList);
+      try {
+        localStorage.setItem('bookmyartist_custom_site_themes', JSON.stringify(updatedList));
+      } catch {}
+
       await saveCustomSiteThemes(updatedList);
 
       if (activeThemeId === editingTheme.id || previewThemeId === editingTheme.id) {
@@ -163,8 +177,11 @@ export function GlobalThemeSwitcher({
 
       success(`Theme "${editingTheme.name}" updated successfully!`);
       setEditingTheme(null);
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to save theme changes');
+    } catch (err: any) {
+      console.error('Error saving theme edit:', err);
+      showError(err?.message || 'Failed to save theme changes to database');
+      // Even if server action reported an issue, keep the modal closed and client updated
+      setEditingTheme(null);
     } finally {
       setIsSavingCustom(false);
     }
@@ -183,6 +200,10 @@ export function GlobalThemeSwitcher({
     try {
       const updatedList = themesList.filter((t) => t.id !== deletingTheme.id);
       setThemesList(updatedList);
+      try {
+        localStorage.setItem('bookmyartist_custom_site_themes', JSON.stringify(updatedList));
+      } catch {}
+
       await saveCustomSiteThemes(updatedList);
 
       if (previewThemeId === deletingTheme.id) {
@@ -191,8 +212,10 @@ export function GlobalThemeSwitcher({
 
       success(`Theme "${deletingTheme.name}" deleted successfully.`);
       setDeletingTheme(null);
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to delete theme');
+    } catch (err: any) {
+      console.error('Error deleting theme:', err);
+      showError(err?.message || 'Failed to delete theme');
+      setDeletingTheme(null);
     } finally {
       setIsSavingCustom(false);
     }
@@ -231,12 +254,17 @@ export function GlobalThemeSwitcher({
 
       const updatedList = [createdTheme, ...themesList];
       setThemesList(updatedList);
+      try {
+        localStorage.setItem('bookmyartist_custom_site_themes', JSON.stringify(updatedList));
+      } catch {}
+
       await saveCustomSiteThemes(updatedList);
 
       success(`New theme "${createdTheme.name}" created! You can now preview or apply it.`);
       setIsCreateModalOpen(false);
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to create custom theme');
+    } catch (err: any) {
+      console.error('Error creating custom theme:', err);
+      showError(err?.message || 'Failed to create custom theme');
     } finally {
       setIsSavingCustom(false);
     }
@@ -250,11 +278,15 @@ export function GlobalThemeSwitcher({
 
     setIsSavingCustom(true);
     try {
+      try {
+        localStorage.removeItem('bookmyartist_custom_site_themes');
+      } catch {}
       await resetCustomSiteThemesToDefault();
       setThemesList(GLOBAL_SITE_THEMES);
       success('Factory default themes restored successfully!');
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to reset themes');
+    } catch (err: any) {
+      console.error('Error resetting themes:', err);
+      showError(err?.message || 'Failed to reset themes');
     } finally {
       setIsSavingCustom(false);
     }

@@ -50,7 +50,7 @@ export async function saveCustomSiteThemes(themes: GlobalSiteTheme[]) {
         category: 'branding',
         label: 'Configured Site Themes',
         description: 'JSON list of configured themes including edits and user additions',
-        field_type: 'json',
+        field_type: 'textarea',
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'key' }
