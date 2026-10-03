@@ -435,3 +435,30 @@
   align-items: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
+
+@media (max-width: 640px) {
+  .stageWindow {
+    padding: 12px 8px;
+    overflow-x: auto;
+  }
+
+  .mockDesktopNav {
+    padding: 8px 12px;
+  }
+
+  .mockNavLinks {
+    display: none;
+  }
+
+  .mockQuotationHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .actionButtons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

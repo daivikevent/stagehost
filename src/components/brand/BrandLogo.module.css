@@ -28,6 +28,13 @@
   }
 }
 
+/* Explicit Navbar Mobile Placement */
+.variantNavbarMobile .logoImg {
+  height: var(--brand-logo-navbar-mobile-h, 32px);
+  width: auto;
+  max-height: 50px;
+}
+
 /* Footer Placement */
 .variantFooter .logoImg {
   height: var(--brand-logo-footer-h, 38px);

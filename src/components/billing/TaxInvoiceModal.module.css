@@ -362,6 +362,67 @@
   border-top: 1px solid #f3f4f6;
 }
 
+/* Mobile Responsive */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 8px;
+  }
+
+  .modal {
+    max-height: 96vh;
+    border-radius: 10px;
+  }
+
+  .topBar {
+    padding: 10px 14px;
+  }
+
+  .topBarTitle {
+    font-size: 13px;
+  }
+
+  .scrollArea {
+    padding: 16px 14px;
+  }
+
+  .brandHeader {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .taxInvoiceBadge {
+    text-align: left;
+  }
+
+  .metaGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .partiesGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .summaryRow {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .totalsTable {
+    width: 100%;
+  }
+}
+
 /* Print Overrides */
 @media print {
   body * {

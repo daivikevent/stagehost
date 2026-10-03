@@ -166,47 +166,49 @@ export function TaxInvoiceModal({ isOpen, onClose, invoice }: TaxInvoiceModalPro
             </div>
 
             {/* Line Items Table */}
-            <table className={styles.itemsTable}>
-              <thead>
-                <tr>
-                  <th style={{ width: '30px' }}>#</th>
-                  <th>Description of Service</th>
-                  <th style={{ width: '70px', textAlign: 'center' }}>SAC</th>
-                  <th style={{ width: '80px', textAlign: 'right' }}>Taxable (₹)</th>
-                  {isIntraState ? (
-                    <>
-                      <th style={{ width: '70px', textAlign: 'right' }}>CGST (9%)</th>
-                      <th style={{ width: '70px', textAlign: 'right' }}>SGST (9%)</th>
-                    </>
-                  ) : (
-                    <th style={{ width: '80px', textAlign: 'right' }}>IGST (18%)</th>
-                  )}
-                  <th style={{ width: '90px', textAlign: 'right' }}>Total (₹)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoice.items.map((item, idx) => (
-                  <tr key={item.id}>
-                    <td>{idx + 1}</td>
-                    <td>
-                      <div className={styles.itemDescTitle}>{item.description}</div>
-                      <div className={styles.itemDescSub}>Cloud Hosting &amp; Software Provisioning Services</div>
-                    </td>
-                    <td style={{ textAlign: 'center', fontFamily: 'monospace' }}>{item.sacCode}</td>
-                    <td style={{ textAlign: 'right' }}>₹{item.taxableAmount.toFixed(2)}</td>
+            <div className={styles.tableWrapper}>
+              <table className={styles.itemsTable}>
+                <thead>
+                  <tr>
+                    <th style={{ width: '30px' }}>#</th>
+                    <th>Description of Service</th>
+                    <th style={{ width: '70px', textAlign: 'center' }}>SAC</th>
+                    <th style={{ width: '80px', textAlign: 'right' }}>Taxable (₹)</th>
                     {isIntraState ? (
                       <>
-                        <td style={{ textAlign: 'right' }}>₹{item.cgstAmount.toFixed(2)}</td>
-                        <td style={{ textAlign: 'right' }}>₹{item.sgstAmount.toFixed(2)}</td>
+                        <th style={{ width: '70px', textAlign: 'right' }}>CGST (9%)</th>
+                        <th style={{ width: '70px', textAlign: 'right' }}>SGST (9%)</th>
                       </>
                     ) : (
-                      <td style={{ textAlign: 'right' }}>₹{item.igstAmount.toFixed(2)}</td>
+                      <th style={{ width: '80px', textAlign: 'right' }}>IGST (18%)</th>
                     )}
-                    <td style={{ textAlign: 'right', fontWeight: 700 }}>₹{item.totalAmount.toFixed(2)}</td>
+                    <th style={{ width: '90px', textAlign: 'right' }}>Total (₹)</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {invoice.items.map((item, idx) => (
+                    <tr key={item.id}>
+                      <td>{idx + 1}</td>
+                      <td>
+                        <div className={styles.itemDescTitle}>{item.description}</div>
+                        <div className={styles.itemDescSub}>Cloud Hosting &amp; Software Provisioning Services</div>
+                      </td>
+                      <td style={{ textAlign: 'center', fontFamily: 'monospace' }}>{item.sacCode}</td>
+                      <td style={{ textAlign: 'right' }}>₹{item.taxableAmount.toFixed(2)}</td>
+                      {isIntraState ? (
+                        <>
+                          <td style={{ textAlign: 'right' }}>₹{item.cgstAmount.toFixed(2)}</td>
+                          <td style={{ textAlign: 'right' }}>₹{item.sgstAmount.toFixed(2)}</td>
+                        </>
+                      ) : (
+                        <td style={{ textAlign: 'right' }}>₹{item.igstAmount.toFixed(2)}</td>
+                      )}
+                      <td style={{ textAlign: 'right', fontWeight: 700 }}>₹{item.totalAmount.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {/* Calculations & Words */}
             <div className={styles.summaryRow}>

@@ -29,7 +29,8 @@ export function BrandLogo({
 
   // Determine variant class
   let variantClass = styles.variantNavbar;
-  if (variant === 'footer') variantClass = styles.variantFooter;
+  if (variant === 'navbar-mobile') variantClass = styles.variantNavbarMobile;
+  else if (variant === 'footer') variantClass = styles.variantFooter;
   else if (variant === 'sidebar') variantClass = styles.variantSidebar;
   else if (variant === 'sidebar-icon') variantClass = styles.variantSidebarIcon;
   else if (variant === 'auth') variantClass = styles.variantAuth;
