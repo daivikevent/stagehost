@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Check, Save, Loader2, Send, Megaphone, AlertCircle, Sparkles, Globe, ExternalLink, Palette, MessageCircle } from 'lucide-react';
+import { Check, Save, Loader2, Send, Megaphone, AlertCircle, Sparkles, Globe, ExternalLink, Palette, MessageCircle, Building2, CreditCard, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { savePlatformSettings, sendAdminTestEmail, sendTestWhatsAppAlert, saveAnnouncementBanner, updateCustomDomainStatus } from '@/lib/actions/admin';
 import { GLOBAL_SITE_THEMES } from '@/constants/site-themes';
@@ -393,6 +393,135 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
                 {isSendingWhatsAppTest ? <Loader2 size={14} className="spin" /> : <MessageCircle size={14} />} Send Test Ping
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Company Legal & GST Tax Invoicing Configuration */}
+        <div className={styles.settingSection}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-2)' }}>
+            <Building2 size={18} color="var(--color-primary)" />
+            <h3 style={{ margin: 0 }}>Company GST &amp; Tax Invoicing</h3>
+          </div>
+          <p className="text-secondary text-xs" style={{ margin: '0 0 var(--space-3) 0' }}>
+            BookMyArtist legal registration details printed on all subscription Tax Invoices (Rules 46 of GST Act).
+          </p>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Company Legal Entity Name</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              value={settings.company_legal_name || 'BookMyArtist Technologies Private Limited'}
+              onChange={(e) => update('company_legal_name', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Company GSTIN</div>
+              <div className={styles.settingDesc}>15-digit Indian GST number</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              placeholder="27AAGCB9876F1Z4"
+              value={settings.company_gstin || '27AAGCB9876F1Z4'}
+              onChange={(e) => update('company_gstin', e.target.value.toUpperCase())}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Company PAN</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              placeholder="AAGCB9876F"
+              value={settings.company_pan || 'AAGCB9876F'}
+              onChange={(e) => update('company_pan', e.target.value.toUpperCase())}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Registered Address &amp; State</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              value={settings.company_address || 'B-402, Signature One, Bandra Kurla Complex, Mumbai'}
+              onChange={(e) => update('company_address', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Invoice Number Prefix</div>
+              <div className={styles.settingDesc}>e.g. BMA/2026-27/</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              value={settings.company_invoice_prefix || 'BMA/2026-27/'}
+              onChange={(e) => update('company_invoice_prefix', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>SAC Code (Service Accounting Code)</div>
+              <div className={styles.settingDesc}>Default: 998315 (IT &amp; Hosting Provisioning)</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              value={settings.company_sac_code || '998315'}
+              onChange={(e) => update('company_sac_code', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Razorpay Merchant Payment Gateway */}
+        <div className={styles.settingSection}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <CreditCard size={18} color="#0052FF" />
+              <h3 style={{ margin: 0 }}>Razorpay Merchant Gateway</h3>
+            </div>
+            <span className={`badge ${settings.razorpay_key_id?.startsWith('rzp_live_') ? 'badge-success' : 'badge-warning'}`}>
+              {settings.razorpay_key_id?.startsWith('rzp_live_') ? 'Mode: LIVE' : 'Mode: SANDBOX / SIMULATION'}
+            </span>
+          </div>
+          <p className="text-secondary text-xs" style={{ margin: '0 0 var(--space-3) 0' }}>
+            Powering UPI AutoPay, Debit/Credit Cards &amp; NetBanking for Pro and Premium artist subscriptions.
+          </p>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Razorpay Key ID</div>
+              <div className={styles.settingDesc}>rzp_live_... or rzp_test_...</div>
+            </div>
+            <input
+              className={styles.settingInput}
+              placeholder="rzp_live_xxxxxxxxxxxxxxxx"
+              value={settings.razorpay_key_id || ''}
+              onChange={(e) => update('razorpay_key_id', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Razorpay Key Secret</div>
+            </div>
+            <input
+              type="password"
+              className={styles.settingInput}
+              placeholder="••••••••••••••••"
+              value={settings.razorpay_key_secret || ''}
+              onChange={(e) => update('razorpay_key_secret', e.target.value)}
+            />
+          </div>
+          <div className={styles.settingRow}>
+            <div>
+              <div className={styles.settingLabel}>Webhook Secret</div>
+              <div className={styles.settingDesc}>From Razorpay Dashboard Webhook settings</div>
+            </div>
+            <input
+              type="password"
+              className={styles.settingInput}
+              placeholder="••••••••••••••••"
+              value={settings.razorpay_webhook_secret || ''}
+              onChange={(e) => update('razorpay_webhook_secret', e.target.value)}
+            />
           </div>
         </div>
 

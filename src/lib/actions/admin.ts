@@ -380,6 +380,18 @@ export async function getPlatformSettings(): Promise<Record<string, string>> {
     brand_logo_sidebar_icon_size: '32',
     brand_logo_auth_height: '48',
     brand_logo_quotation_height: '40',
+    company_legal_name: 'BookMyArtist Technologies Private Limited',
+    company_trade_name: 'BookMyArtist',
+    company_gstin: '27AAGCB9876F1Z4',
+    company_pan: 'AAGCB9876F',
+    company_address: 'B-402, Signature One, Bandra Kurla Complex, Bandra East',
+    company_city: 'Mumbai',
+    company_state: 'Maharashtra',
+    company_state_code: '27',
+    company_pincode: '400051',
+    company_billing_email: 'billing@bookmyartist.in',
+    company_invoice_prefix: 'BMA/2026-27/',
+    company_sac_code: '998315',
   };
 
   if (!data) return defaults;

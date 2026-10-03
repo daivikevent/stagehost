@@ -29,12 +29,16 @@ import type { PublicPlan } from '@/lib/actions/plans';
 import PushNotificationToggle from '@/components/dashboard/PushNotificationToggle';
 import CustomDomainCard from '@/components/dashboard/CustomDomainCard';
 import GoogleCalendarSyncCard from '@/components/dashboard/GoogleCalendarSyncCard';
+import { ArtistBillingManager } from '@/components/billing/ArtistBillingManager';
+import type { ArtistBillingDetails, TaxInvoice } from '@/types/invoice';
 
 interface SettingsClientProps {
   initialProfile: AnchorProfile | null;
   initialSubscription: Partial<Subscription> | null;
   initialShowCalendar?: boolean;
   plans?: PublicPlan[];
+  initialBillingDetails?: ArtistBillingDetails | null;
+  initialInvoices?: TaxInvoice[];
 }
 
 export function SettingsClient({
@@ -42,6 +46,8 @@ export function SettingsClient({
   initialSubscription,
   initialShowCalendar = true,
   plans = [],
+  initialBillingDetails = null,
+  initialInvoices = [],
 }: SettingsClientProps) {
   const { success, error: showError } = useToast();
   const [activeTab, setActiveTab] = useState<TabId>('profile');
@@ -338,12 +344,12 @@ export function SettingsClient({
                   })}
               </div>
 
-              {/* Payment History */}
-              <h3 style={{ marginTop: 'var(--space-8)' }}>Payment History</h3>
-              <div className="empty-state" style={{ padding: 'var(--space-6)' }}>
-                <div className="empty-state-icon"><CreditCard size={24} /></div>
-                <div className="empty-state-title">No payments yet</div>
-                <div className="empty-state-text">Your payment history will appear here after upgrading</div>
+              {/* GST Details & Payment History with Tax Invoices */}
+              <div style={{ marginTop: 'var(--space-8)' }}>
+                <ArtistBillingManager
+                  initialBilling={initialBillingDetails}
+                  initialInvoices={initialInvoices}
+                />
               </div>
             </div>
           )}

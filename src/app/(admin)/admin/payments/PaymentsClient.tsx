@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Download, CreditCard, ArrowUpDown } from 'lucide-react';
+import { Search, Download, CreditCard, ArrowUpDown, FileText, Eye } from 'lucide-react';
+import { TaxInvoiceModal } from '@/components/billing/TaxInvoiceModal';
+import { DEFAULT_PLATFORM_COMPANY, type TaxInvoice, type PlatformCompanyDetails } from '@/types/invoice';
+import { numberToIndianWords } from '@/lib/number-to-words';
 import styles from '../dashboard/admin.module.css';
 
 interface PaymentRecord {
@@ -15,6 +18,7 @@ interface PaymentRecord {
 
 interface PaymentsClientProps {
   initialPayments: PaymentRecord[];
+  companyDetails?: PlatformCompanyDetails;
 }
 
 function exportPaymentsToCSV(records: PaymentRecord[]) {
@@ -39,10 +43,11 @@ function exportPaymentsToCSV(records: PaymentRecord[]) {
   document.body.removeChild(link);
 }
 
-export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
+export function PaymentsClient({ initialPayments, companyDetails = DEFAULT_PLATFORM_COMPANY }: PaymentsClientProps) {
   const [payments] = useState<PaymentRecord[]>(initialPayments);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [selectedInvoice, setSelectedInvoice] = useState<TaxInvoice | null>(null);
 
   const filtered = payments.filter((p) => {
     if (
@@ -61,6 +66,63 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
 
   const handleExport = () => {
     exportPaymentsToCSV(filtered);
+  };
+
+  const handleViewInvoice = (p: PaymentRecord) => {
+    const totalAmount = Number(p.amount) || 599;
+    const taxable = Math.round((totalAmount / 1.18) * 100) / 100;
+    const totalTax = Math.round((totalAmount - taxable) * 100) / 100;
+
+    const invoice: TaxInvoice = {
+      id: p.id,
+      invoiceNumber: `${companyDetails.invoicePrefix}${p.id.slice(-5).toUpperCase()}`,
+      invoiceDate: p.date,
+      billingPeriod: '1 Month Subscription',
+      placeOfSupply: `${companyDetails.state} (${companyDetails.stateCode})`,
+      isB2B: false,
+      supplier: companyDetails,
+      customer: {
+        name: p.name,
+        businessName: p.name,
+        email: 'artist@bookmyartist.in',
+        phone: '',
+        address: 'Registered Platform Artist',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        stateCode: '27',
+        pincode: '400001',
+      },
+      items: [
+        {
+          id: 'item-1',
+          description: `BookMyArtist ${p.plan} Subscription - Digital Stage & Portfolio Infrastructure`,
+          sacCode: companyDetails.sacCode,
+          taxableAmount: taxable,
+          cgstRate: 9,
+          cgstAmount: Math.round((totalTax / 2) * 100) / 100,
+          sgstRate: 9,
+          sgstAmount: Math.round((totalTax / 2) * 100) / 100,
+          igstRate: 0,
+          igstAmount: 0,
+          totalAmount,
+        },
+      ],
+      subtotalTaxable: taxable,
+      totalCgst: Math.round((totalTax / 2) * 100) / 100,
+      totalSgst: Math.round((totalTax / 2) * 100) / 100,
+      totalIgst: 0,
+      totalTax,
+      totalAmount,
+      amountInWords: numberToIndianWords(totalAmount),
+      paymentDetails: {
+        paymentId: p.id,
+        mode: 'Razorpay Online Gateway',
+        date: p.date,
+        status: 'PAID',
+      },
+    };
+
+    setSelectedInvoice(invoice);
   };
 
   return (
@@ -121,11 +183,12 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
               <thead>
                 <tr>
                   <th>Payment ID</th>
-                  <th>Anchor</th>
+                  <th>Artist / Anchor</th>
                   <th>Plan</th>
-                  <th>Amount</th>
+                  <th>Amount (INR)</th>
                   <th>Status</th>
                   <th>Date</th>
+                  <th style={{ textAlign: 'right' }}>Tax Invoice</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,6 +204,17 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
                       </span>
                     </td>
                     <td className="text-xs text-tertiary">{p.date}</td>
+                    <td style={{ textAlign: 'right' }}>
+                      <button
+                        type="button"
+                        className="btn btn-xs btn-outline"
+                        onClick={() => handleViewInvoice(p)}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        title="View & Print Official GST Tax Invoice"
+                      >
+                        <FileText size={12} /> GST Invoice
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -148,6 +222,13 @@ export function PaymentsClient({ initialPayments }: PaymentsClientProps) {
           </div>
         )}
       </div>
+
+      {/* Tax Invoice Modal for Admin */}
+      <TaxInvoiceModal
+        isOpen={Boolean(selectedInvoice)}
+        onClose={() => setSelectedInvoice(null)}
+        invoice={selectedInvoice}
+      />
     </div>
   );
 }

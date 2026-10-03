@@ -19,10 +19,12 @@
 | ✅ **Shipped** | **Razorpay Merchant Integration & Auto-Activation** | Sandbox simulation mode, signature verification, live-key support |
 | ✅ **Shipped** | **Meta WhatsApp Cloud API (Automated Alert)** | Meta Graph API, instant lead alerts, webhook listener, admin test ping |
 | ✅ **Shipped** | **PDF Quotation & Rate Card Generator** | Branded executive client proposals, A4 PDF print/download, WhatsApp sharing |
-| 🟡 **Phase 3** | **GST Tax Invoice Generator for Subscriptions** | 18% GST calculation, sequential numbering, PDF download |
-| 🟡 **Phase 3** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers |
-| 🟡 **Phase 4** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders |
-| 🟡 **Phase 4** | **AI Portfolio Bio & Repertoire Assistant** | Gemini API prompt engine for artist bios & pitch decks |
+| ✅ **Shipped** | **Brand Logo & Multi-Placement Sizing Studio** | Admin logo upload, 7-location height sliders, live multi-screen preview |
+| ✅ **Shipped** | **GST Tax Invoice Generator for Subscriptions** | Indian GST Act Rule 46, 18% GST breakdown, B2B ITC claim, sequential PDF |
+| 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
+| 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
+| 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
+| 🟡 **Phase 2 (Pending)** | **AI Portfolio Bio & Repertoire Assistant** | Gemini API prompt engine for artist bios & pitch decks (Future Scope) |
 
 ---
 
