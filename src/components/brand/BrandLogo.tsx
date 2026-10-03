@@ -37,9 +37,19 @@ export function BrandLogo({
   else if (variant === 'quotation') variantClass = styles.variantQuotation;
 
   // Determine resolved source from props or brand context
-  const isStackedOrIcon = variant === 'sidebar-icon' || variant === 'auth' || variant === 'stacked';
-  const defaultFallback = isStackedOrIcon ? '/images/logo-icon.png' : '/images/logo.png';
-  const contextSrc = isStackedOrIcon ? (brand?.logoIconUrl || defaultFallback) : (brand?.logoUrl || defaultFallback);
+  let defaultFallback = '/images/logo.png';
+  let contextSrc = brand?.logoUrl || defaultFallback;
+
+  if (variant === 'sidebar-icon') {
+    defaultFallback = '/icon.png';
+    contextSrc = defaultFallback;
+  } else if (variant === 'auth' || variant === 'stacked') {
+    defaultFallback = '/images/logo-icon.png';
+    contextSrc = brand?.logoIconUrl || defaultFallback;
+  } else if (variant === 'quotation') {
+    defaultFallback = '/images/logo-light.png';
+    contextSrc = defaultFallback;
+  }
   const resolvedSrc = src || contextSrc;
 
   // Custom inline style overrides if specifically provided

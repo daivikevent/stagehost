@@ -55,8 +55,12 @@
   width: var(--brand-logo-sidebar-icon-size, 32px);
   object-fit: contain;
 }
-
-
+/* Auth Placement (Stacked Logo) */
+.variantAuth .logoImg {
+  height: var(--brand-logo-auth-h, 72px);
+  width: auto;
+  max-height: 90px;
+}
 
 /* PDF Quotation Header */
 .variantQuotation .logoImg {
