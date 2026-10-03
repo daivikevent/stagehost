@@ -190,6 +190,67 @@
    BOOKMYARTIST GLOBAL THEMES (Platform-Wide Themes)
    =================================================== */
 
+/* 0. BookMyArtist Signature (Neon Stage) — Matches Official Brand Logo ✨ */
+html[data-site-theme="signature-neon"],
+:root[data-site-theme="signature-neon"],
+html:not([data-site-theme]),
+:root:not([data-site-theme]) {
+  --color-primary: #FF007A;
+  --color-primary-hover: #FF2A93;
+  --color-primary-light: rgba(255, 0, 122, 0.16);
+  --color-primary-glow: rgba(255, 0, 122, 0.5);
+  --color-accent: #FF8A00;
+  --color-accent-hover: #FFA233;
+  --color-accent-light: rgba(255, 138, 0, 0.16);
+  --color-accent-glow: rgba(255, 138, 0, 0.4);
+  --color-bg-primary: #07060C;
+  --color-bg-secondary: #0E0A18;
+  --color-bg-tertiary: #171128;
+  --color-bg-card: #120D1F;
+  --color-bg-card-hover: #1A132C;
+  --color-bg-input: #0E0A18;
+  --color-bg-elevated: #1D1532;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #C8BEDC;
+  --color-text-tertiary: #84759E;
+  --color-text-link: #FF007A;
+  --color-text-link-hover: #FF4DA6;
+  --color-border: rgba(255, 0, 122, 0.18);
+  --color-border-hover: rgba(255, 0, 122, 0.45);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 0, 122, 0.18);
+  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 0, 122, 0.22) 0%, rgba(121, 40, 202, 0.14) 50%, #07060C 100%);
+  --gradient-accent: linear-gradient(135deg, #FF8A00 0%, #FF007A 50%, #7928CA 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255, 0, 122, 0.06) 0%, rgba(121, 40, 202, 0.02) 100%);
+  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 0, 122, 0.12), transparent 40%);
+  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #FFE6F2 40%, #FF007A 100%);
+  --shadow-glow: 0 0 35px rgba(255, 0, 122, 0.45);
+  --navbar-scrolled-bg: rgba(7, 6, 12, 0.9);
+}
+
+html[data-site-theme="signature-neon"] .btn-primary,
+:root:not([data-site-theme]) .btn-primary {
+  background: linear-gradient(135deg, #FF7A00 0%, #FF007A 45%, #7928CA 100%) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 0, 122, 0.5) !important;
+  box-shadow: 0 4px 20px rgba(255, 0, 122, 0.4) !important;
+  font-weight: 600 !important;
+}
+
+html[data-site-theme="signature-neon"] .btn-primary:hover,
+:root:not([data-site-theme]) .btn-primary:hover {
+  background: linear-gradient(135deg, #FFA233 0%, #FF2A93 45%, #8B5CF6 100%) !important;
+  box-shadow: 0 6px 28px rgba(255, 0, 122, 0.6) !important;
+  transform: translateY(-1px);
+}
+
+html[data-site-theme="signature-neon"] .badge-primary,
+:root:not([data-site-theme]) .badge-primary {
+  background: rgba(255, 0, 122, 0.15) !important;
+  color: #FF4DA6 !important;
+  border: 1px solid rgba(255, 0, 122, 0.3) !important;
+}
+
 /* 1. Obsidian Violet — Default Modern Neon Stage */
 html[data-site-theme="obsidian-violet"],
 :root[data-site-theme="obsidian-violet"] {

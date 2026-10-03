@@ -370,7 +370,7 @@ export async function getPlatformSettings(): Promise<Record<string, string>> {
     email_from_name: 'BookMyArtist',
     email_from_address: 'notifications@bookmyartist.in',
     resend_api_key: (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_placeholder') ? '••••••••••••••••' : '',
-    site_theme: 'obsidian-violet',
+    site_theme: 'signature-neon',
   };
 
   if (!data) return defaults;

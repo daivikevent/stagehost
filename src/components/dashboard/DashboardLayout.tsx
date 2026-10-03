@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Sparkles, LayoutDashboard, User, Video, Image, Package,
@@ -91,9 +92,12 @@ export function DashboardShell({
       {/* Desktop Sidebar */}
       <aside className={cn(styles.sidebar, collapsed && styles.collapsed)}>
         <div className={styles.sidebarHeader}>
-          <Link href="/" className={styles.logo}>
-            <Sparkles size={22} />
-            {!collapsed && <span>BookMyArtist</span>}
+          <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
+            {collapsed ? (
+              <NextImage src="/images/logo-icon.png" alt="BMA" width={32} height={32} style={{ height: '30px', width: 'auto', objectFit: 'contain' }} />
+            ) : (
+              <NextImage src="/images/logo.png" alt="BookMyArtist" width={160} height={46} priority style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+            )}
           </Link>
           <button className={styles.collapseBtn} onClick={() => setCollapsed(!collapsed)}>
             <ChevronLeft size={18} style={{ transform: collapsed ? 'rotate(180deg)' : 'none', transition: 'transform 200ms' }} />
@@ -162,9 +166,8 @@ export function DashboardShell({
           <button className={styles.mobileMenuBtn} onClick={() => setMobileOpen(true)}>
             <Menu size={22} />
           </button>
-          <Link href="/" className={styles.mobileLogo}>
-            <Sparkles size={20} />
-            <span>BookMyArtist</span>
+          <Link href="/" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center' }}>
+            <NextImage src="/images/logo.png" alt="BookMyArtist" width={140} height={40} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
           </Link>
           <div className="avatar avatar-sm" style={{ cursor: 'pointer' }}>{initials}</div>
         </header>
@@ -300,7 +303,9 @@ export function DashboardShell({
           <div className={styles.overlay} onClick={() => setMobileOpen(false)} />
           <div className={styles.mobileSlide}>
             <div className={styles.mobileSlideHeader}>
-              <Link href="/" className={styles.mobileLogo}><Sparkles size={20} /><span>BookMyArtist</span></Link>
+              <Link href="/" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center' }}>
+                <NextImage src="/images/logo.png" alt="BookMyArtist" width={140} height={40} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+              </Link>
               <button onClick={() => setMobileOpen(false)}><X size={22} /></button>
             </div>
             {SIDEBAR_LINKS.map(link => (

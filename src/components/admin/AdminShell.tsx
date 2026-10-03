@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -52,9 +53,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <aside className={cn(styles.sidebar, collapsed && styles.collapsed)}>
         <div className={styles.sidebarHeader}>
           <div className={styles.headerTop}>
-            <Link href="/" className={styles.logo}>
-              <Sparkles size={20} />
-              {!collapsed && <span>BookMyArtist</span>}
+            <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
+              {collapsed ? (
+                <NextImage src="/images/logo-icon.png" alt="BMA" width={30} height={30} style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+              ) : (
+                <NextImage src="/images/logo.png" alt="BookMyArtist" width={150} height={44} priority style={{ height: '30px', width: 'auto', objectFit: 'contain' }} />
+              )}
             </Link>
             <button
               type="button"
@@ -133,9 +137,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           >
             <Menu size={20} />
           </button>
-          <Link href="/admin/dashboard" className={styles.mobileLogo}>
-            <Sparkles size={18} style={{ color: '#ec4899' }} />
-            <span>BookMyArtist</span>
+          <Link href="/admin/dashboard" className={styles.mobileLogo} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <NextImage src="/images/logo.png" alt="BookMyArtist" width={130} height={38} style={{ height: '26px', width: 'auto', objectFit: 'contain' }} />
             <span className={styles.mobileAdminTag}>ADMIN</span>
           </Link>
           <Link

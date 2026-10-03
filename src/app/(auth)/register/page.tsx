@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ensureCleanProfileSlug } from '@/lib/actions/auth';
@@ -102,9 +103,15 @@ export default function RegisterPage() {
   return (
     <div className={styles.authCard}>
       {/* Logo */}
-      <Link href="/" className={styles.logo}>
-        <Sparkles size={24} />
-        <span>BookMyArtist</span>
+      <Link href="/" className={styles.logo} style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: '16px' }}>
+        <Image
+          src="/images/logo.png"
+          alt="BookMyArtist"
+          width={190}
+          height={56}
+          priority
+          style={{ height: '42px', width: 'auto', objectFit: 'contain' }}
+        />
       </Link>
 
       <h1 className={styles.title}>Build Your Digital Stage</h1>

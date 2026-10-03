@@ -538,22 +538,29 @@ Please let us know once transferred so we can officially lock the date on the ca
                 }}
               >
                 <div>
+                  {/* Official BookMyArtist Brand Logo */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/logo.png"
+                    alt="BookMyArtist"
+                    style={{ height: '34px', width: 'auto', marginBottom: '8px', display: 'block' }}
+                  />
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span
                       style={{
-                        background: '#D4AF37',
-                        color: '#000',
-                        fontSize: '11px',
+                        background: 'linear-gradient(135deg, #FF7A00 0%, #FF007A 50%, #7928CA 100%)',
+                        color: '#fff',
+                        fontSize: '10px',
                         fontWeight: 800,
                         padding: '2px 8px',
                         borderRadius: '4px',
                         letterSpacing: '0.05em',
                       }}
                     >
-                      BOOKMYARTIST
+                      VERIFIED TALENT
                     </span>
                     <span style={{ fontSize: '11px', color: '#666', fontWeight: 600 }}>
-                      OFFICIAL TALENT PROPOSAL
+                      OFFICIAL COMMERCIAL PROPOSAL
                     </span>
                   </div>
                   <h1 style={{ margin: '6px 0 2px 0', fontSize: '24px', fontWeight: 800, color: '#111' }}>

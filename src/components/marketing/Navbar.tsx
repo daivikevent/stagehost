@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Sparkles } from 'lucide-react';
 import styles from './Navbar.module.css';
@@ -42,9 +43,15 @@ export function Navbar() {
     >
       <div className={styles.container}>
         {/* Logo */}
-        <Link href="/" className={styles.logo}>
-          <Sparkles size={24} />
-          <span className={styles.logoText}>BookMyArtist</span>
+        <Link href="/" className={styles.logo} style={{ display: 'flex', alignItems: 'center' }}>
+          <Image
+            src="/images/logo.png"
+            alt="BookMyArtist"
+            width={180}
+            height={56}
+            priority
+            style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
+          />
         </Link>
 
         {/* Desktop Nav */}

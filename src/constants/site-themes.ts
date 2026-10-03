@@ -25,6 +25,27 @@ export interface GlobalSiteTheme {
 }
 
 export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
+  // ── OFFICIAL BRAND SIGNATURE THEME ──
+  {
+    id: 'signature-neon',
+    name: 'BookMyArtist Signature (Neon Stage)',
+    hindiName: 'सिग्नेचर स्टेज (Official Brand)',
+    badge: '✨ Official Brand',
+    category: 'modern',
+    mode: 'dark',
+    description: 'Electric Hot Pink, Royal Ultraviolet & Sunset Orange matching the official BookMyArtist 3D logo. High-octane concert and stage energy.',
+    primary: '#FF007A',
+    primaryHover: '#FF2A93',
+    accent: '#FF8A00',
+    bg: '#07060C',
+    cardBg: '#120D1F',
+    border: 'rgba(255, 0, 122, 0.18)',
+    glow: 'rgba(255, 0, 122, 0.5)',
+    previewGradient: 'linear-gradient(135deg, #FF8A00 0%, #FF007A 50%, #7928CA 100%)',
+    previewColors: ['#FF007A', '#7928CA', '#FF8A00', '#07060C'],
+    features: ['Official 3D Logo Match', 'Electric Magenta & Violet', 'Sunset Gold Accents', 'High-Octane Stage Presence'],
+  },
+
   // ── DARK MODE REGAL & MODERN THEMES ──
   {
     id: 'obsidian-violet',
@@ -182,4 +203,4 @@ export const GLOBAL_SITE_THEMES: GlobalSiteTheme[] = [
   },
 ];
 
-export const DEFAULT_SITE_THEME = 'obsidian-violet';
+export const DEFAULT_SITE_THEME = 'signature-neon';
