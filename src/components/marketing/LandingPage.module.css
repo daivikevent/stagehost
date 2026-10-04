@@ -45,51 +45,53 @@
   }
 }
 
-/* ---- Floating Ambient Orbs (positioned within bounds) ---- */
+/* ---- Floating Ambient Orbs (vibrant, fluid & alive) ---- */
 .heroGlow {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 550px;
+  height: 550px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--color-primary, #6C5CE7) 0%, transparent 70%);
-  opacity: 0.15;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.45) 0%, rgba(108, 92, 231, 0.25) 45%, transparent 70%);
+  opacity: 0.85;
   top: 5%;
-  right: 10%;
+  right: 8%;
   pointer-events: none;
-  animation: orbFloat1 12s ease-in-out infinite;
+  animation: orbFloat1 13s ease-in-out infinite;
   z-index: 0;
-  filter: blur(80px);
+  filter: blur(65px);
+  will-change: transform;
 }
 
 .heroOrb2 {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--color-accent, #F0A500) 0%, transparent 70%);
-  opacity: 0.1;
-  bottom: 10%;
+  background: radial-gradient(circle, rgba(240, 165, 0, 0.38) 0%, rgba(236, 72, 153, 0.2) 50%, transparent 70%);
+  opacity: 0.75;
+  bottom: 8%;
   left: 5%;
   pointer-events: none;
   animation: orbFloat2 15s ease-in-out infinite;
   z-index: 0;
-  filter: blur(90px);
+  filter: blur(70px);
+  will-change: transform;
 }
 
 .heroOrb3 {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 420px;
+  height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--color-primary, #6C5CE7) 0%, var(--color-accent, #F0A500) 50%, transparent 70%);
-  opacity: 0.08;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(236, 72, 153, 0.18) 50%, transparent 70%);
+  opacity: 0.65;
+  top: 35%;
+  left: 45%;
   pointer-events: none;
-  animation: orbFloat3 18s ease-in-out infinite;
+  animation: orbFloat3 17s ease-in-out infinite;
   z-index: 0;
-  filter: blur(100px);
+  filter: blur(75px);
+  will-change: transform;
 }
 
 /* ---- Hero Content with Staggered Entry ---- */
@@ -131,11 +133,14 @@
 }
 
 .heroGradient {
+  display: inline-block;
   background: linear-gradient(
     90deg,
-    var(--color-primary, #6C5CE7),
-    var(--color-accent, #F0A500),
-    var(--color-primary, #6C5CE7)
+    #8B5CF6 0%,
+    #F0A500 25%,
+    #EC4899 50%,
+    #8B5CF6 75%,
+    #F0A500 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -260,8 +265,9 @@
   padding: var(--space-3);
   box-shadow: 
     var(--shadow-xl),
-    0 0 60px rgba(var(--color-primary-rgb, 108, 92, 231), 0.1);
+    0 0 60px rgba(var(--color-primary-rgb, 108, 92, 231), 0.15);
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+  animation: heroCardFloat 6s ease-in-out infinite 1800ms;
   transition: transform var(--duration-slow) var(--ease-default), 
               box-shadow var(--duration-slow) var(--ease-default);
 }
@@ -269,16 +275,18 @@
 @media (max-width: 1023px) {
   .mockupPhone {
     transform: none;
+    animation: heroCardFloatMobile 5s ease-in-out infinite 1800ms;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6),
-                0 0 40px rgba(var(--color-primary-rgb, 108, 92, 231), 0.15);
+                0 0 40px rgba(var(--color-primary-rgb, 108, 92, 231), 0.2);
   }
 }
 
 .mockupPhone:hover {
-  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  animation-play-state: paused;
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-6px);
   box-shadow: 
     var(--shadow-xl),
-    0 0 80px rgba(var(--color-primary-rgb, 108, 92, 231), 0.2);
+    0 0 80px rgba(var(--color-primary-rgb, 108, 92, 231), 0.3);
 }
 
 .mockupScreen {
@@ -1148,20 +1156,30 @@
     width: 260px;
     height: 260px;
     top: 5%;
-    right: 5%;
-    opacity: 0.1;
-    filter: blur(50px);
+    right: -10px;
+    opacity: 0.65;
+    filter: blur(45px);
+    display: block;
   }
 
   .heroOrb2 {
-    width: 200px;
-    height: 200px;
-    opacity: 0.06;
-    filter: blur(60px);
+    width: 220px;
+    height: 220px;
+    bottom: 5%;
+    left: -10px;
+    opacity: 0.55;
+    filter: blur(45px);
+    display: block;
   }
 
   .heroOrb3 {
-    display: none;
+    width: 200px;
+    height: 200px;
+    top: 40%;
+    left: 20%;
+    opacity: 0.45;
+    filter: blur(50px);
+    display: block;
   }
 
   .heroBadge {
@@ -1234,7 +1252,8 @@
     margin: 0 auto;
     border-radius: 22px;
     padding: 10px;
-    transform: none !important;
+    transform: none;
+    animation: heroCardFloatMobile 5s ease-in-out infinite 1800ms;
     background: linear-gradient(145deg, rgba(28, 24, 52, 0.95), rgba(14, 12, 26, 0.98));
     border: 1.5px solid rgba(139, 92, 246, 0.4);
     box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(108, 92, 231, 0.2);
@@ -1477,5 +1496,128 @@
   .footerLinks {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 18px !important;
+  }
+}
+
+/* ============================================
+   Landing Page Scoped Keyframe Animations
+   (Scoped for CSS Modules compatibility)
+   ============================================ */
+
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(45px, -35px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 35px) scale(0.95);
+  }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-40px, 40px) scale(1.12);
+  }
+  66% {
+    transform: translate(35px, -25px) scale(0.92);
+  }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(35px, -30px) scale(1.15);
+  }
+}
+
+@keyframes heroCardFloat {
+  0%, 100% {
+    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(0);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(4deg) translateY(-12px);
+  }
+}
+
+@keyframes heroCardFloatMobile {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes heroTextReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientTextShimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes mockupEntrance {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(-12deg) rotateX(6deg) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(0);
+  }
+}
+
+@keyframes iconBreathe {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.22) rotate(12deg);
+  }
+}
+
+@keyframes ctaGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(240, 165, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(240, 165, 0, 0.6), 0 0 65px rgba(240, 165, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes stepLineDraw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
