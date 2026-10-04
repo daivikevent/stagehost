@@ -1640,3 +1640,18 @@
   margin-right: auto;
   line-height: 1.5;
 }
+
+@media (max-width: 768px) {
+  .palaceFooter {
+    padding: 36px 16px calc(110px + env(safe-area-inset-bottom, 16px));
+    margin-top: 40px;
+  }
+  .palaceFooter a {
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .palaceFooterNotice {
+    font-size: 0.7rem;
+  }
+}

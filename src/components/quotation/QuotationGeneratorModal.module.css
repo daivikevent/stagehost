@@ -1,0 +1,331 @@
+/* Quotation Generator & Rate Card Studio Modal Styles */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 180ms ease-out;
+  overflow-y: auto;
+}
+
+.dialog {
+  background-color: #0F0F1A;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1050px;
+  max-height: 92vh;
+  max-height: calc(100dvh - 20px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.1);
+  overflow: hidden;
+}
+
+/* Top Bar */
+.topBar {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #131322 0%, #1A1A2E 100%);
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.topBarBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.topBarIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.topBarTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topBarSubtitle {
+  margin: 0;
+  font-size: 11px;
+  color: #A0A0B0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topBarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Mobile Nav Tabs (Only visible < 900px) */
+.mobileNavTabs {
+  display: none;
+  background: #090912;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mobileTabBtn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.mobileTabBtnActive {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+}
+
+/* Content Body */
+.contentBody {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) 1fr;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Controls Column */
+.controlsColumn {
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0B0B14;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.controlRow2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.controlRow2 input,
+.controlRow2 select {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Preview Column */
+.previewColumn {
+  padding: 24px;
+  background-color: #1E1E2D;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Paper Sheet Preview */
+.paperSheet {
+  width: 100%;
+  max-width: 680px;
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  border-radius: 8px;
+  padding: 36px 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  font-family: system-ui, -apple-system, sans-serif;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sheetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #D4AF37;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.sheetScopeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  background-color: #F8F9FA;
+  border: 1px solid #E9ECEF;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.deliverablesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.paymentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background-color: #FFFDF5;
+  border: 1px solid #F0E6D2;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 11px;
+}
+
+.termsRow {
+  border-top: 1px solid #E9ECEF;
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 10px;
+  color: #888;
+  gap: 12px;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 20px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 899px) {
+  .hideOnMobile {
+    display: none !important;
+  }
+
+  .overlay {
+    padding: 6px;
+  }
+
+  .dialog {
+    max-height: calc(100dvh - 12px);
+    border-radius: 12px;
+  }
+
+  .topBar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .topBarTitle {
+    font-size: 14px;
+  }
+
+  .topBarSubtitle {
+    font-size: 10px;
+  }
+
+  .topBarActions button {
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+
+  .mobileNavTabs {
+    display: flex;
+  }
+
+  .contentBody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .controlsColumn {
+    border-right: none;
+    padding: 16px 12px;
+  }
+
+  .previewColumn {
+    padding: 10px 4px;
+  }
+
+  .paperSheet {
+    padding: 20px 14px;
+    border-radius: 6px;
+  }
+
+  .sheetHeader {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sheetScopeGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .deliverablesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paymentGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .termsRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .controlRow2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .topBarActions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .topBarActions .hideOnSmallPhone {
+    display: none;
+  }
+}

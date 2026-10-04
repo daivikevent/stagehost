@@ -257,7 +257,7 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+        <div className={styles.headerActions}>
           <div className={styles.headerStats}>
             <div className={styles.headerStat}>
               <span className={styles.headerStatValue}>
@@ -904,47 +904,16 @@ ${profileName}`;
           ======================================================= */}
       {showAddModal && (
         <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(8, 9, 15, 0.88)',
-            backdropFilter: 'blur(10px)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px',
-            animation: 'fadeIn 180ms ease-out',
-          }}
+          className={styles.leadModalOverlay}
           onClick={() => setShowAddModal(false)}
         >
           <div
-            style={{
-              background: 'var(--color-bg-card)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-xl)',
-              width: '100%',
-              maxWidth: '620px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(108, 92, 231, 0.2)',
-              overflow: 'hidden',
-            }}
+            className={styles.leadModalDialog}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '16px 20px',
-                borderBottom: '1px solid var(--color-border)',
-                background: 'var(--color-bg-secondary)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '16px' }}>
+            <div className={styles.leadModalHeader}>
+              <div className={styles.leadModalTitle}>
                 <UserPlus size={18} color="var(--color-primary)" />
                 <span>Add Personal Client / Phone Lead</span>
               </div>
@@ -965,13 +934,13 @@ ${profileName}`;
             </div>
 
             {/* Modal Form Body */}
-            <div style={{ padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <p style={{ margin: 0, fontSize: '13px', color: 'var(--color-text-secondary)' }}>
+            <div className={styles.leadModalBody}>
+              <p style={{ margin: 0, fontSize: '13px', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                 Log inquiries received over phone calls, WhatsApp messages, Instagram DMs, or event referrals to manage your entire booking pipeline in one place.
               </p>
 
               {/* Row 1: Name & Phone */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className={styles.leadModalRow}>
                 <div className="input-group">
                   <label className="input-label">Client / Event Planner Name *</label>
                   <input
@@ -1004,7 +973,7 @@ ${profileName}`;
               />
 
               {/* Row 2: Event Date & City */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className={styles.leadModalRow}>
                 <div className="input-group">
                   <label className="input-label">Event Date</label>
                   <input
@@ -1039,7 +1008,7 @@ ${profileName}`;
               </div>
 
               {/* Row 4: Lead Channel & Status */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className={styles.leadModalRow}>
                 <div className="input-group">
                   <label className="input-label">Lead Source / Channel</label>
                   <select
@@ -1102,18 +1071,7 @@ ${profileName}`;
             </div>
 
             {/* Modal Footer */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '16px 20px',
-                borderTop: '1px solid var(--color-border)',
-                background: 'var(--color-bg-secondary)',
-                gap: '10px',
-                flexWrap: 'wrap',
-              }}
-            >
+            <div className={styles.leadModalFooter}>
               <button
                 type="button"
                 className="btn btn-ghost"
@@ -1123,7 +1081,7 @@ ${profileName}`;
                 Cancel
               </button>
 
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <div className={styles.leadModalBtnGroup}>
                 <button
                   type="button"
                   className="btn btn-secondary"

@@ -26,6 +26,7 @@ import { useToast } from '@/hooks/useToast';
 import { formatEventDate } from '@/lib/utils';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import type { Inquiry, AnchorProfile } from '@/types';
+import styles from './QuotationGeneratorModal.module.css';
 
 interface QuotationGeneratorModalProps {
   isOpen: boolean;
@@ -45,6 +46,7 @@ export function QuotationGeneratorModal({
   const { success, error: showError } = useToast();
   const printAreaRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'edit' | 'preview'>('edit');
 
   // Generate Unique Quote ID: BMA-QTE-YYYY-XXXX
   const [quoteId] = useState(
@@ -200,73 +202,29 @@ Please let us know once transferred so we can officially lock the date on the ca
         }
       `}</style>
       <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(8px)',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '16px',
-          overflowY: 'auto',
-        }}
+        className={styles.overlay}
         onClick={(e) => {
           if (e.target === e.currentTarget) onClose();
         }}
       >
-      <div
-        style={{
-          backgroundColor: '#0F0F1A',
-          border: '1px solid rgba(212, 175, 55, 0.3)',
-          borderRadius: '16px',
-          width: '100%',
-          maxWidth: '1050px',
-          maxHeight: '92vh',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.1)',
-          overflow: 'hidden',
-        }}
-      >
+      <div className={styles.dialog}>
         {/* Modal Top Bar */}
-        <div
-          style={{
-            padding: '16px 24px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: 'linear-gradient(90deg, #131322 0%, #1A1A2E 100%)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span
-              style={{
-                width: 34,
-                height: 34,
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#000',
-              }}
-            >
+        <div className={styles.topBar}>
+          <div className={styles.topBarBrand}>
+            <span className={styles.topBarIcon}>
               <FileText size={18} />
             </span>
             <div>
-              <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#fff' }}>
+              <h3 className={styles.topBarTitle}>
                 PDF Quotation & Rate Card Studio
               </h3>
-              <p style={{ margin: 0, fontSize: '11px', color: '#A0A0B0' }}>
-                Ref: <strong style={{ color: '#D4AF37' }}>{quoteId}</strong> · Branded Client Proposal Generator
+              <p className={styles.topBarSubtitle}>
+                Ref: <strong style={{ color: '#D4AF37' }}>{quoteId}</strong> · Branded Client Proposal
               </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className={styles.topBarActions}>
             <button
               type="button"
               className="btn btn-sm"
@@ -279,7 +237,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                 gap: '6px',
               }}
             >
-              <Printer size={14} /> Download / Print PDF
+              <Printer size={14} /> <span className={styles.hideOnSmallPhone}>Download / </span>Print PDF
             </button>
 
             {clientPhone && (
@@ -296,7 +254,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                   gap: '6px',
                 }}
               >
-                <Share2 size={14} /> Send WhatsApp
+                <Share2 size={14} /> WhatsApp
               </button>
             )}
 
@@ -307,7 +265,7 @@ Please let us know once transferred so we can officially lock the date on the ca
               style={{ fontSize: '12px', gap: '6px' }}
             >
               {copied ? <Check size={14} color="#10B981" /> : <Copy size={14} />}
-              {copied ? 'Copied' : 'Copy Text'}
+              {copied ? 'Copied' : 'Copy'}
             </button>
 
             <button
@@ -321,27 +279,28 @@ Please let us know once transferred so we can officially lock the date on the ca
           </div>
         </div>
 
-        {/* Content Body: Left Controls, Right Document Preview */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(320px, 380px) 1fr',
-            overflowY: 'auto',
-            flex: 1,
-          }}
-        >
-          {/* Controls Column */}
-          <div
-            style={{
-              padding: '20px',
-              borderRight: '1px solid rgba(255,255,255,0.08)',
-              background: '#0B0B14',
-              overflowY: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-            }}
+        {/* Mobile Tab Switcher */}
+        <div className={styles.mobileNavTabs}>
+          <button
+            type="button"
+            className={`${styles.mobileTabBtn} ${mobileTab === 'edit' ? styles.mobileTabBtnActive : ''}`}
+            onClick={() => setMobileTab('edit')}
           >
+            <FileText size={14} /> 📝 Edit Quotation
+          </button>
+          <button
+            type="button"
+            className={`${styles.mobileTabBtn} ${mobileTab === 'preview' ? styles.mobileTabBtnActive : ''}`}
+            onClick={() => setMobileTab('preview')}
+          >
+            <Printer size={14} /> 📄 Preview Proposal (PDF)
+          </button>
+        </div>
+
+        {/* Content Body: Left Controls, Right Document Preview */}
+        <div className={styles.contentBody}>
+          {/* Controls Column */}
+          <div className={`${styles.controlsColumn} ${mobileTab === 'preview' ? styles.hideOnMobile : ''}`}>
             {/* Section 1: Client & Event */}
             <div>
               <label style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#D4AF37', letterSpacing: '0.05em' }}>
@@ -360,7 +319,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div className={styles.controlRow2}>
                   <input
                     className="input input-sm"
                     placeholder="Phone"
@@ -380,7 +339,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                   value={eventName}
                   onChange={(e) => setEventName(e.target.value)}
                 />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div className={styles.controlRow2}>
                   <input
                     type="date"
                     className="input input-sm"
@@ -436,7 +395,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                     onChange={(e) => setTravelTerms(e.target.value)}
                   />
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div className={styles.controlRow2}>
                   <div>
                     <span style={{ fontSize: '11px', color: '#A0A0B0' }}>GST Rate</span>
                     <select
@@ -477,7 +436,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                   value={upiId}
                   onChange={(e) => setUpiId(e.target.value)}
                 />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div className={styles.controlRow2}>
                   <input
                     className="input input-sm"
                     placeholder="Bank Name"
@@ -502,48 +461,21 @@ Please let us know once transferred so we can officially lock the date on the ca
           </div>
 
           {/* Right Column: Live High-Fidelity Printable PDF Preview */}
-          <div
-            style={{
-              padding: '28px',
-              backgroundColor: '#1E1E2D',
-              overflowY: 'auto',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
+          <div className={`${styles.previewColumn} ${mobileTab === 'edit' ? styles.hideOnMobile : ''}`}>
             {/* The A4 Printable Paper */}
             <div
               id="printable-quotation-sheet"
               ref={printAreaRef}
-              style={{
-                width: '100%',
-                maxWidth: '680px',
-                backgroundColor: '#FFFFFF',
-                color: '#1A1A1A',
-                borderRadius: '8px',
-                padding: '36px 40px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-                position: 'relative',
-              }}
+              className={styles.paperSheet}
             >
               {/* Header Letterhead */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  borderBottom: '2px solid #D4AF37',
-                  paddingBottom: '16px',
-                  marginBottom: '20px',
-                }}
-              >
+              <div className={styles.sheetHeader}>
                 <div>
                   {/* Official BookMyArtist Brand Logo */}
                   <div style={{ marginBottom: '8px' }}>
                     <BrandLogo variant="quotation" />
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <span
                       style={{
                         background: 'linear-gradient(135deg, #FF7A00 0%, #FF007A 50%, #7928CA 100%)',
@@ -595,18 +527,7 @@ Please let us know once transferred so we can officially lock the date on the ca
               </div>
 
               {/* Client & Event Scope Grid */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '14px',
-                  backgroundColor: '#F8F9FA',
-                  border: '1px solid #E9ECEF',
-                  borderRadius: '8px',
-                  padding: '14px 18px',
-                  marginBottom: '20px',
-                }}
-              >
+              <div className={styles.sheetScopeGrid}>
                 <div>
                   <div style={{ fontSize: '10px', textTransform: 'uppercase', fontWeight: 700, color: '#888' }}>
                     CLIENT / HOST
@@ -652,7 +573,7 @@ Please let us know once transferred so we can officially lock the date on the ca
                 >
                   Scope of Work & Deliverables
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <div className={styles.deliverablesGrid}>
                   {deliverables.map((item, idx) => (
                     <div
                       key={idx}
@@ -672,12 +593,13 @@ Please let us know once transferred so we can officially lock the date on the ca
               </div>
 
               {/* Commercial Investment Table */}
-              <div style={{ marginBottom: '20px' }}>
+              <div className={styles.tableWrapper}>
                 <table
                   style={{
                     width: '100%',
                     borderCollapse: 'collapse',
                     fontSize: '12px',
+                    minWidth: '460px',
                   }}
                 >
                   <thead>
@@ -745,19 +667,7 @@ Please let us know once transferred so we can officially lock the date on the ca
               </div>
 
               {/* Payment Schedule & Bank Settlement Card */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '12px',
-                  backgroundColor: '#FFFDF5',
-                  border: '1px solid #F0E6D2',
-                  borderRadius: '6px',
-                  padding: '12px 16px',
-                  marginBottom: '16px',
-                  fontSize: '11px',
-                }}
-              >
+              <div className={styles.paymentGrid}>
                 <div>
                   <div style={{ fontWeight: 800, color: '#B8860B', marginBottom: '4px' }}>
                     PAYMENT MILESTONES
@@ -777,17 +687,7 @@ Please let us know once transferred so we can officially lock the date on the ca
               </div>
 
               {/* Footer Terms & Acceptance */}
-              <div
-                style={{
-                  borderTop: '1px solid #E9ECEF',
-                  paddingTop: '12px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  fontSize: '10px',
-                  color: '#888',
-                }}
-              >
+              <div className={styles.termsRow}>
                 <div>
                   <div>• Standard 48-hour cancellation policy applies. Advance is non-refundable upon date lock.</div>
                   <div>• Valid for 7 days from quote issue date. Subject to calendar slot availability.</div>

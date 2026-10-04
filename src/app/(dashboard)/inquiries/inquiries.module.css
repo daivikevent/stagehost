@@ -281,6 +281,13 @@
   gap: var(--space-3);
 }
 
+@media (max-width: 640px) {
+  .detailGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+}
+
 .detailGrid p {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
@@ -298,4 +305,160 @@
   gap: var(--space-3);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
+}
+
+/* Header Actions */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .headerActions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .headerActions > button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Add Lead Modal & Dialog Responsive Styles */
+.leadModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 9, 15, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 180ms ease-out;
+  overflow-y: auto;
+}
+
+.leadModalDialog {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 620px;
+  max-height: min(90vh, calc(100dvh - 32px));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(108, 92, 231, 0.2);
+  overflow: hidden;
+}
+
+.leadModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  flex-shrink: 0;
+}
+
+.leadModalTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  min-width: 0;
+}
+
+.leadModalTitle span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leadModalBody {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1 1 auto;
+}
+
+.leadModalRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.leadModalRow input,
+.leadModalRow select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.leadModalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.leadModalBtnGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .leadModalOverlay {
+    padding: 8px;
+  }
+  .leadModalDialog {
+    max-height: calc(100dvh - 16px);
+    border-radius: var(--radius-lg);
+  }
+  .leadModalHeader {
+    padding: 12px 14px;
+  }
+  .leadModalTitle {
+    font-size: 14px;
+  }
+  .leadModalBody {
+    padding: 14px 12px;
+    gap: 14px;
+  }
+  .leadModalRow {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .leadModalFooter {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: 12px 14px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  }
+  .leadModalFooter button,
+  .leadModalBtnGroup {
+    width: 100%;
+  }
+  .leadModalBtnGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .leadModalBtnGroup button {
+    width: 100%;
+    justify-content: center;
+  }
 }

@@ -25,6 +25,7 @@
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **AI Portfolio Bio & Repertoire Assistant** | Gemini API prompt engine for artist bios & pitch decks (Future Scope) |
+| 🟡 **Phase 2 (Pending)** | **🦁 Brand Mascot — "BMA Lion"** | Lion mascot for branding, onboarding, error pages, social media (Future Scope) |
 
 ---
 
@@ -256,6 +257,32 @@ Many talented performers struggle to write compelling, high-converting bios and 
 | **Gig Repertoire & Tech Rider Builder** | Musicians & DJs | Medium | 🟡 Medium (Professionalism boost) | **Sprint 7** |
 | **Multi-Artist Booking Bundles** | Event Planners & Crews | High | 🟢 High (Increases booking volume) | **Sprint 8** |
 | **AI Bio & Repertoire Assistant** | All Artists | Low | 🟡 Medium (Onboarding conversion) | **Sprint 9** |
+
+---
+
+## 🦁 Brand Mascot — "BMA Lion"
+**Status:** 💡 Idea — Concepts Ready | **Priority:** Low | **Sprint:** TBD
+
+A lion mascot to give BookMyArtist a memorable brand personality — "King of the Stage" energy.
+
+### Concept Designs (Generated)
+| Version | Style | Description |
+|---------|-------|-------------|
+| **V1 "The Host"** | Formal | Purple suit, bow-tie, holding microphone — classic stage performer |
+| **V2 "The Manager"** | Casual/Cool | Sunglasses, purple jacket, rock-on gesture + smartphone — tech-savvy vibe |
+
+### Potential Use Cases
+- Landing page hero or empty states
+- Onboarding flow guide character
+- Error pages (404, 500) — friendly error companion
+- Loading animations / skeleton screens
+- WhatsApp sticker pack for artist engagement
+- Social media content & reels
+- Email campaign illustrations
+- Favicon / app icon variant
+
+### Name Ideas
+Simba · Roary · Leo · Staggy · Arty
 
 ---
 
