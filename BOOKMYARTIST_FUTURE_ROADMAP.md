@@ -21,11 +21,19 @@
 | ✅ **Shipped** | **PDF Quotation & Rate Card Generator** | Branded executive client proposals, A4 PDF print/download, WhatsApp sharing |
 | ✅ **Shipped** | **Brand Logo & Multi-Placement Sizing Studio** | Admin logo upload, 7-location height sliders, live multi-screen preview |
 | ✅ **Shipped** | **GST Tax Invoice Generator for Subscriptions** | Indian GST Act Rule 46, 18% GST breakdown, B2B ITC claim, sequential PDF |
+| ✅ **Shipped** | **Artist Referral & Rewards Core System** | 1-Click WhatsApp invite, live tracking, admin policy studio (validity, cash, leaderboard) |
 | 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **AI Portfolio Bio & Repertoire Assistant** | Gemini API prompt engine for artist bios & pitch decks (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **🦁 Brand Mascot — "BMA Lion"** | Lion mascot for branding, onboarding, error pages, social media (Future Scope) |
+| 🟣 **Phase 3 (Future Scope)** | **Two-Sided "Give & Get" Referral Incentives** | 15-day free trial gift for new artist + 30 days for referrer |
+| 🟣 **Phase 3 (Future Scope)** | **Instant Referral WhatsApp & Email Notifications** | Automated real-time alerts when peer joins via invite |
+| 🟣 **Phase 3 (Future Scope)** | **Ambassador Milestone Tiers & Prestige Badges** | Bronze, Silver, Gold creator ranks with homepage spotlight |
+| 🟣 **Phase 3 (Future Scope)** | **1-Click Instagram & WhatsApp Story Card Generator** | 1080x1920 viral poster generator with artist photo & QR |
+| 🟣 **Phase 3 (Future Scope)** | **Automated Validity Credit Engine** | Real-time subscription validity extension without manual admin actions |
+| 🟣 **Phase 3 (Future Scope)** | **Artist UPI Wallet & Cash Withdrawal System** | UPI ID payout requests with 1-click Razorpay Payouts |
+| 🟣 **Phase 3 (Future Scope)** | **Client & Event Planner Referral Engine** | Organizer-to-organizer referral loops with booking credits |
 
 ---
 
@@ -240,6 +248,87 @@ Many talented performers struggle to write compelling, high-converting bios and 
    - Artist inputs 3 bullet points: Years of experience, notable brands/events hosted, signature style (Energetic, Humorous, Sophisticated).
 3. **Output:**
    - Generates 3 polished bio variations (Short elevator pitch, Detailed corporate profile, Luxury wedding bio).
+
+---
+
+## 🟣 Phase 3: Viral Referral Engine & Growth Expansion (Future Scope)
+
+> **Context:** Added upon user request as strategic future scope to transform BookMyArtist into India's fastest-growing organic artist network. To be reviewed and prioritized for development in Phase 3.
+
+---
+
+### 🎁 Feature 10: Two-Sided "Give & Get" Referral Incentives
+* **Concept:** Currently, only the inviting artist receives perks. Under "Give & Get", the invited newcomer ALSO receives an exclusive welcome gift (e.g. 15 Days Free Pro Trial or ₹200 off their first subscription).
+* **Conversion Impact:** Conversion rate jumps 3x–5x because the invite feels like an exclusive gift from a respected colleague rather than marketing.
+* **Implementation Plan:**
+  1. On `/register?ref=slug`, display: *"🎁 Rahul Sharma has gifted you a 15-Day Free Pro Trial!"*
+  2. Upon signup, credit 15 days of Pro status to the new user and queue +30 days for the referrer.
+
+---
+
+### ⚡ Feature 11: Real-Time WhatsApp & Email Referral Alerts (Dopamine Loop)
+* **Concept:** The exact second a fellow artist registers using someone's invite link, an automated WhatsApp alert and email are fired to the referrer.
+* **Message Template:**
+  ```text
+  🎉 *GREAT NEWS, {{artist_name}}!* 🎉
+  
+  Singer Aarti Verma has just registered on BookMyArtist using your personal invite link!
+  
+  🎁 *Reward Credited:* +30 Days Pro Validity
+  🏆 *New Community Rank:* #3 on the Leaderboard
+  
+  Invite 2 more artists to unlock the Silver Ambassador Badge!
+  👉 https://bookmyartist.in/referrals
+  ```
+* **Psychological Impact:** Instant gratification stimulates the referrer to share with 5 more peers immediately.
+
+---
+
+### 🏆 Feature 12: Ambassador Milestone Tiers & Prestige Badges
+* **Concept:** Live performers and anchors value industry prestige and verified authority. Gamified tiers fuel competitive pride on the community leaderboard.
+* **Milestone Structure:**
+  - **🥉 Bronze Ambassador (3 Invites):** Verified Community Ambassador Badge on their public stage & directory card.
+  - **🥈 Silver Ambassador (5 Invites):** 1 Month Homepage Hero Spotlight ("Artist of the Month").
+  - **🥇 Gold Legend (10+ Invites):** Lifetime Free Pro Plan + First Priority for inbound direct corporate event inquiries.
+
+---
+
+### 📸 Feature 13: 1-Click Instagram & WhatsApp Story Card Generator
+* **Concept:** Artists live on Instagram Stories and WhatsApp Statuses. Provide a 1-tap branded visual poster generator.
+* **Output Specs:** High-res 9:16 vertical poster (1080x1920) formatted for stories:
+  - Artist profile photo & stage name in neon aesthetic
+  - "Check out my official live portfolio on BookMyArtist"
+  - Embedded high-res QR code leading directly to their `/register?ref=slug` URL
+  - One-tap "Save Story Poster" or "Share to WhatsApp Status" button.
+
+---
+
+### ⚙️ Feature 14: Automated Subscription Validity Extension Engine
+* **Concept:** Eliminate manual admin review for validity rewards.
+* **Workflow:**
+  1. Invited artist creates account and marks their profile complete (photo + at least 1 video showreel + bio).
+  2. Background webhook or server action automatically queries `subscriptions` for the referrer.
+  3. Increments `current_period_end` by `settings.reward_value` (e.g. 30 days) in PostgreSQL.
+  4. Records timestamp in `referrals.rewarded_at` and triggers confirmation notifications.
+
+---
+
+### 💳 Feature 15: Artist Cash Wallet & Instant UPI Withdrawal Engine
+* **Concept:** If Admin toggles "Cash / Money" mode (e.g. ₹500 per verified artist referral):
+* **Workflow:**
+  1. User Dashboard displays live **"Referral Earnings Wallet (₹)"** balance.
+  2. Artist inputs their UPI VPA (e.g., `artistname@upi` or `9876543210@paytm`).
+  3. Artist clicks "Request UPI Payout".
+  4. Admin panel includes a 1-click **Razorpay Payouts API** integration (or manual "Mark Paid with Bank UTR Number").
+
+---
+
+### 🤝 Feature 16: Client & Event Planner Referral Loop
+* **Concept:** Expand referrals beyond artists to event planners and wedding organizers.
+* **Workflow:**
+  - After a client books an artist through a digital receipt (`/receipt/[id]`):
+  - Confirmation screen displays: *"Know another event organizer or couple planning a wedding? Share BookMyArtist and both get ₹500 credit on your next artist booking!"*
+  - Creates a self-reinforcing B2B viral loop among event management companies and corporate planners.
 
 ---
 
