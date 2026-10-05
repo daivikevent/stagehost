@@ -435,4 +435,49 @@ export interface ContactSubmission {
   admin_notes?: string;
 }
 
+// ---- Referral Program & Leaderboard Types ----
+export type ReferralRewardType = 'none' | 'validity' | 'money' | 'custom';
+
+export interface ReferralProgramSettings {
+  enabled: boolean;
+  reward_type: ReferralRewardType;
+  reward_value: number; // e.g. 30 (days) or 500 (INR)
+  reward_unit: 'days' | 'inr' | 'perks';
+  reward_title: string;
+  reward_description: string;
+  terms: string;
+}
+
+export interface ReferralRecord {
+  id: string;
+  referrer_profile_id: string;
+  referrer_user_id: string;
+  referrer_name: string;
+  referrer_slug: string;
+  referred_user_id: string;
+  referred_profile_id?: string;
+  referred_name: string;
+  referred_email: string;
+  referred_slug?: string;
+  referred_avatar?: string | null;
+  referred_category?: string;
+  status: 'pending' | 'completed' | 'rewarded';
+  reward_type: ReferralRewardType;
+  reward_value: number;
+  created_at: string;
+  rewarded_at?: string;
+  notes?: string;
+}
+
+export interface ReferrerLeaderboardEntry {
+  rank: number;
+  profile_id: string;
+  name: string;
+  slug: string;
+  avatar_url?: string | null;
+  artist_type?: string;
+  referral_count: number;
+  reward_count: number;
+}
+
 

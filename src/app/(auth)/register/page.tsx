@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { ensureCleanProfileSlug } from '@/lib/actions/auth';
+import { recordReferral } from '@/lib/actions/referrals';
 import { useToast } from '@/hooks/useToast';
-import { Sparkles, Mail, Lock, User, Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
+import { Sparkles, Mail, Lock, User, Eye, EyeOff, ArrowRight, Check, Gift } from 'lucide-react';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import styles from '../auth.module.css';
 
@@ -18,14 +19,36 @@ const BENEFITS = [
   'Free forever, upgrade anytime',
 ];
 
-export default function RegisterPage() {
+function RegisterFormContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { success, error } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [referralCode, setReferralCode] = useState<string>('');
+
+  useEffect(() => {
+    const refParam = searchParams.get('ref');
+    if (refParam) {
+      const clean = refParam.trim();
+      setReferralCode(clean);
+      try {
+        sessionStorage.setItem('bma_referral_code', clean);
+      } catch (e) {
+        // Ignore session storage error
+      }
+    } else {
+      try {
+        const saved = sessionStorage.getItem('bma_referral_code');
+        if (saved) setReferralCode(saved);
+      } catch (e) {
+        // Ignore
+      }
+    }
+  }, [searchParams]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +88,22 @@ export default function RegisterPage() {
           await ensureCleanProfileSlug(data.user.id, name);
         } catch (slugErr) {
           console.error('Error ensuring clean slug:', slugErr);
+        }
+
+        // Record referral if coming through invite link
+        const effectiveRef = referralCode || (typeof window !== 'undefined' ? sessionStorage.getItem('bma_referral_code') : null);
+        if (effectiveRef) {
+          try {
+            await recordReferral({
+              referrerSlugOrCode: effectiveRef,
+              newUserId: data.user.id,
+              newUserName: name,
+              newUserEmail: email,
+            });
+            sessionStorage.removeItem('bma_referral_code');
+          } catch (refErr) {
+            console.error('Error recording referral:', refErr);
+          }
         }
       }
 
@@ -111,6 +150,31 @@ export default function RegisterPage() {
       <h1 className={styles.title}>Build Your Digital Stage</h1>
       <p className={styles.subtitle}>Create your professional artist portfolio in minutes</p>
 
+      {/* Referral Invited Badge */}
+      {referralCode && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            padding: '10px 16px',
+            background: 'linear-gradient(135deg, rgba(108, 92, 231, 0.15), rgba(240, 165, 0, 0.12))',
+            border: '1px solid rgba(108, 92, 231, 0.3)',
+            borderRadius: '12px',
+            fontSize: '13px',
+            fontWeight: 500,
+            color: 'var(--color-primary-light, #a29bfe)',
+            marginBottom: '18px',
+          }}
+        >
+          <Gift size={16} color="var(--color-accent, #f0a500)" />
+          <span>
+            Invited by artist <strong>@{referralCode}</strong>
+          </span>
+        </div>
+      )}
+
       {/* Benefits */}
       <div className={styles.benefits}>
         {BENEFITS.map((benefit) => (
@@ -151,31 +215,29 @@ export default function RegisterPage() {
             <input
               id="register-name"
               type="text"
-              className="input"
-              placeholder="Rahul Sharma"
+              className="input input-with-icon-padding"
+              placeholder="e.g. Rahul Sharma"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              autoComplete="name"
             />
           </div>
         </div>
 
         <div className="input-group">
           <label className="input-label" htmlFor="register-email">
-            Email <span className="required">*</span>
+            Email Address <span className="required">*</span>
           </label>
           <div className="input-with-icon">
             <Mail size={18} className="input-icon" />
             <input
               id="register-email"
               type="email"
-              className="input"
-              placeholder="you@example.com"
+              className="input input-with-icon-padding"
+              placeholder="anchor@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              autoComplete="email"
             />
           </div>
         </div>
@@ -189,14 +251,12 @@ export default function RegisterPage() {
             <input
               id="register-password"
               type={showPassword ? 'text' : 'password'}
-              className="input"
+              className="input input-with-icon-padding"
               placeholder="Min. 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              autoComplete="new-password"
-              style={{ paddingRight: '44px' }}
             />
             <button
               type="button"
@@ -236,5 +296,13 @@ export default function RegisterPage() {
         <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
       </p>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--color-text-secondary)' }}>Loading registration...</div>}>
+      <RegisterFormContent />
+    </Suspense>
   );
 }

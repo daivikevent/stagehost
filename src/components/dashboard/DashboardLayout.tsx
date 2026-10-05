@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   Sparkles, LayoutDashboard, User, Video, Image, Package,
   Calendar, MessageSquare, BarChart3, Settings, ExternalLink,
-  LogOut, ChevronLeft, Menu, X, Shield, Megaphone, ArrowRight,
+  LogOut, ChevronLeft, Menu, X, Shield, Megaphone, ArrowRight, Gift,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
@@ -22,6 +22,7 @@ const SIDEBAR_LINKS = [
   { href: '/schedule', icon: Calendar, label: 'Schedule' },
   { href: '/inquiries', icon: MessageSquare, label: 'Inquiries' },
   { href: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { href: '/referrals', icon: Gift, label: 'Referrals' },
   { href: '/settings', icon: Settings, label: 'Settings' },
 ];
 

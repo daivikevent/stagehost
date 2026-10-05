@@ -20,6 +20,7 @@ import {
   Inbox,
   Menu,
   X,
+  Gift,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BrandLogo } from '@/components/brand/BrandLogo';
@@ -30,6 +31,7 @@ const ADMIN_NAV = [
   { href: '/admin/users', icon: Users, label: 'Users & Anchors' },
   { href: '/admin/plans', icon: CreditCard, label: 'Plans & Pricing' },
   { href: '/admin/payments', icon: BarChart3, label: 'Payments' },
+  { href: '/admin/referrals', icon: Gift, label: 'Referrals & Rewards' },
   { href: '/admin/themes', icon: Palette, label: 'Themes' },
   { href: '/admin/pages', icon: FileText, label: 'Pages & Legal CMS' },
   { href: '/admin/inquiries', icon: Inbox, label: 'Contact Queries' },

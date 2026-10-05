@@ -19,6 +19,7 @@ import {
   AlertCircle,
   ChevronRight,
   Sliders,
+  Gift,
 } from 'lucide-react';
 import Link from 'next/link';
 import { getMyProfile } from '@/lib/actions/profile';
@@ -156,6 +157,10 @@ export default async function DashboardPage() {
               className={cn(styles.actionBtn, styles.actionBtnSecondary)}
             />
           )}
+          <Link href="/referrals" className={cn(styles.actionBtn, styles.actionBtnSecondary)}>
+            <Gift size={15} color="var(--color-accent, #f0a500)" />
+            <span>Invite Artist</span>
+          </Link>
           {profile && (
             <DashboardMediaKitButton
               profile={profile}
