@@ -1,5 +1,5 @@
 import { getUserReferralData } from '@/lib/actions/referrals';
-import { ReferralsClient } from './ReferralsClient';
+import { ReferralsClient } from '@/app/(dashboard)/referrals/ReferralsClient';
 import { redirect } from 'next/navigation';
 
 export const metadata = {

@@ -1,5 +1,5 @@
 import { getAllReferralsAdmin } from '@/lib/actions/referrals';
-import { AdminReferralsClient } from './AdminReferralsClient';
+import { AdminReferralsClient } from '@/app/(admin)/admin/referrals/AdminReferralsClient';
 import { redirect } from 'next/navigation';
 
 export const metadata = {
