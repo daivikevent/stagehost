@@ -623,3 +623,50 @@
   margin: 0;
   line-height: 1.4;
 }
+
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 10px 40px;
+    gap: 20px;
+  }
+
+  .rewardBanner {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+
+  .rewardTitle {
+    font-size: 1.15rem;
+  }
+
+  .inviteCard {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btnCopy,
+  .btnWhatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .panel {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+
+  .leaderboardItem {
+    padding: 10px 10px;
+    gap: 10px;
+  }
+
+  .scoreNumber {
+    font-size: 14px;
+  }
+}

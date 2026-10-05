@@ -71,9 +71,9 @@ export async function updateReferralProgramSettings(
       category: 'general',
       label: 'Referral Program Settings',
       description: 'Rules, reward types, and perks for the artist referral system',
-      field_type: 'json',
+      field_type: 'text',
       updated_at: new Date().toISOString(),
-    });
+    }, { onConflict: 'key' });
 
     if (error) throw error;
 
@@ -119,9 +119,9 @@ async function saveAllReferralsRaw(records: ReferralRecord[]): Promise<void> {
     category: 'general',
     label: 'Platform Referrals Log',
     description: 'System-wide artist referral records and status tracking',
-    field_type: 'json',
+    field_type: 'text',
     updated_at: new Date().toISOString(),
-  });
+  }, { onConflict: 'key' });
 }
 
 /**
