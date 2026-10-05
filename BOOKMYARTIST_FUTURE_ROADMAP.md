@@ -346,6 +346,13 @@ Many talented performers struggle to write compelling, high-converting bios and 
 | **Gig Repertoire & Tech Rider Builder** | Musicians & DJs | Medium | 🟡 Medium (Professionalism boost) | **Sprint 7** |
 | **Multi-Artist Booking Bundles** | Event Planners & Crews | High | 🟢 High (Increases booking volume) | **Sprint 8** |
 | **AI Bio & Repertoire Assistant** | All Artists | Low | 🟡 Medium (Onboarding conversion) | **Sprint 9** |
+| **Two-Sided "Give & Get" (15-Day Trial Gift)** | New & Existing Artists | Low | 🟢 High (3x-5x invite conversion) | **Phase 3 (Pending Your Decision)** |
+| **Real-Time WhatsApp & Email Referral Alerts** | Inviting Artists | Medium | 🟢 High (Instant dopamine loop) | **Phase 3 (Pending Your Decision)** |
+| **Ambassador Milestone Tiers (Bronze/Silver/Gold)** | Top Referrers | Low | 🟡 Medium (Prestige & gamification) | **Phase 3 (Pending Your Decision)** |
+| **1-Click Instagram & WhatsApp Story Poster** | Social Creators | Medium | 🟢 High (Viral visual sharing) | **Phase 3 (Pending Your Decision)** |
+| **Automated Subscription Validity Auto-Credit** | Pro/Premium Artists | Low | 🟡 Medium (Zero admin intervention) | **Phase 3 (Pending Your Decision)** |
+| **Artist Cash Wallet & Instant UPI Withdrawal** | Cash Earning Artists | High | 🟢 High (Monetary incentive loop) | **Phase 3 (Pending Your Decision)** |
+| **Client & Event Planner Referral Loop** | Organizers / Clients | Medium | 🟢 High (B2B organic acquisition) | **Phase 3 (Pending Your Decision)** |
 
 ---
 
