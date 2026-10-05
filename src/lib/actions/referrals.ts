@@ -311,7 +311,8 @@ export async function getUserReferralData() {
   }
 
   // Enrich avatars and categories for top referrers
-  const leaderboardRaw = Array.from(referrerMap.entries())
+  // Sort and assign ranks — only actual referrals from database
+  const sortedLeaderboard: ReferrerLeaderboardEntry[] = Array.from(referrerMap.entries())
     .map(([id, val]) => ({
       profile_id: id,
       name: val.name,
@@ -321,35 +322,6 @@ export async function getUserReferralData() {
       referral_count: val.count,
       reward_count: val.reward_count,
     }))
-    .sort((a, b) => b.referral_count - a.referral_count);
-
-  // If leaderboard is sparse, populate with active artists or demo entries
-  if (leaderboardRaw.length < 5) {
-    const { data: topProfiles } = await adminClient
-      .from('anchor_profiles')
-      .select('id, name, slug, artist_type, profile_photo_url')
-      .eq('is_profile_complete', true)
-      .limit(6);
-
-    if (topProfiles) {
-      topProfiles.forEach((p, idx) => {
-        if (!leaderboardRaw.some((l) => l.slug === p.slug)) {
-          leaderboardRaw.push({
-            profile_id: p.id,
-            name: p.name || 'Featured Artist',
-            slug: p.slug,
-            avatar_url: p.profile_photo_url,
-            artist_type: p.artist_type || 'Performer',
-            referral_count: Math.max(1, 5 - idx),
-            reward_count: Math.max(1, 4 - idx),
-          });
-        }
-      });
-    }
-  }
-
-  // Sort again and assign ranks
-  const sortedLeaderboard: ReferrerLeaderboardEntry[] = leaderboardRaw
     .sort((a, b) => b.referral_count - a.referral_count)
     .slice(0, 10)
     .map((item, index) => ({
@@ -361,8 +333,10 @@ export async function getUserReferralData() {
   const mySlug = profile?.slug || user.id.slice(0, 8);
   const inviteLink = `${appUrl}/register?ref=${mySlug}`;
 
-  // Find user's rank
-  const myRank = sortedLeaderboard.find((l) => l.slug === mySlug)?.rank || null;
+  // Find user's rank (only if user has invited at least 1 artist)
+  const myRank = totalInvited > 0
+    ? (sortedLeaderboard.find((l) => l.slug === mySlug)?.rank || null)
+    : null;
 
   return {
     profile: profile || null,

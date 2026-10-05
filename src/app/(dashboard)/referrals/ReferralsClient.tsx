@@ -125,7 +125,7 @@ export function ReferralsClient({ initialData }: ReferralsClientProps) {
             {settings.reward_type === 'custom' && '⭐ Exclusive Perk'}
             {settings.reward_type === 'none' && '🏆 Community Spotlight'}
           </span>
-          {myRank && (
+          {totalInvited > 0 && myRank && (
             <span style={{ fontSize: '13px', color: '#f0a500', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Trophy size={15} /> Your Community Rank: #{myRank}
             </span>
@@ -257,14 +257,14 @@ export function ReferralsClient({ initialData }: ReferralsClientProps) {
             <span className={styles.statValue}>
               {settings.reward_type === 'money' && `₹${totalRewardValue}`}
               {settings.reward_type === 'validity' && `+${totalRewardValue} Days`}
-              {(settings.reward_type === 'none' || settings.reward_type === 'custom') && (myRank ? `#${myRank}` : 'Top 10')}
+              {(settings.reward_type === 'none' || settings.reward_type === 'custom') && (totalInvited > 0 && myRank ? `#${myRank}` : '—')}
             </span>
             <span className={styles.statLabel}>
               {settings.reward_type === 'money'
                 ? 'Cash Rewards Earned'
                 : settings.reward_type === 'validity'
                 ? 'Pro Validity Added'
-                : 'Community Rank'}
+                : (totalInvited > 0 && myRank ? 'Community Rank' : 'Unranked')}
             </span>
           </div>
         </div>
@@ -288,53 +288,64 @@ export function ReferralsClient({ initialData }: ReferralsClientProps) {
             </span>
           </div>
 
-          <div className={styles.leaderboardList}>
-            {leaderboard.map((entry) => {
-              const isMe = profile && (entry.slug === profile.slug || entry.profile_id === profile.id);
-              return (
-                <div
-                  key={entry.profile_id || entry.slug}
-                  className={`${styles.leaderboardItem} ${isMe ? styles.leaderboardItemSelf : ''}`}
-                >
+          {leaderboard.length === 0 ? (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>
+                <Trophy size={24} color="#f59e0b" />
+              </div>
+              <p className={styles.emptyText}>
+                No referrals recorded yet. Be the first artist to invite your peers and claim the #1 spot on the leaderboard!
+              </p>
+            </div>
+          ) : (
+            <div className={styles.leaderboardList}>
+              {leaderboard.map((entry) => {
+                const isMe = profile && (entry.slug === profile.slug || entry.profile_id === profile.id);
+                return (
                   <div
-                    className={`${styles.rankBadge} ${
-                      entry.rank === 1
-                        ? styles.rank1
-                        : entry.rank === 2
-                        ? styles.rank2
-                        : entry.rank === 3
-                        ? styles.rank3
-                        : ''
-                    }`}
+                    key={entry.profile_id || entry.slug}
+                    className={`${styles.leaderboardItem} ${isMe ? styles.leaderboardItemSelf : ''}`}
                   >
-                    {entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : `#${entry.rank}`}
-                  </div>
-
-                  <div className={styles.leaderboardAvatar}>
-                    {entry.avatar_url ? (
-                      <img src={entry.avatar_url} alt={entry.name} />
-                    ) : (
-                      entry.name.slice(0, 2).toUpperCase()
-                    )}
-                  </div>
-
-                  <div className={styles.leaderboardInfo}>
-                    <div className={styles.leaderboardName}>
-                      {entry.name} {isMe && <span style={{ color: '#a29bfe', fontSize: '11px' }}>(You)</span>}
+                    <div
+                      className={`${styles.rankBadge} ${
+                        entry.rank === 1
+                          ? styles.rank1
+                          : entry.rank === 2
+                          ? styles.rank2
+                          : entry.rank === 3
+                          ? styles.rank3
+                          : ''
+                      }`}
+                    >
+                      {entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : entry.rank === 3 ? '🥉' : `#${entry.rank}`}
                     </div>
-                    <div className={styles.leaderboardCategory}>
-                      {entry.artist_type || 'Performing Artist'}
+
+                    <div className={styles.leaderboardAvatar}>
+                      {entry.avatar_url ? (
+                        <img src={entry.avatar_url} alt={entry.name} />
+                      ) : (
+                        entry.name.slice(0, 2).toUpperCase()
+                      )}
+                    </div>
+
+                    <div className={styles.leaderboardInfo}>
+                      <div className={styles.leaderboardName}>
+                        {entry.name} {isMe && <span style={{ color: '#a29bfe', fontSize: '11px' }}>(You)</span>}
+                      </div>
+                      <div className={styles.leaderboardCategory}>
+                        {entry.artist_type || 'Performing Artist'}
+                      </div>
+                    </div>
+
+                    <div className={styles.leaderboardScore}>
+                      <span className={styles.scoreNumber}>{entry.referral_count}</span>
+                      <span className={styles.scoreLabel}>Artists</span>
                     </div>
                   </div>
-
-                  <div className={styles.leaderboardScore}>
-                    <span className={styles.scoreNumber}>{entry.referral_count}</span>
-                    <span className={styles.scoreLabel}>Artists</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* My Referred Artists */}
