@@ -14,5 +14,10 @@ export default async function ReferralsPage() {
     redirect('/login');
   }
 
+  // If the referral program is paused by admin, redirect to dashboard
+  if (!data.settings.enabled) {
+    redirect('/dashboard');
+  }
+
   return <ReferralsClient initialData={data} />;
 }

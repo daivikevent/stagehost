@@ -45,6 +45,7 @@ interface DashboardShellProps {
     anchorName?: string;
   };
   announcement?: AnnouncementBanner;
+  referralsEnabled?: boolean;
 }
 
 export function DashboardShell({
@@ -54,12 +55,17 @@ export function DashboardShell({
   isAdmin,
   impersonation,
   announcement,
+  referralsEnabled = false,
 }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
+
+  const activeLinks = SIDEBAR_LINKS.filter(
+    (link) => link.href !== '/referrals' || referralsEnabled
+  );
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -107,7 +113,7 @@ export function DashboardShell({
         </div>
 
         <nav className={styles.sidebarNav}>
-          {SIDEBAR_LINKS.map(link => (
+          {activeLinks.map(link => (
             <Link key={link.href} href={link.href} prefetch={true} className={cn(styles.navItem, isActive(link.href) && styles.active)} title={collapsed ? link.label : undefined}>
               <link.icon size={20} />
               {!collapsed && <span>{link.label}</span>}
@@ -310,7 +316,7 @@ export function DashboardShell({
               </Link>
               <button onClick={() => setMobileOpen(false)}><X size={22} /></button>
             </div>
-            {SIDEBAR_LINKS.map(link => (
+            {activeLinks.map(link => (
               <Link key={link.href} href={link.href} className={cn(styles.navItem, isActive(link.href) && styles.active)} onClick={() => setMobileOpen(false)}>
                 <link.icon size={20} /><span>{link.label}</span>
               </Link>

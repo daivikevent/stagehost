@@ -30,6 +30,7 @@ import { getWhatsAppLink, cn } from '@/lib/utils';
 import styles from './dashboard.module.css';
 import { DashboardShareButton } from '@/components/dashboard/DashboardShareButton';
 import { DashboardMediaKitButton } from '@/components/dashboard/DashboardMediaKitButton';
+import { getReferralProgramSettings } from '@/lib/actions/referrals';
 
 function formatEventDate(dateStr: string) {
   try {
@@ -46,13 +47,14 @@ export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
   // Fetch all dashboard data concurrently
-  const [profile, inquiryCounts, upcomingEvents, inquiries, scheduleData, analytics] = await Promise.all([
+  const [profile, inquiryCounts, upcomingEvents, inquiries, scheduleData, analytics, referralSettings] = await Promise.all([
     getMyProfile(),
     getInquiryCounts(),
     getUpcomingEvents(4),
     getMyInquiries(),
     getScheduleData(),
     getAnchorAnalytics(30),
+    getReferralProgramSettings(),
   ]);
 
   const firstName = profile?.name?.split(' ')[0] || 'there';
@@ -157,10 +159,12 @@ export default async function DashboardPage() {
               className={cn(styles.actionBtn, styles.actionBtnSecondary)}
             />
           )}
-          <Link href="/referrals" className={cn(styles.actionBtn, styles.actionBtnSecondary)}>
-            <Gift size={15} color="var(--color-accent, #f0a500)" />
-            <span>Invite Artist</span>
-          </Link>
+          {referralSettings?.enabled && (
+            <Link href="/referrals" className={cn(styles.actionBtn, styles.actionBtnSecondary)}>
+              <Gift size={15} color="var(--color-accent, #f0a500)" />
+              <span>Invite Artist</span>
+            </Link>
+          )}
           {profile && (
             <DashboardMediaKitButton
               profile={profile}

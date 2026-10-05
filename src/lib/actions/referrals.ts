@@ -77,6 +77,8 @@ export async function updateReferralProgramSettings(
 
     if (error) throw error;
 
+    revalidatePath('/', 'layout');
+    revalidatePath('/dashboard');
     revalidatePath('/referrals');
     revalidatePath('/admin/referrals');
     revalidatePath('/admin/settings');
