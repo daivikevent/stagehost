@@ -7,15 +7,18 @@ import { savePlatformSettings, sendAdminTestEmail, sendTestWhatsAppAlert, saveAn
 import { GLOBAL_SITE_THEMES } from '@/constants/site-themes';
 import type { AnnouncementBanner, CustomDomainRequest } from '@/types';
 import { BrandLogoSettingsCard } from '@/components/admin/BrandLogoSettingsCard';
+import { TaxonomySettingsCard } from '@/components/admin/TaxonomySettingsCard';
+import type { PlatformTaxonomy } from '@/types/taxonomy';
 import styles from '../dashboard/admin.module.css';
 
 interface SettingsFormClientProps {
   initialSettings: Record<string, string>;
   initialBanner?: AnnouncementBanner;
   initialCustomDomains?: CustomDomainRequest[];
+  initialTaxonomy?: PlatformTaxonomy;
 }
 
-export function SettingsFormClient({ initialSettings, initialBanner, initialCustomDomains }: SettingsFormClientProps) {
+export function SettingsFormClient({ initialSettings, initialBanner, initialCustomDomains, initialTaxonomy }: SettingsFormClientProps) {
   const { success, error: showError } = useToast();
   const [settings, setSettings] = useState(initialSettings);
   const [customDomains, setCustomDomains] = useState<CustomDomainRequest[]>(initialCustomDomains || []);
@@ -127,6 +130,9 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
       <div className={styles.settingsGrid}>
         {/* Brand Logo & Multi-Placement Sizing Studio */}
         <BrandLogoSettingsCard settings={settings} onSettingChange={update} />
+
+        {/* Dynamic Profile Taxonomy & Dropdowns Manager */}
+        {initialTaxonomy && <TaxonomySettingsCard initialTaxonomy={initialTaxonomy} />}
 
         {/* General */}
         <div className={styles.settingSection}>

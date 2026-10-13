@@ -48,6 +48,9 @@ import { PhotosManager } from '@/components/portfolio/PhotosManager';
 import type { AnchorProfile, Video, Photo, ServicePackage, Testimonial } from '@/types';
 import styles from './portfolio.module.css';
 
+import type { PlatformTaxonomy } from '@/types/taxonomy';
+import { DEFAULT_SPECIALTIES, DEFAULT_CLIENT_BRANDS } from '@/types/taxonomy';
+
 interface PortfolioFormProps {
   initialProfile: (Partial<AnchorProfile> & {
     videos?: Video[];
@@ -55,6 +58,7 @@ interface PortfolioFormProps {
     service_packages?: ServicePackage[];
     testimonials?: Testimonial[];
   }) | null;
+  taxonomy?: PlatformTaxonomy;
 }
 
 const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: string; border: string }> = {
@@ -66,10 +70,18 @@ const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: stri
   cinema: { label: 'CineStar Red Carpet Premiere', badge: '🎬 Red Carpet Premiere', color: '#ff2a4b', border: 'rgba(255, 42, 75, 0.5)' },
 };
 
-export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
+export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) {
   const { success, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
   const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(true);
+
+  // Dynamic Taxonomy & Options synced with Database / Admin Panel
+  const categories = taxonomy?.categories && taxonomy.categories.length > 0 ? taxonomy.categories : ARTIST_CATEGORIES;
+  const availableLanguages = taxonomy?.languages && taxonomy.languages.length > 0 ? taxonomy.languages : LANGUAGES;
+  const availableEventTypes = taxonomy?.eventTypes && taxonomy.eventTypes.length > 0 ? taxonomy.eventTypes : EVENT_TYPES;
+  const availableCities = taxonomy?.cities && taxonomy.cities.length > 0 ? taxonomy.cities : MAJOR_CITIES;
+  const availableSpecialties = taxonomy?.specialties && taxonomy.specialties.length > 0 ? taxonomy.specialties : DEFAULT_SPECIALTIES;
+  const availableBrands = taxonomy?.clientBrands && taxonomy.clientBrands.length > 0 ? taxonomy.clientBrands : DEFAULT_CLIENT_BRANDS;
 
   const [form, setForm] = useState({
     name: initialProfile?.name || '',
@@ -1016,7 +1028,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
                 value={form.artist_type}
                 onChange={e => updateField('artist_type', e.target.value)}
               >
-                {ARTIST_CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.emoji} {cat.label} ({cat.hindiName}) — {cat.badge}
                   </option>
@@ -1355,7 +1367,10 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
         <PhotosManager initialPhotos={initialProfile?.photos || []} />
 
         {/* Event Packages & Pricing Manager */}
-        <PackagesManager initialPackages={initialProfile?.service_packages || []} />
+        <PackagesManager
+          initialPackages={initialProfile?.service_packages || []}
+          availableEventTypes={availableEventTypes}
+        />
 
         {/* Client Reviews & Testimonials Section */}
         <TestimonialsManager initialTestimonials={initialProfile?.testimonials || []} />
@@ -1379,7 +1394,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
                 onChange={e => updateField('city', e.target.value)}
               />
               <datalist id="profile-city-suggestions">
-                {MAJOR_CITIES.map(city => (
+                {availableCities.map(city => (
                   <option key={city} value={city} />
                 ))}
               </datalist>
@@ -1575,7 +1590,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
           </div>
 
           <div className={styles.chipGrid}>
-            {LANGUAGES.map(lang => (
+            {availableLanguages.map(lang => (
               <button
                 key={lang}
                 className={`${styles.chip} ${form.languages.includes(lang) ? styles.chipActive : ''}`}
@@ -1682,7 +1697,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
           </div>
 
           <div className={styles.chipGrid}>
-            {EVENT_TYPES.filter(type => type !== 'Other').map(type => (
+            {availableEventTypes.filter(type => type !== 'Other').map(type => (
               <button
                 key={type}
                 className={`${styles.chip} ${form.event_types.includes(type) ? styles.chipActive : ''}`}
@@ -1846,20 +1861,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
           {/* Quick Preset Chips */}
           <div style={{ marginTop: '10px', display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
             <span style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>Add preset:</span>
-            {[
-              'Taj Hotels & Palaces',
-              'Forbes India Gala',
-              'BMW Excellence Club',
-              'Marriott Bonvoy',
-              'Filmfare Red Carpet',
-              'The Oberoi Group',
-              'Rolls-Royce',
-              'TEDx Conferences',
-              'Vogue Weddings',
-              'Cartier Privé',
-              'ICICI Bank',
-              'Tata Motors',
-            ].map(preset => (
+            {availableBrands.map(preset => (
               <button
                 key={preset}
                 type="button"
@@ -1941,15 +1943,7 @@ export function PortfolioForm({ initialProfile }: PortfolioFormProps) {
           {/* Presets */}
           <div style={{ marginTop: '10px', display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
             <span style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>Presets:</span>
-            {[
-              'Bilingual / Multilingual Emcee',
-              'High-Energy Crowd Work & Roasts',
-              'Royal Wedding Protocol & Sangeet Direction',
-              'Fortune 500 Corporate Diplomacy',
-              'Standup Comedy & Quick Wit',
-              'Live Auctioneering',
-              'Keynote Moderation & Fireside Chats',
-            ].map(preset => (
+            {availableSpecialties.map(preset => (
               <button
                 key={preset}
                 type="button"

@@ -23,9 +23,10 @@ import styles from '@/app/(dashboard)/portfolio/portfolio.module.css';
 
 interface PackagesManagerProps {
   initialPackages: ServicePackage[];
+  availableEventTypes?: readonly string[] | string[];
 }
 
-export function PackagesManager({ initialPackages }: PackagesManagerProps) {
+export function PackagesManager({ initialPackages, availableEventTypes = EVENT_TYPES }: PackagesManagerProps) {
   const { success, error: showError } = useToast();
   const [packages, setPackages] = useState<ServicePackage[]>(initialPackages);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -338,14 +339,11 @@ export function PackagesManager({ initialPackages }: PackagesManagerProps) {
                       value={eventType}
                       onChange={e => setEventType(e.target.value)}
                     >
-                      {EVENT_TYPES.map(t => (
+                      {availableEventTypes.map(t => (
                         <option key={t} value={t}>
                           {t}
                         </option>
                       ))}
-                      <option value="Corporate Summit">Corporate Summit</option>
-                      <option value="Destination Wedding">Destination Wedding</option>
-                      <option value="Private Gala">Private Gala</option>
                     </select>
                   </div>
                   <div className="input-group">

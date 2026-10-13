@@ -1,7 +1,12 @@
 import { getMyProfile } from '@/lib/actions/profile';
+import { getPlatformTaxonomy } from '@/lib/actions/taxonomy';
 import { PortfolioForm } from './PortfolioForm';
 
 export default async function PortfolioPage() {
-  const profile = await getMyProfile();
-  return <PortfolioForm initialProfile={profile} />;
+  const [profile, taxonomy] = await Promise.all([
+    getMyProfile(),
+    getPlatformTaxonomy(),
+  ]);
+
+  return <PortfolioForm initialProfile={profile} taxonomy={taxonomy} />;
 }
