@@ -1373,7 +1373,10 @@ export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) 
         />
 
         {/* Client Reviews & Testimonials Section */}
-        <TestimonialsManager initialTestimonials={initialProfile?.testimonials || []} />
+        <TestimonialsManager
+          initialTestimonials={initialProfile?.testimonials || []}
+          slug={initialProfile?.slug}
+        />
 
         {/* Location & Contact */}
         <div className={styles.formSection}>

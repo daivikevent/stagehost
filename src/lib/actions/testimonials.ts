@@ -168,3 +168,67 @@ export async function deleteTestimonial(id: string) {
 
   return { success: true };
 }
+
+// ---- Public Client Review Submission (/review/[slug]) ----
+export async function submitClientReview(
+  slug: string,
+  data: {
+    client_name: string;
+    client_designation?: string;
+    text: string;
+    rating: number;
+    event_type?: string;
+    event_date?: string | null;
+  }
+) {
+  if (!slug || !data.client_name?.trim() || !data.text?.trim()) {
+    return { success: false, error: 'Please enter your name and a brief review.' };
+  }
+
+  const adminClient = createAdminClient();
+
+  const { data: profile, error: profileErr } = await adminClient
+    .from('anchor_profiles')
+    .select('id, name, slug')
+    .eq('slug', slug.toLowerCase().trim())
+    .single();
+
+  if (profileErr || !profile) {
+    return { success: false, error: 'Artist profile not found.' };
+  }
+
+  // Get max sort_order
+  const { data: existing } = await adminClient
+    .from('testimonials')
+    .select('sort_order')
+    .eq('profile_id', profile.id)
+    .order('sort_order', { ascending: false })
+    .limit(1);
+
+  const nextOrder = existing && existing.length > 0 ? (existing[0].sort_order || 0) + 1 : 0;
+
+  const { error: insertErr } = await adminClient
+    .from('testimonials')
+    .insert({
+      profile_id: profile.id,
+      client_name: data.client_name.trim(),
+      client_designation: data.client_designation?.trim() || 'Verified Event Host',
+      text: data.text.trim(),
+      rating: Math.min(5, Math.max(1, data.rating || 5)),
+      event_type: data.event_type?.trim() || 'Live Performance',
+      event_date: data.event_date || null,
+      is_visible: true,
+      sort_order: nextOrder,
+    });
+
+  if (insertErr) {
+    console.error('Error submitting review:', insertErr);
+    return { success: false, error: 'Could not record your review. Please try again.' };
+  }
+
+  revalidatePath(`/${profile.slug}`);
+  revalidatePath('/portfolio');
+
+  return { success: true, artistName: profile.name, slug: profile.slug };
+}
+

@@ -13,6 +13,7 @@ import {
   X,
   Loader2,
   Sparkles,
+  Share2,
 } from 'lucide-react';
 import { addTestimonial, updateTestimonial, deleteTestimonial } from '@/lib/actions/testimonials';
 import { useToast } from '@/hooks/useToast';
@@ -23,9 +24,10 @@ import styles from '@/app/(dashboard)/portfolio/portfolio.module.css';
 
 interface TestimonialsManagerProps {
   initialTestimonials: Testimonial[];
+  slug?: string;
 }
 
-export function TestimonialsManager({ initialTestimonials }: TestimonialsManagerProps) {
+export function TestimonialsManager({ initialTestimonials, slug }: TestimonialsManagerProps) {
   const { success, error: showError } = useToast();
   const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -125,14 +127,31 @@ export function TestimonialsManager({ initialTestimonials }: TestimonialsManager
           </p>
         </div>
 
-        <button
-          type="button"
-          className="btn btn-primary btn-sm"
-          onClick={handleOpenModal}
-          style={{ gap: '6px' }}
-        >
-          <Plus size={16} /> Add Client Review
-        </button>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {slug && (
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => {
+                const url = `${window.location.origin}/review/${slug}`;
+                navigator.clipboard.writeText(url);
+                success('Review link copied! Send to clients on WhatsApp to collect 5-star ratings.');
+              }}
+              style={{ gap: '6px' }}
+            >
+              <Share2 size={15} /> Collect Client Reviews Link
+            </button>
+          )}
+
+          <button
+            type="button"
+            className="btn btn-primary btn-sm"
+            onClick={handleOpenModal}
+            style={{ gap: '6px' }}
+          >
+            <Plus size={16} /> Add Client Review
+          </button>
+        </div>
       </div>
 
       {/* Testimonials List / Empty State */}

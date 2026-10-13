@@ -662,7 +662,7 @@ export async function getDirectoryAnchors(filters?: {
 
   let query = supabase
     .from('anchor_profiles')
-    .select('id, user_id, name, slug, tagline, city, state, languages, event_types, profile_photo_url, experience_years, starting_price, whatsapp_number')
+    .select('id, user_id, name, slug, tagline, city, state, languages, event_types, profile_photo_url, experience_years, starting_price, whatsapp_number, artist_type')
     .neq('is_listed_in_directory', false)
     .order('created_at', { ascending: false });
 

@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@supabase/supabase-js';
+import { MAJOR_CITIES } from '@/constants';
+import { ARTIST_CATEGORIES } from '@/constants/artists';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bookmyartist.in';
@@ -44,6 +46,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Dynamic City & Category SEO Routes
+  const topCities = MAJOR_CITIES.slice(0, 15);
+  const cityRoutes: MetadataRoute.Sitemap = topCities.map((city) => ({
+    url: `${baseUrl}/artists/${encodeURIComponent(city.toLowerCase())}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  const catRoutes: MetadataRoute.Sitemap = [];
+  for (const city of topCities) {
+    for (const cat of ARTIST_CATEGORIES.slice(0, 8)) {
+      catRoutes.push({
+        url: `${baseUrl}/artists/${encodeURIComponent(city.toLowerCase())}/${cat.id}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
+    }
+  }
+
   // Dynamic Anchor Profiles from Supabase
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -64,12 +87,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.9,
         }));
 
-        return [...staticRoutes, ...anchorRoutes];
+    return [...staticRoutes, ...cityRoutes, ...catRoutes, ...anchorRoutes];
       }
     }
   } catch (e) {
     console.error('Error generating dynamic sitemap:', e);
   }
 
-  return staticRoutes;
+  return [...staticRoutes, ...cityRoutes, ...catRoutes];
 }

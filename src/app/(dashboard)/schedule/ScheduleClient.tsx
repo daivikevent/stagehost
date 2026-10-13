@@ -34,6 +34,7 @@ import {
   Search,
   MessageCircle,
   User,
+  Sliders,
 } from 'lucide-react';
 import Link from 'next/link';
 import { getDaysInMonth, getFirstDayOfMonth, toDateString, cn } from '@/lib/utils';
@@ -44,6 +45,7 @@ import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { BookingReceiptModal } from '@/components/schedule/BookingReceiptModal';
 import { CalendarSyncModal } from '@/components/schedule/CalendarSyncModal';
 import { BookingImportExportModal } from '@/components/schedule/BookingImportExportModal';
+import { TechRiderModal } from '@/components/schedule/TechRiderModal';
 import { EventFunctionsPicker } from '@/components/common/EventFunctionsPicker';
 import { saveSlotTimings } from '@/lib/actions/profile';
 import {
@@ -433,6 +435,9 @@ export function ScheduleClient({
 
   // Bulk Import / Export Modal State
   const [showImportExportModal, setShowImportExportModal] = useState(false);
+
+  // Stage Tech Rider Modal State
+  const [showTechRiderModal, setShowTechRiderModal] = useState(false);
 
   // Editable Slot Timings State (Configurable by anchor, persisted in profile DB & localStorage)
   const [slotTimes, setSlotTimes] = useState<{ morning: string; evening: string; full_day: string }>(() => {
@@ -1533,6 +1538,16 @@ export function ScheduleClient({
             >
               <Calendar size={13} style={{ color: '#34D399' }} />
               <span>Sync</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowTechRiderModal(true)}
+              className={styles.toolbarBtn}
+              title="Generate 1-page Soundcheck & Tech Rider slip for sound engineers"
+            >
+              <Sliders size={13} style={{ color: '#F59E0B' }} />
+              <span>Tech Rider</span>
             </button>
           </div>
         </div>
@@ -4744,6 +4759,13 @@ export function ScheduleClient({
       />
     )
   }
+
+  {/* Stage Tech Rider Modal */}
+  <TechRiderModal
+    isOpen={showTechRiderModal}
+    onClose={() => setShowTechRiderModal(false)}
+    artistProfile={initialProfile || { name: 'Artist' }}
+  />
 
   {/* Active Pencil Holds Quick Modal */}
   {showHoldsModal && (

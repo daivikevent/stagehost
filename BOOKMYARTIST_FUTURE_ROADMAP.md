@@ -22,15 +22,15 @@
 | ✅ **Shipped** | **Brand Logo & Multi-Placement Sizing Studio** | Admin logo upload, 7-location height sliders, live multi-screen preview |
 | ✅ **Shipped** | **GST Tax Invoice Generator for Subscriptions** | Indian GST Act Rule 46, 18% GST breakdown, B2B ITC claim, sequential PDF |
 | ✅ **Shipped** | **Artist Referral & Rewards Core System** | 1-Click WhatsApp invite, live tracking, admin policy studio (validity, cash, leaderboard) |
-| 🔵 **Phase 1 (Upcoming)** | **City + Category SEO Landing Pages** | Dynamic SSR pages (`/djs-in-mumbai`, etc.) for zero-ad Google organic discovery |
-| 🔵 **Phase 1 (Upcoming)** | **Directory Date & City Availability Filter** | Real-time date availability checker for event planners |
-| 🔵 **Phase 1 (Upcoming)** | **1-Click Verified WhatsApp Inquiries** | Phone-verified, high-intent lead routing to block spam |
-| 🔵 **Phase 1 (Upcoming)** | **Digital Performance Agreement (E-Sign)** | Mobile finger e-signature agreement to protect artist dates & terms |
-| 🔵 **Phase 1 (Upcoming)** | **Post-Event Automated Review Collector** | Day-after WhatsApp review link & verified portfolio badge |
-| 🔵 **Phase 1 (Upcoming)** | **Stage Soundcheck & Tech Rider Checklist** | Technical rider generator (mics, monitors, mixer) for sound engineers |
-| 🔵 **Phase 1 (Upcoming)** | **Featured Artist Directory Boost** | Monetized top-of-directory spotlight for premium artists |
-| 🔵 **Phase 1 (Upcoming)** | **Offline Portfolio PWA Caching** | Service worker asset caching for banquet halls with weak internet |
-| 🔵 **Phase 1 (Upcoming)** | **Artist Smart Analytics & Lead Intelligence** | City-level visitor breakdown and conversion tracking |
+| ✅ **Shipped** | **City + Category SEO Landing Pages** | Dynamic SSR pages (`/artists/[city]` and `/artists/[city]/[category]`) with JSON-LD schema |
+| ✅ **Shipped** | **Directory Date & City Availability Filter** | Real-time date availability checker & calendar filter in `/directory` |
+| ✅ **Shipped** | **Digital Performance Agreement (E-Sign)** | Mobile finger e-signature agreement (`/agreement/[id]`) with 7-clause legal protection & zero escrow disclaimer |
+| ✅ **Shipped** | **Post-Event Client Review Collector** | Direct 5-star review portal (`/review/[slug]`) saving to verified testimonials |
+| ✅ **Shipped** | **Stage Soundcheck & Tech Rider Studio** | Technical rider generator modal with WhatsApp sound engineer share |
+| ✅ **Shipped** | **Offline Portfolio PWA Caching** | Service worker v2 asset & portfolio caching for weak hotel signals |
+| 🔵 **Phase 1 (Next Up)** | **1-Click Verified WhatsApp Inquiries** | Phone-verified, high-intent lead routing to block spam |
+| 🔵 **Phase 1 (Next Up)** | **Featured Artist Directory Boost** | Monetized top-of-directory spotlight for premium artists |
+| 🔵 **Phase 1 (Next Up)** | **Artist Smart Analytics & Lead Intelligence** | City-level visitor breakdown and conversion tracking |
 | 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |

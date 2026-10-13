@@ -44,14 +44,29 @@ export interface DirectoryAnchor {
   is_verified?: boolean;
 }
 
-export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryAnchor[] }) {
+export interface DirectoryClientProps {
+  initialAnchors: DirectoryAnchor[];
+  initialCity?: string;
+  initialArtistType?: string;
+  titleOverride?: string;
+  subtitleOverride?: string;
+}
+
+export function DirectoryClient({
+  initialAnchors,
+  initialCity = '',
+  initialArtistType = 'all',
+  titleOverride,
+  subtitleOverride,
+}: DirectoryClientProps) {
   const containerRef = useScrollRevealContainer<HTMLDivElement>();
   const [search, setSearch] = useState('');
-  const [selectedArtistType, setSelectedArtistType] = useState<string>('all');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedArtistType, setSelectedArtistType] = useState<string>(initialArtistType);
+  const [selectedCity, setSelectedCity] = useState(initialCity);
   const [selectedEventType, setSelectedEventType] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [showFilters, setShowFilters] = useState(Boolean(initialCity || initialArtistType !== 'all'));
   const [sortBy, setSortBy] = useState<'featured' | 'experience' | 'price_low' | 'price_high'>('featured');
 
   const allAnchors = useMemo(() => {
@@ -103,9 +118,9 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
       {/* Page Header */}
       <section className={styles.hero}>
         <div className={styles.heroBadge}><Sparkles size={14} /> Artist Directory</div>
-        <h1 className={styles.heroTitle}>Find Your Perfect Live Artist &amp; Performer</h1>
+        <h1 className={styles.heroTitle}>{titleOverride || 'Find Your Perfect Live Artist & Performer'}</h1>
         <p className={styles.heroSubtitle}>
-          Browse verified professional artists across India. Filter by category, city, event type, and language.
+          {subtitleOverride || 'Browse verified professional artists across India. Filter by category, city, event type, and language.'}
         </p>
 
         {/* Search Bar */}
@@ -170,6 +185,15 @@ export function DirectoryClient({ initialAnchors }: { initialAnchors: DirectoryA
               <option value="">All Languages</option>
               {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
             </select>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(255, 255, 255, 0.04)', padding: '6px 12px', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)', whiteSpace: 'nowrap' }}>📅 Check Date:</span>
+              <input
+                type="date"
+                style={{ border: 'none', background: 'transparent', color: '#fff', fontSize: '13px', outline: 'none' }}
+                value={selectedDate}
+                onChange={e => setSelectedDate(e.target.value)}
+              />
+            </div>
             {hasFilters && (
               <button className={styles.clearFilters} onClick={clearFilters}>
                 <X size={14} /> Clear Filters

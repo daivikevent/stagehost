@@ -194,6 +194,10 @@ export function BookingReceiptModal({
     ? `${window.location.origin}/receipt/${booking.id}`
     : `https://bookmyartist.in/receipt/${booking.id || ''}`;
 
+  const publicAgreementUrl = typeof window !== 'undefined' && booking.id
+    ? `${window.location.origin}/agreement/${booking.id}`
+    : `https://bookmyartist.in/agreement/${booking.id || ''}`;
+
   const slotName =
     booking.slot_type === 'morning'
       ? '☀️ Morning Show (10:00 AM – 02:30 PM)'
@@ -231,6 +235,9 @@ ${formData.terms_and_conditions}
 
 📄 *View & Print Official Slip Online:*
 ${publicReceiptUrl}
+
+✍️ *Sign Performance Agreement (E-Sign on Mobile):*
+${publicAgreementUrl}
 
 🌐 *Artist Portfolio:*
 https://bookmyartist.in/${anchorProfile.slug || ''}
@@ -414,6 +421,18 @@ Thank you for confirming with ${anchorProfile.name}! Looking forward to a blockb
                 >
                   <ExternalLink size={13} />
                   View Online
+                </a>
+
+                <a
+                  href={`/agreement/${booking.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary btn-sm"
+                  style={{ gap: '6px', textDecoration: 'none', background: 'rgba(108, 92, 231, 0.1)', color: 'var(--color-primary)', border: '1px solid rgba(108, 92, 231, 0.3)' }}
+                  title="Open Digital Performance Agreement with Mobile Finger E-Sign"
+                >
+                  <ScrollText size={13} />
+                  E-Sign Agreement ✍️
                 </a>
               </>
             )}

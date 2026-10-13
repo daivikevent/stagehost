@@ -1,9 +1,10 @@
-// BookMyArtist Backstage & Cue Sheet Offline Service Worker
-const CACHE_NAME = 'bookmyartist-v1';
+// BookMyArtist Backstage, Portfolio & Cue Sheet Offline Service Worker (Phase 1)
+const CACHE_NAME = 'bookmyartist-v2';
 const OFFLINE_URLS = [
   '/schedule',
+  '/directory',
   '/manifest.json',
-  '/globe.svg',
+  '/brand/logo-icon.svg',
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,8 +33,14 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Network-first strategy for dynamic schedule & cue sheets, falling back to cache when offline
-  if (url.pathname.startsWith('/schedule') || url.pathname.startsWith('/receipt')) {
+  // Network-first strategy for dynamic schedules, cue sheets, agreements, and offline portfolio viewing
+  if (
+    url.pathname.startsWith('/schedule') ||
+    url.pathname.startsWith('/receipt') ||
+    url.pathname.startsWith('/agreement') ||
+    url.pathname.startsWith('/review') ||
+    (!url.pathname.startsWith('/api') && !url.pathname.startsWith('/_next') && !url.pathname.includes('.'))
+  ) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
@@ -55,8 +62,11 @@ self.addEventListener('fetch', (event) => {
   // Cache-first for static assets
   if (
     url.pathname.startsWith('/_next/static') ||
+    url.pathname.startsWith('/brand') ||
     url.pathname.endsWith('.svg') ||
     url.pathname.endsWith('.png') ||
+    url.pathname.endsWith('.jpg') ||
+    url.pathname.endsWith('.webp') ||
     url.pathname.endsWith('.woff2')
   ) {
     event.respondWith(
@@ -82,8 +92,8 @@ self.addEventListener('push', (event) => {
   let data = {
     title: 'BookMyArtist Notification',
     body: 'You have a new update on BookMyArtist.',
-    icon: '/globe.svg',
-    badge: '/globe.svg',
+    icon: '/brand/logo-icon.svg',
+    badge: '/brand/logo-icon.svg',
     url: '/inquiries',
     tag: 'bookmyartist-notification',
   };
@@ -99,8 +109,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: data.body,
-    icon: data.icon || '/globe.svg',
-    badge: data.badge || '/globe.svg',
+    icon: data.icon || '/brand/logo-icon.svg',
+    badge: data.badge || '/brand/logo-icon.svg',
     tag: data.tag || 'bookmyartist-inquiry',
     vibrate: [200, 100, 200, 100, 200],
     requireInteraction: true,
@@ -127,14 +137,12 @@ self.addEventListener('notificationclick', (event) => {
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-      // Check if any tab is already open with the target origin
       for (const client of windowClients) {
         if (client.url.includes(self.location.origin) && 'focus' in client) {
           client.navigate(targetUrl);
           return client.focus();
         }
       }
-      // If no tab is open, open a new window
       if (clients.openWindow) {
         return clients.openWindow(targetUrl);
       }
