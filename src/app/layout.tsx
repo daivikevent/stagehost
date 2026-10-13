@@ -43,7 +43,12 @@ export const metadata: Metadata = {
     description:
       'Build your professional artist portfolio, manage your schedule, and get more bookings.',
   },
-
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/brand/logo-icon.svg',
+    shortcut: '/brand/logo-icon.svg',
+    apple: '/icon.png',
+  },
 };
 
 export const viewport: Viewport = {
