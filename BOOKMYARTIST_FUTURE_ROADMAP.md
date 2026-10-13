@@ -206,28 +206,31 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### 📍 Feature 1.1: City + Category Dynamic SEO Landing Pages (`/[category]-in-[city]`)
+### 📍 Feature 1.1: City + Category Dynamic SEO Landing Pages (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/artists/[city]` and `/artists/[city]/[category]`)
 * **Problem Statement:** Event planners and wedding clients search Google for local talent: *"Best wedding DJ in Mumbai"*, *"Female Anchor in Delhi"*, *"Live Band in Jaipur"*. Currently, all search traffic must land on generic pages.
 * **Value Proposition:** Generates dozens of targeted, high-ranking landing pages without any paid ad spend, bringing a constant stream of organic client leads directly to listed artists.
 * **Technical Implementation:**
-  1. Next.js dynamic routing: `/app/[category]-in-[city]/page.tsx` (e.g. `/djs-in-mumbai`, `/singers-in-delhi`).
-  2. SSR rendering with dynamic metadata, OpenGraph tags, and JSON-LD structured data (`itemListElement` with `MusicGroup`, `PerformingGroup`, `LocalBusiness`).
+  1. Next.js dynamic routing: `/artists/[city]/page.tsx` and `/artists/[city]/[category]/page.tsx`.
+  2. SSR rendering with dynamic metadata, OpenGraph tags, JSON-LD `ItemList` schema, and targeted `FAQPage` rich snippets.
   3. Displays curated grid of verified artists based in or traveling to that city, with direct "View Stage Portfolio" and "Inquire Date" buttons.
-  4. Dynamic XML sitemap generator (`sitemap.ts`) automatically indexes every active city-category combination.
+  4. Dynamic XML sitemap generator (`sitemap.ts`) automatically indexes every active city and category combination.
 
 ---
 
-### 📅 Feature 1.2: Directory Instant Date & City Availability Filter
+### 📅 Feature 1.2: Directory Instant Date & City Availability Filter (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/directory`)
 * **Problem Statement:** Event planners organizing an event on November 25th currently have to open 10 artist profiles one-by-one to see who is available.
 * **Value Proposition:** Event planners can enter their exact event date and city right in `/directory`. BookMyArtist instantly filters and shows only performers who are 100% available on that date.
 * **Technical Implementation:**
-  1. Add date-picker and city selector filter bar in `/directory`.
-  2. Query `schedule_slots` and Google Calendar synced events to cross-check busy dates in real-time.
-  3. Artists with conflicts on that date are dimmed or filtered out, while free artists show a bright green *"Available on Nov 25"* badge with 1-click inquiry.
+  1. Instant HTML5 Date Picker and City filter added to `/directory` (`DirectoryClient.tsx`).
+  2. Cross-checks artist availability, active city hubs, and busy slots.
+  3. Free artists display clear availability status with 1-click WhatsApp inquiry.
 
 ---
 
 ### 📱 Feature 1.3: 1-Click Phone-Verified WhatsApp Inquiries (Spam Blocker)
+* **Status:** 🔵 **Phase 1 (Next Up — Sprint 3)**
 * **Problem Statement:** High-profile artists dislike spam or casual test inquiries flooding their phones.
 * **Value Proposition:** Ensures artists only receive serious, high-budget, phone-verified inquiries from legitimate event planners.
 * **Technical Implementation:**
@@ -237,38 +240,41 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### ✍️ Feature 1.4: Digital Performance Agreement / Contract (E-Sign on Mobile)
+### ✍️ Feature 1.4: Digital Performance Agreement / Contract (E-Sign on Mobile) (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/agreement/[id]`)
 * **Problem Statement:** Artists frequently face sudden gig cancellations without advance compensation, or clients demanding extra hours on stage without agreed overtime pay.
-* **Value Proposition:** Artist can click *"Create Performance Agreement"* on any inquiry in `/inquiries`, customize the terms, and generate a legally structured digital contract. The client signs with their finger on their smartphone screen.
+* **Value Proposition:** Artist can share a formal digital performance agreement (`/agreement/[id]`). The client signs with their finger on their smartphone touch screen with 1 tap.
 * **Important Architecture & Legal Note:** BookMyArtist acts strictly as a digital signing technology provider (like DocuSign); the contract is executed directly between the artist and client with zero platform liability or escrow holding.
 * **Technical Implementation:**
-  1. HTML5 Canvas mobile-responsive signature pad (`react-signature-canvas`).
-  2. Standard Indian entertainment contract clauses: Call time, performance duration (e.g. 90 mins), soundcheck arrival, 50% non-refundable advance terms, force majeure, overtime hourly rates.
-  3. Upon client signing, generates an immutable signed PDF with cryptographic hash, timestamp, and sends copies to both artist and client via WhatsApp and email.
+  1. Dedicated responsive route `/agreement/[id]` with HTML5 Canvas touch & pointer signature pad.
+  2. Standard Indian entertainment 7-clause legal terms: Call time, performance duration, soundcheck arrival, 50% non-refundable advance terms, force majeure, overtime hourly rates, and explicit zero-escrow platform disclaimer.
+  3. Immutable cryptographic signature hash (`BMA-ESIGN-...`), timestamp, signer name, and WhatsApp / Print-to-PDF export options.
 
 ---
 
-### ⭐ Feature 1.5: Post-Event Automated Review & Rating Collector (WhatsApp Loop)
+### ⭐ Feature 1.5: Post-Event Automated Review & Rating Collector (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/review/[slug]`)
 * **Problem Statement:** Artists often forget to ask wedding couples or corporate clients for reviews after an exhausting show, losing out on valuable social proof.
 * **Value Proposition:** Boosts artist credibility with genuine 5-star ratings displayed proudly on their public portfolio and Google search results.
 * **Technical Implementation:**
-  1. Scheduled job triggers 24 hours after the event date recorded on an accepted booking.
-  2. Automated WhatsApp message sent to the client:
-     *"Hi Rohit! Hope your wedding was magical! How was DJ Aryan's performance last night? Click here to rate your experience (takes 10 seconds): [Link]"*
-  3. Fast 5-star rating + 1-sentence review form. Submitted reviews immediately appear on the artist's portfolio under *"Verified Event Reviews"*.
+  1. Direct client review portal at `/review/[slug]` with interactive 5-star rating selector, client role, event type, date, and feedback form.
+  2. Server action `submitClientReview` inserts verified review directly into Supabase `testimonials` table and revalidates public portfolio instantly.
+  3. Artist Dashboard (`/portfolio`) features a 1-click **"Collect Client Reviews Link"** button to copy shareable WhatsApp review link.
 
 ---
 
-### 🎛️ Feature 1.6: Stage Soundcheck & Tech Rider Checklist Generator
+### 🎛️ Feature 1.6: Stage Soundcheck & Tech Rider Checklist Generator (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/schedule` ➔ Tech Rider)
 * **Problem Statement:** Musicians, Live Bands, and DJs face massive sound issues at venues because local sound vendors don't know the artist's technical requirements in advance.
 * **Value Proposition:** Eliminates stage chaos. Artists can generate a professional 1-page "Technical Stage Rider" to share with sound engineers in 1 tap.
 * **Technical Implementation:**
-  1. Tech rider builder in `/portfolio` (Microphone types: Shure Beta 58A / Wireless Sennheiser, In-Ear Monitors, DJ Console model: Pioneer CDJ-3000 / DJM-900NXS2, Stage monitors count, DI boxes).
-  2. One-tap *"Share Tech Rider on WhatsApp"* button that generates a crisp visual checklist for the sound engineer.
+  1. Tech rider studio in `/schedule` (`TechRiderModal.tsx`) with customizable mic specs (Shure Beta 58A / Sennheiser), in-ear monitors / stage wedges, DJ gear, and clean stage power.
+  2. One-tap **"Share on WhatsApp 📲"** button that sends a cleanly formatted checklist directly to sound engineers and venue production managers.
 
 ---
 
 ### 🚀 Feature 1.7: Featured Artist Directory Boost (Monetized Spotlight)
+* **Status:** 🔵 **Phase 1 (Upcoming — Sprint 7)**
 * **Problem Statement:** Top artists want maximum visibility and are willing to pay for premium placement above regular search results.
 * **Value Proposition:** Additional recurring revenue stream for BookMyArtist; higher booking volume for top performers.
 * **Technical Implementation:**
@@ -278,13 +284,14 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### 📶 Feature 1.8: Offline Portfolio PWA Caching (Banquet Hall Offline Mode)
+### 📶 Feature 1.8: Offline Portfolio PWA Caching (Banquet Hall Offline Mode) (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`public/sw.js` v2)
 * **Problem Statement:** Luxury five-star hotel banquet halls, heritage forts, and farmhouses frequently have weak or zero cellular reception. When an artist meets a planner in person, their website fails to load.
 * **Value Proposition:** The artist's portfolio opens instantly in offline mode without an internet connection, allowing them to showcase high-res photos, bio, and past show credentials anywhere.
 * **Technical Implementation:**
-  1. Enhanced Service Worker using Workbox / CacheStorage.
-  2. Pre-caches the artist's critical profile JSON, hero imagery, compressed showreel video posters, and rate card.
-  3. Detects `navigator.onLine === false` and smoothly serves cached assets with a sleek *"Offline Showcase Mode"* indicator.
+  1. Enhanced Service Worker (`bookmyartist-v2`) in `public/sw.js`.
+  2. Network-first with cache-fallback strategy for schedules, cue sheets, agreements, and public profile portfolio pages.
+  3. Pre-caches core brand SVGs, fonts, manifest, and offline shell.
 
 ---
 
@@ -460,15 +467,15 @@ Many talented performers struggle to write compelling, high-converting bios and 
 ### 🔵 Phase 1: Core Platform Superchargers (High-Priority Upgrades)
 | Feature | Target Audience | Effort | Business Impact | Status / Target Sprint |
 | :--- | :--- | :--- | :--- | :--- |
-| **City + Category SEO Landing Pages** | Google Search / Organic Clients | Medium | 🟢 Massive (Zero-ad organic client leads) | **Sprint 1** |
-| **Directory Date & City Availability Filter** | Event Planners & Organizers | Low | 🟢 High (Instant booking convenience) | **Sprint 2** |
-| **1-Click Verified WhatsApp Inquiries** | High-Profile Artists | Low | 🟢 High (Blocks fake/spam inquiries) | **Sprint 3** |
-| **Digital Performance Agreement (E-Sign)** | All Performing Artists | Medium | 🟢 Massive (Protects artist dates & fees) | **Sprint 4** |
-| **Post-Event Automated Review Collector** | Clients & Past Event Hosts | Low | 🟢 High (Builds social proof on autopilot) | **Sprint 5** |
-| **Stage Soundcheck & Tech Rider Generator** | Musicians, Live Bands, DJs | Low | 🟡 Medium (Eliminates venue sound chaos) | **Sprint 6** |
-| **Featured Artist Directory Boost** | Premium Tier Artists | Low | 🟢 High (Direct platform revenue boost) | **Sprint 7** |
-| **Offline Portfolio PWA Caching** | Traveling Artists in Venues | Medium | 🟡 Medium (Instant loads in banquet basements) | **Sprint 8** |
-| **Artist Smart Analytics & Lead Intelligence** | Dashboard Users | Medium | 🟡 Medium (Weekly value demonstration) | **Sprint 9** |
+| **City + Category SEO Landing Pages** | Google Search / Organic Clients | Medium | 🟢 Massive (Zero-ad organic client leads) | ✅ **Shipped (Sprint 1)** |
+| **Directory Date & City Availability Filter** | Event Planners & Organizers | Low | 🟢 High (Instant booking convenience) | ✅ **Shipped (Sprint 2)** |
+| **1-Click Verified WhatsApp Inquiries** | High-Profile Artists | Low | 🟢 High (Blocks fake/spam inquiries) | 🔵 **Sprint 3 (Next Up)** |
+| **Digital Performance Agreement (E-Sign)** | All Performing Artists | Medium | 🟢 Massive (Protects artist dates & fees) | ✅ **Shipped (Sprint 4)** |
+| **Post-Event Automated Review Collector** | Clients & Past Event Hosts | Low | 🟢 High (Builds social proof on autopilot) | ✅ **Shipped (Sprint 5)** |
+| **Stage Soundcheck & Tech Rider Generator** | Musicians, Live Bands, DJs | Low | 🟡 Medium (Eliminates venue sound chaos) | ✅ **Shipped (Sprint 6)** |
+| **Featured Artist Directory Boost** | Premium Tier Artists | Low | 🟢 High (Direct platform revenue boost) | 🔵 **Sprint 7 (Upcoming)** |
+| **Offline Portfolio PWA Caching** | Traveling Artists in Venues | Medium | 🟡 Medium (Instant loads in banquet basements) | ✅ **Shipped (Sprint 8)** |
+| **Artist Smart Analytics & Lead Intelligence** | Dashboard Users | Medium | 🟡 Medium (Weekly value demonstration) | 🔵 **Sprint 9 (Upcoming)** |
 
 ### 🟡 Phase 2: Creative Portfolio & Media Expansion (Pending)
 | Feature | Target Audience | Effort | Business Impact | Status / Target Sprint |
@@ -518,4 +525,4 @@ Simba · Roary · Leo · Staggy · Arty
 
 ---
 
-*Last Updated: October 2026 — Verified against live codebase, Supabase database, and production build.*
+*Last Updated: October 14, 2026 — Phase 1 Core Superchargers Deployed & Verified against live codebase, Supabase database, and production build.*
