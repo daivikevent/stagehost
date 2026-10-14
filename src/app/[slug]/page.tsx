@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { PublicProfile } from '@/components/public-profile/PublicProfile';
 import { getPublicProfile } from '@/lib/actions/profile';
 import { getPublicAnchorSchedule } from '@/lib/actions/schedule';
+import { getPublicRawMedia } from '@/lib/actions/raw-media';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -72,8 +73,11 @@ export default async function ProfilePage({ params, searchParams }: PageProps) {
     redirect(`/${profile.slug}`);
   }
 
-  // Fetch schedule and live availability for this anchor
-  const scheduleData = await getPublicAnchorSchedule(profile.id);
+  // Fetch schedule and public raw media concurrently
+  const [scheduleData, rawMedia] = await Promise.all([
+    getPublicAnchorSchedule(profile.id),
+    getPublicRawMedia(profile.id),
+  ]);
 
   // Determine plan tier from subscription (simplified — 0 = free)
   const planTier = 0;
@@ -84,6 +88,7 @@ export default async function ProfilePage({ params, searchParams }: PageProps) {
       planTier={planTier}
       scheduleData={scheduleData}
       layoutOverride={layoutOverride}
+      rawMedia={rawMedia}
     />
   );
 }

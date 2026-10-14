@@ -24,6 +24,7 @@ import {
   FileText,
   Sparkles,
   Crown,
+  Music,
   Zap,
   LayoutGrid,
   Radio,
@@ -1071,6 +1072,55 @@ export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) 
             <span className="badge badge-primary" style={{ fontSize: '12px' }}>
               {videos.length} {videos.length === 1 ? 'Video' : 'Videos'} Active
             </span>
+          </div>
+
+          {/* Raw Media & Audio Vault Banner */}
+          <div
+            style={{
+              padding: '14px 18px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%)',
+              border: '1px solid rgba(6, 182, 212, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '10px',
+                  background: 'rgba(6, 182, 212, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#06b6d4',
+                  flexShrink: 0,
+                }}
+              >
+                <Music size={20} />
+              </div>
+              <div>
+                <strong style={{ fontSize: '13px', color: '#fff', display: 'block' }}>
+                  Raw Videos &amp; MP3 Audio Vault
+                </strong>
+                <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)' }}>
+                  Upload unedited work clips and raw MP3 tracks to share directly with clients on WhatsApp or show on your portfolio.
+                </span>
+              </div>
+            </div>
+            <a
+              href="/vault"
+              className="btn btn-secondary btn-xs"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+            >
+              Open Raw Vault →
+            </a>
           </div>
 
           {/* Add Video Form */}

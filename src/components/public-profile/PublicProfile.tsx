@@ -22,6 +22,7 @@ import {
   Plane,
   X,
   Film,
+  Music,
   Video as VideoIcon,
   UserPlus,
   CheckCircle2,
@@ -71,6 +72,13 @@ interface PublicProfileProps {
     bookings: Array<{ date: string; slot_type: string; event_type?: string; event_name?: string; city?: string }>;
   };
   layoutOverride?: 'classic' | 'editorial' | 'spotlight' | 'vip' | 'palace' | 'cinema' | 'neostage';
+  rawMedia?: Array<{
+    id: string;
+    title: string;
+    media_type: 'video' | 'audio';
+    file_url: string;
+    event_name?: string;
+  }>;
 }
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -90,7 +98,7 @@ const EVENT_FUNCTION_OPTIONS = [
   { id: 'concert_fest', label: '🎤 Concert / College Fest' },
 ];
 
-export function PublicProfile({ profile, planTier, scheduleData, layoutOverride }: PublicProfileProps) {
+export function PublicProfile({ profile, planTier, scheduleData, layoutOverride, rawMedia }: PublicProfileProps) {
   const { success, error: showError } = useToast();
   const containerRef = useScrollRevealContainer<HTMLDivElement>();
   const initialLayout = layoutOverride === 'neostage' ? 'spotlight' : (layoutOverride || profile.profile_layout || 'classic');
@@ -963,6 +971,111 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Raw Stage Footage & Live Audios (Uncut Work Samples) */}
+        {rawMedia && rawMedia.length > 0 && (
+          <div style={{ marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--color-border)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+              <div>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                  <Film size={18} color="var(--color-primary)" /> Raw Work Samples &amp; Live Audios
+                </h3>
+                <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.55)', margin: '4px 0 0' }}>
+                  Authentic, unedited live performance clips &amp; raw sound recordings directly from the stage.
+                </p>
+              </div>
+              <span className="badge badge-ghost" style={{ fontSize: '11px' }}>
+                {rawMedia.length} Raw Sample{rawMedia.length > 1 ? 's' : ''}
+              </span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+              {rawMedia.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div style={{ width: '100%', aspectRatio: '16 / 9', background: '#0a0a12', position: 'relative' }}>
+                    {item.media_type === 'video' ? (
+                      item.file_url.includes('drive.google.com') ? (
+                        <iframe
+                          src={
+                            item.file_url.includes('/preview')
+                              ? item.file_url
+                              : item.file_url.replace(/\/view.*$/, '/preview')
+                          }
+                          title={item.title}
+                          style={{ width: '100%', height: '100%', border: 'none' }}
+                          allow="autoplay"
+                        />
+                      ) : (
+                        <video
+                          src={item.file_url}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      )
+                    ) : (
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '16px',
+                          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%)',
+                          gap: '10px',
+                        }}
+                      >
+                        <Music size={28} color="#c084fc" />
+                        <audio
+                          src={item.file_url}
+                          controls
+                          preload="metadata"
+                          style={{ width: '90%', maxWidth: '240px' }}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                      <strong style={{ fontSize: '13px', color: '#fff' }}>{item.title}</strong>
+                      <span
+                        className="badge badge-xs"
+                        style={{
+                          fontSize: '10px',
+                          textTransform: 'uppercase',
+                          background:
+                            item.media_type === 'video' ? 'rgba(6, 182, 212, 0.15)' : 'rgba(168, 85, 247, 0.15)',
+                          color: item.media_type === 'video' ? '#67e8f9' : '#d8b4fe',
+                        }}
+                      >
+                        {item.media_type}
+                      </span>
+                    </div>
+                    {item.event_name && (
+                      <span style={{ fontSize: '11px', color: '#f59e0b', fontWeight: 600 }}>
+                        {item.event_name}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </section>

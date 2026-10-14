@@ -8,6 +8,7 @@ import {
   Sparkles, LayoutDashboard, User, Video, Image, Package,
   Calendar, MessageSquare, BarChart3, Settings, ExternalLink,
   LogOut, ChevronLeft, Menu, X, Shield, Megaphone, ArrowRight, Gift,
+  Film,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
@@ -19,6 +20,7 @@ import styles from './DashboardLayout.module.css';
 const SIDEBAR_LINKS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/portfolio', icon: User, label: 'Profile' },
+  { href: '/vault', icon: Film, label: 'Raw Media Vault' },
   { href: '/schedule', icon: Calendar, label: 'Schedule' },
   { href: '/inquiries', icon: MessageSquare, label: 'Inquiries' },
   { href: '/analytics', icon: BarChart3, label: 'Analytics' },
@@ -29,6 +31,7 @@ const SIDEBAR_LINKS = [
 const MOBILE_NAV_LINKS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Home' },
   { href: '/portfolio', icon: User, label: 'Portfolio' },
+  { href: '/vault', icon: Film, label: 'Raw Vault' },
   { href: '/schedule', icon: Calendar, label: 'Schedule' },
   { href: '/inquiries', icon: MessageSquare, label: 'Inquiries' },
   { href: '/settings', icon: Settings, label: 'More' },
