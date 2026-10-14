@@ -22,10 +22,13 @@ import {
   HardDrive,
   Loader2,
   Plus,
+  Lock,
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import {
   type RawMediaItem,
+  type ArtistStorageUsage,
+  getArtistStorageUsage,
   uploadRawMediaFile,
   addRawMediaItem,
   updateRawMediaItem,
@@ -36,19 +39,24 @@ import styles from '@/app/(dashboard)/vault/RawMediaVaultClient.module.css';
 
 interface RawMediaManagerProps {
   initialItems: RawMediaItem[];
+  initialStorageUsage?: ArtistStorageUsage;
   artistSlug: string;
   artistName: string;
 }
 
 export function RawMediaManager({
   initialItems = [],
+  initialStorageUsage,
   artistSlug,
   artistName,
 }: RawMediaManagerProps) {
   const { success, error: showError } = useToast();
 
   const [items, setItems] = useState<RawMediaItem[]>(initialItems);
-  const [activeTab, setActiveTab] = useState<'upload' | 'link'>('upload');
+  const [storageUsage, setStorageUsage] = useState<ArtistStorageUsage | undefined>(initialStorageUsage);
+  const [activeTab, setActiveTab] = useState<'upload' | 'link'>(
+    initialStorageUsage?.isLocked ? 'link' : 'upload'
+  );
   const [filter, setFilter] = useState<'all' | 'video' | 'audio' | 'public' | 'private'>('all');
 
   // Form State
@@ -137,6 +145,7 @@ export function RawMediaManager({
         setItems((prev) => [newItem, ...prev]);
         success('Work sample uploaded and saved to vault successfully!');
         resetForm();
+        getArtistStorageUsage().then(setStorageUsage).catch(() => {});
       } catch (err: any) {
         showError(err.message || 'Failed to upload media file');
       } finally {
@@ -196,6 +205,7 @@ export function RawMediaManager({
         await deleteRawMediaItem(id);
         setItems((prev) => prev.filter((item) => item.id !== id));
         success('Work sample removed from vault.');
+        getArtistStorageUsage().then(setStorageUsage).catch(() => {});
       } catch (err) {
         showError('Failed to delete media item');
       }
@@ -277,6 +287,81 @@ export function RawMediaManager({
         </span>
       </div>
 
+      {/* Cloud Storage Quota Bar */}
+      {storageUsage && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            background: storageUsage.isLocked ? 'rgba(239, 68, 68, 0.08)' : 'rgba(6, 182, 212, 0.08)',
+            border: `1px solid ${storageUsage.isLocked ? 'rgba(239, 68, 68, 0.25)' : 'rgba(6, 182, 212, 0.25)'}`,
+            borderRadius: '10px',
+            padding: '10px 14px',
+            marginBottom: '16px',
+            flexWrap: 'wrap',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', fontWeight: 600 }}>
+            {storageUsage.isLocked ? (
+              <>
+                <Lock size={15} color="#f87171" />
+                <span style={{ color: '#f87171' }}>Cloud Storage: 0 GB (Free Plan Locked)</span>
+              </>
+            ) : (
+              <>
+                <HardDrive size={15} color="#06b6d4" />
+                <span style={{ color: '#06b6d4' }}>
+                  Cloud Storage: {storageUsage.usedFormatted} / {storageUsage.totalGb} GB used ({storageUsage.percentUsed}%)
+                </span>
+              </>
+            )}
+          </div>
+
+          {!storageUsage.isLocked && (
+            <div
+              style={{
+                flex: '1 1 140px',
+                height: '6px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '999px',
+                overflow: 'hidden',
+                minWidth: '100px',
+              }}
+            >
+              <div
+                style={{
+                  height: '100%',
+                  width: `${Math.min(100, Math.max(2, storageUsage.percentUsed))}%`,
+                  background:
+                    storageUsage.percentUsed > 90
+                      ? '#ef4444'
+                      : storageUsage.percentUsed > 70
+                      ? '#f59e0b'
+                      : '#06b6d4',
+                  borderRadius: '999px',
+                  transition: 'width 0.3s ease',
+                }}
+              />
+            </div>
+          )}
+
+          {storageUsage.isLocked ? (
+            <a
+              href="/pricing"
+              className="btn btn-primary btn-xs"
+              style={{ marginLeft: 'auto', textDecoration: 'none' }}
+            >
+              Upgrade to Unlock
+            </a>
+          ) : (
+            <span style={{ fontSize: '11px', color: 'var(--text-tertiary)', marginLeft: 'auto' }}>
+              {storageUsage.planName} Plan Quota
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Upload Studio Form */}
       <div
         style={{
@@ -306,6 +391,38 @@ export function RawMediaManager({
 
         <form onSubmit={handleCreateMedia}>
           {activeTab === 'upload' ? (
+            storageUsage?.isLocked ? (
+              <div
+                style={{
+                  padding: '24px 16px',
+                  textAlign: 'center',
+                  background: 'rgba(239, 68, 68, 0.05)',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: '12px',
+                  marginBottom: '16px',
+                }}
+              >
+                <Lock size={32} color="#f87171" style={{ margin: '0 auto 10px' }} />
+                <h4 style={{ margin: '0 0 6px', fontSize: '15px', color: '#f87171', fontWeight: 600 }}>
+                  Direct Cloud File Uploads are Locked on Free Plan
+                </h4>
+                <p style={{ margin: '0 auto 16px', maxWidth: '480px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  Free plan artists can use the <strong>External Cloud Link</strong> tab to paste unlimited Google Drive, Dropbox, or YouTube links. To upload high-speed MP4 videos and MP3 audios directly to our Cloud Vault, please upgrade to a Paid Plan.
+                </p>
+                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setActiveTab('link')}
+                  >
+                    Switch to External Link
+                  </button>
+                  <a href="/pricing" className="btn btn-primary btn-sm">
+                    Upgrade to Unlock Cloud Storage
+                  </a>
+                </div>
+              </div>
+            ) : (
             <div>
               <div
                 className={`${styles.dropzone} ${isDragging ? styles.dropzoneDragging : ''}`}
@@ -399,7 +516,8 @@ export function RawMediaManager({
                 </div>
               )}
             </div>
-          ) : (
+          )
+        ) : (
             <div style={{ marginBottom: '16px' }}>
               <div className="input-group">
                 <label className="input-label">External File Link (Google Drive / Dropbox / Direct URL) *</label>

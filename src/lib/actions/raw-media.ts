@@ -15,6 +15,7 @@ export interface RawMediaItem {
   file_url: string;
   file_name?: string;
   file_size?: string;
+  file_size_bytes?: number;
   event_name?: string;
   description?: string;
   is_public: boolean;
@@ -22,6 +23,126 @@ export interface RawMediaItem {
   drive_file_id?: string;
   drive_web_view_link?: string;
   created_at: string;
+}
+
+export interface ArtistStorageUsage {
+  usedBytes: number;
+  usedFormatted: string;
+  totalBytes: number;
+  totalGb: number;
+  percentUsed: number;
+  isLocked: boolean;
+  planName: string;
+}
+
+function parseSizeBytes(sizeStr?: string, sizeBytes?: number): number {
+  if (typeof sizeBytes === 'number' && sizeBytes > 0) return sizeBytes;
+  if (!sizeStr) return 0;
+  const match = sizeStr.match(/([\d.]+)\s*(GB|MB|KB|B)/i);
+  if (!match) return 0;
+  const val = parseFloat(match[1]);
+  const unit = match[2].toUpperCase();
+  if (unit === 'GB') return val * 1024 * 1024 * 1024;
+  if (unit === 'MB') return val * 1024 * 1024;
+  if (unit === 'KB') return val * 1024;
+  return val;
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes <= 0) return '0 MB';
+  const gb = bytes / (1024 * 1024 * 1024);
+  if (gb >= 1) return `${gb.toFixed(2)} GB`;
+  const mb = bytes / (1024 * 1024);
+  return `${mb.toFixed(1)} MB`;
+}
+
+/**
+ * Calculate artist's real-time storage quota usage and lock status.
+ */
+export async function getArtistStorageUsage(profileId?: string): Promise<ArtistStorageUsage> {
+  let profile = null;
+  if (profileId) {
+    const adminClient = createAdminClient();
+    const { data } = await adminClient
+      .from('anchor_profiles')
+      .select('id, slug, user_id')
+      .eq('id', profileId)
+      .maybeSingle();
+    profile = data;
+  }
+  if (!profile) {
+    profile = await getCurrentProfile();
+  }
+  if (!profile) {
+    return {
+      usedBytes: 0,
+      usedFormatted: '0 MB',
+      totalBytes: 0,
+      totalGb: 0,
+      percentUsed: 0,
+      isLocked: true,
+      planName: 'Free',
+    };
+  }
+
+  const adminClient = createAdminClient();
+  const [{ data: sub }, { data: plansData }, { data: row }] = await Promise.all([
+    adminClient
+      .from('subscriptions')
+      .select('status, plan_id, plans(*)')
+      .eq('user_id', profile.user_id)
+      .maybeSingle(),
+    adminClient
+      .from('plans')
+      .select('*')
+      .order('tier', { ascending: true }),
+    adminClient
+      .from('platform_settings')
+      .select('value')
+      .eq('key', `raw_media_${profile.id}`)
+      .maybeSingle(),
+  ]);
+
+  const activePlan = (sub?.status === 'active' && sub?.plans) ? (sub.plans as any) : null;
+  const isFree = !activePlan || activePlan.tier === 0 || activePlan.slug === 'free';
+  const freePlanFromDb = plansData?.find((p) => p.tier === 0 || p.slug === 'free');
+
+  let totalGb = 0;
+  let planName = 'Free';
+
+  if (!isFree && activePlan) {
+    totalGb = Number(activePlan.limits?.storage_gb ?? (activePlan.tier === 1 ? 1 : activePlan.tier === 2 ? 5 : 15));
+    planName = activePlan.name || 'Paid Plan';
+  } else {
+    totalGb = Number(freePlanFromDb?.limits?.storage_gb ?? 0);
+    planName = freePlanFromDb?.name || 'Free';
+  }
+
+  let items: RawMediaItem[] = [];
+  if (row?.value) {
+    try {
+      const parsed = JSON.parse(row.value);
+      if (Array.isArray(parsed)) items = parsed;
+    } catch {}
+  }
+
+  const usedBytes = items
+    .filter((item) => item.storage_provider === 'platform' || !item.storage_provider)
+    .reduce((acc, item) => acc + parseSizeBytes(item.file_size, item.file_size_bytes), 0);
+
+  const totalBytes = totalGb * 1024 * 1024 * 1024;
+  const percentUsed = totalBytes > 0 ? Math.min(100, Math.round((usedBytes / totalBytes) * 100)) : 0;
+  const isLocked = totalGb <= 0;
+
+  return {
+    usedBytes,
+    usedFormatted: formatBytes(usedBytes),
+    totalBytes,
+    totalGb,
+    percentUsed,
+    isLocked,
+    planName,
+  };
 }
 
 async function getCurrentProfile() {
@@ -108,6 +229,7 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
   url: string;
   fileName: string;
   fileSize: string;
+  fileSizeBytes?: number;
   mediaType: 'video' | 'audio';
   storageProvider: 'platform';
 }> {
@@ -128,6 +250,20 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
     mediaType = 'video';
   } else {
     throw new Error('Unsupported format. Please upload MP4, MOV, WebM video or MP3, WAV, M4A audio.');
+  }
+
+  // Enforce Plan Storage Quota & Free Tier Lock
+  const usage = await getArtistStorageUsage(profile.id);
+  if (usage.isLocked || usage.totalGb <= 0) {
+    throw new Error(
+      `Cloud Media Vault upload is locked on the ${usage.planName} plan (0 GB limit). Please upgrade to a Paid Plan (Starter / Pro / Premium) to upload files directly, or use the External Cloud Link tab.`
+    );
+  }
+
+  if (usage.usedBytes + file.size > usage.totalBytes) {
+    throw new Error(
+      `Storage quota exceeded! You have used ${usage.usedFormatted} of your ${usage.totalGb} GB plan limit. Please delete older media files or upgrade your plan to get more cloud storage.`
+    );
   }
 
   // Format file size
@@ -163,6 +299,7 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
     url: publicUrl,
     fileName: file.name,
     fileSize,
+    fileSizeBytes: file.size,
     mediaType,
     storageProvider: 'platform',
   };
@@ -177,6 +314,7 @@ export async function addRawMediaItem(payload: {
   file_url: string;
   file_name?: string;
   file_size?: string;
+  file_size_bytes?: number;
   event_name?: string;
   description?: string;
   is_public?: boolean;
@@ -198,6 +336,7 @@ export async function addRawMediaItem(payload: {
     file_url: payload.file_url.trim(),
     file_name: payload.file_name?.trim() || 'Work Sample',
     file_size: payload.file_size?.trim() || undefined,
+    file_size_bytes: payload.file_size_bytes,
     event_name: payload.event_name?.trim() || undefined,
     description: payload.description?.trim() || undefined,
     is_public: payload.is_public ?? true,
@@ -265,9 +404,24 @@ export async function deleteRawMediaItem(id: string): Promise<boolean> {
   if (!profile) throw new Error('Not authenticated');
 
   const currentList = await getMyRawMedia();
+  const itemToDelete = currentList.find((item) => item.id === id);
   const updatedList = currentList.filter((item) => item.id !== id);
 
   const adminClient = createAdminClient();
+
+  // Reclaim storage quota by removing the actual physical file from the Supabase bucket
+  if (itemToDelete?.storage_provider === 'platform' && itemToDelete.file_url) {
+    try {
+      const parts = itemToDelete.file_url.split('/media/');
+      if (parts.length > 1) {
+        const filePath = parts[1].split('?')[0];
+        await adminClient.storage.from('media').remove([filePath]);
+      }
+    } catch (cleanupErr) {
+      console.warn('Could not remove file from media bucket:', cleanupErr);
+    }
+  }
+
   await adminClient.from('platform_settings').upsert(
     {
       key: `raw_media_${profile.id}`,

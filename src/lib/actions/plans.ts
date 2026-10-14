@@ -57,6 +57,11 @@ export async function getPublicPlans(): Promise<PublicPlan[]> {
         ];
 
         if (p.limits?.verified_badge) features.push('Verified Artist Blue Tick Badge');
+        if (p.limits?.storage_gb && p.limits.storage_gb > 0) {
+          features.push(`${p.limits.storage_gb} GB Cloud Media Vault (Audio/Video)`);
+        } else if (p.tier === 0) {
+          features.push('External Video & Audio links (YouTube/Drive)');
+        }
         if (p.limits?.analytics_dashboard) features.push('Advanced visitor & lead analytics');
         if (p.limits?.custom_domain) features.push('Custom domain connection (yourname.com)');
         if (p.limits?.remove_branding_footer) features.push('Zero BookMyArtist footer branding');
@@ -123,6 +128,7 @@ function getFallbackPlans(): PublicPlan[] {
         '15 video showcases',
         '30 photo gallery',
         '5 service packages',
+        '1 GB Cloud Media Vault',
         'Lead tracking',
         'Remove footer branding',
         'Basic analytics',
@@ -145,7 +151,7 @@ function getFallbackPlans(): PublicPlan[] {
       features: [
         'Unlimited videos & photos',
         'Unlimited packages',
-        'Google Drive integration',
+        '5 GB Cloud Media Vault',
         'Travel buffer scheduling',
         'Advanced analytics',
         'All themes unlocked',
@@ -168,6 +174,7 @@ function getFallbackPlans(): PublicPlan[] {
       features: [
         'Everything in Pro',
         'Custom domain connection',
+        '15 GB Cloud Media Vault',
         'White-label (no branding)',
         'Featured in directory',
         'Invoice generation',
@@ -176,7 +183,7 @@ function getFallbackPlans(): PublicPlan[] {
         'Dedicated VIP support',
       ],
       popular: false,
-      limits: { max_videos: -1, max_photos: -1, max_service_packages: -1, custom_domain: true },
+      limits: { max_videos: -1, max_photos: -1, max_service_packages: -1, custom_domain: true, storage_gb: 15 },
       cta: 'Get Premium',
       href: '/register?plan=premium',
     },

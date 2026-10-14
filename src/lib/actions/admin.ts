@@ -807,10 +807,10 @@ export async function getAdminPlans() {
 
   if (!plans || plans.length === 0) {
     return [
-      { id: 'free', name: 'Free', slug: 'free', price: 0, price_yearly: 0, description: 'Perfect to get started', tier: 0, is_active: true, is_popular: false, videos: 3, photos: 6, services: 3, analytics: false, custom_domain: false, verified_badge: false, themes: 1, branding: true, phone_verification: true, digital_agreements: false, tech_rider: false, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['3 showreel videos', '6 photo gallery uploads', '3 service packages', 'Direct WhatsApp booking button', 'Verified client reviews system', 'BookMyArtist Directory listing', 'Zero booking commissions', 'Offline PWA & Event Mode'] },
-      { id: 'starter', name: 'Starter', slug: 'starter', price: 199, price_yearly: 1999, description: 'For growing anchors', tier: 1, is_active: true, is_popular: false, videos: 10, photos: 20, services: 10, analytics: false, custom_domain: false, verified_badge: false, themes: 3, branding: false, phone_verification: true, digital_agreements: false, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['10 showreel videos', '20 photo gallery uploads', '10 service packages', 'Direct WhatsApp booking button', 'Tech Rider Studio & Sound Specs', 'Zero BookMyArtist branding'] },
-      { id: 'pro', name: 'Pro', slug: 'pro', price: 599, price_yearly: 5999, description: 'For serious professionals', tier: 2, is_active: true, is_popular: true, videos: 30, photos: 60, services: -1, analytics: true, custom_domain: false, verified_badge: true, themes: 5, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['30 showreel videos', '60 photos gallery', 'Unlimited service packages', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
-      { id: 'premium', name: 'Premium', slug: 'premium', price: 1299, price_yearly: 12999, description: 'For top-tier anchors', tier: 3, is_active: true, is_popular: false, videos: -1, photos: -1, services: -1, analytics: true, custom_domain: true, verified_badge: true, themes: -1, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: true, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['Unlimited showreel videos', 'Unlimited photo gallery', 'Unlimited service packages', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Custom domain connection (yourname.com)', 'Featured Directory Top Search Boost', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
+      { id: 'free', name: 'Free', slug: 'free', price: 0, price_yearly: 0, description: 'Perfect to get started', tier: 0, is_active: true, is_popular: false, videos: 3, photos: 6, services: 3, storage_gb: 0, analytics: false, custom_domain: false, verified_badge: false, themes: 1, branding: true, phone_verification: true, digital_agreements: false, tech_rider: false, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['3 showreel videos', '6 photo gallery uploads', '3 service packages', 'Direct WhatsApp booking button', 'Verified client reviews system', 'BookMyArtist Directory listing', 'Zero booking commissions', 'Offline PWA & Event Mode'] },
+      { id: 'starter', name: 'Starter', slug: 'starter', price: 199, price_yearly: 1999, description: 'For growing anchors', tier: 1, is_active: true, is_popular: false, videos: 10, photos: 20, services: 10, storage_gb: 1, analytics: false, custom_domain: false, verified_badge: false, themes: 3, branding: false, phone_verification: true, digital_agreements: false, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['10 showreel videos', '20 photo gallery uploads', '10 service packages', '1 GB Cloud Media Vault (Audio/Video)', 'Direct WhatsApp booking button', 'Tech Rider Studio & Sound Specs', 'Zero BookMyArtist branding'] },
+      { id: 'pro', name: 'Pro', slug: 'pro', price: 599, price_yearly: 5999, description: 'For serious professionals', tier: 2, is_active: true, is_popular: true, videos: 30, photos: 60, services: -1, storage_gb: 5, analytics: true, custom_domain: false, verified_badge: true, themes: 5, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['30 showreel videos', '60 photos gallery', 'Unlimited service packages', '5 GB Cloud Media Vault (Audio/Video)', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
+      { id: 'premium', name: 'Premium', slug: 'premium', price: 1299, price_yearly: 12999, description: 'For top-tier anchors', tier: 3, is_active: true, is_popular: false, videos: -1, photos: -1, services: -1, storage_gb: 15, analytics: true, custom_domain: true, verified_badge: true, themes: -1, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: true, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['Unlimited showreel videos', 'Unlimited photo gallery', 'Unlimited service packages', '15 GB Cloud Media Vault (Audio/Video)', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Custom domain connection (yourname.com)', 'Featured Directory Top Search Boost', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
     ];
   }
 
@@ -831,6 +831,7 @@ export async function getAdminPlans() {
       videos: p.limits?.max_videos ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : p.tier === 2 ? 30 : -1),
       photos: p.limits?.max_photos ?? (p.tier === 0 ? 6 : p.tier === 1 ? 20 : p.tier === 2 ? 60 : -1),
       services: p.limits?.max_service_packages ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : -1),
+      storage_gb: p.limits?.storage_gb !== undefined ? Number(p.limits.storage_gb) : (p.tier === 0 ? 0 : p.tier === 1 ? 1 : p.tier === 2 ? 5 : 15),
       analytics: !!p.limits?.analytics_dashboard,
       custom_domain: !!p.limits?.custom_domain,
       verified_badge: !!p.limits?.verified_badge,
@@ -864,6 +865,7 @@ export async function updateAdminPlan(
     videos: number;
     photos: number;
     services: number;
+    storage_gb?: number;
     themes?: number;
     analytics: boolean;
     custom_domain: boolean;
@@ -901,6 +903,7 @@ export async function updateAdminPlan(
     max_videos: updates.videos,
     max_photos: updates.photos,
     max_service_packages: updates.services,
+    storage_gb: updates.storage_gb !== undefined ? Math.max(0, Number(updates.storage_gb)) : (currentLimits.storage_gb !== undefined ? Number(currentLimits.storage_gb) : (currentPlan?.tier === 0 ? 0 : 5)),
     max_themes: updates.themes ?? currentLimits.max_themes ?? -1,
     analytics_dashboard: updates.analytics,
     custom_domain: updates.custom_domain,
@@ -998,6 +1001,7 @@ export async function createAdminPlan(data: {
   calendar_sync?: boolean;
   pdf_quotations?: boolean;
   offline_pwa?: boolean;
+  storage_gb?: number;
   features?: string[];
 }) {
   const isAdmin = await checkIsAdmin();
@@ -1039,6 +1043,7 @@ export async function createAdminPlan(data: {
     max_videos: Number(data.videos),
     max_photos: Number(data.photos),
     max_service_packages: Number(data.services),
+    storage_gb: data.storage_gb !== undefined ? Math.max(0, Number(data.storage_gb)) : (tier === 0 ? 0 : 5),
     max_themes: data.themes ?? (tier >= 2 ? -1 : 3),
     analytics_dashboard: !!data.analytics,
     custom_domain: !!data.custom_domain,

@@ -48,7 +48,7 @@ import { PackagesManager } from '@/components/portfolio/PackagesManager';
 import { PhotosManager } from '@/components/portfolio/PhotosManager';
 import { RawMediaManager } from '@/components/portfolio/RawMediaManager';
 import type { AnchorProfile, Video, Photo, ServicePackage, Testimonial } from '@/types';
-import type { RawMediaItem } from '@/lib/actions/raw-media';
+import type { RawMediaItem, ArtistStorageUsage } from '@/lib/actions/raw-media';
 import styles from './portfolio.module.css';
 
 import type { PlatformTaxonomy } from '@/types/taxonomy';
@@ -63,6 +63,7 @@ interface PortfolioFormProps {
   }) | null;
   taxonomy?: PlatformTaxonomy;
   initialRawMedia?: RawMediaItem[];
+  initialStorageUsage?: ArtistStorageUsage;
 }
 
 const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: string; border: string }> = {
@@ -74,7 +75,7 @@ const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: stri
   cinema: { label: 'CineStar Red Carpet Premiere', badge: '🎬 Red Carpet Premiere', color: '#ff2a4b', border: 'rgba(255, 42, 75, 0.5)' },
 };
 
-export function PortfolioForm({ initialProfile, taxonomy, initialRawMedia = [] }: PortfolioFormProps) {
+export function PortfolioForm({ initialProfile, taxonomy, initialRawMedia = [], initialStorageUsage }: PortfolioFormProps) {
   const { success, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
   const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(true);
@@ -1388,6 +1389,7 @@ export function PortfolioForm({ initialProfile, taxonomy, initialRawMedia = [] }
         {/* Raw Videos & MP3 Audio Vault Manager (Directly Below Video Showcase) */}
         <RawMediaManager
           initialItems={initialRawMedia}
+          initialStorageUsage={initialStorageUsage}
           artistSlug={initialProfile?.slug || ''}
           artistName={initialProfile?.name || 'Artist'}
         />

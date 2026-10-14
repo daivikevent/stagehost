@@ -28,6 +28,7 @@ import {
   Smartphone,
   Lock,
   Star,
+  HardDrive,
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import {
@@ -57,6 +58,7 @@ export interface PlanConfig {
   videos: number;
   photos: number;
   services: number;
+  storage_gb?: number;
   analytics: boolean;
   custom_domain: boolean;
   verified_badge?: boolean;
@@ -82,6 +84,7 @@ function generateDefaultBullets(plan: {
   videos?: number;
   photos?: number;
   services?: number;
+  storage_gb?: number;
   themes?: number;
   analytics?: boolean;
   custom_domain?: boolean;
@@ -100,6 +103,9 @@ function generateDefaultBullets(plan: {
     plan.videos === -1 ? 'Unlimited showreel videos' : `${plan.videos ?? 5} showreel videos`,
     plan.photos === -1 ? 'Unlimited photo gallery' : `${plan.photos ?? 10} photos`,
     plan.services === -1 ? 'Unlimited service packages' : `${plan.services ?? 3} service packages`,
+    plan.storage_gb !== undefined && plan.storage_gb > 0
+      ? `${plan.storage_gb} GB Cloud Media Vault (Audio/Video)`
+      : 'External Video & Audio links (YouTube/Drive)',
     'Direct WhatsApp booking button',
     'BookMyArtist Directory listing',
     'Zero booking commissions',
@@ -135,6 +141,7 @@ const defaultNewPlanState = {
   videos: 20,
   photos: 40,
   services: 8,
+  storage_gb: 5,
   analytics: true,
   custom_domain: false,
   verified_badge: true,
@@ -284,6 +291,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
         videos: Number(newPlanForm.videos),
         photos: Number(newPlanForm.photos),
         services: Number(newPlanForm.services),
+        storage_gb: Number(newPlanForm.storage_gb),
         analytics: newPlanForm.analytics,
         custom_domain: newPlanForm.custom_domain,
         verified_badge: newPlanForm.verified_badge,
@@ -408,6 +416,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
           videos: planToSave.videos,
           photos: planToSave.photos,
           services: planToSave.services,
+          storage_gb: planToSave.storage_gb,
           themes: planToSave.themes,
           analytics: planToSave.analytics,
           custom_domain: planToSave.custom_domain,
@@ -448,6 +457,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
         original.videos !== editingPlan.videos ||
         original.photos !== editingPlan.photos ||
         original.services !== editingPlan.services ||
+        original.storage_gb !== editingPlan.storage_gb ||
         original.analytics !== editingPlan.analytics ||
         original.custom_domain !== editingPlan.custom_domain ||
         original.verified_badge !== editingPlan.verified_badge ||
@@ -704,6 +714,15 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
 
             {/* Platform Feature Badges */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', margin: '8px 0 12px' }}>
+              {(plan.storage_gb !== undefined && plan.storage_gb > 0) ? (
+                <span className="badge badge-info" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <HardDrive size={10} /> {plan.storage_gb} GB Vault
+                </span>
+              ) : (
+                <span className="badge badge-ghost" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px', color: 'var(--text-tertiary)' }}>
+                  <Lock size={10} /> 0 GB (Links Only)
+                </span>
+              )}
               {plan.phone_verification && (
                 <span className="badge badge-primary" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
                   <ShieldCheck size={10} /> Verified OTP
@@ -1266,7 +1285,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr 1fr',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
                     gap: '8px',
                   }}
                 >
@@ -1306,6 +1325,20 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                       value={newPlanForm.services}
                       onChange={(e) =>
                         setNewPlanForm({ ...newPlanForm, services: Number(e.target.value) })
+                      }
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label" style={{ fontSize: '11px' }} title="0 GB locks direct cloud file uploads for this plan">
+                      Storage (GB, 0=Lock)
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      className="input"
+                      value={newPlanForm.storage_gb ?? 0}
+                      onChange={(e) =>
+                        setNewPlanForm({ ...newPlanForm, storage_gb: Number(e.target.value) })
                       }
                     />
                   </div>
@@ -1921,7 +1954,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr 1fr',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
                     gap: '8px',
                   }}
                 >
@@ -1961,6 +1994,20 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                       value={editingPlan.services}
                       onChange={(e) =>
                         setEditingPlan({ ...editingPlan, services: Number(e.target.value) })
+                      }
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label" style={{ fontSize: '11px' }} title="0 GB locks direct cloud file uploads for this plan">
+                      Storage (GB, 0=Lock)
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      className="input"
+                      value={editingPlan.storage_gb ?? 0}
+                      onChange={(e) =>
+                        setEditingPlan({ ...editingPlan, storage_gb: Number(e.target.value) })
                       }
                     />
                   </div>

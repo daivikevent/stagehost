@@ -20,6 +20,7 @@ export const DEFAULT_PLAN_LIMITS = {
     remove_branding_badge: false,
     remove_branding_email: false,
     remove_branding_full: false,
+    storage_gb: 0, // 0 GB: Cloud uploads locked (external links only)
     travel_buffer_scheduling: false,
     analytics_dashboard: false,
     lead_management: false,
@@ -39,6 +40,7 @@ export const DEFAULT_PLAN_LIMITS = {
     remove_branding_badge: false,
     remove_branding_email: false,
     remove_branding_full: false,
+    storage_gb: 1, // 1 GB cloud media vault
     travel_buffer_scheduling: false,
     analytics_dashboard: true,
     lead_management: true,
@@ -58,6 +60,7 @@ export const DEFAULT_PLAN_LIMITS = {
     remove_branding_badge: true,
     remove_branding_email: true,
     remove_branding_full: false,
+    storage_gb: 5, // 5 GB cloud media vault
     travel_buffer_scheduling: true,
     analytics_dashboard: true,
     lead_management: true,
@@ -77,6 +80,7 @@ export const DEFAULT_PLAN_LIMITS = {
     remove_branding_badge: true,
     remove_branding_email: true,
     remove_branding_full: true,
+    storage_gb: 15, // 15 GB cloud media vault
     travel_buffer_scheduling: true,
     analytics_dashboard: true,
     lead_management: true,

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getMyProfile } from '@/lib/actions/profile';
-import { getMyRawMedia } from '@/lib/actions/raw-media';
+import { getMyRawMedia, getArtistStorageUsage } from '@/lib/actions/raw-media';
 import { RawMediaVaultClient } from './RawMediaVaultClient';
 
 export const metadata: Metadata = {
@@ -18,11 +18,15 @@ export default async function VaultPage() {
     redirect('/login');
   }
 
-  const rawMediaItems = await getMyRawMedia();
+  const [rawMediaItems, storageUsage] = await Promise.all([
+    getMyRawMedia(),
+    getArtistStorageUsage(),
+  ]);
 
   return (
     <RawMediaVaultClient
       initialItems={rawMediaItems}
+      initialStorageUsage={storageUsage}
       artistName={profile.name || 'Artist'}
       artistSlug={profile.slug || ''}
     />
