@@ -5,6 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { checkIsAdmin } from '@/lib/actions/admin';
+import { getMyProfile } from './profile';
 
 export interface RawMediaItem {
   id: string;
@@ -17,6 +18,9 @@ export interface RawMediaItem {
   event_name?: string;
   description?: string;
   is_public: boolean;
+  storage_provider?: 'platform' | 'google_drive';
+  drive_file_id?: string;
+  drive_web_view_link?: string;
   created_at: string;
 }
 
@@ -105,6 +109,7 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
   fileName: string;
   fileSize: string;
   mediaType: 'video' | 'audio';
+  storageProvider: 'platform';
 }> {
   const profile = await getCurrentProfile();
   if (!profile) throw new Error('Not authenticated');
@@ -159,6 +164,7 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
     fileName: file.name,
     fileSize,
     mediaType,
+    storageProvider: 'platform',
   };
 }
 
@@ -174,6 +180,9 @@ export async function addRawMediaItem(payload: {
   event_name?: string;
   description?: string;
   is_public?: boolean;
+  storage_provider?: 'platform' | 'google_drive';
+  drive_file_id?: string;
+  drive_web_view_link?: string;
 }): Promise<RawMediaItem> {
   const profile = await getCurrentProfile();
   if (!profile) throw new Error('Not authenticated');
@@ -192,6 +201,9 @@ export async function addRawMediaItem(payload: {
     event_name: payload.event_name?.trim() || undefined,
     description: payload.description?.trim() || undefined,
     is_public: payload.is_public ?? true,
+    storage_provider: payload.storage_provider || 'platform',
+    drive_file_id: payload.drive_file_id,
+    drive_web_view_link: payload.drive_web_view_link,
     created_at: new Date().toISOString(),
   };
 

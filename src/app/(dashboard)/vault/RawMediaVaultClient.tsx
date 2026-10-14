@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useTransition, useRef } from 'react';
+import { useState, useTransition, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Film,
   Music,
@@ -19,6 +20,7 @@ import {
   Play,
   FileVideo,
   FileAudio,
+  HardDrive,
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import {
@@ -42,6 +44,7 @@ export function RawMediaVaultClient({
   artistSlug,
 }: RawMediaVaultClientProps) {
   const { success, error: showError } = useToast();
+
   const [items, setItems] = useState<RawMediaItem[]>(initialItems);
   const [activeTab, setActiveTab] = useState<'upload' | 'link'>('upload');
   const [filter, setFilter] = useState<'all' | 'video' | 'audio' | 'public' | 'private'>('all');
@@ -124,6 +127,7 @@ export function RawMediaVaultClient({
           event_name: eventName,
           description,
           is_public: isPublic,
+          storage_provider: uploadRes.storageProvider,
         });
 
         setItems((prev) => [newItem, ...prev]);
