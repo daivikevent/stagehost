@@ -16,6 +16,18 @@ import {
   Layers,
   Eye,
   EyeOff,
+  Check,
+  RefreshCw,
+  FileText,
+  Sliders,
+  Calendar,
+  FileSpreadsheet,
+  ShieldCheck,
+  Zap,
+  Globe,
+  Smartphone,
+  Lock,
+  Star,
 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import {
@@ -50,11 +62,66 @@ export interface PlanConfig {
   verified_badge?: boolean;
   themes: number;
   branding: boolean;
+  phone_verification?: boolean;
+  digital_agreements?: boolean;
+  tech_rider?: boolean;
+  client_reviews?: boolean;
+  featured_directory?: boolean;
+  calendar_sync?: boolean;
+  pdf_quotations?: boolean;
+  offline_pwa?: boolean;
+  features?: string[];
 }
 
 interface PlansClientProps {
   initialPlans: PlanConfig[];
   initialCoupons?: Coupon[];
+}
+
+function generateDefaultBullets(plan: {
+  videos?: number;
+  photos?: number;
+  services?: number;
+  themes?: number;
+  analytics?: boolean;
+  custom_domain?: boolean;
+  verified_badge?: boolean;
+  branding?: boolean;
+  phone_verification?: boolean;
+  digital_agreements?: boolean;
+  tech_rider?: boolean;
+  client_reviews?: boolean;
+  featured_directory?: boolean;
+  calendar_sync?: boolean;
+  pdf_quotations?: boolean;
+  offline_pwa?: boolean;
+}): string[] {
+  const bullets: string[] = [
+    plan.videos === -1 ? 'Unlimited showreel videos' : `${plan.videos ?? 5} showreel videos`,
+    plan.photos === -1 ? 'Unlimited photo gallery' : `${plan.photos ?? 10} photos`,
+    plan.services === -1 ? 'Unlimited service packages' : `${plan.services ?? 3} service packages`,
+    'Direct WhatsApp booking button',
+    'BookMyArtist Directory listing',
+    'Zero booking commissions',
+  ];
+
+  if (plan.verified_badge) bullets.push('Verified Artist Blue Tick Badge');
+  if (plan.phone_verification) bullets.push('1-Click Phone Verified Leads');
+  if (plan.digital_agreements) bullets.push('Digital E-Sign Event Agreements');
+  if (plan.tech_rider) bullets.push('Tech Rider Studio & Sound Specs');
+  if (plan.client_reviews) bullets.push('Verified Client Review Collector');
+  if (plan.featured_directory) bullets.push('Featured Directory Top Boost');
+  if (plan.calendar_sync) bullets.push('Google / Apple Calendar Auto-Sync');
+  if (plan.pdf_quotations) bullets.push('Instant PDF Quotation & Invoice Generator');
+  if (plan.analytics) bullets.push('Advanced visitor & lead analytics');
+  if (plan.custom_domain) bullets.push('Custom domain connection (yourname.com)');
+  if (!plan.branding) bullets.push('100% White-Label (No BookMyArtist branding)');
+  if (plan.offline_pwa) bullets.push('Offline PWA & Event Day Mode');
+  if ((plan.themes ?? 1) > 1) {
+    bullets.push(`${plan.themes === -1 ? 'All' : plan.themes} themes unlocked`);
+  }
+
+  return bullets;
 }
 
 const defaultNewPlanState = {
@@ -73,6 +140,15 @@ const defaultNewPlanState = {
   verified_badge: true,
   branding: false,
   is_popular: false,
+  phone_verification: true,
+  digital_agreements: true,
+  tech_rider: true,
+  client_reviews: true,
+  featured_directory: false,
+  calendar_sync: true,
+  pdf_quotations: true,
+  offline_pwa: true,
+  customBullets: [] as string[],
 };
 
 export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientProps) {
@@ -85,6 +161,8 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
   const [isCreatingPlan, setIsCreatingPlan] = useState(false);
   const [newPlanForm, setNewPlanForm] = useState(defaultNewPlanState);
   const [isSavingPlan, setIsSavingPlan] = useState(false);
+  const [newCreateBulletText, setNewCreateBulletText] = useState('');
+  const [newEditBulletText, setNewEditBulletText] = useState('');
 
   // Delete Plan State
   const [planToDelete, setPlanToDelete] = useState<PlanConfig | null>(null);
@@ -105,6 +183,65 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
     max_uses: '',
   });
   const [isSavingCoupon, setIsSavingCoupon] = useState(false);
+
+  // Custom bullet points handlers for Edit Modal
+  const handleAddEditBullet = () => {
+    if (!newEditBulletText.trim() || !editingPlan) return;
+    setEditingPlan({
+      ...editingPlan,
+      features: [...(editingPlan.features || []), newEditBulletText.trim()],
+    });
+    setNewEditBulletText('');
+  };
+
+  const handleUpdateEditBullet = (index: number, val: string) => {
+    if (!editingPlan) return;
+    const updated = [...(editingPlan.features || [])];
+    updated[index] = val;
+    setEditingPlan({ ...editingPlan, features: updated });
+  };
+
+  const handleDeleteEditBullet = (index: number) => {
+    if (!editingPlan) return;
+    const updated = (editingPlan.features || []).filter((_, idx) => idx !== index);
+    setEditingPlan({ ...editingPlan, features: updated });
+  };
+
+  const handleAutoGenerateEditBullets = () => {
+    if (!editingPlan) return;
+    const bullets = generateDefaultBullets(editingPlan);
+    setEditingPlan({ ...editingPlan, features: bullets });
+  };
+
+  // Custom bullet points handlers for Create Modal
+  const handleAddCreateBullet = () => {
+    if (!newCreateBulletText.trim()) return;
+    setNewPlanForm((prev) => ({
+      ...prev,
+      customBullets: [...prev.customBullets, newCreateBulletText.trim()],
+    }));
+    setNewCreateBulletText('');
+  };
+
+  const handleUpdateCreateBullet = (index: number, val: string) => {
+    setNewPlanForm((prev) => {
+      const updated = [...prev.customBullets];
+      updated[index] = val;
+      return { ...prev, customBullets: updated };
+    });
+  };
+
+  const handleDeleteCreateBullet = (index: number) => {
+    setNewPlanForm((prev) => ({
+      ...prev,
+      customBullets: prev.customBullets.filter((_, idx) => idx !== index),
+    }));
+  };
+
+  const handleAutoGenerateCreateBullets = () => {
+    const bullets = generateDefaultBullets(newPlanForm);
+    setNewPlanForm((prev) => ({ ...prev, customBullets: bullets }));
+  };
 
   const handlePlanNameChange = (val: string) => {
     const generatedSlug = val
@@ -152,14 +289,24 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
         verified_badge: newPlanForm.verified_badge,
         branding: newPlanForm.branding,
         is_popular: newPlanForm.is_popular,
+        phone_verification: newPlanForm.phone_verification,
+        digital_agreements: newPlanForm.digital_agreements,
+        tech_rider: newPlanForm.tech_rider,
+        client_reviews: newPlanForm.client_reviews,
+        featured_directory: newPlanForm.featured_directory,
+        calendar_sync: newPlanForm.calendar_sync,
+        pdf_quotations: newPlanForm.pdf_quotations,
+        offline_pwa: newPlanForm.offline_pwa,
+        features: newPlanForm.customBullets.length > 0 ? newPlanForm.customBullets : undefined,
       });
 
       if (res.plan) {
-        setPlans((prev) => [...prev, res.plan]);
+        setPlans((prev) => [...prev, res.plan as any]);
       }
       success(`Plan "${newPlanForm.name}" created and published!`);
       setIsCreatingPlan(false);
       setNewPlanForm(defaultNewPlanState);
+      setNewCreateBulletText('');
     } catch (err) {
       showError(err instanceof Error ? err.message : 'Failed to create plan');
     } finally {
@@ -190,6 +337,15 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
         branding: plan.branding,
         is_popular: plan.is_popular,
         is_active: newActiveState,
+        phone_verification: plan.phone_verification,
+        digital_agreements: plan.digital_agreements,
+        tech_rider: plan.tech_rider,
+        client_reviews: plan.client_reviews,
+        featured_directory: plan.featured_directory,
+        calendar_sync: plan.calendar_sync,
+        pdf_quotations: plan.pdf_quotations,
+        offline_pwa: plan.offline_pwa,
+        features: plan.features,
       });
       success(
         newActiveState
@@ -259,6 +415,15 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
           branding: planToSave.branding,
           is_popular: planToSave.is_popular,
           is_active: planToSave.is_active,
+          phone_verification: planToSave.phone_verification,
+          digital_agreements: planToSave.digital_agreements,
+          tech_rider: planToSave.tech_rider,
+          client_reviews: planToSave.client_reviews,
+          featured_directory: planToSave.featured_directory,
+          calendar_sync: planToSave.calendar_sync,
+          pdf_quotations: planToSave.pdf_quotations,
+          offline_pwa: planToSave.offline_pwa,
+          features: planToSave.features,
         });
 
         setPlans((prev) => prev.map((p) => (p.id === planToSave.id ? planToSave : p)));
@@ -289,7 +454,16 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
         original.branding !== editingPlan.branding ||
         original.is_popular !== editingPlan.is_popular ||
         original.is_active !== editingPlan.is_active ||
-        original.period_text !== editingPlan.period_text);
+        original.period_text !== editingPlan.period_text ||
+        original.phone_verification !== editingPlan.phone_verification ||
+        original.digital_agreements !== editingPlan.digital_agreements ||
+        original.tech_rider !== editingPlan.tech_rider ||
+        original.client_reviews !== editingPlan.client_reviews ||
+        original.featured_directory !== editingPlan.featured_directory ||
+        original.calendar_sync !== editingPlan.calendar_sync ||
+        original.pdf_quotations !== editingPlan.pdf_quotations ||
+        original.offline_pwa !== editingPlan.offline_pwa ||
+        JSON.stringify(original.features) !== JSON.stringify(editingPlan.features));
 
     if (hasChanges) {
       handleSavePlanLimits(undefined, editingPlan);
@@ -528,35 +702,89 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
               </div>
             </div>
 
-            <ul className={styles.planCardFeatures}>
-              <li>{plan.videos === -1 ? 'Unlimited videos' : `${plan.videos} videos`}</li>
-              <li>{plan.photos === -1 ? 'Unlimited photos' : `${plan.photos} photos`}</li>
-              <li>
-                {plan.services === -1
-                  ? 'Unlimited services'
-                  : `${plan.services} service packages`}
-              </li>
-              <li>{plan.analytics ? 'Analytics dashboard' : 'No analytics'}</li>
-              <li>{plan.custom_domain ? 'Custom domain' : 'Subdomain only'}</li>
-              <li>
-                {plan.verified_badge
-                  ? 'Verified Artist Badge (Blue tick)'
-                  : 'No verified badge'}
-              </li>
-              <li>All themes included</li>
-              <li>
-                {plan.branding ? 'Shows BookMyArtist branding' : 'No branding (White-label)'}
-              </li>
-            </ul>
+            {/* Platform Feature Badges */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', margin: '8px 0 12px' }}>
+              {plan.phone_verification && (
+                <span className="badge badge-primary" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <ShieldCheck size={10} /> Verified OTP
+                </span>
+              )}
+              {plan.digital_agreements && (
+                <span className="badge badge-accent" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <FileText size={10} /> E-Sign
+                </span>
+              )}
+              {plan.tech_rider && (
+                <span className="badge badge-info" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <Sliders size={10} /> Tech Rider
+                </span>
+              )}
+              {plan.client_reviews && (
+                <span className="badge badge-secondary" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <Star size={10} /> Reviews
+                </span>
+              )}
+              {plan.calendar_sync && (
+                <span className="badge badge-success" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <Calendar size={10} /> Calendar
+                </span>
+              )}
+              {plan.pdf_quotations && (
+                <span className="badge badge-warning" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <FileSpreadsheet size={10} /> PDF Quotes
+                </span>
+              )}
+              {plan.featured_directory && (
+                <span className="badge badge-warning" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <Zap size={10} /> Top Boost
+                </span>
+              )}
+              {plan.offline_pwa && (
+                <span className="badge badge-ghost" style={{ fontSize: '10px', padding: '2px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                  <Smartphone size={10} /> PWA
+                </span>
+              )}
+            </div>
+
+            {/* Live Pricing Bullets Preview */}
+            <div style={{ margin: '8px 0', borderTop: '1px dashed var(--color-border)', paddingTop: '10px' }}>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: '6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Sparkles size={12} color="var(--color-primary)" /> Pricing Bullets
+                </span>
+                <span style={{ fontSize: '10px', color: 'var(--color-success)', fontWeight: 600 }}>
+                  {plan.features?.length ?? 0} bullets live
+                </span>
+              </div>
+              <ul className={styles.planCardFeatures} style={{ maxHeight: '160px', overflowY: 'auto' }}>
+                {(plan.features && plan.features.length > 0
+                  ? plan.features
+                  : [
+                      plan.videos === -1 ? 'Unlimited showreels' : `${plan.videos} videos`,
+                      plan.photos === -1 ? 'Unlimited photos' : `${plan.photos} photos`,
+                      plan.services === -1 ? 'Unlimited services' : `${plan.services} service packages`,
+                      plan.analytics ? 'Analytics dashboard' : 'No analytics',
+                      plan.custom_domain ? 'Custom domain' : 'Subdomain only',
+                      plan.verified_badge ? 'Verified Artist Badge' : 'No verified badge',
+                      plan.branding ? 'BookMyArtist branding' : 'Zero branding (White-label)',
+                    ]
+                ).map((feat, fIdx) => (
+                  <li key={fIdx} style={{ fontSize: '12px', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+                    <Check size={12} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: '3px' }} />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div style={{ display: 'flex', gap: '8px', marginTop: 'auto', paddingTop: '12px' }}>
               <button
                 type="button"
                 className="btn btn-ghost btn-sm"
-                style={{ flex: 1 }}
-                onClick={() => setEditingPlan({ ...plan })}
+                style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                onClick={() => setEditingPlan({ ...plan, features: plan.features ? [...plan.features] : generateDefaultBullets(plan) })}
               >
-                <Edit2 size={14} /> Edit Limits
+                <Edit2 size={14} /> Edit Plan & Bullets
               </button>
               {plan.slug !== 'free' && (
                 <button
@@ -865,7 +1093,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: '520px',
+              maxWidth: '680px',
               maxHeight: '88vh',
               display: 'flex',
               flexDirection: 'column',
@@ -1214,6 +1442,274 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                     </label>
                   </div>
                 </div>
+
+                {/* Platform Feature Entitlements Section */}
+                <div
+                  style={{
+                    background: 'var(--color-bg-secondary)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Sliders size={16} color="var(--color-primary)" />
+                      <span className="text-sm font-semibold" style={{ color: 'var(--color-primary)' }}>
+                        Platform Feature Entitlements
+                      </span>
+                    </div>
+                    <span style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>
+                      Assign platform modules to this plan tier
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                      gap: '10px',
+                    }}
+                  >
+                    {/* Phone Verification */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <ShieldCheck size={16} color="var(--color-primary)" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Phone OTP Verified Leads</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Filter spam inquiries</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.phone_verification}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, phone_verification: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Digital Agreements */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FileText size={16} color="#06b6d4" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Digital E-Sign Agreements</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Performance contracts</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.digital_agreements}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, digital_agreements: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Tech Rider */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Sliders size={16} color="#8b5cf6" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Tech Rider Studio</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Sound & mic specs generator</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.tech_rider}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, tech_rider: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Client Reviews */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Star size={16} color="#f59e0b" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Verified Client Reviews</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Testimonial collection</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.client_reviews}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, client_reviews: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Calendar Sync */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Calendar size={16} color="#10b981" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Calendar Auto-Sync</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Google / Apple calendar</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.calendar_sync}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, calendar_sync: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* PDF Quotations */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FileSpreadsheet size={16} color="#ec4899" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>PDF Quotations & Invoices</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>GST-ready estimate builder</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.pdf_quotations}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, pdf_quotations: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Featured Directory Boost */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Zap size={16} color="#f97316" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Featured Directory Boost</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Top ranking in search</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.featured_directory}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, featured_directory: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Offline PWA */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Smartphone size={16} color="#6366f1" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Offline PWA Mode</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>No-internet event day tools</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={newPlanForm.offline_pwa}
+                          onChange={(e) => setNewPlanForm({ ...newPlanForm, offline_pwa: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Custom Bullets Manager Section */}
+                <div
+                  style={{
+                    background: 'var(--color-bg-secondary)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Sparkles size={16} color="var(--color-warning)" />
+                        <span className="text-sm font-semibold">Pricing Card Bullet Points</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>
+                        These exact bullets sync to the public pricing cards on / and /pricing
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-xs"
+                      onClick={handleAutoGenerateCreateBullets}
+                      style={{ fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px', color: 'var(--color-primary)' }}
+                    >
+                      <RefreshCw size={11} /> Auto-Generate from Toggles
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {newPlanForm.customBullets.map((bText, bIdx) => (
+                      <div key={bIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-text-tertiary)', width: '18px', textAlign: 'center' }}>
+                          {bIdx + 1}.
+                        </span>
+                        <input
+                          type="text"
+                          className="input input-sm"
+                          value={bText}
+                          onChange={(e) => handleUpdateCreateBullet(bIdx, e.target.value)}
+                          style={{ flex: 1, fontSize: '12px' }}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-xs text-error"
+                          onClick={() => handleDeleteCreateBullet(bIdx)}
+                          style={{ padding: '4px 6px' }}
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    ))}
+
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                      <input
+                        type="text"
+                        className="input input-sm"
+                        placeholder="Add custom bullet (e.g. VIP Concierge Support)..."
+                        value={newCreateBulletText}
+                        onChange={(e) => setNewCreateBulletText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddCreateBullet();
+                          }
+                        }}
+                        style={{ flex: 1, fontSize: '12px' }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={handleAddCreateBullet}
+                        style={{ fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus size={13} /> Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Sticky Footer */}
@@ -1259,7 +1755,7 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: '520px',
+              maxWidth: '680px',
               maxHeight: '88vh',
               display: 'flex',
               flexDirection: 'column',
@@ -1626,6 +2122,274 @@ export function PlansClient({ initialPlans, initialCoupons = [] }: PlansClientPr
                       />
                       <span className="toggle-slider" />
                     </label>
+                  </div>
+                </div>
+
+                {/* Platform Feature Entitlements Section */}
+                <div
+                  style={{
+                    background: 'var(--color-bg-secondary)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Sliders size={16} color="var(--color-primary)" />
+                      <span className="text-sm font-semibold" style={{ color: 'var(--color-primary)' }}>
+                        Platform Feature Entitlements
+                      </span>
+                    </div>
+                    <span style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>
+                      Assign platform modules to this plan tier
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                      gap: '10px',
+                    }}
+                  >
+                    {/* Phone Verification */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <ShieldCheck size={16} color="var(--color-primary)" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Phone OTP Verified Leads</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Filter spam inquiries</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.phone_verification ?? true}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, phone_verification: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Digital Agreements */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FileText size={16} color="#06b6d4" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Digital E-Sign Agreements</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Performance contracts</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.digital_agreements ?? false}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, digital_agreements: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Tech Rider */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Sliders size={16} color="#8b5cf6" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Tech Rider Studio</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Sound & mic specs generator</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.tech_rider ?? false}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, tech_rider: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Client Reviews */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Star size={16} color="#f59e0b" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Verified Client Reviews</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Testimonial collection</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.client_reviews ?? true}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, client_reviews: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Calendar Sync */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Calendar size={16} color="#10b981" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Calendar Auto-Sync</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Google / Apple calendar</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.calendar_sync ?? false}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, calendar_sync: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* PDF Quotations */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FileSpreadsheet size={16} color="#ec4899" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>PDF Quotations & Invoices</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>GST-ready estimate builder</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.pdf_quotations ?? false}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, pdf_quotations: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Featured Directory Boost */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Zap size={16} color="#f97316" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Featured Directory Boost</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>Top ranking in search</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.featured_directory ?? false}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, featured_directory: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+
+                    {/* Offline PWA */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Smartphone size={16} color="#6366f1" />
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 600 }}>Offline PWA Mode</div>
+                          <div style={{ fontSize: '10px', color: 'var(--color-text-tertiary)' }}>No-internet event day tools</div>
+                        </div>
+                      </div>
+                      <label className="toggle">
+                        <input
+                          type="checkbox"
+                          checked={editingPlan.offline_pwa ?? true}
+                          onChange={(e) => setEditingPlan({ ...editingPlan, offline_pwa: e.target.checked })}
+                        />
+                        <span className="toggle-slider" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Custom Bullets Manager Section */}
+                <div
+                  style={{
+                    background: 'var(--color-bg-secondary)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Sparkles size={16} color="var(--color-warning)" />
+                        <span className="text-sm font-semibold">Pricing Card Bullet Points</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--color-text-tertiary)' }}>
+                        These exact bullets sync to the public pricing cards on / and /pricing
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-xs"
+                      onClick={handleAutoGenerateEditBullets}
+                      style={{ fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px', color: 'var(--color-primary)' }}
+                    >
+                      <RefreshCw size={11} /> Auto-Generate from Toggles
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {(editingPlan.features || []).map((bText, bIdx) => (
+                      <div key={bIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--color-text-tertiary)', width: '18px', textAlign: 'center' }}>
+                          {bIdx + 1}.
+                        </span>
+                        <input
+                          type="text"
+                          className="input input-sm"
+                          value={bText}
+                          onChange={(e) => handleUpdateEditBullet(bIdx, e.target.value)}
+                          style={{ flex: 1, fontSize: '12px' }}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-xs text-error"
+                          onClick={() => handleDeleteEditBullet(bIdx)}
+                          style={{ padding: '4px 6px' }}
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    ))}
+
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                      <input
+                        type="text"
+                        className="input input-sm"
+                        placeholder="Add custom bullet (e.g. VIP Concierge Support)..."
+                        value={newEditBulletText}
+                        onChange={(e) => setNewEditBulletText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddEditBullet();
+                          }
+                        }}
+                        style={{ flex: 1, fontSize: '12px' }}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={handleAddEditBullet}
+                        style={{ fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <Plus size={13} /> Add
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -8,6 +8,7 @@ import { GLOBAL_SITE_THEMES } from '@/constants/site-themes';
 import type { AnnouncementBanner, CustomDomainRequest } from '@/types';
 import { BrandLogoSettingsCard } from '@/components/admin/BrandLogoSettingsCard';
 import { TaxonomySettingsCard } from '@/components/admin/TaxonomySettingsCard';
+import { PlatformFeaturesSettingsCard } from '@/components/admin/PlatformFeaturesSettingsCard';
 import type { PlatformTaxonomy } from '@/types/taxonomy';
 import styles from '../dashboard/admin.module.css';
 
@@ -133,6 +134,9 @@ export function SettingsFormClient({ initialSettings, initialBanner, initialCust
 
         {/* Dynamic Profile Taxonomy & Dropdowns Manager */}
         {initialTaxonomy && <TaxonomySettingsCard initialTaxonomy={initialTaxonomy} />}
+
+        {/* Master Platform Feature Modules & Toggles */}
+        <PlatformFeaturesSettingsCard settings={settings} onSettingChange={update} />
 
         {/* General */}
         <div className={styles.settingSection}>

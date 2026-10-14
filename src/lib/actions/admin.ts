@@ -807,34 +807,46 @@ export async function getAdminPlans() {
 
   if (!plans || plans.length === 0) {
     return [
-      { id: 'free', name: 'Free', slug: 'free', price: 0, price_yearly: 0, description: 'Perfect to get started', tier: 0, is_active: true, is_popular: false, videos: 3, photos: 6, services: 3, analytics: false, custom_domain: false, verified_badge: false, themes: 1, branding: true },
-      { id: 'starter', name: 'Starter', slug: 'starter', price: 199, price_yearly: 1999, description: 'For growing anchors', tier: 1, is_active: true, is_popular: false, videos: 10, photos: 20, services: 10, analytics: false, custom_domain: false, verified_badge: false, themes: 3, branding: false },
-      { id: 'pro', name: 'Pro', slug: 'pro', price: 599, price_yearly: 5999, description: 'For serious professionals', tier: 2, is_active: true, is_popular: true, videos: 30, photos: 60, services: -1, analytics: true, custom_domain: false, verified_badge: true, themes: 5, branding: false },
-      { id: 'premium', name: 'Premium', slug: 'premium', price: 1299, price_yearly: 12999, description: 'For top-tier anchors', tier: 3, is_active: true, is_popular: false, videos: -1, photos: -1, services: -1, analytics: true, custom_domain: true, verified_badge: true, themes: -1, branding: false },
+      { id: 'free', name: 'Free', slug: 'free', price: 0, price_yearly: 0, description: 'Perfect to get started', tier: 0, is_active: true, is_popular: false, videos: 3, photos: 6, services: 3, analytics: false, custom_domain: false, verified_badge: false, themes: 1, branding: true, phone_verification: true, digital_agreements: false, tech_rider: false, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['3 showreel videos', '6 photo gallery uploads', '3 service packages', 'Direct WhatsApp booking button', 'Verified client reviews system', 'BookMyArtist Directory listing', 'Zero booking commissions', 'Offline PWA & Event Mode'] },
+      { id: 'starter', name: 'Starter', slug: 'starter', price: 199, price_yearly: 1999, description: 'For growing anchors', tier: 1, is_active: true, is_popular: false, videos: 10, photos: 20, services: 10, analytics: false, custom_domain: false, verified_badge: false, themes: 3, branding: false, phone_verification: true, digital_agreements: false, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: false, pdf_quotations: false, offline_pwa: true, features: ['10 showreel videos', '20 photo gallery uploads', '10 service packages', 'Direct WhatsApp booking button', 'Tech Rider Studio & Sound Specs', 'Zero BookMyArtist branding'] },
+      { id: 'pro', name: 'Pro', slug: 'pro', price: 599, price_yearly: 5999, description: 'For serious professionals', tier: 2, is_active: true, is_popular: true, videos: 30, photos: 60, services: -1, analytics: true, custom_domain: false, verified_badge: true, themes: 5, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: false, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['30 showreel videos', '60 photos gallery', 'Unlimited service packages', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
+      { id: 'premium', name: 'Premium', slug: 'premium', price: 1299, price_yearly: 12999, description: 'For top-tier anchors', tier: 3, is_active: true, is_popular: false, videos: -1, photos: -1, services: -1, analytics: true, custom_domain: true, verified_badge: true, themes: -1, branding: false, phone_verification: true, digital_agreements: true, tech_rider: true, client_reviews: true, featured_directory: true, calendar_sync: true, pdf_quotations: true, offline_pwa: true, features: ['Unlimited showreel videos', 'Unlimited photo gallery', 'Unlimited service packages', 'Verified Artist Blue Tick Badge', '1-Click Phone Verified WhatsApp Leads', 'Digital E-Sign Event Agreements', 'Tech Rider Studio & Sound Specs', 'Instant PDF Quotation & Invoice Generator', 'Calendar Auto-Sync (Google/Apple)', 'Custom domain connection (yourname.com)', 'Featured Directory Top Search Boost', 'Advanced visitor & lead analytics', 'Zero BookMyArtist branding'] },
     ];
   }
 
-  return plans.map((p) => ({
-    id: p.id,
-    name: p.name,
-    slug: p.slug,
-    price: p.price_monthly,
-    price_yearly: p.price_yearly ?? (p.price_monthly * 10),
-    strike_price: p.limits?.strike_price ? Number(p.limits.strike_price) : undefined,
-    period_text: p.limits?.period_text || (p.price_monthly === 0 ? 'forever' : undefined),
-    tier: p.tier,
-    description: p.description ?? '',
-    is_active: p.is_active ?? true,
-    is_popular: !!p.is_popular,
-    videos: p.limits?.max_videos ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : p.tier === 2 ? 30 : -1),
-    photos: p.limits?.max_photos ?? (p.tier === 0 ? 6 : p.tier === 1 ? 20 : p.tier === 2 ? 60 : -1),
-    services: p.limits?.max_service_packages ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : -1),
-    analytics: !!p.limits?.analytics_dashboard,
-    custom_domain: !!p.limits?.custom_domain,
-    verified_badge: !!p.limits?.verified_badge,
-    themes: p.tier === 0 ? 1 : p.tier === 1 ? 3 : p.tier === 2 ? 5 : -1,
-    branding: !p.limits?.remove_branding_footer,
-  }));
+  return plans.map((p) => {
+    const rawFeatures = Array.isArray(p.features) && p.features.length > 0 ? p.features : [];
+    return {
+      id: p.id,
+      name: p.name,
+      slug: p.slug,
+      price: p.price_monthly,
+      price_yearly: p.price_yearly ?? (p.price_monthly * 10),
+      strike_price: p.limits?.strike_price ? Number(p.limits.strike_price) : undefined,
+      period_text: p.limits?.period_text || (p.price_monthly === 0 ? 'forever' : undefined),
+      tier: p.tier,
+      description: p.description ?? '',
+      is_active: p.is_active ?? true,
+      is_popular: !!p.is_popular,
+      videos: p.limits?.max_videos ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : p.tier === 2 ? 30 : -1),
+      photos: p.limits?.max_photos ?? (p.tier === 0 ? 6 : p.tier === 1 ? 20 : p.tier === 2 ? 60 : -1),
+      services: p.limits?.max_service_packages ?? (p.tier === 0 ? 3 : p.tier === 1 ? 10 : -1),
+      analytics: !!p.limits?.analytics_dashboard,
+      custom_domain: !!p.limits?.custom_domain,
+      verified_badge: !!p.limits?.verified_badge,
+      themes: p.tier === 0 ? 1 : p.tier === 1 ? 3 : p.tier === 2 ? 5 : -1,
+      branding: !p.limits?.remove_branding_footer,
+      phone_verification: p.limits?.phone_verification !== undefined ? !!p.limits?.phone_verification : true,
+      digital_agreements: p.limits?.digital_agreements !== undefined ? !!p.limits?.digital_agreements : (p.tier >= 2),
+      tech_rider: p.limits?.tech_rider !== undefined ? !!p.limits?.tech_rider : (p.tier >= 1),
+      client_reviews: p.limits?.client_reviews !== undefined ? !!p.limits?.client_reviews : true,
+      featured_directory: p.limits?.featured_directory !== undefined ? !!p.limits?.featured_directory : (p.tier >= 3),
+      calendar_sync: p.limits?.calendar_sync !== undefined ? !!p.limits?.calendar_sync : (p.tier >= 2),
+      pdf_quotations: p.limits?.pdf_quotations !== undefined ? !!p.limits?.pdf_quotations : (p.tier >= 2),
+      offline_pwa: p.limits?.offline_pwa !== undefined ? !!p.limits?.offline_pwa : true,
+      features: rawFeatures,
+    };
+  });
 }
 
 /**
@@ -859,6 +871,15 @@ export async function updateAdminPlan(
     branding: boolean;
     is_popular?: boolean;
     is_active?: boolean;
+    phone_verification?: boolean;
+    digital_agreements?: boolean;
+    tech_rider?: boolean;
+    client_reviews?: boolean;
+    featured_directory?: boolean;
+    calendar_sync?: boolean;
+    pdf_quotations?: boolean;
+    offline_pwa?: boolean;
+    features?: string[];
   }
 ) {
   const isAdmin = await checkIsAdmin();
@@ -888,25 +909,44 @@ export async function updateAdminPlan(
     remove_branding_full: !updates.branding,
     strike_price: updates.strike_price !== undefined ? (updates.strike_price || null) : currentLimits.strike_price,
     period_text: updates.period_text !== undefined ? (updates.period_text.trim() || null) : currentLimits.period_text,
+    phone_verification: updates.phone_verification !== undefined ? updates.phone_verification : (currentLimits.phone_verification ?? true),
+    digital_agreements: updates.digital_agreements !== undefined ? updates.digital_agreements : (currentLimits.digital_agreements ?? false),
+    tech_rider: updates.tech_rider !== undefined ? updates.tech_rider : (currentLimits.tech_rider ?? false),
+    client_reviews: updates.client_reviews !== undefined ? updates.client_reviews : (currentLimits.client_reviews ?? true),
+    featured_directory: updates.featured_directory !== undefined ? updates.featured_directory : (currentLimits.featured_directory ?? false),
+    calendar_sync: updates.calendar_sync !== undefined ? updates.calendar_sync : (currentLimits.calendar_sync ?? false),
+    pdf_quotations: updates.pdf_quotations !== undefined ? updates.pdf_quotations : (currentLimits.pdf_quotations ?? false),
+    offline_pwa: updates.offline_pwa !== undefined ? updates.offline_pwa : (currentLimits.offline_pwa ?? true),
   };
 
-  const dynamicFeatures: string[] = [
-    updates.videos === -1 ? 'Unlimited showreel videos' : `${updates.videos} showreel videos`,
-    updates.photos === -1 ? 'Unlimited photo gallery' : `${updates.photos} photos`,
-    updates.services === -1 ? 'Unlimited service packages' : `${updates.services} service packages`,
-    'Direct WhatsApp booking button',
-    'BookMyArtist Directory listing',
-  ];
-  if (updates.verified_badge) dynamicFeatures.push('Verified Artist Blue Tick Badge');
-  if (updates.analytics) dynamicFeatures.push('Advanced visitor & lead analytics');
-  if (updates.custom_domain) dynamicFeatures.push('Custom domain connection');
-  if (!updates.branding) dynamicFeatures.push('Zero BookMyArtist branding');
-  if ((updates.themes ?? 1) > 1) dynamicFeatures.push(`${updates.themes === -1 ? 'All' : updates.themes} themes unlocked`);
+  let featuresToSave = updates.features;
+  if (!featuresToSave || !Array.isArray(featuresToSave) || featuresToSave.length === 0) {
+    featuresToSave = [
+      updates.videos === -1 ? 'Unlimited showreel videos' : `${updates.videos} showreel videos`,
+      updates.photos === -1 ? 'Unlimited photo gallery' : `${updates.photos} photos`,
+      updates.services === -1 ? 'Unlimited service packages' : `${updates.services} service packages`,
+      'Direct WhatsApp booking button',
+      'BookMyArtist Directory listing',
+    ];
+    if (updates.verified_badge) featuresToSave.push('Verified Artist Blue Tick Badge');
+    if (updates.phone_verification) featuresToSave.push('1-Click Phone Verified Leads');
+    if (updates.digital_agreements) featuresToSave.push('Digital E-Sign Event Agreements');
+    if (updates.tech_rider) featuresToSave.push('Tech Rider Studio & Sound Specs');
+    if (updates.client_reviews) featuresToSave.push('Verified Client Review Collector');
+    if (updates.featured_directory) featuresToSave.push('Featured Directory Top Boost');
+    if (updates.calendar_sync) featuresToSave.push('Calendar Auto-Sync (Google/Apple)');
+    if (updates.pdf_quotations) featuresToSave.push('Instant PDF Quotation & Invoice Generator');
+    if (updates.analytics) featuresToSave.push('Advanced visitor & lead analytics');
+    if (updates.custom_domain) featuresToSave.push('Custom domain connection');
+    if (!updates.branding) featuresToSave.push('Zero BookMyArtist branding');
+    if (updates.offline_pwa) featuresToSave.push('Offline PWA & Event Mode');
+    if ((updates.themes ?? 1) > 1) featuresToSave.push(`${updates.themes === -1 ? 'All' : updates.themes} themes unlocked`);
+  }
 
   const payload: Record<string, any> = {
     price_monthly: updates.price,
     limits: mergedLimits,
-    features: dynamicFeatures,
+    features: featuresToSave,
     updated_at: new Date().toISOString(),
   };
 
@@ -950,6 +990,15 @@ export async function createAdminPlan(data: {
   verified_badge?: boolean;
   branding: boolean;
   is_popular?: boolean;
+  phone_verification?: boolean;
+  digital_agreements?: boolean;
+  tech_rider?: boolean;
+  client_reviews?: boolean;
+  featured_directory?: boolean;
+  calendar_sync?: boolean;
+  pdf_quotations?: boolean;
+  offline_pwa?: boolean;
+  features?: string[];
 }) {
   const isAdmin = await checkIsAdmin();
   if (!isAdmin) throw new Error('Unauthorized');
@@ -998,23 +1047,42 @@ export async function createAdminPlan(data: {
     remove_branding_full: !data.branding,
     strike_price: data.strike_price ? Number(data.strike_price) : null,
     period_text: data.period_text?.trim() || null,
+    phone_verification: data.phone_verification !== undefined ? data.phone_verification : true,
+    digital_agreements: data.digital_agreements !== undefined ? data.digital_agreements : false,
+    tech_rider: data.tech_rider !== undefined ? data.tech_rider : false,
+    client_reviews: data.client_reviews !== undefined ? data.client_reviews : true,
+    featured_directory: data.featured_directory !== undefined ? data.featured_directory : false,
+    calendar_sync: data.calendar_sync !== undefined ? data.calendar_sync : false,
+    pdf_quotations: data.pdf_quotations !== undefined ? data.pdf_quotations : false,
+    offline_pwa: data.offline_pwa !== undefined ? data.offline_pwa : true,
   };
 
   const monthly = Math.max(0, Number(data.price_monthly));
   const yearly = data.price_yearly !== undefined ? Math.max(0, Number(data.price_yearly)) : monthly * 10;
 
-  const features = [
-    data.videos === -1 ? 'Unlimited showreel videos' : `${data.videos} showreel videos`,
-    data.photos === -1 ? 'Unlimited photo gallery' : `${data.photos} photos`,
-    data.services === -1 ? 'Unlimited service packages' : `${data.services} service packages`,
-    'Direct WhatsApp booking button',
-    'BookMyArtist Directory listing',
-    'Zero booking commissions',
-  ];
-  if (data.verified_badge) features.push('Verified Artist Blue Tick Badge');
-  if (data.analytics) features.push('Advanced visitor & lead analytics');
-  if (data.custom_domain) features.push('Custom domain connection (yourname.com)');
-  if (!data.branding) features.push('Zero BookMyArtist footer branding');
+  let features = data.features;
+  if (!features || !Array.isArray(features) || features.length === 0) {
+    features = [
+      data.videos === -1 ? 'Unlimited showreel videos' : `${data.videos} showreel videos`,
+      data.photos === -1 ? 'Unlimited photo gallery' : `${data.photos} photos`,
+      data.services === -1 ? 'Unlimited service packages' : `${data.services} service packages`,
+      'Direct WhatsApp booking button',
+      'BookMyArtist Directory listing',
+      'Zero booking commissions',
+    ];
+    if (data.verified_badge) features.push('Verified Artist Blue Tick Badge');
+    if (data.phone_verification) features.push('1-Click Phone Verified Leads');
+    if (data.digital_agreements) features.push('Digital E-Sign Event Agreements');
+    if (data.tech_rider) features.push('Tech Rider Studio & Sound Specs');
+    if (data.client_reviews) features.push('Verified Client Review Collector');
+    if (data.featured_directory) features.push('Featured Directory Top Boost');
+    if (data.calendar_sync) features.push('Calendar Auto-Sync (Google/Apple)');
+    if (data.pdf_quotations) features.push('Instant PDF Quotation & Invoice Generator');
+    if (data.analytics) features.push('Advanced visitor & lead analytics');
+    if (data.custom_domain) features.push('Custom domain connection (yourname.com)');
+    if (!data.branding) features.push('Zero BookMyArtist footer branding');
+    if (data.offline_pwa) features.push('Offline PWA & Event Mode');
+  }
 
   const { data: newPlan, error } = await adminClient
     .from('plans')
@@ -1063,6 +1131,15 @@ export async function createAdminPlan(data: {
       verified_badge: !!newPlan.limits?.verified_badge,
       themes: newPlan.limits?.max_themes ?? -1,
       branding: !newPlan.limits?.remove_branding_footer,
+      phone_verification: newPlan.limits?.phone_verification !== undefined ? !!newPlan.limits?.phone_verification : true,
+      digital_agreements: !!newPlan.limits?.digital_agreements,
+      tech_rider: !!newPlan.limits?.tech_rider,
+      client_reviews: newPlan.limits?.client_reviews !== undefined ? !!newPlan.limits?.client_reviews : true,
+      featured_directory: !!newPlan.limits?.featured_directory,
+      calendar_sync: !!newPlan.limits?.calendar_sync,
+      pdf_quotations: !!newPlan.limits?.pdf_quotations,
+      offline_pwa: newPlan.limits?.offline_pwa !== undefined ? !!newPlan.limits?.offline_pwa : true,
+      features: Array.isArray(newPlan.features) ? newPlan.features : features,
     },
   };
 }
