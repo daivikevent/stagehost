@@ -9,19 +9,89 @@ import type { Inquiry, InquiryStatus } from '@/types';
 import { sendInquiryAlertEmail } from '@/lib/email';
 import { sendPushNotificationToAnchor } from '@/lib/actions/push';
 import { sendWhatsAppInquiryAlert } from '@/lib/whatsapp';
+import {
+  generateVerificationSession,
+  verifyOTPSession,
+  validateVerifiedProof,
+  sendClientVerificationOTP,
+  sanitizeIndianPhone,
+} from '@/lib/phone-verification';
+
+// ---- Request Phone Verification OTP (Public) ----
+export async function requestInquiryOTP(phone: string, artistSlug?: string) {
+  const cleanPhone = sanitizeIndianPhone(phone);
+  if (!cleanPhone || cleanPhone.length !== 10) {
+    throw new Error('Please enter a valid 10-digit Indian mobile number');
+  }
+
+  let artistName = 'Artist';
+  if (artistSlug) {
+    const adminClient = createAdminClient();
+    const { data: profile } = await adminClient
+      .from('anchor_profiles')
+      .select('name')
+      .eq('slug', artistSlug)
+      .maybeSingle();
+    if (profile?.name) {
+      artistName = profile.name;
+    }
+  }
+
+  const { code, token } = generateVerificationSession(cleanPhone);
+
+  // Send via WhatsApp if available
+  const result = await sendClientVerificationOTP({
+    phone: cleanPhone,
+    code,
+    artistName,
+  });
+
+  // Check if running in development or sandbox (no real WhatsApp business API connected)
+  const isSandbox = result.simulated || !process.env.WHATSAPP_ACCESS_TOKEN || process.env.WHATSAPP_ACCESS_TOKEN.includes('placeholder');
+
+  return {
+    success: true,
+    verificationToken: token,
+    // Provide demo code in sandbox/development so clients can easily complete verification
+    demoCode: isSandbox ? code : undefined,
+    isSimulated: isSandbox,
+  };
+}
+
+// ---- Verify Phone OTP (Public) ----
+export async function verifyInquiryOTP(phone: string, code: string, verificationToken: string) {
+  const result = verifyOTPSession(phone, code, verificationToken);
+  if (!result.valid) {
+    throw new Error(result.error || 'Invalid verification code');
+  }
+
+  return {
+    success: true,
+    verifiedProofToken: result.verifiedProofToken,
+  };
+}
 
 // ---- Submit inquiry (public — no auth required) ----
-export async function submitInquiry(profileSlug: string, formData: {
-  name: string;
-  email?: string;
-  phone: string;
-  message?: string;
-  event_date?: string;
-  event_type?: string;
-  event_city?: string;
-  budget_range?: string;
-  honeypot?: string;
-}) {
+export async function submitInquiry(
+  profileSlug: string,
+  formData: {
+    name: string;
+    email?: string;
+    phone: string;
+    message?: string;
+    event_date?: string;
+    event_type?: string;
+    event_city?: string;
+    budget_range?: string;
+    honeypot?: string;
+    notes?: string;
+  },
+  options?: {
+    verifiedToken?: string;
+    isWhatsAppDirect?: boolean;
+    customNotes?: string;
+  }
+) {
   // 1. Anti-Spam Honeypot Trap: If bots fill the invisible honeypot field, silently drop
   if (formData.honeypot && formData.honeypot.trim().length > 0) {
     console.warn('[Anti-Spam] Bot inquiry caught and blocked via honeypot:', profileSlug);
@@ -29,13 +99,31 @@ export async function submitInquiry(profileSlug: string, formData: {
   }
 
   // 2. Validate & sanitize phone
-  const cleanPhone = formData.phone ? formData.phone.replace(/\D/g, '') : '';
-  if (!cleanPhone || cleanPhone.length < 10) {
+  const cleanPhone = sanitizeIndianPhone(formData.phone);
+  if (!cleanPhone || cleanPhone.length !== 10) {
     throw new Error('Please enter a valid 10-digit mobile number');
   }
 
-  const { honeypot: _hp, ...inquiryFields } = formData;
+  const { honeypot: _hp, notes: userNotes, ...inquiryFields } = formData;
   inquiryFields.phone = cleanPhone;
+
+  // 3. Determine phone verification status
+  let isPhoneVerified = false;
+  let verificationTag = '';
+
+  if (options?.verifiedToken && validateVerifiedProof(cleanPhone, options.verifiedToken)) {
+    isPhoneVerified = true;
+    verificationTag = '[PHONE_VERIFIED:otp] Verified via 4-digit mobile security check';
+  } else if (options?.isWhatsAppDirect) {
+    isPhoneVerified = true;
+    verificationTag = '[PHONE_VERIFIED:whatsapp] Verified via 1-Click WhatsApp Direct routing';
+  }
+
+  const combinedNotes = [
+    verificationTag,
+    options?.customNotes,
+    userNotes,
+  ].filter(Boolean).join('\n\n');
 
   const adminClient = createAdminClient();
 
@@ -56,7 +144,8 @@ export async function submitInquiry(profileSlug: string, formData: {
       profile_id: profile.id,
       ...inquiryFields,
       status: 'new',
-      source: 'portfolio',
+      source: options?.isWhatsAppDirect ? 'portfolio' : 'portfolio',
+      notes: combinedNotes,
     });
 
   if (error) throw new Error(error.message);
@@ -67,7 +156,7 @@ export async function submitInquiry(profileSlug: string, formData: {
     sendWhatsAppInquiryAlert({
       artistPhone: artistWhatsAppNumber,
       artistName: profile.name || 'Artist',
-      clientName: formData.name,
+      clientName: `${formData.name}${isPhoneVerified ? ' (✓ Verified Client)' : ''}`,
       clientPhone: cleanPhone,
       eventType: formData.event_type || 'Event',
       eventDate: formData.event_date || 'TBD',
@@ -86,7 +175,7 @@ export async function submitInquiry(profileSlug: string, formData: {
         anchorEmail: profile.email,
         anchorName: profile.name || 'Anchor',
         inquiry: {
-          name: formData.name,
+          name: `${formData.name}${isPhoneVerified ? ' (✓ Phone-Verified Client)' : ''}`,
           phone: cleanPhone,
           email: formData.email,
           event_type: formData.event_type,
@@ -105,8 +194,9 @@ export async function submitInquiry(profileSlug: string, formData: {
   try {
     const eventDetail = formData.event_type || 'Event';
     const cityDetail = formData.event_city ? ` in ${formData.event_city}` : '';
+    const verifiedBadgeText = isPhoneVerified ? '🛡️ Verified Lead: ' : '';
     sendPushNotificationToAnchor(profile.id, {
-      title: '🔥 New Booking Inquiry!',
+      title: `${verifiedBadgeText}🔥 New Booking Inquiry!`,
       body: `${formData.name} requested a quote for ${eventDetail}${cityDetail} (📱 ${cleanPhone})`,
       url: '/inquiries',
       tag: `inquiry-${Date.now()}`,
@@ -117,7 +207,7 @@ export async function submitInquiry(profileSlug: string, formData: {
     console.error('[WebPush] Trigger error:', pushErr);
   }
 
-  return { success: true };
+  return { success: true, isPhoneVerified };
 }
 
 // ---- Get all inquiries for current user ----

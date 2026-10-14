@@ -30,8 +30,7 @@
 | ✅ **Shipped** | **Stage Soundcheck & Tech Rider Studio** | Technical rider generator modal in `/schedule` with WhatsApp sound engineer share |
 | ✅ **Shipped** | **Featured Artist Directory Boost** | 1-click spotlight boost in `/admin/users`, priority directory sort & gold featured badges |
 | ✅ **Shipped** | **Offline Portfolio PWA Caching** | Service worker v2 asset & portfolio caching for weak hotel signals |
-| ✅ **Shipped** | **Artist Smart Analytics & Lead Intelligence** | Daily/monthly views, city-level visitor breakdown, device split, video plays, lead conversions |
-| 🔵 **Phase 1 (Active / Next)** | **1-Click Verified WhatsApp Inquiries** | Phone-verified, high-intent lead routing to block spam |
+| ✅ **Shipped** | **1-Click Phone-Verified WhatsApp Inquiries** | Anti-spam 4-digit PIN verification + 1-click WhatsApp routing with verified client badges |
 | 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
@@ -230,14 +229,15 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### 📱 Feature 1.3: 1-Click Phone-Verified WhatsApp Inquiries (Spam Blocker)
-* **Status:** 🔵 **Phase 1 (Next Up — Sprint 3)**
-* **Problem Statement:** High-profile artists dislike spam or casual test inquiries flooding their phones.
-* **Value Proposition:** Ensures artists only receive serious, high-budget, phone-verified inquiries from legitimate event planners.
+### 📱 Feature 1.3: 1-Click Phone-Verified WhatsApp Inquiries (Spam Blocker) (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (Public Profile Modal + CRM Dashboards)
+* **Problem Statement:** High-profile artists dislike spam or casual test inquiries flooding their phones with fake numbers.
+* **Value Proposition:** Ensures artists only receive serious, high-intent, phone-verified inquiries from legitimate event planners and corporate hosts.
 * **Technical Implementation:**
-  1. Inquiry form validates Indian mobile numbers using regex format (`+91` 10 digits).
-  2. Fast 4-digit SMS OTP or 1-tap WhatsApp verification ping before the lead is dispatched to the artist's CRM and WhatsApp.
-  3. Verified leads receive a blue *"Verified Planner / Client"* badge in the artist's `/inquiries` dashboard.
+  1. Cryptographic HMAC-signed session OTP generation and verification in `src/lib/phone-verification.ts`.
+  2. Public inquiry modal in `src/components/public-profile/PublicProfile.tsx` with seamless 4-digit verification step, resend countdown timer, and 1-tap WhatsApp direct routing.
+  3. Automatic lead dispatch via tri-channel alerts: Meta WhatsApp Cloud API (`sendWhatsAppInquiryAlert`), Resend email, and WebPush with `[PHONE_VERIFIED]` tagging.
+  4. Blue *"✓ Phone-Verified Client"* badge and anti-spam trust intelligence banner in `/inquiries` and `/dashboard` CRM feeds.
 
 ---
 
@@ -471,8 +471,7 @@ Many talented performers struggle to write compelling, high-converting bios and 
 | Feature | Target Audience | Effort | Business Impact | Status / Target Sprint |
 | :--- | :--- | :--- | :--- | :--- |
 | **City + Category SEO Landing Pages** | Google Search / Organic Clients | Medium | 🟢 Massive (Zero-ad organic client leads) | ✅ **Shipped (Sprint 1)** |
-| **Directory Date & City Availability Filter** | Event Planners & Organizers | Low | 🟢 High (Instant booking convenience) | ✅ **Shipped (Sprint 2)** |
-| **1-Click Verified WhatsApp Inquiries** | High-Profile Artists | Low | 🟢 High (Blocks fake/spam inquiries) | 🔵 **Sprint 3 (Next Up)** |
+| **1-Click Verified WhatsApp Inquiries** | High-Profile Artists | Low | 🟢 High (Blocks fake/spam inquiries) | ✅ **Shipped (Sprint 3)** |
 | **Digital Performance Agreement (E-Sign)** | All Performing Artists | Medium | 🟢 Massive (Protects artist dates & fees) | ✅ **Shipped (Sprint 4)** |
 | **Post-Event Automated Review Collector** | Clients & Past Event Hosts | Low | 🟢 High (Builds social proof on autopilot) | ✅ **Shipped (Sprint 5)** |
 | **Stage Soundcheck & Tech Rider Generator** | Musicians, Live Bands, DJs | Low | 🟡 Medium (Eliminates venue sound chaos) | ✅ **Shipped (Sprint 6)** |

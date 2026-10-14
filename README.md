@@ -52,7 +52,7 @@
 | **⭐ Post-Event Direct Review Collector** | Social Proof & CRM | ✅ **Shipped** | WhatsApp review loop (`/review/[slug]`) saving to verified testimonials. |
 | **🎛️ Stage Soundcheck & Tech Rider Studio** | Audio Production | ✅ **Shipped** | Audio checklist generator for sound engineers with 1-tap WhatsApp sharing. |
 | **⚙️ Dynamic Profile Taxonomy Manager** | Super Admin Control | ✅ **Shipped** | Real-time database sync for artist categories, event genres, languages, and cities. |
-| **📱 1-Click Verified WhatsApp Inquiries** | Security & Leads | 🔵 Active | Phone-verified, high-intent lead routing with Indian +91 regex validation. |
+| **📱 1-Click Verified WhatsApp Inquiries** | Security & Leads | ✅ **Shipped** | Anti-spam 4-digit PIN verification + 1-click WhatsApp routing with verified client badges. |
 
 ---
 

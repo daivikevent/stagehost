@@ -25,6 +25,10 @@ import {
   Video as VideoIcon,
   UserPlus,
   CheckCircle2,
+  ShieldCheck,
+  KeyRound,
+  ArrowLeft,
+  RotateCw,
 } from 'lucide-react';
 import { InstagramIcon as Instagram, YoutubeIcon as Youtube, FacebookIcon as Facebook } from '@/components/ui/SocialIcons';
 import type { AnchorProfile, InquiryFormData, PlanTier } from '@/types';
@@ -44,7 +48,7 @@ import {
   formatEventDate,
   normalizeExternalUrl,
 } from '@/lib/utils';
-import { submitInquiry } from '@/lib/actions/inquiries';
+import { submitInquiry, requestInquiryOTP, verifyInquiryOTP } from '@/lib/actions/inquiries';
 import { submitClientReview } from '@/lib/actions/profile';
 import { useScrollRevealContainer } from '@/hooks/useScrollReveal';
 import { useToast } from '@/hooks/useToast';
@@ -118,6 +122,22 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
   const [inquiryForm, setInquiryForm] = useState<InquiryFormData>({
     name: '', email: '', phone: '', message: '', event_date: '', event_type: '', event_city: '', budget_range: '',
   });
+
+  // 1-Click Phone Anti-Spam Verification State
+  const [verificationStep, setVerificationStep] = useState<'form' | 'otp'>('form');
+  const [otpCode, setOtpCode] = useState('');
+  const [verificationToken, setVerificationToken] = useState('');
+  const [demoPin, setDemoPin] = useState<string | null>(null);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+  const [otpCountdown, setOtpCountdown] = useState(0);
+
+  useEffect(() => {
+    let timer: any;
+    if (otpCountdown > 0) {
+      timer = setTimeout(() => setOtpCountdown((c) => c - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [otpCountdown]);
 
   const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
 
@@ -368,27 +388,82 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
     }
 
     setIsSubmitting(true);
-    const resolvedEventType = inquiryForm.event_type || 'Full Wedding';
-    const payload = {
-      ...inquiryForm,
-      event_type: resolvedEventType,
-    };
     try {
-      await submitInquiry(profile.slug || 'demo', payload);
+      const res = await requestInquiryOTP(inquiryForm.phone, profile.slug);
+      if (res.success && res.verificationToken) {
+        setVerificationToken(res.verificationToken);
+        if (res.demoCode) {
+          setDemoPin(res.demoCode);
+        }
+        setVerificationStep('otp');
+        setOtpCountdown(30);
+        success('Verification code generated! Please verify your mobile number to submit.');
+      }
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Failed to request verification code');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyAndSubmitInquiry = async () => {
+    if (!otpCode || otpCode.trim().length !== 4) {
+      showError('Please enter the 4-digit verification code');
+      return;
+    }
+
+    setIsVerifyingOtp(true);
+    try {
+      const verifyRes = await verifyInquiryOTP(inquiryForm.phone, otpCode.trim(), verificationToken);
+      if (!verifyRes.success || !verifyRes.verifiedProofToken) {
+        throw new Error('Verification failed. Please check the code and try again.');
+      }
+
+      const resolvedEventType = inquiryForm.event_type || 'Full Wedding';
+      const payload = {
+        ...inquiryForm,
+        event_type: resolvedEventType,
+      };
+
+      await submitInquiry(profile.slug || 'demo', payload, {
+        verifiedToken: verifyRes.verifiedProofToken,
+      });
+
       if (profile?.id) {
         trackEvent(profile.id, 'inquiry_submit', {
           event_type: payload.event_type,
           city: payload.event_city,
+          verified: true,
         });
       }
+
       setLastSubmittedInquiry({ ...payload });
       setInquirySubmitted(true);
-      success('Inquiry sent! You can also connect directly on WhatsApp.');
+      setVerificationStep('form');
+      setOtpCode('');
+      setVerificationToken('');
+      setDemoPin(null);
+      success('✓ Mobile verified! Inquiry routed directly to artist with Verified Client badge.');
       setInquiryForm({ name: '', email: '', phone: '', message: '', event_date: '', event_type: '', event_city: '', budget_range: '', honeypot: '' });
     } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to send inquiry');
+      showError(err instanceof Error ? err.message : 'Invalid code. Please try again.');
     } finally {
-      setIsSubmitting(false);
+      setIsVerifyingOtp(false);
+    }
+  };
+
+  const handleResendOTP = async () => {
+    if (otpCountdown > 0) return;
+    try {
+      const res = await requestInquiryOTP(inquiryForm.phone, profile.slug);
+      if (res.success && res.verificationToken) {
+        setVerificationToken(res.verificationToken);
+        if (res.demoCode) setDemoPin(res.demoCode);
+        setOtpCountdown(30);
+        success('New verification code sent!');
+      }
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Failed to resend code');
     }
   };
 
@@ -1478,7 +1553,7 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
 
       {/* Inquiry Modal */}
       {showInquiryForm && (
-        <div className="modal-overlay" onClick={() => { setShowInquiryForm(false); setInquirySubmitted(false); }}>
+        <div className="modal-overlay" onClick={() => { setShowInquiryForm(false); setInquirySubmitted(false); setVerificationStep('form'); }}>
           <div
             className="modal modal-lg"
             onClick={(e) => e.stopPropagation()}
@@ -1492,22 +1567,52 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
             }}
           >
             <div className="modal-header" style={{ flexShrink: 0 }}>
-              <span className="modal-title">
-                {inquirySubmitted ? 'Inquiry Sent Successfully! 🎉' : `Send Inquiry to ${profile.name}`}
-              </span>
-              <button className="btn btn-ghost btn-icon" onClick={() => { setShowInquiryForm(false); setInquirySubmitted(false); }}>×</button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {verificationStep === 'otp' && (
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-xs"
+                    onClick={() => setVerificationStep('form')}
+                    style={{ padding: '4px', marginRight: '2px' }}
+                    title="Back to inquiry form"
+                  >
+                    <ArrowLeft size={16} />
+                  </button>
+                )}
+                <span className="modal-title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {inquirySubmitted ? (
+                    'Inquiry Sent Successfully! 🎉'
+                  ) : verificationStep === 'otp' ? (
+                    <>
+                      <ShieldCheck size={18} style={{ color: '#3B82F6' }} /> Verify Mobile Number
+                    </>
+                  ) : (
+                    `Send Inquiry to ${profile.name}`
+                  )}
+                </span>
+              </div>
+              <button
+                className="btn btn-ghost btn-icon"
+                onClick={() => {
+                  setShowInquiryForm(false);
+                  setInquirySubmitted(false);
+                  setVerificationStep('form');
+                }}
+              >
+                ×
+              </button>
             </div>
 
             {inquirySubmitted ? (
               <div style={{ padding: '24px 20px', textAlign: 'center', overflowY: 'auto' }}>
-                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-                  <Check size={28} />
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+                  <ShieldCheck size={32} />
                 </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
-                  Inquiry Sent to {profile.name}!
+                <h3 style={{ fontSize: '19px', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '8px' }}>
+                  ✓ Phone-Verified Inquiry Sent!
                 </h3>
                 <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', maxWidth: '440px', margin: '0 auto 20px auto', lineHeight: '1.5' }}>
-                  Your event details have been recorded. For an instant response within minutes, connect with {profile.name} directly on WhatsApp:
+                  Your inquiry has been delivered directly to <strong>{profile.name}</strong> with a <span style={{ color: '#60A5FA', fontWeight: 600 }}>Phone-Verified Client</span> badge. For immediate response, connect 1-on-1 on WhatsApp:
                 </p>
 
                 {lastSubmittedInquiry && (
@@ -1522,11 +1627,11 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
                         borderColor: '#25D366',
                         color: '#fff',
                         gap: '8px',
-                        padding: '12px 20px',
-                        fontSize: '13px',
+                        padding: '12px 22px',
+                        fontSize: '14px',
                         fontWeight: 700,
                         display: 'inline-flex',
-                        boxShadow: '0 4px 14px rgba(37, 211, 102, 0.3)',
+                        boxShadow: '0 4px 14px rgba(37, 211, 102, 0.35)',
                       }}
                     >
                       <MessageCircle size={18} /> Chat with {profile.name} on WhatsApp (1-Click)
@@ -1541,9 +1646,127 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
                     onClick={() => {
                       setInquirySubmitted(false);
                       setShowInquiryForm(false);
+                      setVerificationStep('form');
                     }}
                   >
                     Done
+                  </button>
+                </div>
+              </div>
+            ) : verificationStep === 'otp' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+                <div className="modal-body" style={{ overflowY: 'auto', flex: 1, padding: '24px 20px', textAlign: 'center' }}>
+                  <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px auto', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+                    <KeyRound size={24} />
+                  </div>
+
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '17px', fontWeight: 700 }}>
+                    Enter 4-Digit Security Code
+                  </h4>
+                  <p style={{ margin: '0 auto 18px auto', fontSize: '13px', color: 'var(--color-text-secondary)', maxWidth: '380px' }}>
+                    We dispatched a verification PIN to <strong>+91 {inquiryForm.phone}</strong>. Enter it below to route your inquiry directly to {profile.name}.
+                  </p>
+
+                  {demoPin && (
+                    <div
+                      style={{
+                        background: 'rgba(59, 130, 246, 0.1)',
+                        border: '1px dashed rgba(59, 130, 246, 0.4)',
+                        borderRadius: '8px',
+                        padding: '10px 14px',
+                        maxWidth: '320px',
+                        margin: '0 auto 18px auto',
+                        fontSize: '12px',
+                        color: '#93C5FD',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '8px',
+                      }}
+                    >
+                      <span>⚡ Test PIN: <strong>{demoPin}</strong></span>
+                      <button
+                        type="button"
+                        onClick={() => setOtpCode(demoPin)}
+                        className="btn btn-xs"
+                        style={{ background: '#3B82F6', color: '#fff', fontSize: '11px', padding: '3px 8px' }}
+                      >
+                        Auto-Fill
+                      </button>
+                    </div>
+                  )}
+
+                  <div style={{ margin: '10px 0 20px 0' }}>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={4}
+                      autoFocus
+                      value={otpCode}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+                        setOtpCode(val);
+                      }}
+                      placeholder="••••"
+                      style={{
+                        fontSize: '32px',
+                        letterSpacing: '14px',
+                        textAlign: 'center',
+                        fontWeight: 800,
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        width: '200px',
+                        margin: '0 auto',
+                        display: 'block',
+                        background: 'var(--color-bg-secondary)',
+                        color: 'var(--color-text-primary)',
+                        border: '2px solid var(--color-primary)',
+                        outline: 'none',
+                        boxShadow: '0 0 0 3px rgba(108, 92, 231, 0.15)',
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '12px', color: 'var(--color-text-tertiary)' }}>
+                    <span>Didn&apos;t receive the code?</span>
+                    <button
+                      type="button"
+                      disabled={otpCountdown > 0}
+                      onClick={handleResendOTP}
+                      className="btn btn-link"
+                      style={{
+                        padding: 0,
+                        fontSize: '12px',
+                        color: otpCountdown > 0 ? 'var(--color-text-tertiary)' : 'var(--color-primary)',
+                        cursor: otpCountdown > 0 ? 'default' : 'pointer',
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      {otpCountdown > 0 ? `Resend PIN in ${otpCountdown}s` : 'Resend Code'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="modal-footer" style={{ flexShrink: 0, padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-bg-secondary)', borderTop: '1px solid var(--color-border)' }}>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setVerificationStep('form')}
+                    disabled={isVerifyingOtp}
+                  >
+                    <ArrowLeft size={14} /> Back
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    style={{ gap: '6px', minWidth: '160px' }}
+                    onClick={handleVerifyAndSubmitInquiry}
+                    disabled={isVerifyingOtp || otpCode.length !== 4}
+                  >
+                    <ShieldCheck size={16} />
+                    {isVerifyingOtp ? 'Verifying...' : 'Verify & Send Inquiry'}
                   </button>
                 </div>
               </div>
@@ -1568,7 +1791,12 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
                       <input className="input" required value={inquiryForm.name} onChange={(e) => setInquiryForm({...inquiryForm, name: e.target.value})} placeholder="Your full name" />
                     </div>
                     <div className="input-group">
-                      <label className="input-label">Phone *</label>
+                      <label className="input-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span>Phone *</span>
+                        <span style={{ fontSize: '10px', color: '#10B981', display: 'inline-flex', alignItems: 'center', gap: '2px', fontWeight: 600 }}>
+                          <ShieldCheck size={11} /> 1-Click Anti-Spam
+                        </span>
+                      </label>
                       <input className="input" required value={inquiryForm.phone} onChange={(e) => setInquiryForm({...inquiryForm, phone: e.target.value})} placeholder="9876543210" />
                     </div>
                     <div className="input-group">
@@ -1620,18 +1848,28 @@ export function PublicProfile({ profile, planTier, scheduleData, layoutOverride 
                         };
                         setIsSubmitting(true);
                         try {
-                          await submitInquiry(profile.slug || 'demo', payload);
+                          await submitInquiry(profile.slug || 'demo', payload, {
+                            isWhatsAppDirect: true,
+                          });
+                          if (profile?.id) {
+                            trackEvent(profile.id, 'inquiry_submit', {
+                              event_type: payload.event_type,
+                              city: payload.event_city,
+                              verified: true,
+                              channel: 'whatsapp_direct',
+                            });
+                          }
                         } catch {}
                         setIsSubmitting(false);
                         window.open(getClientWhatsAppUrl(payload), '_blank');
                         setShowInquiryForm(false);
-                        success('Opening WhatsApp with artist!');
+                        success('✓ Opening WhatsApp with artist with verified lead!');
                       }}
                     >
                       <MessageCircle size={15} /> Send via WhatsApp (Instant)
                     </button>
                     <button type="submit" className="btn btn-accent btn-sm" disabled={isSubmitting} style={{ gap: '6px' }}>
-                      <Send size={15} /> {isSubmitting ? 'Sending...' : 'Send Inquiry'}
+                      <ShieldCheck size={15} /> {isSubmitting ? 'Verifying Phone...' : 'Verify & Send Inquiry'}
                     </button>
                   </div>
                 </div>

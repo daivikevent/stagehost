@@ -17,6 +17,7 @@ import {
   AlertCircle,
   Eye,
   RefreshCw,
+  ShieldCheck,
 } from 'lucide-react';
 import type { ContactSubmission } from '@/types';
 import {
@@ -316,6 +317,11 @@ export function AdminInquiriesClient({
                               <Phone size={12} />
                               <span>{item.phone}</span>
                             </a>
+                            {cleanPhone.length >= 10 && (
+                              <span style={{ fontSize: '10px', color: '#60A5FA', display: 'inline-flex', alignItems: 'center', gap: '2px', background: 'rgba(59,130,246,0.12)', padding: '1px 5px', borderRadius: '4px' }}>
+                                <ShieldCheck size={10} /> Valid
+                              </span>
+                            )}
                           </>
                         )}
                         <span>·</span>

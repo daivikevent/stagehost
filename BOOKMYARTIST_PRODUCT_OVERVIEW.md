@@ -87,6 +87,8 @@ Every registered artist receives a personalized public profile (e.g. `bookmyarti
    - Direct review portal for event hosts and wedding couples to submit star ratings and testimonials that immediately reflect on the artist portfolio.
 9. **City & Category Dynamic SEO Landing Pages (`/artists/[city]` & `/artists/[city]/[category]`)**:
    - Targeted SSR landing pages with JSON-LD ItemList & FAQPage rich schemas driving zero-ad organic Google search leads.
+10. **1-Click Phone-Verified WhatsApp Inquiries (Anti-Spam Lead Routing)**:
+   - High-intent mobile number verification via 4-digit security PIN or 1-click WhatsApp direct routing, eliminating fake numbers and awarding leads a "✓ Phone-Verified Client" trust badge in the artist CRM.
 
 ---
 
@@ -94,7 +96,8 @@ Every registered artist receives a personalized public profile (e.g. `bookmyarti
 When an artist logs into BookMyArtist (`/dashboard`), they access a full private operations suite:
 
 1. **Lead Management & CRM (`/inquiries`)**:
-   - Two-column responsive CRM view: left side lists incoming leads, right side displays detailed client event specifics.
+   - Two-column responsive CRM view: left side lists incoming leads with "✓ Phone-Verified Client" trust badges, right side displays detailed client event specifics.
+   - **Phone Anti-Spam Intelligence**: Clear verification banner separating serious event planners from casual inquiries.
    - **Manual Lead Entry ("Add Offline Lead")**: Artist can log phone call leads or direct Instagram DMs to centralize their entire event business.
    - **Kanban / Status Pipeline**: Track leads across `New` ➔ `Contacted` ➔ `Converted` ➔ `Lost`.
    - **1-Click WhatsApp Quote Generator**: Pre-formats polite pricing proposals and opens WhatsApp directly to chat with the client.

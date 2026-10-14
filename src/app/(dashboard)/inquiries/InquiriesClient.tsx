@@ -21,6 +21,7 @@ import {
   ChevronRight,
   ArrowLeft,
   FileText,
+  ShieldCheck,
 } from 'lucide-react';
 import { INQUIRY_STATUS, INQUIRY_STATUS_COLORS, EVENT_TYPES, BUDGET_RANGES, MAJOR_CITIES } from '@/constants';
 import { formatRelativeTime, cn, formatEventDate } from '@/lib/utils';
@@ -383,8 +384,27 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
                 }}
               >
                 <div className={styles.inquiryCardHeader}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                     <span className={styles.inquiryName}>{inq.name}</span>
+                    {inq.notes?.includes('[PHONE_VERIFIED]') && (
+                      <span
+                        style={{
+                          fontSize: '10px',
+                          background: 'rgba(59, 130, 246, 0.15)',
+                          color: '#60A5FA',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
+                          borderRadius: '4px',
+                          padding: '1px 5px',
+                          fontWeight: 700,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px',
+                        }}
+                        title="High-Intent: Phone Anti-Spam Verified"
+                      >
+                        <ShieldCheck size={10} /> Verified
+                      </span>
+                    )}
                     {selectedId === inq.id && (
                       <span style={{ fontSize: '10px', color: 'var(--color-primary)', fontWeight: 700 }}>
                         ● Active
@@ -540,7 +560,27 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
               {/* Detail Header */}
               <div className={styles.detailHeader}>
                 <div>
-                  <h3 style={{ margin: 0, fontSize: '18px' }}>{selected.name}</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <h3 style={{ margin: 0, fontSize: '18px' }}>{selected.name}</h3>
+                    {selected.notes?.includes('[PHONE_VERIFIED]') && (
+                      <span
+                        style={{
+                          fontSize: '11px',
+                          background: 'rgba(59, 130, 246, 0.15)',
+                          color: '#60A5FA',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
+                          borderRadius: '6px',
+                          padding: '2px 8px',
+                          fontWeight: 700,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                        }}
+                      >
+                        <ShieldCheck size={13} /> Phone-Verified Client
+                      </span>
+                    )}
+                  </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
                     <span className={`badge badge-${INQUIRY_STATUS_COLORS[selected.status]}`}>
                       {STATUS_LABELS[selected.status]}
@@ -561,6 +601,34 @@ export function InquiriesClient({ initialInquiries, initialBookings = [], profil
                   <Trash2 size={15} />
                 </button>
               </div>
+
+              {/* Phone Verified Anti-Spam Trust Alert */}
+              {selected.notes?.includes('[PHONE_VERIFIED]') && (
+                <div
+                  style={{
+                    padding: '10px 14px',
+                    borderRadius: 'var(--radius-md)',
+                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.05))',
+                    border: '1px solid rgba(59, 130, 246, 0.25)',
+                    marginBottom: '14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <ShieldCheck size={18} style={{ color: '#60A5FA', flexShrink: 0 }} />
+                    <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
+                      <strong>High-Intent Verified Lead:</strong> Client passed 1-click mobile phone verification. Zero fake numbers.
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#10B981', fontWeight: 600 }}>
+                    🛡️ Verified Client
+                  </span>
+                </div>
+              )}
 
               {/* Dual-Inquiry & Clash Intelligence Alert */}
               {(() => {

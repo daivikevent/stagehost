@@ -20,6 +20,7 @@ import {
   ChevronRight,
   Sliders,
   Gift,
+  ShieldCheck,
 } from 'lucide-react';
 import Link from 'next/link';
 import { getMyProfile } from '@/lib/actions/profile';
@@ -489,7 +490,27 @@ export default async function DashboardPage() {
                   title="Click to view full inquiry details and history"
                 >
                   <div className={styles.inquiryHeader}>
-                    <span className={styles.inquiryClientName}>{inq.name}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                      <span className={styles.inquiryClientName}>{inq.name}</span>
+                      {inq.notes?.includes('[PHONE_VERIFIED]') && (
+                        <span
+                          style={{
+                            fontSize: '9px',
+                            background: 'rgba(59, 130, 246, 0.15)',
+                            color: '#60A5FA',
+                            border: '1px solid rgba(59, 130, 246, 0.3)',
+                            borderRadius: '4px',
+                            padding: '1px 5px',
+                            fontWeight: 700,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '2px',
+                          }}
+                        >
+                          <ShieldCheck size={10} /> Verified
+                        </span>
+                      )}
+                    </div>
                     <span className={`${styles.statusPill} ${statusClass}`}>
                       {inq.status}
                     </span>
