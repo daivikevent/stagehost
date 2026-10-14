@@ -5,6 +5,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { checkIsAdmin } from '@/lib/actions/admin';
+import { getMyProfile } from './profile';
+import { isGoogleDriveConfigured, uploadFileToGoogleDrive } from '@/lib/services/google-drive';
 
 export interface RawMediaItem {
   id: string;
@@ -17,6 +19,9 @@ export interface RawMediaItem {
   event_name?: string;
   description?: string;
   is_public: boolean;
+  storage_provider?: 'platform' | 'google_drive';
+  drive_file_id?: string;
+  drive_web_view_link?: string;
   created_at: string;
 }
 
@@ -98,13 +103,16 @@ export async function getPublicRawMedia(profileId: string): Promise<RawMediaItem
 }
 
 /**
- * 3. Upload a raw video or audio file to Supabase Storage ('media' bucket)
+ * 3. Upload a raw video or audio file to Google Drive or Supabase Storage ('media' bucket)
  */
 export async function uploadRawMediaFile(formData: FormData): Promise<{
   url: string;
   fileName: string;
   fileSize: string;
   mediaType: 'video' | 'audio';
+  storageProvider: 'platform' | 'google_drive';
+  driveFileId?: string;
+  driveWebViewLink?: string;
 }> {
   const profile = await getCurrentProfile();
   if (!profile) throw new Error('Not authenticated');
@@ -112,6 +120,94 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
   const file = formData.get('file') as File | null;
   if (!file) throw new Error('No file selected');
 
+  const targetDestination = (formData.get('destination') as string) || 'auto';
+  const customFolderId = (formData.get('folder_id') as string) || '';
+
+  // Get full profile to check linked Google Drive storage
+  const fullProfile = await getMyProfile().catch(() => null);
+  const connectedFolderId =
+    customFolderId ||
+    fullProfile?.google_drive_storage?.primary_videos?.folder_id ||
+    fullProfile?.google_drive_storage?.primary_folder?.folder_id ||
+    fullProfile?.google_drive_storage?.primary_audio?.folder_id ||
+    fullProfile?.google_drive_storage?.folders?.[0]?.folder_id;
+
+  const shouldUploadToDrive =
+    targetDestination === 'google_drive' ||
+    (targetDestination === 'auto' && Boolean(connectedFolderId));
+
+  // Check if artist has connected their Google Drive via 1-Click OAuth
+  const adminClient = createAdminClient();
+  const { data: oauthRow } = await adminClient
+    .from('platform_settings')
+    .select('value')
+    .eq('key', `google_drive_oauth_${profile.id}`)
+    .maybeSingle();
+
+  let oauthSettings: any = null;
+  if (oauthRow?.value) {
+    try {
+      oauthSettings = JSON.parse(oauthRow.value);
+    } catch {}
+  }
+
+  // 1. If artist connected via 1-Click OAuth, upload using user's quota
+  if (oauthSettings?.refresh_token && oauthSettings?.folder_id && targetDestination !== 'platform') {
+    try {
+      const { uploadFileWithUserToken } = await import('@/lib/services/google-oauth');
+      const userDriveRes = await uploadFileWithUserToken({
+        refreshToken: oauthSettings.refresh_token,
+        folderId: oauthSettings.folder_id,
+        file,
+      });
+
+      return {
+        url: userDriveRes.url,
+        fileName: userDriveRes.fileName,
+        fileSize: userDriveRes.fileSize,
+        mediaType: userDriveRes.mediaType,
+        storageProvider: 'google_drive',
+        driveFileId: userDriveRes.fileId,
+        driveWebViewLink: userDriveRes.webViewLink,
+      };
+    } catch (oauthErr: any) {
+      console.error('User Google Drive direct upload failed:', oauthErr);
+      throw new Error(`Google Drive upload failed: ${oauthErr.message || 'Permission error'}. Please reconnect your Google Drive in Settings.`);
+    }
+  }
+
+  // 2. Service Account method fallback
+  if (shouldUploadToDrive && connectedFolderId) {
+    if (!isGoogleDriveConfigured()) {
+      throw new Error(
+        'Google Drive Service Account is not yet configured on server (.env.local). Please set GOOGLE_SERVICE_ACCOUNT_JSON or upload to Platform Cloud Storage.'
+      );
+    }
+
+    try {
+      const driveRes = await uploadFileToGoogleDrive({
+        file,
+        folderId: connectedFolderId,
+      });
+
+      return {
+        url: driveRes.url,
+        fileName: driveRes.fileName,
+        fileSize: driveRes.fileSize,
+        mediaType: driveRes.mediaType,
+        storageProvider: 'google_drive',
+        driveFileId: driveRes.fileId,
+        driveWebViewLink: driveRes.webViewLink,
+      };
+    } catch (driveErr: any) {
+      console.error('Google Drive direct upload failed:', driveErr);
+      throw new Error(
+        `Google Drive upload failed: ${driveErr.message || 'Permission denied'}. Please check that your Google Drive folder permission is set to "Anyone with the link can EDIT" (Editor access).`
+      );
+    }
+  }
+
+  // Fallback / standard upload to Supabase Storage ('media' bucket)
   const rawExt = file.name.split('.').pop()?.toLowerCase() || '';
   const videoExts = ['mp4', 'mov', 'webm', 'mkv', 'm4v'];
   const audioExts = ['mp3', 'wav', 'm4a', 'aac', 'ogg', 'flac'];
@@ -139,7 +235,6 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
   const fileName = `${Date.now()}_${cleanBase}_${uniqueId}.${rawExt}`;
   const filePath = `raw-vault/${profile.id}/${fileName}`;
 
-  const adminClient = createAdminClient();
   const { error: uploadError } = await adminClient.storage
     .from('media')
     .upload(filePath, file, {
@@ -159,6 +254,7 @@ export async function uploadRawMediaFile(formData: FormData): Promise<{
     fileName: file.name,
     fileSize,
     mediaType,
+    storageProvider: 'platform',
   };
 }
 
@@ -174,6 +270,9 @@ export async function addRawMediaItem(payload: {
   event_name?: string;
   description?: string;
   is_public?: boolean;
+  storage_provider?: 'platform' | 'google_drive';
+  drive_file_id?: string;
+  drive_web_view_link?: string;
 }): Promise<RawMediaItem> {
   const profile = await getCurrentProfile();
   if (!profile) throw new Error('Not authenticated');
@@ -192,6 +291,9 @@ export async function addRawMediaItem(payload: {
     event_name: payload.event_name?.trim() || undefined,
     description: payload.description?.trim() || undefined,
     is_public: payload.is_public ?? true,
+    storage_provider: payload.storage_provider || 'platform',
+    drive_file_id: payload.drive_file_id,
+    drive_web_view_link: payload.drive_web_view_link,
     created_at: new Date().toISOString(),
   };
 

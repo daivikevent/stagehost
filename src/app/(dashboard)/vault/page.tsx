@@ -25,6 +25,7 @@ export default async function VaultPage() {
       initialItems={rawMediaItems}
       artistName={profile.name || 'Artist'}
       artistSlug={profile.slug || ''}
+      googleDriveStorage={profile.google_drive_storage}
     />
   );
 }

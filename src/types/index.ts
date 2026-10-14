@@ -51,6 +51,9 @@ export interface AnchorProfile {
   created_at: string;
   updated_at: string;
 
+  // Cloud & Google Drive Storage Bridge
+  google_drive_storage?: GoogleDriveStorageSettings;
+
   // Relations (optional, populated when joined)
   videos?: Video[];
   photos?: Photo[];
@@ -58,6 +61,21 @@ export interface AnchorProfile {
   testimonials?: Testimonial[];
   subscription?: Subscription;
   theme?: Theme;
+}
+
+export interface GoogleDriveFolderConfig {
+  url: string;
+  folder_id: string;
+  folder_name: string;
+  is_verified: boolean;
+  verified_at?: string;
+}
+
+export interface GoogleDriveStorageSettings {
+  primary_videos?: GoogleDriveFolderConfig;
+  audio_demos?: GoogleDriveFolderConfig;
+  photos?: GoogleDriveFolderConfig;
+  backup?: GoogleDriveFolderConfig;
 }
 
 // ---- Portfolio Content ----

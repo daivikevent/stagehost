@@ -46,6 +46,7 @@ import { MediaKitModal } from '@/components/portfolio/MediaKitModal';
 import { TestimonialsManager } from '@/components/portfolio/TestimonialsManager';
 import { PackagesManager } from '@/components/portfolio/PackagesManager';
 import { PhotosManager } from '@/components/portfolio/PhotosManager';
+import { GoogleDriveQuickCard } from '@/components/dashboard/GoogleDriveQuickCard';
 import type { AnchorProfile, Video, Photo, ServicePackage, Testimonial } from '@/types';
 import styles from './portfolio.module.css';
 
@@ -1122,6 +1123,9 @@ export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) 
               Open Raw Vault →
             </a>
           </div>
+
+          {/* Quick Google Drive Storage Bridge */}
+          <GoogleDriveQuickCard initialStorage={initialProfile?.google_drive_storage} />
 
           {/* Add Video Form */}
           <form

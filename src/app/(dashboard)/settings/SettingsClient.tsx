@@ -4,8 +4,9 @@ import { useState, useTransition, useEffect } from 'react';
 import {
   User, Bell, CreditCard, Shield, Link,
   Eye, Copy, Check, ExternalLink, Crown, Sparkles, Loader2, Edit3, Save, X,
-  Globe, Calendar,
+  Globe, Calendar, HardDrive,
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
 import { CheckoutButton } from '@/components/payment/CheckoutButton';
@@ -15,6 +16,7 @@ import styles from './settings.module.css';
 
 const TABS = [
   { id: 'profile', label: 'Profile', icon: User },
+  { id: 'storage', label: 'Cloud Storage', icon: HardDrive },
   { id: 'domain', label: 'Custom Domain', icon: Globe },
   { id: 'calendar', label: 'Calendar Sync', icon: Calendar },
   { id: 'billing', label: 'Billing', icon: CreditCard },
@@ -29,6 +31,7 @@ import type { PublicPlan } from '@/lib/actions/plans';
 import PushNotificationToggle from '@/components/dashboard/PushNotificationToggle';
 import CustomDomainCard from '@/components/dashboard/CustomDomainCard';
 import GoogleCalendarSyncCard from '@/components/dashboard/GoogleCalendarSyncCard';
+import { GoogleDriveAdvancedManager } from '@/components/dashboard/GoogleDriveAdvancedManager';
 import { ArtistBillingManager } from '@/components/billing/ArtistBillingManager';
 import type { ArtistBillingDetails, TaxInvoice } from '@/types/invoice';
 
@@ -50,9 +53,19 @@ export function SettingsClient({
   initialInvoices = [],
 }: SettingsClientProps) {
   const { success, error: showError } = useToast();
-  const [activeTab, setActiveTab] = useState<TabId>('profile');
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState<TabId>(
+    requestedTab && TABS.some((t) => t.id === requestedTab) ? (requestedTab as TabId) : 'profile'
+  );
   const [copied, setCopied] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (requestedTab && TABS.some((t) => t.id === requestedTab)) {
+      setActiveTab(requestedTab as TabId);
+    }
+  }, [requestedTab]);
 
   const [showCalendar, setShowCalendar] = useState(initialShowCalendar);
 
@@ -351,6 +364,13 @@ export function SettingsClient({
                   initialInvoices={initialInvoices}
                 />
               </div>
+            </div>
+          )}
+
+          {/* CLOUD STORAGE TAB (ADVANCED GOOGLE DRIVE STUDIO) */}
+          {activeTab === 'storage' && (
+            <div className={styles.settingsSection}>
+              <GoogleDriveAdvancedManager initialStorage={profile?.google_drive_storage} />
             </div>
           )}
 
