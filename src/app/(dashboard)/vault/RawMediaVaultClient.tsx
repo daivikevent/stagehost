@@ -32,33 +32,18 @@ import {
 } from '@/lib/actions/raw-media';
 import styles from './RawMediaVaultClient.module.css';
 
-import type { GoogleDriveStorageSettings } from '@/types';
-
 interface RawMediaVaultClientProps {
   initialItems: RawMediaItem[];
   artistName: string;
   artistSlug: string;
-  googleDriveStorage?: GoogleDriveStorageSettings;
 }
 
 export function RawMediaVaultClient({
   initialItems,
   artistName,
   artistSlug,
-  googleDriveStorage,
 }: RawMediaVaultClientProps) {
   const { success, error: showError } = useToast();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if (searchParams.get('drive_connected') === 'true') {
-      success('Google Drive connected successfully! Folder "BookMyArtist Media Vault" is ready. 🎉');
-    }
-    const err = searchParams.get('error');
-    if (err) {
-      showError(`Google Drive connection error: ${decodeURIComponent(err)}`);
-    }
-  }, [searchParams, success, showError]);
 
   const [items, setItems] = useState<RawMediaItem[]>(initialItems);
   const [activeTab, setActiveTab] = useState<'upload' | 'link'>('upload');
@@ -143,16 +128,10 @@ export function RawMediaVaultClient({
           description,
           is_public: isPublic,
           storage_provider: uploadRes.storageProvider,
-          drive_file_id: uploadRes.driveFileId,
-          drive_web_view_link: uploadRes.driveWebViewLink,
         });
 
         setItems((prev) => [newItem, ...prev]);
-        if (uploadRes.storageProvider === 'google_drive') {
-          success('Directly uploaded to your Google Drive folder & linked to portfolio! 🚀');
-        } else {
-          success('Work sample uploaded and saved to vault successfully!');
-        }
+        success('Work sample uploaded and saved to vault successfully!');
         resetForm();
       } catch (err: any) {
         showError(err.message || 'Failed to upload media file');
@@ -295,116 +274,6 @@ export function RawMediaVaultClient({
             <LinkIcon size={15} /> External Cloud Link (Drive / Dropbox)
           </button>
         </div>
-
-        {googleDriveStorage?.primary_videos?.is_verified ? (
-          <div
-            style={{
-              margin: '0 0 16px 0',
-              padding: '10px 14px',
-              background: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
-              borderRadius: '10px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '8px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontSize: '13px',
-                color: '#a7f3d0',
-              }}
-            >
-              <HardDrive size={16} color="#10b981" />
-              <span>
-                Connected Drive Storage:{' '}
-                <strong style={{ color: '#34d399' }}>
-                  {googleDriveStorage.primary_videos.folder_name}
-                </strong>
-              </span>
-            </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <a
-                href={googleDriveStorage.primary_videos.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  fontSize: '12px',
-                  color: '#60a5fa',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  fontWeight: 500,
-                }}
-              >
-                <span>Open in Drive</span>
-                <ExternalLink size={12} />
-              </a>
-              <a
-                href="/settings?tab=storage"
-                style={{
-                  fontSize: '12px',
-                  color: '#a78bfa',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                }}
-              >
-                Multi-Folder Settings →
-              </a>
-            </div>
-          </div>
-        ) : (
-          <div
-            style={{
-              margin: '0 0 16px 0',
-              padding: '12px 16px',
-              background: 'linear-gradient(135deg, rgba(66, 133, 244, 0.1) 0%, rgba(52, 168, 83, 0.05) 100%)',
-              border: '1px solid rgba(66, 133, 244, 0.25)',
-              borderRadius: '10px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <HardDrive size={20} color="#60a5fa" />
-              <div>
-                <div style={{ fontSize: '13px', fontWeight: 600, color: '#f8fafc' }}>
-                  Connect Google Drive (15 GB Personal Cloud)
-                </div>
-                <div style={{ fontSize: '11px', color: '#94a3b8' }}>
-                  Save your work samples directly into your personal Google Drive with 0 server limits.
-                </div>
-              </div>
-            </div>
-            <a
-              href="/api/auth/google/connect"
-              style={{
-                padding: '7px 14px',
-                background: '#2563eb',
-                color: '#fff',
-                borderRadius: '8px',
-                fontSize: '12px',
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              <span>1-Click Connect Drive</span>
-              <ExternalLink size={13} />
-            </a>
-          </div>
-        )}
 
         <form onSubmit={handleCreateMedia}>
           {activeTab === 'upload' ? (

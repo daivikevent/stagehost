@@ -81,18 +81,6 @@ function extractTourCities(profile: any): Array<{ city: string; tag: string }> {
   return [];
 }
 
-// ---- Extract Google Drive Storage Settings ----
-function extractGoogleDriveStorage(profile: any) {
-  if (!Array.isArray(profile?.artist_specialties)) return undefined;
-  const tag = profile.artist_specialties.find((s: string) => typeof s === 'string' && s.startsWith('drivestorage:'));
-  if (!tag) return undefined;
-  try {
-    return JSON.parse(tag.replace('drivestorage:', ''));
-  } catch {
-    return undefined;
-  }
-}
-
 // ---- Extract Clean Artist Specialties (excluding internal metadata tags) ----
 function extractCleanArtistSpecialties(profile: any): string[] {
   if (!Array.isArray(profile?.artist_specialties)) return [];
@@ -101,8 +89,7 @@ function extractCleanArtistSpecialties(profile: any): string[] {
     !s.startsWith('gigs:') &&
     !s.startsWith('layout:') &&
     !s.startsWith('brands:') &&
-    !s.startsWith('tour:') &&
-    !s.startsWith('drivestorage:')
+    !s.startsWith('tour:')
   );
 }
 
@@ -137,7 +124,6 @@ export async function getMyProfile() {
         impProfile.profile_layout = extractProfileLayout(impProfile);
         impProfile.client_brands = extractClientBrands(impProfile);
         impProfile.tour_cities = extractTourCities(impProfile);
-        impProfile.google_drive_storage = extractGoogleDriveStorage(impProfile);
         impProfile.artist_specialties = extractCleanArtistSpecialties(impProfile);
         return impProfile;
       }
@@ -239,7 +225,6 @@ export async function getMyProfile() {
     data.profile_layout = extractProfileLayout(data);
     data.client_brands = extractClientBrands(data);
     data.tour_cities = extractTourCities(data);
-    data.google_drive_storage = extractGoogleDriveStorage(data);
     data.artist_specialties = extractCleanArtistSpecialties(data);
   }
 
@@ -348,11 +333,10 @@ export async function updateProfile(updates: Partial<AnchorProfile>) {
     profile_layout: inputProfileLayout,
     client_brands: inputClientBrands,
     tour_cities: inputTourCities,
-    google_drive_storage: inputGoogleDriveStorage,
     ...safeUpdates
   } = updates as any;
 
-  // Handle gigs_completed, profile_layout, client_brands, tour_cities, and google_drive_storage encoding into artist_specialties as universal persistence fallback
+  // Handle gigs_completed, profile_layout, client_brands, and tour_cities encoding into artist_specialties as universal persistence fallback
   let effectiveSpecialties = Array.isArray(safeUpdates.artist_specialties)
     ? [...safeUpdates.artist_specialties]
     : undefined;
@@ -360,14 +344,12 @@ export async function updateProfile(updates: Partial<AnchorProfile>) {
   const targetLayout = updates.profile_layout ?? inputProfileLayout;
   const targetBrands = updates.client_brands ?? inputClientBrands;
   const targetTour = updates.tour_cities ?? inputTourCities;
-  const targetDriveStorage = updates.google_drive_storage ?? inputGoogleDriveStorage;
 
   if (
     updates.gigs_completed !== undefined ||
     targetLayout !== undefined ||
     targetBrands !== undefined ||
-    targetTour !== undefined ||
-    targetDriveStorage !== undefined
+    targetTour !== undefined
   ) {
     if (!effectiveSpecialties) {
       const { data: curr } = await dbClient
@@ -403,13 +385,6 @@ export async function updateProfile(updates: Partial<AnchorProfile>) {
       effectiveSpecialties = effectiveSpecialties.filter((s: string) => typeof s === 'string' && !s.startsWith('tour:'));
       if (Array.isArray(targetTour) && targetTour.length > 0) {
         effectiveSpecialties.push(`tour:${targetTour.map((t: any) => `${t.city || ''}||${t.tag || ''}`).join(';;;')}`);
-      }
-    }
-
-    if (targetDriveStorage !== undefined) {
-      effectiveSpecialties = effectiveSpecialties.filter((s: string) => typeof s === 'string' && !s.startsWith('drivestorage:'));
-      if (targetDriveStorage && Object.keys(targetDriveStorage).length > 0) {
-        effectiveSpecialties.push(`drivestorage:${JSON.stringify(targetDriveStorage)}`);
       }
     }
   }
@@ -630,7 +605,6 @@ export async function getPublicProfile(slug: string) {
       fallbackData.profile_layout = extractProfileLayout(fallbackData);
       fallbackData.client_brands = extractClientBrands(fallbackData);
       fallbackData.tour_cities = extractTourCities(fallbackData);
-      fallbackData.google_drive_storage = extractGoogleDriveStorage(fallbackData);
       fallbackData.artist_specialties = extractCleanArtistSpecialties(fallbackData);
       return fallbackData;
     }
@@ -673,7 +647,6 @@ export async function getPublicProfile(slug: string) {
   data.profile_layout = extractProfileLayout(data);
   data.client_brands = extractClientBrands(data);
   data.tour_cities = extractTourCities(data);
-  data.google_drive_storage = extractGoogleDriveStorage(data);
   data.artist_specialties = extractCleanArtistSpecialties(data);
   return data;
 }

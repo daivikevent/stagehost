@@ -47,7 +47,6 @@ import { TestimonialsManager } from '@/components/portfolio/TestimonialsManager'
 import { PackagesManager } from '@/components/portfolio/PackagesManager';
 import { PhotosManager } from '@/components/portfolio/PhotosManager';
 import { RawMediaManager } from '@/components/portfolio/RawMediaManager';
-import { GoogleDriveQuickCard } from '@/components/dashboard/GoogleDriveQuickCard';
 import type { AnchorProfile, Video, Photo, ServicePackage, Testimonial } from '@/types';
 import type { RawMediaItem } from '@/lib/actions/raw-media';
 import styles from './portfolio.module.css';
@@ -1095,9 +1094,6 @@ export function PortfolioForm({ initialProfile, taxonomy, initialRawMedia = [] }
               </span>
             </div>
           </div>
-
-          {/* Quick Google Drive Storage Bridge */}
-          <GoogleDriveQuickCard initialStorage={initialProfile?.google_drive_storage} />
 
           {/* Add Video Form */}
           <form

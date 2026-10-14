@@ -16,7 +16,6 @@ import styles from './settings.module.css';
 
 const TABS = [
   { id: 'profile', label: 'Profile', icon: User },
-  { id: 'storage', label: 'Cloud Storage', icon: HardDrive },
   { id: 'domain', label: 'Custom Domain', icon: Globe },
   { id: 'calendar', label: 'Calendar Sync', icon: Calendar },
   { id: 'billing', label: 'Billing', icon: CreditCard },
@@ -31,7 +30,6 @@ import type { PublicPlan } from '@/lib/actions/plans';
 import PushNotificationToggle from '@/components/dashboard/PushNotificationToggle';
 import CustomDomainCard from '@/components/dashboard/CustomDomainCard';
 import GoogleCalendarSyncCard from '@/components/dashboard/GoogleCalendarSyncCard';
-import { GoogleDriveAdvancedManager } from '@/components/dashboard/GoogleDriveAdvancedManager';
 import { ArtistBillingManager } from '@/components/billing/ArtistBillingManager';
 import type { ArtistBillingDetails, TaxInvoice } from '@/types/invoice';
 
@@ -364,13 +362,6 @@ export function SettingsClient({
                   initialInvoices={initialInvoices}
                 />
               </div>
-            </div>
-          )}
-
-          {/* CLOUD STORAGE TAB (ADVANCED GOOGLE DRIVE STUDIO) */}
-          {activeTab === 'storage' && (
-            <div className={styles.settingsSection}>
-              <GoogleDriveAdvancedManager initialStorage={profile?.google_drive_storage} />
             </div>
           )}
 

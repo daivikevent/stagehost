@@ -132,8 +132,6 @@ export function RawMediaManager({
           description,
           is_public: isPublic,
           storage_provider: uploadRes.storageProvider,
-          drive_file_id: uploadRes.driveFileId,
-          drive_web_view_link: uploadRes.driveWebViewLink,
         });
 
         setItems((prev) => [newItem, ...prev]);
