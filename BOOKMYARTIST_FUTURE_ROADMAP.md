@@ -31,6 +31,8 @@
 | ✅ **Shipped** | **Featured Artist Directory Boost** | 1-click spotlight boost in `/admin/users`, priority directory sort & gold featured badges |
 | ✅ **Shipped** | **Offline Portfolio PWA Caching** | Service worker v2 asset & portfolio caching for weak hotel signals |
 | ✅ **Shipped** | **1-Click Phone-Verified WhatsApp Inquiries** | Anti-spam 4-digit PIN verification + 1-click WhatsApp routing with verified client badges |
+| ✅ **Shipped** | **Raw Stage Clips & MP3 Audio Vault** | Uncut stage videos (.mp4, .mov) & raw MP3 vocals, WhatsApp share, public showcase |
+| 🔵 **Phase 1 (Future Scope)** | **Artist Google Drive Storage Bridge (Zero Hosting Cost)** | Shared Folder Auto-Sync & Google Picker API integration to stream directly from artist Drive |
 | 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
@@ -305,6 +307,39 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
   2. Interactive geographic visitor breakdown by city with visual percentage fill bars.
   3. Device breakdown (Mobile vs Desktop) and video showreel play click tracking.
   4. Lead conversion rate calculations and direct WhatsApp click engagement metrics.
+
+---
+
+### 🎬 Feature 1.10: Raw Stage Clips & MP3 Audio Vault (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/vault`)
+* **Problem Statement:** Event planners and wedding coordinators frequently ask for unedited raw footage and audio samples without cinematic filters or background music to evaluate the artist's real mic presence, acoustic voice, and crowd interaction.
+* **Value Proposition:** Empowers artists to maintain an organized vault of authentic, unedited work samples with 1-click WhatsApp sharing to clients and an optional public showcase on their portfolio.
+* **Technical Implementation:**
+  1. Dedicated studio route at `/vault` with multi-format support (`.mp4`, `.mov`, `.webm`, `.mp3`, `.wav`, `.m4a`).
+  2. Supabase storage integration with upload progress bar, file size detection, and metadata persistence.
+  3. Inline HTML5 video player and custom gradient MP3 audio player.
+  4. 1-Click WhatsApp client share button with auto-formatted inquiry response messages.
+  5. Privacy switch: Toggle between Private Vault (shareable via link only) and Public Portfolio display.
+
+---
+
+### ☁️ Feature 1.11: Artist Cloud Drive & Google Drive Storage Bridge (Zero Hosting Cost) (🔵 In Roadmap)
+* **Status:** 🔵 **In Roadmap (Phase 1 Exploration)**
+* **Problem Statement:** Raw 4K stage videos and high-fidelity lossless audio recordings range from 200MB to 2GB per file. Storing and streaming these directly on platform servers creates high storage and bandwidth hosting bills as the platform scales to thousands of artists.
+* **Value Proposition:** Eliminates platform storage bills (₹0 hosting and bandwidth cost) by allowing artists to link their own Google Drive (using their free 15GB or Google One storage) while streaming video and audio directly on BookMyArtist.
+* **Proposed Implementation Approaches (Under Research):**
+  1. **Approach 1 — Public Shared Google Drive Folder / Link Streamer:**
+     - Artist creates a dedicated folder in their personal Google Drive (e.g. `BMA Stage Clips`).
+     - Sets access to *"Anyone with the link can view"*.
+     - Pastes the folder or file link into their BookMyArtist Raw Media Vault.
+     - The platform parses file IDs and streams video/audio using Google Drive CDN embeds (`/preview`), with 100% bandwidth handled by Google.
+  2. **Approach 2 — 1-Click "Connect Google Drive" (Google Picker API):**
+     - Native "📁 Select from Google Drive" button in the artist dashboard.
+     - Google OAuth using lightweight `drive.file` scope (requires zero invasive permissions).
+     - Official Google Drive file explorer modal opens inside BookMyArtist, letting artists select videos and MP3s directly.
+     - Only file IDs and streaming URLs are saved in the database; zero files are downloaded to BookMyArtist servers.
+  3. **Alternative Storage Explorations:**
+     - Evaluating Cloudflare Stream / R2 zero-egress storage, YouTube Unlisted stage reels, and direct S3 presigned upload pipelines.
 
 ---
 
