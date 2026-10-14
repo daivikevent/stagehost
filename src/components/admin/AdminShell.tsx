@@ -21,9 +21,11 @@ import {
   Menu,
   X,
   Gift,
+  Search,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BrandLogo } from '@/components/brand/BrandLogo';
+import { AdminCommandBar } from './AdminCommandBar';
 import styles from './AdminShell.module.css';
 
 const ADMIN_NAV = [
@@ -85,6 +87,50 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           )}
         </div>
 
+        {/* Quick Search Spotlight Button */}
+        <button
+          type="button"
+          onClick={() => {
+            window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+          }}
+          style={{
+            margin: collapsed ? '10px auto 6px' : '10px 12px 6px',
+            padding: collapsed ? '8px' : '7px 10px',
+            borderRadius: '8px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            color: 'rgba(255, 255, 255, 0.65)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: collapsed ? 'center' : 'space-between',
+            cursor: 'pointer',
+            fontSize: '12px',
+            transition: 'all 150ms ease',
+            width: collapsed ? '44px' : 'calc(100% - 24px)',
+          }}
+          title="Search / Command Bar (⌘K)"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Search size={14} color="var(--color-primary)" />
+            {!collapsed && <span>Quick Search...</span>}
+          </div>
+          {!collapsed && (
+            <kbd
+              style={{
+                fontSize: '10px',
+                fontFamily: 'var(--font-mono, monospace)',
+                background: 'rgba(255, 255, 255, 0.08)',
+                padding: '2px 5px',
+                borderRadius: '4px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: 'rgba(255, 255, 255, 0.5)',
+              }}
+            >
+              ⌘K
+            </kbd>
+          )}
+        </button>
+
         <nav className={styles.nav}>
           {ADMIN_NAV.map((link) => (
             <Link
@@ -144,19 +190,35 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <BrandLogo variant="navbar-mobile" />
             <span className={styles.mobileAdminTag}>ADMIN</span>
           </Link>
-          <Link
-            href="/dashboard"
-            className={styles.mobileAnchorLink}
-            title="Switch to Anchor Dashboard"
-          >
-            <LayoutDashboard size={17} />
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <button
+              type="button"
+              className={styles.mobileAnchorLink}
+              title="Search (⌘K)"
+              onClick={() => {
+                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+              }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
+            >
+              <Search size={17} />
+            </button>
+            <Link
+              href="/dashboard"
+              className={styles.mobileAnchorLink}
+              title="Switch to Anchor Dashboard"
+            >
+              <LayoutDashboard size={17} />
+            </Link>
+          </div>
         </header>
 
         {/* Content */}
         <div className={styles.content}>
           {children}
         </div>
+
+        {/* Global Spotlight Command Bar */}
+        <AdminCommandBar />
       </main>
 
       {/* Mobile Slide-in Drawer */}

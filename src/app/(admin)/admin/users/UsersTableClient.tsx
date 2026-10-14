@@ -1,9 +1,32 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Search, ExternalLink, Eye, UserX, UserCheck, Shield, Star, LogIn, Download, CheckSquare, Square } from 'lucide-react';
+import {
+  Search,
+  ExternalLink,
+  Eye,
+  UserX,
+  UserCheck,
+  Shield,
+  Star,
+  LogIn,
+  Download,
+  CheckSquare,
+  Square,
+  BadgeCheck,
+  MessageCircle,
+  ShieldCheck,
+} from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
-import { updateUserPlan, updateUserDirectoryListing, toggleUserStatus, toggleFeaturedAnchor, startImpersonation, bulkUpdateUserStatus } from '@/lib/actions/admin';
+import {
+  updateUserPlan,
+  updateUserDirectoryListing,
+  toggleUserStatus,
+  toggleFeaturedAnchor,
+  toggleVerifiedAnchor,
+  startImpersonation,
+  bulkUpdateUserStatus,
+} from '@/lib/actions/admin';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import styles from '../dashboard/admin.module.css';
 
@@ -94,6 +117,8 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
     });
   };
 
+  const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'verified' | 'featured' | 'paid'>('all');
+
   const handleFeaturedToggle = (profileId: string, currentFeatured: boolean) => {
     const nextFeatured = !currentFeatured;
     startTransition(async () => {
@@ -103,6 +128,19 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
         success(nextFeatured ? '⭐ Anchor boosted to Top of Directory!' : 'Featured boost removed');
       } catch (err) {
         showError('Failed to update featured status');
+      }
+    });
+  };
+
+  const handleVerifiedToggle = (profileId: string, currentVerified: boolean) => {
+    const nextVerified = !currentVerified;
+    startTransition(async () => {
+      try {
+        await toggleVerifiedAnchor(profileId, nextVerified);
+        setUsers(prev => prev.map(u => u.id === profileId ? { ...u, is_verified: nextVerified } : u));
+        success(nextVerified ? '🔵 Official Blue Tick verified badge granted!' : 'Blue Tick badge revoked from anchor.');
+      } catch (err) {
+        showError('Failed to update verification status');
       }
     });
   };
@@ -195,11 +233,24 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
     success(`Exported ${selectedUsers.length} selected users to CSV!`);
   };
 
-  const activeCount = users.filter(u => u.status === 'active').length;
-  const inactiveCount = users.filter(u => u.status === 'inactive').length;
-
+  const activeCount = users.filter((u) => u.status === 'active').length;
+  const inactiveCount = users.filter((u) => u.status === 'inactive').length;
+  const pendingVerificationsCount = users.filter((u) => u.profile_complete && !u.is_verified).length;
+  const verifiedCount = users.filter((u) => u.is_verified).length;
+  const featuredCount = users.filter((u) => u.is_featured).length;
+  const paidCount = users.filter((u) => u.plan && u.plan !== 'Free').length;
 
   const filtered = users.filter((u) => {
+    if (activeTab === 'pending') {
+      if (!u.profile_complete || u.is_verified) return false;
+    } else if (activeTab === 'verified') {
+      if (!u.is_verified) return false;
+    } else if (activeTab === 'featured') {
+      if (!u.is_featured) return false;
+    } else if (activeTab === 'paid') {
+      if (!u.plan || u.plan === 'Free') return false;
+    }
+
     if (
       search &&
       !u.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -232,6 +283,51 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
             <span className="badge badge-warning">{inactiveCount} disabled</span>
           )}
         </div>
+      </div>
+
+      {/* Filter Tabs / Quick Verification Queue */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+        <button
+          type="button"
+          className={`btn btn-xs ${activeTab === 'all' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => setActiveTab('all')}
+        >
+          All Anchors ({users.length})
+        </button>
+        <button
+          type="button"
+          className={`btn btn-xs ${activeTab === 'pending' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => setActiveTab('pending')}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+        >
+          <ShieldCheck size={13} color="#f59e0b" />
+          Pending Verification ({pendingVerificationsCount})
+        </button>
+        <button
+          type="button"
+          className={`btn btn-xs ${activeTab === 'verified' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => setActiveTab('verified')}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+        >
+          <BadgeCheck size={13} color="var(--color-primary)" />
+          Verified Blue Tick ({verifiedCount})
+        </button>
+        <button
+          type="button"
+          className={`btn btn-xs ${activeTab === 'featured' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => setActiveTab('featured')}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+        >
+          <Star size={13} color="#f59e0b" />
+          Spotlight Top Boost ({featuredCount})
+        </button>
+        <button
+          type="button"
+          className={`btn btn-xs ${activeTab === 'paid' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => setActiveTab('paid')}
+        >
+          Paid Subscribers ({paidCount})
+        </button>
       </div>
 
       <div className={styles.filtersRow}>
@@ -318,6 +414,7 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
                 <th>Status</th>
                 <th>In Directory</th>
                 <th>Spotlight</th>
+                <th>Blue Tick</th>
                 <th>Joined</th>
                 <th>Actions</th>
               </tr>
@@ -414,6 +511,28 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
                       {u.is_featured ? 'Featured' : 'Boost'}
                     </button>
                   </td>
+                  <td>
+                    <button
+                      className={`badge ${u.is_verified ? 'badge-primary' : 'badge-ghost'}`}
+                      style={{
+                        cursor: 'pointer',
+                        border: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        padding: '4px 8px',
+                        background: u.is_verified ? 'rgba(99, 102, 241, 0.15)' : undefined,
+                        color: u.is_verified ? 'var(--color-primary)' : undefined,
+                        fontWeight: u.is_verified ? 600 : 400,
+                      }}
+                      onClick={() => handleVerifiedToggle(u.id, !!u.is_verified)}
+                      disabled={isPending}
+                      title={u.is_verified ? 'Click to revoke Blue Tick verified badge' : 'Click to Grant Official Blue Tick Badge'}
+                    >
+                      <BadgeCheck size={12} />
+                      {u.is_verified ? 'Verified' : 'Grant'}
+                    </button>
+                  </td>
                   <td className="text-tertiary text-xs">{u.joined}</td>
                   <td>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -426,6 +545,18 @@ export function UsersTableClient({ initialUsers }: UsersTableClientProps) {
                       >
                         <LogIn size={13} />
                       </button>
+
+                      <a
+                        href={`https://wa.me/?text=${encodeURIComponent(
+                          `Hello ${u.name}! Congratulations, your artist portfolio on BookMyArtist has been officially verified with the Blue Tick badge! Check your live profile: https://bookmyartist.in/${u.slug}`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-ghost btn-xs text-success"
+                        title="Send WhatsApp Notification"
+                      >
+                        <MessageCircle size={13} />
+                      </a>
 
                       <a
                         href={`/${u.slug}`}
