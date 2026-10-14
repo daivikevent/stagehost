@@ -46,8 +46,10 @@ import { MediaKitModal } from '@/components/portfolio/MediaKitModal';
 import { TestimonialsManager } from '@/components/portfolio/TestimonialsManager';
 import { PackagesManager } from '@/components/portfolio/PackagesManager';
 import { PhotosManager } from '@/components/portfolio/PhotosManager';
+import { RawMediaManager } from '@/components/portfolio/RawMediaManager';
 import { GoogleDriveQuickCard } from '@/components/dashboard/GoogleDriveQuickCard';
 import type { AnchorProfile, Video, Photo, ServicePackage, Testimonial } from '@/types';
+import type { RawMediaItem } from '@/lib/actions/raw-media';
 import styles from './portfolio.module.css';
 
 import type { PlatformTaxonomy } from '@/types/taxonomy';
@@ -61,6 +63,7 @@ interface PortfolioFormProps {
     testimonials?: Testimonial[];
   }) | null;
   taxonomy?: PlatformTaxonomy;
+  initialRawMedia?: RawMediaItem[];
 }
 
 const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: string; border: string }> = {
@@ -72,7 +75,7 @@ const LAYOUT_DETAILS: Record<string, { label: string; badge: string; color: stri
   cinema: { label: 'CineStar Red Carpet Premiere', badge: '🎬 Red Carpet Premiere', color: '#ff2a4b', border: 'rgba(255, 42, 75, 0.5)' },
 };
 
-export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) {
+export function PortfolioForm({ initialProfile, taxonomy, initialRawMedia = [] }: PortfolioFormProps) {
   const { success, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
   const [isLayoutCollapsed, setIsLayoutCollapsed] = useState(true);
@@ -1060,68 +1063,37 @@ export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) 
         {/* ========================================================= */}
         {/* VIDEOS & SHOWREELS SECTION (YouTube + Google Drive + Reels) */}
         {/* ========================================================= */}
-        <div className={styles.formSection} style={{ border: '1px solid rgba(108, 92, 231, 0.3)' }}>
+        <div id="media" style={{ scrollMarginTop: '80px' }}></div>
+        <div id="video-showcase" className={styles.formSection} style={{ border: '1px solid rgba(108, 92, 231, 0.3)', scrollMarginTop: '80px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
             <div>
               <h3 className={styles.sectionTitle} style={{ margin: 0 }}>
-                <Film size={20} color="var(--color-primary)" /> Video Showcase & Showreels
+                <Film size={20} color="var(--color-primary)" /> Video Showcase &amp; Showreels
               </h3>
               <p className="text-xs text-secondary" style={{ marginTop: '4px' }}>
                 Upload links for your YouTube videos, Google Drive performance clips, or Instagram reels. Visitors will watch them directly on your portfolio!
               </p>
             </div>
-            <span className="badge badge-primary" style={{ fontSize: '12px' }}>
-              {videos.length} {videos.length === 1 ? 'Video' : 'Videos'} Active
-            </span>
-          </div>
-
-          {/* Raw Media & Audio Vault Banner */}
-          <div
-            style={{
-              padding: '14px 18px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%)',
-              border: '1px solid rgba(6, 182, 212, 0.25)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '20px',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <a
+                href="#raw-media-vault"
+                className="btn btn-secondary btn-xs"
                 style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '10px',
-                  background: 'rgba(6, 182, 212, 0.15)',
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  gap: '5px',
                   color: '#06b6d4',
-                  flexShrink: 0,
+                  borderColor: 'rgba(6, 182, 212, 0.4)',
+                  background: 'rgba(6, 182, 212, 0.08)',
+                  textDecoration: 'none',
                 }}
               >
-                <Music size={20} />
-              </div>
-              <div>
-                <strong style={{ fontSize: '13px', color: '#fff', display: 'block' }}>
-                  Raw Videos &amp; MP3 Audio Vault
-                </strong>
-                <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Upload unedited work clips and raw MP3 tracks to share directly with clients on WhatsApp or show on your portfolio.
-                </span>
-              </div>
+                <Music size={13} /> Raw Vault ({initialRawMedia.length}) ↓
+              </a>
+              <span className="badge badge-primary" style={{ fontSize: '12px' }}>
+                {videos.length} {videos.length === 1 ? 'Video' : 'Videos'} Active
+              </span>
             </div>
-            <a
-              href="/vault"
-              className="btn btn-secondary btn-xs"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-            >
-              Open Raw Vault →
-            </a>
           </div>
 
           {/* Quick Google Drive Storage Bridge */}
@@ -1416,6 +1388,13 @@ export function PortfolioForm({ initialProfile, taxonomy }: PortfolioFormProps) 
             </div>
           )}
         </div>
+
+        {/* Raw Videos & MP3 Audio Vault Manager (Directly Below Video Showcase) */}
+        <RawMediaManager
+          initialItems={initialRawMedia}
+          artistSlug={initialProfile?.slug || ''}
+          artistName={initialProfile?.name || 'Artist'}
+        />
 
         {/* Stage Photo Gallery Manager ("Captured On Stage") */}
         <PhotosManager initialPhotos={initialProfile?.photos || []} />

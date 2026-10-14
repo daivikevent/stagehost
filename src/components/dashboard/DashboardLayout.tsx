@@ -20,7 +20,7 @@ import styles from './DashboardLayout.module.css';
 const SIDEBAR_LINKS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/portfolio', icon: User, label: 'Profile' },
-  { href: '/vault', icon: Film, label: 'Raw Media Vault' },
+  { href: '/portfolio#media', icon: Film, label: 'Manage Media' },
   { href: '/schedule', icon: Calendar, label: 'Schedule' },
   { href: '/inquiries', icon: MessageSquare, label: 'Inquiries' },
   { href: '/analytics', icon: BarChart3, label: 'Analytics' },
@@ -31,7 +31,7 @@ const SIDEBAR_LINKS = [
 const MOBILE_NAV_LINKS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Home' },
   { href: '/portfolio', icon: User, label: 'Portfolio' },
-  { href: '/vault', icon: Film, label: 'Raw Vault' },
+  { href: '/portfolio#media', icon: Film, label: 'Media' },
   { href: '/schedule', icon: Calendar, label: 'Schedule' },
   { href: '/inquiries', icon: MessageSquare, label: 'Inquiries' },
   { href: '/settings', icon: Settings, label: 'More' },
@@ -79,8 +79,28 @@ export function DashboardShell({
     }
   }, []);
 
-  const isActive = (href: string) =>
-    href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
+  const [currentHash, setCurrentHash] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentHash(window.location.hash);
+      const onHashChange = () => setCurrentHash(window.location.hash);
+      window.addEventListener('hashchange', onHashChange);
+      return () => window.removeEventListener('hashchange', onHashChange);
+    }
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    const [baseHref, hash] = href.split('#');
+    if (baseHref === '/dashboard') return pathname === '/dashboard';
+    if (hash) {
+      return pathname === baseHref && currentHash === `#${hash}`;
+    }
+    if (baseHref === '/portfolio') {
+      return pathname === '/portfolio' && (!currentHash || currentHash === '#profile');
+    }
+    return pathname.startsWith(baseHref);
+  };
 
   const handleSignOut = async () => {
     const supabase = createClient();
