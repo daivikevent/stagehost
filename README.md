@@ -5,67 +5,32 @@
 
 ---
 
-## 🌟 What's New in Version 2.8 (September 2026 Release)
+## 🌟 What's New in Version 3.0 (October 2026 Release)
 
-### 1. ⏳ Pencil Hold Expiry Timer & Smart WhatsApp Nudge
-- **Dual Mode Flexibility**: Holds default to **None (Manual Hold)** without forced countdowns. Users can optionally activate `24h`, `48h`, `72h`, `7d`, or **Custom** deadlines (with quick `+12 Hours` and `+5 Days` offset buttons).
-- **Executive Amber Pipeline Banner**: Displays expiring holds at a glance with countdown badges (`⏳ 32h left` / `⚠️ Expired`).
-- **1-Click WhatsApp Nudge**: Sends pre-formatted, polite reminder messages asking clients to confirm or release their held date.
-- **Direct Edit Access**: Dedicated **Edit** button inside the Active Holds modal to update hold details instantly without multiple clicks.
+### 1. ✍️ Digital Performance Agreement & Mobile E-Sign (`/agreement/[id]`)
+- **Interactive Mobile Finger Signature Pad**: Clients can draw and execute their digital signature directly on their smartphone touchscreen using HTML5 Canvas.
+- **7-Clause Standard Entertainment Contract**: Protects artists with call time protocols, performance milestones, overtime hourly rates, non-refundable advance terms, and force majeure.
+- **Zero-Escrow Platform Disclaimer**: Explicit legal clause confirming BookMyArtist is strictly a digital software enablement tool with zero booking liability and zero advance escrow holding; contracts and payments remain 100% direct between artist and organizer.
+- **Immutable Cryptographic Hash**: Every executed agreement generates a verifiable timestamped signature seal with 1-click WhatsApp and PDF export.
 
-### 2. ⚔️ Date Clash & Dual-Inquiry Detection Engine
-- **Live Collision Badges**: `/inquiries` automatically cross-references inbound inquiry event dates against confirmed and tentative bookings:
-  - `⚔️ Booked Clash` (Show already locked in)
-  - `⚡ Hold Clash (Nudge Opportunity)` (Tentative pencil hold on that date)
-- **Negotiation Leverage Tool**: Detail panel includes 1-click action buttons to WhatsApp the hold client (*"Sir, a second client is inquiring for your date"*) or reply to the new client proposing alternative open dates.
+### 2. 📍 City + Category Dynamic SEO Landing Pages (`/artists/[city]` & `/artists/[city]/[category]`)
+- **High-Ranking Organic Discovery**: Next.js SSR landing pages for local queries (e.g. `Best DJs in Mumbai`, `Wedding Singer Delhi`, `Anchor in Jaipur`) without paid ad spend.
+- **Rich Snippets & Schemas**: Auto-generates JSON-LD `ItemList` and `FAQPage` structured schemas indexed via dynamic `sitemap.xml`.
+- **Instant Availability & Live Date Filter**: Event planners can filter performers by specific event date and city directly in `/directory`.
 
-### 3. 💳 Razorpay Advance Token Payment on Public Receipts
-- **Online Checkout on Public Receipts**: `/receipt/[id]` includes online payment support for credit/debit cards, netbanking, and UPI QR codes.
-- **Token Presets**: Clients can pay preset tokens (₹10,000, ₹15,000, ₹25,000, or a custom amount).
-- **Auto-Conversion to Confirmed Show**: Successful Razorpay payment automatically strips `[PENCIL_HOLD]`, marks the calendar slot as `booked`, updates the receipt, and notifies the artist.
+### 3. ⭐ Post-Event Direct Review Collector (`/review/[slug]`)
+- **Direct 5-Star Feedback Loop**: Artists can copy their personalized review link (`/review/[slug]`) from `/portfolio` and send it via WhatsApp the morning after a performance.
+- **Verified Testimonials Feed**: Client ratings, designations, and reviews instantly publish to the artist's live stage portfolio.
 
-### 4. 📅 1-Click Direct Google Calendar Sync & WebCal Feeds
-- **Per-Event Direct Link**: Every confirmed and held show card has a direct `📅 Cal` button generating a pre-filled Google Calendar event URL with venue, client contact, and show cue notes.
-- **Enhanced WebCal Modal**: 1-click "Subscribe in Google Calendar" and "Subscribe in Apple Calendar" links using dynamic `/api/calendar/[slug]` iCal feeds.
+### 4. 🎛️ Stage Soundcheck & Tech Rider Studio (`/schedule`)
+- **Eliminates Venue Sound Chaos**: Customizable technical rider generator to specify vocal microphones (Shure Beta 58A / Sennheiser), in-ear monitors, stage wedges, DJ consoles (CDJ-3000), and stage power.
+- **1-Tap WhatsApp Sound Engineer Dispatch**: Generates a clean visual checklist shared directly with event production managers and venue audio engineers.
 
-### 5. 📄 Offline Backstage PWA & Legal Performance Contract
-- **Service Worker Offline Caching**: `sw.js` and `manifest.json` cache schedules, receipts, and cue sheets so artists can access their show details in zero-network ballroom basements.
-- **Formal Legal Contract View**: Receipt pages include a toggleable **Artist Performance Engagement Agreement** complete with technical riders, financial milestones, cancellation terms, and digital E-Signature seals ready for print or PDF.
+### 5. ⚙️ Dynamic Profile Dropdowns & Taxonomy Manager (`/admin/settings`)
+- **Real-Time Database Sync**: Super admins can add, rename, or remove artist categories, event genres, languages, and cities in real-time, synchronized with Supabase `platform_settings`.
 
-### 6. 🎛️ 1-Screen Fit Switcher & Executive Header Action Bar
-- **Primary View Switcher**:
-  - `[ 📅 Calendar View ]`: Focused month grid and day detail panel.
-  - `[ 📋 Shows Pipeline ]`: Displays all shows at the top of the viewport with sticky headers and compact rows without scrolling past the calendar.
-  - `[ 🔲 All-in-One ]`: Classic unified vertical layout.
-- **Executive Header Bar**: Single-line clean toolbar featuring Primary `+ Add Booking` alongside unified `Import/Export`, `Sync Cal`, and `Portfolio ↗` tools without awkward wrapping.
-
----
-
-## 🚀 How to Use Core Workflows
-
-### A. Managing Holds & Sending WhatsApp Nudges
-1. Go to **Dashboard > Schedule** and click **+ Add Booking**.
-2. Toggle status to **🟡 Pencil Hold (Tentative)**.
-3. Select desired hold duration or keep **🚫 None (Manual Hold)**.
-4. If a client delays, click **View Holds** on the top amber banner and press **⚡ WhatsApp Nudge**.
-5. To update hold info directly, click **✏️ Edit** right from the modal.
-
-### B. Handling Inbound Inquiries & Date Clashes
-1. Go to **Dashboard > Inquiries**.
-2. Check for `⚔️ Booked Clash` or `⚡ Hold Clash` badges next to inquiries.
-3. Click on the inquiry to review client budget, event genre, and contact details.
-4. Use the **Clash Management** box to either leverage the hold client into paying an advance token or suggest alternative dates to the new prospect.
-
-### C. Collecting Advance Tokens via Public Receipts
-1. Open the booking in **Schedule** and click the **Receipt** icon.
-2. Enter the advance amount or set a token deposit.
-3. Click **Share Receipt** and send the public `/receipt/[id]` URL to your client.
-4. Client clicks **Pay Token Online** and pays via UPI/Card. The hold instantly switches to Confirmed.
-
-### D. Syncing with Google & Apple Calendar
-1. Click **Sync Cal** in the top action bar of the Schedule page.
-2. Click **Subscribe in Google Calendar** or **Subscribe in Apple Calendar**.
-3. All new bookings, travel blocks, and held dates sync automatically to your phone.
+### 6. 📶 Enhanced Service Worker v2 Offline Portfolio Caching
+- **Banquet Hall Offline Mode**: Caches artist portfolios, cue sheets, and schedules so they open instantly in zero-cellular hotel basements and heritage forts.
 
 ---
 
@@ -80,7 +45,14 @@
 | **🖼️ Client-Side Media Compression (WebP)** | Infrastructure | ✅ **Shipped** | HTML5 Canvas WebP compression (15MB ➔ ~250KB) before upload to Supabase Storage. |
 | **📄 Automated PDF Quotation & Rate Card Generator** | Commercial & Proposals | ✅ **Shipped** | 1-click corporate quotation generator with itemized scope of work, A4 PDF print/download, and WhatsApp sharing. |
 | **🤖 Meta WhatsApp Cloud API (Automated Ping)** | AI & Automation | ✅ **Shipped** | Official WhatsApp Cloud API integration delivering lead notifications directly to artist chats with sandbox test fallback. |
-| **📑 Automated GST Tax Invoicing for Subscriptions** | Compliance & Finance | 🟡 Planned | GST-compliant tax invoicing with B2B GSTIN collection and downloadable PDF invoices. |
+| **📑 Automated GST Tax Invoicing for Subscriptions** | Compliance & Finance | ✅ **Shipped** | GST-compliant tax invoicing (Rule 46) with B2B GSTIN collection, sequential numbering, and downloadable PDF invoices. |
+| **🎁 Artist Referral & Rewards Engine** | Growth & Community | ✅ **Shipped** | 1-click WhatsApp invite links, live referral tracking, community leaderboard, and admin reward policies. |
+| **✍️ Digital Performance Agreement (E-Sign)** | Legal & Contracts | ✅ **Shipped** | Mobile finger signature canvas, 7-clause legal protection, and zero escrow disclaimer. |
+| **📍 City + Category SEO Landing Pages** | SEO & Discovery | ✅ **Shipped** | Dynamic SSR pages with JSON-LD schemas for organic client leads. |
+| **⭐ Post-Event Direct Review Collector** | Social Proof & CRM | ✅ **Shipped** | WhatsApp review loop (`/review/[slug]`) saving to verified testimonials. |
+| **🎛️ Stage Soundcheck & Tech Rider Studio** | Audio Production | ✅ **Shipped** | Audio checklist generator for sound engineers with 1-tap WhatsApp sharing. |
+| **⚙️ Dynamic Profile Taxonomy Manager** | Super Admin Control | ✅ **Shipped** | Real-time database sync for artist categories, event genres, languages, and cities. |
+| **📱 1-Click Verified WhatsApp Inquiries** | Security & Leads | 🔵 Active | Phone-verified, high-intent lead routing with Indian +91 regex validation. |
 
 ---
 

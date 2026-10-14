@@ -22,15 +22,16 @@
 | ✅ **Shipped** | **Brand Logo & Multi-Placement Sizing Studio** | Admin logo upload, 7-location height sliders, live multi-screen preview |
 | ✅ **Shipped** | **GST Tax Invoice Generator for Subscriptions** | Indian GST Act Rule 46, 18% GST breakdown, B2B ITC claim, sequential PDF |
 | ✅ **Shipped** | **Artist Referral & Rewards Core System** | 1-Click WhatsApp invite, live tracking, admin policy studio (validity, cash, leaderboard) |
+| ✅ **Shipped** | **Dynamic Profile Dropdowns & Taxonomy Manager** | Super Admin studio in `/admin/settings` to edit artist types, event genres, languages & cities synced with Supabase |
 | ✅ **Shipped** | **City + Category SEO Landing Pages** | Dynamic SSR pages (`/artists/[city]` and `/artists/[city]/[category]`) with JSON-LD schema |
 | ✅ **Shipped** | **Directory Date & City Availability Filter** | Real-time date availability checker & calendar filter in `/directory` |
 | ✅ **Shipped** | **Digital Performance Agreement (E-Sign)** | Mobile finger e-signature agreement (`/agreement/[id]`) with 7-clause legal protection & zero escrow disclaimer |
 | ✅ **Shipped** | **Post-Event Client Review Collector** | Direct 5-star review portal (`/review/[slug]`) saving to verified testimonials |
-| ✅ **Shipped** | **Stage Soundcheck & Tech Rider Studio** | Technical rider generator modal with WhatsApp sound engineer share |
+| ✅ **Shipped** | **Stage Soundcheck & Tech Rider Studio** | Technical rider generator modal in `/schedule` with WhatsApp sound engineer share |
+| ✅ **Shipped** | **Featured Artist Directory Boost** | 1-click spotlight boost in `/admin/users`, priority directory sort & gold featured badges |
 | ✅ **Shipped** | **Offline Portfolio PWA Caching** | Service worker v2 asset & portfolio caching for weak hotel signals |
-| 🔵 **Phase 1 (Next Up)** | **1-Click Verified WhatsApp Inquiries** | Phone-verified, high-intent lead routing to block spam |
-| 🔵 **Phase 1 (Next Up)** | **Featured Artist Directory Boost** | Monetized top-of-directory spotlight for premium artists |
-| 🔵 **Phase 1 (Next Up)** | **Artist Smart Analytics & Lead Intelligence** | City-level visitor breakdown and conversion tracking |
+| ✅ **Shipped** | **Artist Smart Analytics & Lead Intelligence** | Daily/monthly views, city-level visitor breakdown, device split, video plays, lead conversions |
+| 🔵 **Phase 1 (Active / Next)** | **1-Click Verified WhatsApp Inquiries** | Phone-verified, high-intent lead routing to block spam |
 | 🟡 **Phase 2 (Pending)** | **Audio & Stream Embeds (Spotify, SoundCloud)** | Embedded audio players for DJs, Singers, Voiceovers (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Gig Repertoire & Setlist Builder** | Genre curation, signature tracks, performance riders (Future Scope) |
 | 🟡 **Phase 2 (Pending)** | **Multi-Artist Booking Bundles (Agency Mode)** | Bundled package inquiries for Event Planners & Crews (Future Scope) |
@@ -273,14 +274,14 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### 🚀 Feature 1.7: Featured Artist Directory Boost (Monetized Spotlight)
-* **Status:** 🔵 **Phase 1 (Upcoming — Sprint 7)**
+### 🚀 Feature 1.7: Featured Artist Directory Boost (Monetized Spotlight) (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/admin/users` ➔ 1-Click Boost & `/directory`)
 * **Problem Statement:** Top artists want maximum visibility and are willing to pay for premium placement above regular search results.
 * **Value Proposition:** Additional recurring revenue stream for BookMyArtist; higher booking volume for top performers.
 * **Technical Implementation:**
-  1. Directory algorithm prioritizes "Featured / Spotlight" artists in top 3 slots for each category/city.
-  2. Can be bundled with the Premium Plan (₹1,299/mo) or unlocked as an add-on boost.
-  3. Displays a gold *"Featured Performer"* badge.
+  1. Super admin can toggle featured spotlight with 1-click inside `/admin/users` (`UsersTableClient.tsx`).
+  2. Public directory (`DirectoryClient.tsx` & `src/lib/actions/profile.ts`) automatically prioritizes featured artists at the top of category/city search results.
+  3. Displays a gold *"Featured"* spotlight badge and elevated card styling.
 
 ---
 
@@ -295,13 +296,15 @@ Indian artists registered as Sole Proprietorships, Partnerships, or Private Limi
 
 ---
 
-### 📊 Feature 1.9: Artist Smart Analytics & Lead Intelligence
+### 📊 Feature 1.9: Artist Smart Analytics & Lead Intelligence (✅ Shipped)
+* **Status:** ✅ **Shipped & Live** (`/analytics`)
 * **Problem Statement:** Artists want to know who is looking at their profile, which cities are generating the most interest, and where they should market themselves.
 * **Value Proposition:** Empowers artists with actionable business intelligence so they feel the tangible value of BookMyArtist every week.
 * **Technical Implementation:**
-  1. Privacy-friendly event tracking for profile views, showreel video plays, WhatsApp clicks, and quotation downloads.
-  2. Interactive charts in `/analytics`: Visitor geographic breakdown (e.g. 58% Mumbai, 25% Pune, 17% Delhi), lead conversion rate, and peak viewing days.
-  3. Weekly summary push notification: *"Your portfolio was viewed by 76 event planners this week! 3 wedding inquiries generated."*
+  1. Real-time analytics suite (`/analytics` & `src/lib/actions/analytics.ts`) tracking daily and monthly profile views.
+  2. Interactive geographic visitor breakdown by city with visual percentage fill bars.
+  3. Device breakdown (Mobile vs Desktop) and video showreel play click tracking.
+  4. Lead conversion rate calculations and direct WhatsApp click engagement metrics.
 
 ---
 
@@ -473,9 +476,10 @@ Many talented performers struggle to write compelling, high-converting bios and 
 | **Digital Performance Agreement (E-Sign)** | All Performing Artists | Medium | 🟢 Massive (Protects artist dates & fees) | ✅ **Shipped (Sprint 4)** |
 | **Post-Event Automated Review Collector** | Clients & Past Event Hosts | Low | 🟢 High (Builds social proof on autopilot) | ✅ **Shipped (Sprint 5)** |
 | **Stage Soundcheck & Tech Rider Generator** | Musicians, Live Bands, DJs | Low | 🟡 Medium (Eliminates venue sound chaos) | ✅ **Shipped (Sprint 6)** |
-| **Featured Artist Directory Boost** | Premium Tier Artists | Low | 🟢 High (Direct platform revenue boost) | 🔵 **Sprint 7 (Upcoming)** |
+| **Featured Artist Directory Boost** | Premium Tier Artists | Low | 🟢 High (Direct platform revenue boost) | ✅ **Shipped (Sprint 7)** |
 | **Offline Portfolio PWA Caching** | Traveling Artists in Venues | Medium | 🟡 Medium (Instant loads in banquet basements) | ✅ **Shipped (Sprint 8)** |
-| **Artist Smart Analytics & Lead Intelligence** | Dashboard Users | Medium | 🟡 Medium (Weekly value demonstration) | 🔵 **Sprint 9 (Upcoming)** |
+| **Artist Smart Analytics & Lead Intelligence** | Dashboard Users | Medium | 🟡 Medium (Weekly value demonstration) | ✅ **Shipped (Sprint 9)** |
+| **Dynamic Profile Dropdowns & Taxonomy Manager** | Super Admins & All Artists | Low | 🟢 High (Full customization of categories/cities) | ✅ **Shipped** |
 
 ### 🟡 Phase 2: Creative Portfolio & Media Expansion (Pending)
 | Feature | Target Audience | Effort | Business Impact | Status / Target Sprint |

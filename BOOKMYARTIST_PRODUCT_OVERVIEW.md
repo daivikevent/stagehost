@@ -79,11 +79,14 @@ Every registered artist receives a personalized public profile (e.g. `bookmyarti
    - Prevents client date inquiries when the artist is already engaged.
 5. **Verified Client Reviews & Rating Engine**:
    - 5-Star verified client testimonials with event type and client designations.
-   - **"Write a Review" Modal**: Past clients and wedding planners can directly leave ratings and reviews.
 6. **Dynamic WhatsApp Social Share Card (`opengraph-image.tsx`)**:
    - When an artist sends their link on WhatsApp, an eye-catching 1200x630 preview card renders automatically showing their photo, name, city, and 5-star rating.
 7. **Mobile Sticky Quick-Action Bar**:
    - Floating dock on mobile screens with **WhatsApp (1-Click Chat)** and **Book / Check Date** for maximum conversion.
+8. **Post-Event Client Review Collector (`/review/[slug]`)**:
+   - Direct review portal for event hosts and wedding couples to submit star ratings and testimonials that immediately reflect on the artist portfolio.
+9. **City & Category Dynamic SEO Landing Pages (`/artists/[city]` & `/artists/[city]/[category]`)**:
+   - Targeted SSR landing pages with JSON-LD ItemList & FAQPage rich schemas driving zero-ad organic Google search leads.
 
 ---
 
@@ -98,25 +101,36 @@ When an artist logs into BookMyArtist (`/dashboard`), they access a full private
 2. **Portfolio Builder (`/portfolio`)**:
    - Update bio, artist name, artist category (Anchor, DJ, Singer, Band, Comedian, etc.), languages, cities, and profile headshots.
    - Manage video showreels, photo gallery, and service packages without touching code.
+   - **1-Click Collect Client Reviews**: Direct copy button to share review loop URL with clients.
 3. **Schedule & Calendar (`/schedule`)**:
    - Block personal dates, add booked gigs, set travel buffers.
+   - **Stage Soundcheck & Tech Rider Studio**: Built-in audio gear checklist (microphones, in-ear monitors, stage wedges, DJ consoles) with 1-tap WhatsApp sharing for sound engineers.
    - Export 1-way iCal subscription feed (`/api/calendar/[slug]`) to sync with Apple Calendar or Google Calendar.
-4. **Themes & Aesthetics (`/themes`)**:
+4. **Digital Performance Agreement & E-Sign Engine (`/agreement/[id]`)**:
+   - Legally structured 7-clause performance contract with interactive mobile finger/touch signature canvas pad.
+   - Explicit zero-escrow platform disclaimer: all contractual liability and payments remain 100% direct between artist and organizer.
+   - Immutable signature hash, timestamp, and WhatsApp / Print-ready PDF export options.
+5. **Offline Portfolio PWA Caching (v2 Service Worker)**:
+   - Enhanced service worker caching ensures portfolios, cue sheets, and schedules load instantly in hotel banquet basements with zero cellular connectivity.
+6. **Themes & Aesthetics (`/themes`)**:
    - Choose between custom design moods: *Obsidian Violet*, *Royal Gold*, *Neon Cyberpunk*, *Minimal Light*, and *Emerald Stage*.
-5. **Business Analytics (`/analytics`)**:
-   - Tracks portfolio pageviews, inquiries generated, WhatsApp clicks, and estimated booking conversion rate.
-6. **Subscription & Plan Upgrades (`/settings`)**:
-   - Interactive checkout modal with **Promo Code validation** (e.g. `EARLYBIRD50` for 50% discount) and Razorpay integration.
+7. **Business Analytics (`/analytics`)**:
+   - Tracks portfolio pageviews (daily/monthly), city-level visitor breakdown, device split (mobile vs desktop), video clicks, and booking conversion rate.
+8. **Subscription & Plan Upgrades (`/settings`)**:
+   - Interactive checkout modal with **Promo Code validation** (e.g. `EARLYBIRD50` for 50% discount), GST tax invoicing, and Razorpay integration.
+9. **Artist Referral & Rewards (`/referrals`)**:
+   - 1-Click WhatsApp referral links, live invite tracking, and subscription validity rewards.
 
 ---
 
 ### Module 3: 🔍 Public Artist Directory (`/directory`)
 A searchable marketplace for event management companies, wedding planners, and corporate HRs:
+- **Instant Date & City Availability Checker**: Real-time event date picker to check which artists are available.
 - Filter artists by **Artist Category** (Anchors, DJs, Live Singers, Bands, Standup Comedians, Dancers, Magicians).
 - Filter artists by **City** (Mumbai, Delhi, Bangalore, Jaipur, Goa, etc.).
 - Filter by **Event Category** (Weddings, Corporate, Concerts, Sangeet).
-- **Featured / Spotlight Badges**: Artists boosted by admins appear right at the top.
-- Direct 1-click buttons to view portfolio or open WhatsApp chat.
+- **Featured / Spotlight Badges**: 1-click boosted artists appear right at the top of category and city search results with gold badges.
+- Direct 1-click buttons to view portfolio, inspect live calendar, or open WhatsApp chat.
 
 ---
 
@@ -139,10 +153,13 @@ A high-powered platform administration control center (`admin@bookmyartist.in`):
    - **Coupons Engine**: Create, toggle active status, and delete discount codes (`DISCOUNT50`, `LAUNCH100`).
 4. **Payments & Revenue Ledger (`/admin/payments`)**:
    - Real-time transaction history with payment IDs, artist names, amounts, statuses, and **1-Click Export Payments to CSV**.
-5. **Global Platform Settings (`/admin/settings`)**:
+5. **Global Platform Settings & Taxonomy (`/admin/settings`)**:
+   - **Dynamic Profile Dropdowns & Taxonomy Manager**: Add, edit, or delete artist categories, event genres, languages, and cities in real-time, synchronized with Supabase `platform_settings`.
    - Platform brand name, support email, razorpay keys, and SMTP email settings with live test email sender.
    - **Broadcast Announcement Banner**: Publish urgent banners or feature news across all artist dashboards with live visual preview.
    - **Custom Domains & DNS Manager**: Displays CNAME / A-Record DNS targets (`cname.bookmyartist.in`) and allows approving/rejecting artist domain requests.
+6. **Referral Program Management (`/admin/referrals`)**:
+   - Configure reward policy (validity days vs cash), minimum profile completion criteria, and review community referral leaderboards.
 
 ---
 
