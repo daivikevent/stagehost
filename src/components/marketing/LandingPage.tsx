@@ -439,7 +439,9 @@ export function LandingPage({ initialPlans }: { initialPlans?: PublicPlan[] }) {
               className={`${styles.pricingCard} ${plan.popular ? styles.pricingPopular : ''} reveal`}
             >
               {plan.popular && (
-                <div className={styles.popularBadge}>Most Popular</div>
+                <div className={styles.popularBadge}>
+                  <Sparkles size={12} /> Most Popular
+                </div>
               )}
               <div className={styles.pricingName}>{plan.name}</div>
               <div className={styles.pricingPrice}>
